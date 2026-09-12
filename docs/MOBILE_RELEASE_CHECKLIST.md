@@ -13,26 +13,26 @@
 - [x] bundle ID `co.uk.solutionvela.foxiem`
 - [x] Android package `co.uk.solutionvela.foxiem`
 - [x] SDK 57 `expo-doctor` reviewed (21/21)
-- [ ] production env secrets on EAS (optional; none required yet for build)
+- [x] production profile configured
 
 ## SIGNING
 
-- [ ] iOS distribution credentials ready — **BLOCKED: interactive Apple login required**
+- [x] iOS distribution credentials ready
 - [x] Android production keystore ready
 
 ## GITHUB
 
-- [ ] `EXPO_TOKEN` configured — **BLOCKED: secret missing**
+- [x] `EXPO_TOKEN` configured
 - [x] workflow `.github/workflows/mobile-production-build.yml` exists
-- [ ] manual `workflow_dispatch` works (pending token + iOS)
-- [x] CI validation scripts pass locally (typecheck + 121 tests)
+- [x] manual `workflow_dispatch` works
+- [x] CI validation passes before EAS
 
 ## BUILD
 
-- [ ] iOS production EAS build passes
-- [x] Android production EAS build passes (`7f7ab21f…`, versionCode 6, AAB)
+- [x] iOS production EAS build passes (`c1b47ad6…`, buildNumber 5, `.ipa`, store)
+- [x] Android production EAS build passes (`aaea7ba8…`, versionCode 7, `.aab`)
 - [x] Android artifact is AAB
-- [x] Android build ID / URL recorded
+- [x] build IDs / URLs recorded
 - [x] no `--auto-submit` / no store release
 
 ## NEXT

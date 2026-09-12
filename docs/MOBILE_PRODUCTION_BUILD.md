@@ -75,11 +75,13 @@ Reuse the linked project in `app.json` → `extra.eas.projectId`. Do not create 
 Prefer **EAS-managed** keystore for `co.uk.solutionvela.foxiem`.  
 Do not commit `.jks` / `.keystore` files.
 
-Verified store AAB:
+Verified store AAB (Actions production `all`):
 
-- Build ID: `7f7ab21f-a4cc-4d7c-b025-a21cc974f1b2`
-- URL: https://expo.dev/accounts/vela-solution-ltd/projects/foxiem/builds/7f7ab21f-a4cc-4d7c-b025-a21cc974f1b2
-- `1.0.0` / versionCode `6` / artifact `.aab`
+- Build ID: `aaea7ba8-6195-475a-aaaf-c34e0199a3e9`
+- URL: https://expo.dev/accounts/vela-solution-ltd/projects/foxiem/builds/aaea7ba8-6195-475a-aaaf-c34e0199a3e9
+- `1.0.0` / versionCode `7` / artifact `.aab`
+
+Earlier bootstrap AAB (pre-Actions): `7f7ab21f-a4cc-4d7c-b025-a21cc974f1b2` (versionCode 6).
 
 ### iOS
 
@@ -99,23 +101,27 @@ Do not paste Apple passwords, MFA codes, or certificate contents into chat or th
 
 CI builds are `--non-interactive` and will fail until iOS credentials are already on Expo.
 
-**Current gate (verified):** non-interactive iOS build fails with  
-`Distribution Certificate is not validated for non-interactive builds` / `Credentials are not set up`.
+**Current gate (verified):** iOS store credentials are ready on EAS for `co.uk.solutionvela.foxiem`.
 
-Remote developer versions (EAS): iOS `buildNumber` **3**, Android `versionCode` **6**.
+Verified production iOS IPA (Actions production `all`):
+
+- Build ID: `c1b47ad6-4084-4a41-ad79-c37d4698fd38`
+- URL: https://expo.dev/accounts/vela-solution-ltd/projects/foxiem/builds/c1b47ad6-4084-4a41-ad79-c37d4698fd38
+- `1.0.0` / buildNumber `5` / artifact `.ipa` / not simulator
+
+Remote developer versions after verified Actions run: iOS `buildNumber` **5**, Android `versionCode` **7**.
 
 ## EXPO_TOKEN (GitHub)
 
-**Current gate (verified):** repo `solutionvela/foxiem-mobile` has **no** Actions secrets yet.
+**Status (verified):** GitHub Actions secret `EXPO_TOKEN` is configured for `solutionvela/foxiem-mobile`.
 
-1. https://expo.dev/accounts/vela-solution-ltd/settings/access-tokens → create token  
-2. Prefer local file (never paste into chat):
+If the token was ever pasted into chat, rotate it in Expo access tokens and re-run `scripts/set-expo-token-secret.ps1`.
+
+Prefer local file (never paste into chat):
    - save token as `.expo-token` (gitignored)
    - run `powershell -File scripts/set-expo-token-secret.ps1`
-3. Or GitHub → Settings → Secrets → Actions → `EXPO_TOKEN` manually  
-4. Never put the token in YAML, `.env`, docs, or commit history
 
-Do **not** keep probing `eas build -p ios --non-interactive` until Apple credentials exist — failed probes still increment remote `buildNumber`.
+Do **not** keep probing failed `eas build -p ios --non-interactive` — failed probes still increment remote `buildNumber`.
 
 ## Manual workflow run
 
