@@ -1,17 +1,24 @@
 {
   "expo": {
-    "name": "foxiem-mobile",
-    "slug": "foxiem-mobile",
+    "name": "Foxiem",
+    "slug": "foxiem",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#000000",
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "co.uk.solutionvela.foxiem",
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "co.uk.solutionvela.foxiem",
+      "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#000000",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -20,6 +27,37 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#000000"
+        }
+      ],
+      [
+        "expo-status-bar",
+        {
+          "style": "light"
+        }
+      ],
+      "expo-font",
+      "expo-localization",
+      [
+        "expo-notifications",
+        {
+          "color": "#3B82F6",
+          "defaultChannel": "foxiem-reminders"
+        }
+      ],
+      "@react-native-community/datetimepicker",
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
+      ]
+    ]
   }
 }

@@ -1,0 +1,301 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "done": "Listo",
+    "save": "Guardar",
+    "continue": "Continuar",
+    "back": "Atrás",
+    "confirm": "Confirmar",
+    "reset": "Restablecer",
+    "notConfigured": "Este enlace aún no está configurado.",
+    "closeModal": "Cerrar el diálogo",
+    "closeSheet": "Cerrar el panel",
+    "saveFailed": "No se pudo guardar. Inténtalo de nuevo."
+  },
+  "navigation": {
+    "home": "Inicio",
+    "statistics": "Estadísticas",
+    "profile": "Perfil"
+  },
+  "home": {
+    "goodMorning": "Buenos días",
+    "goodAfternoon": "Buenas tardes",
+    "goodEvening": "Buenas noches",
+    "totalCount": "Total",
+    "addOne": "Sumar uno",
+    "subtractOne": "Restar uno",
+    "addFive": "Sumar cinco",
+    "resetCounter": "Restablecer",
+    "resetCounterA11y": "Restablecer contador",
+    "wavingHand": "Mano saludando",
+    "mascotAlt": "Mascota zorro Foxiem rodeada de hojas",
+    "resetCounterTitle": "¿Restablecer el contador?",
+    "resetCounterMessage": "Tu conteo actual volverá a cero."
+  },
+  "statistics": {
+    "title": "Estadísticas",
+    "subtitle": "Tu progreso de un vistazo.",
+    "day": "Día",
+    "week": "Semana",
+    "month": "Mes",
+    "year": "Año",
+    "today": "Hoy",
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mes",
+    "total": "Total",
+    "chartLabel": "Gráfico de progreso",
+    "consistency": "Constancia",
+    "viewActivity": "Ver actividad",
+    "consistencyBody": "Los conteos pequeños se convierten en un progreso real.",
+    "achievementAlt": "Foxiem con un trofeo",
+    "weekday": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "weekNumber": {
+      "w1": "S1",
+      "w2": "S2",
+      "w3": "S3",
+      "w4": "S4",
+      "w5": "S5",
+      "w6": "S6"
+    },
+    "monthShort": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Ago",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dic"
+    },
+    "noActivity": "Todavía no hay actividad"
+  },
+  "calendar": {
+    "weekdaysShort": {
+      "monday": "Lun",
+      "tuesday": "Mar",
+      "wednesday": "Mié",
+      "thursday": "Jue",
+      "friday": "Vie",
+      "saturday": "Sáb",
+      "sunday": "Dom"
+    },
+    "monthsShort": {
+      "january": "Ene",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Abr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Ago",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dic"
+    }
+  },
+  "history": {
+    "increment": "Añadido",
+    "decrement": "Restado",
+    "reset": "Restablecido"
+  },
+  "activity": {
+    "title": "Historial de actividad",
+    "subtitle": "Un registro de tus conteos recientes.",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "result": "Resultado",
+    "resetDescription": "Contador restablecido",
+    "empty": {
+      "title": "Todavía no hay actividad",
+      "body": "Tu actividad de conteo aparecerá aquí."
+    }
+  },
+  "consistency": {
+    "title": "Constancia",
+    "subtitle": "Las pequeñas acciones se acumulan con el tiempo.",
+    "currentStreak": "Racha actual",
+    "bestStreak": "Mejor racha",
+    "thisWeek": "Esta semana",
+    "activeDays": "{{count}} de 7 días activos",
+    "weekRatio": "{{count}} / 7",
+    "viewConsistency": "Ver constancia",
+    "keepGoing": "Sigue así.",
+    "startToday": "Empieza hoy.",
+    "noStreak": "Aún no hay racha",
+    "day_one": "{{count}} día",
+    "day_other": "{{count}} días",
+    "activeDay": "activo",
+    "inactiveDay": "inactivo",
+    "todayActive": "hoy, activo",
+    "todayPending": "hoy, aún no activo",
+    "futureDay": "día futuro",
+    "supporting": "Cuentas pequeñas. Gran progreso."
+  },
+  "profile": {
+    "title": "Perfil",
+    "totalCounts": "Conteo total",
+    "editProfile": "Editar perfil",
+    "reminders": "Recordatorios",
+    "language": "Idioma",
+    "privacy": "Privacidad",
+    "resetData": "Restablecer datos",
+    "about": "Acerca de",
+    "chartGraphic": "Gráfico decorativo",
+    "avatarAlt": "Avatar de Foxiem"
+  },
+  "profileSetup": {
+    "title": "Vamos a conocerte",
+    "subtitle": "Dinos cómo quieres que Foxiem te llame.",
+    "name": "Nombre",
+    "username": "Nombre de usuario",
+    "namePlaceholder": "",
+    "usernamePlaceholder": "",
+    "mascotAlt": "Foxiem",
+    "nameRequired": "Escribe tu nombre.",
+    "nameTooLong": "El nombre debe tener 50 caracteres o menos.",
+    "usernameRequired": "Escribe un nombre de usuario.",
+    "usernameLength": "El nombre de usuario debe tener entre 3 y 24 caracteres.",
+    "usernameChars": "Usa solo letras, números, guiones bajos y puntos."
+  },
+  "editProfile": {
+    "title": "Editar perfil",
+    "saveChanges": "Guardar cambios"
+  },
+  "language": {
+    "title": "Idioma",
+    "selected": "Seleccionado"
+  },
+  "privacy": {
+    "title": "Privacidad",
+    "subtitle": "Qué guarda Foxiem y qué no.",
+    "yourData": {
+      "title": "Tus datos",
+      "body": "Foxiem guarda ahora esta información en el dispositivo:",
+      "derived": "Las estadísticas y la constancia se calculan a partir de tu historial y no se guardan por separado."
+    },
+    "data": {
+      "name": "Nombre",
+      "username": "Nombre de usuario",
+      "language": "Idioma seleccionado",
+      "counter": "Contador actual",
+      "history": "Historial de actividad del contador",
+      "reminders": "Configuración de recordatorios",
+      "notificationIds": "Identificadores de notificaciones programadas",
+      "setupCompleted": "Estado de configuración inicial"
+    },
+    "storage": {
+      "title": "Dónde se guardan tus datos",
+      "body": "Tus datos de Foxiem se guardan localmente en este dispositivo. Foxiem no sincroniza ahora estos datos con un servidor remoto ni con una cuenta en la nube."
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "body": "Foxiem puede programar recordatorios locales en este dispositivo. El permiso de notificaciones solo se pide cuando usas recordatorios. Foxiem no usa un servidor remoto de notificaciones push."
+    },
+    "cloud": {
+      "title": "Red y nube",
+      "body": "Los datos de producto de Foxiem — perfil, historial de conteo, recordatorios y preferencias — permanecen en este dispositivo y no se suben a un servidor de Foxiem. No se requiere una cuenta de Foxiem. Por separado, Google Mobile Ads puede comunicarse con Google cuando se muestran anuncios."
+    },
+    "reset": {
+      "title": "Restablecer datos",
+      "body": "Restablecer datos elimina de forma permanente los datos de Foxiem de este dispositivo, incluidos perfil, contador, historial, recordatorios y preferencias. Los recordatorios programados de Foxiem también se cancelan. Puedes hacerlo desde Perfil."
+    },
+    "policy": "Política de privacidad",
+    "policyNotConfigured": "El enlace de la política de privacidad aún no está configurado.",
+    "permission": {
+      "label": "Permiso de notificaciones",
+      "allowed": "Permitido",
+      "denied": "No permitido",
+      "undetermined": "Aún no solicitado"
+    },
+    "advertising": {
+      "title": "Publicidad",
+      "body": "Foxiem usa Google Mobile Ads para mostrar banners en pantallas seleccionadas. Google y el SDK publicitario pueden procesar información del dispositivo y relacionada con anuncios para entrega, medición, prevención de fraude y — según tus opciones — personalización. Foxiem no envía tu nombre, usuario, contador, historial o recordatorios a AdMob como datos de segmentación."
+    },
+    "adChoices": "Opciones de privacidad",
+    "adChoicesUnavailable": "Las opciones de privacidad no están disponibles ahora."
+  },
+  "reminders": {
+    "title": "Recordatorios",
+    "subtitle": "Mantén la constancia con recordatorios suaves.",
+    "empty": {
+      "title": "Aún no hay recordatorios",
+      "body": "Crea un recordatorio para seguir avanzando."
+    },
+    "add": "Añadir recordatorio",
+    "edit": "Editar recordatorio",
+    "time": "Hora",
+    "repeat": "Repetir",
+    "message": "Mensaje",
+    "everyDay": "Todos los días",
+    "weekdays": "Días laborables",
+    "weekends": "Fin de semana",
+    "delete": "Eliminar",
+    "deleteTitle": "¿Eliminar recordatorio?",
+    "deleteBody": "Este recordatorio dejará de aparecer en este dispositivo.",
+    "save": "Guardar recordatorio",
+    "enabled": "Recordatorio activado",
+    "disabled": "Recordatorio desactivado",
+    "chooseTime": "Hora del recordatorio",
+    "selectTime": "Elegir hora",
+    "changeTimeHint": "Cambiar la hora del recordatorio",
+    "scheduleFailed": "No se pudo programar este recordatorio.",
+    "daysRequired": "Elige al menos un día."
+  },
+  "notifications": {
+    "permission": {
+      "title": "Las notificaciones están desactivadas",
+      "body": "Activa las notificaciones en los ajustes del dispositivo para recibir recordatorios.",
+      "openSettings": "Abrir ajustes",
+      "denied": "No se permitieron las notificaciones."
+    },
+    "presets": {
+      "daily": "Recordatorio diario",
+      "momentum": "Ritmo",
+      "progress": "Progreso"
+    },
+    "messages": {
+      "daily": "Es hora de tu conteo Foxiem.",
+      "momentum": "Pasos pequeños. Mantén el ritmo.",
+      "progress": "Un poco de progreso hoy se acumula."
+    }
+  },
+  "about": {
+    "title": "Acerca de",
+    "appName": "Foxiem",
+    "tagline": "Cuentas pequeñas. Gran progreso.",
+    "description": "Foxiem te ayuda a llevar la cuenta de pequeñas acciones, ver tu progreso y crear constancia con el tiempo.",
+    "version": "Versión",
+    "build": "Compilación",
+    "localFirst": {
+      "title": "Primero local",
+      "body": "Foxiem guarda tus datos personales del producto en este dispositivo. No se requiere una cuenta de Foxiem. Los banners pueden usar Google Mobile Ads, que se comunica con Google aparte del almacenamiento de producto de Foxiem."
+    },
+    "privacyPolicy": "Política de privacidad",
+    "terms": "Términos de uso",
+    "dev": {
+      "title": "Información de desarrollo",
+      "appId": "Identificador de la app",
+      "storageKeys": "Claves de almacenamiento",
+      "locale": "Idioma",
+      "notifications": "Permiso de notificaciones"
+    }
+  },
+  "reset": {
+    "title": "¿Restablecer los datos de la app?",
+    "message": "Esto eliminará de forma permanente todos los datos de Foxiem guardados en este dispositivo, incluidos tu perfil, conteos, historial, recordatorios y preferencias.\n\nEsta acción no se puede deshacer.",
+    "confirm": "Restablecer datos"
+  }
+}

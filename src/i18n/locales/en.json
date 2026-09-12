@@ -1,0 +1,301 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "done": "Done",
+    "save": "Save",
+    "continue": "Continue",
+    "back": "Back",
+    "confirm": "Confirm",
+    "reset": "Reset",
+    "notConfigured": "This link is not configured yet.",
+    "closeModal": "Close dialog",
+    "closeSheet": "Close sheet",
+    "saveFailed": "Could not save. Try again."
+  },
+  "navigation": {
+    "home": "Home",
+    "statistics": "Statistics",
+    "profile": "Profile"
+  },
+  "home": {
+    "goodMorning": "Good morning",
+    "goodAfternoon": "Good afternoon",
+    "goodEvening": "Good evening",
+    "totalCount": "Total count",
+    "addOne": "Add one",
+    "subtractOne": "Subtract one",
+    "addFive": "Add five",
+    "resetCounter": "Reset",
+    "resetCounterA11y": "Reset counter",
+    "wavingHand": "Waving hand",
+    "mascotAlt": "Foxiem fox mascot surrounded by leaves",
+    "resetCounterTitle": "Reset counter?",
+    "resetCounterMessage": "Your current count will return to zero."
+  },
+  "statistics": {
+    "title": "Statistics",
+    "subtitle": "Your progress at a glance.",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "today": "Today",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "total": "Total",
+    "chartLabel": "Progress chart",
+    "consistency": "Consistency",
+    "viewActivity": "View activity",
+    "consistencyBody": "Small counts turn into meaningful progress.",
+    "achievementAlt": "Foxiem holding a trophy",
+    "weekday": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "weekNumber": {
+      "w1": "W1",
+      "w2": "W2",
+      "w3": "W3",
+      "w4": "W4",
+      "w5": "W5",
+      "w6": "W6"
+    },
+    "monthShort": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "noActivity": "No activity yet"
+  },
+  "calendar": {
+    "weekdaysShort": {
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Sun"
+    },
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mar",
+      "april": "Apr",
+      "may": "May",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Oct",
+      "november": "Nov",
+      "december": "Dec"
+    }
+  },
+  "history": {
+    "increment": "Added",
+    "decrement": "Subtracted",
+    "reset": "Reset"
+  },
+  "activity": {
+    "title": "Activity History",
+    "subtitle": "A record of your recent counting activity.",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "result": "Result",
+    "resetDescription": "Counter reset",
+    "empty": {
+      "title": "No activity yet",
+      "body": "Your counting activity will appear here."
+    }
+  },
+  "consistency": {
+    "title": "Consistency",
+    "subtitle": "Small actions add up over time.",
+    "currentStreak": "Current streak",
+    "bestStreak": "Best streak",
+    "thisWeek": "This week",
+    "activeDays": "{{count}} of 7 active days",
+    "weekRatio": "{{count}} / 7",
+    "viewConsistency": "View consistency",
+    "keepGoing": "Keep going.",
+    "startToday": "Start today.",
+    "noStreak": "No streak yet",
+    "day_one": "{{count}} day",
+    "day_other": "{{count}} days",
+    "activeDay": "active",
+    "inactiveDay": "inactive",
+    "todayActive": "today, active",
+    "todayPending": "today, not active yet",
+    "futureDay": "future day",
+    "supporting": "Small counts. Big progress."
+  },
+  "profile": {
+    "title": "Profile",
+    "totalCounts": "Total Counts",
+    "editProfile": "Edit Profile",
+    "reminders": "Reminders",
+    "language": "Language",
+    "privacy": "Privacy",
+    "resetData": "Reset App Data",
+    "about": "About",
+    "chartGraphic": "Decorative count chart",
+    "avatarAlt": "Foxiem profile avatar"
+  },
+  "profileSetup": {
+    "title": "Let's get to know you",
+    "subtitle": "Tell us what you'd like Foxiem to call you.",
+    "name": "Name",
+    "username": "Username",
+    "namePlaceholder": "",
+    "usernamePlaceholder": "",
+    "mascotAlt": "Foxiem",
+    "nameRequired": "Enter your name.",
+    "nameTooLong": "Name must be 50 characters or fewer.",
+    "usernameRequired": "Enter a username.",
+    "usernameLength": "Username must be 3–24 characters.",
+    "usernameChars": "Use only letters, numbers, underscores, and periods."
+  },
+  "editProfile": {
+    "title": "Edit Profile",
+    "saveChanges": "Save Changes"
+  },
+  "language": {
+    "title": "Language",
+    "selected": "Selected"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "subtitle": "What Foxiem stores, and what it does not.",
+    "yourData": {
+      "title": "Your data",
+      "body": "Foxiem currently stores this information locally:",
+      "derived": "Statistics and Consistency are calculated from your history and are not stored separately."
+    },
+    "data": {
+      "name": "Name",
+      "username": "Username",
+      "language": "Selected language",
+      "counter": "Current counter",
+      "history": "Counter activity history",
+      "reminders": "Reminder configuration",
+      "notificationIds": "Notification schedule identifiers",
+      "setupCompleted": "Setup-completed state"
+    },
+    "storage": {
+      "title": "Where your data is stored",
+      "body": "Your Foxiem data is stored locally on this device. Foxiem does not currently sync this data to a remote server or cloud account."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "body": "Foxiem can schedule local reminders on this device. Notification permission is requested only when you use reminders. Foxiem does not use a remote push-notification server."
+    },
+    "cloud": {
+      "title": "Network and cloud",
+      "body": "Foxiem product data — your profile, counting history, reminders and preferences — stays on this device and is not uploaded to a Foxiem server. No Foxiem account is required. Separately, Google Mobile Ads may communicate with Google when ads are shown."
+    },
+    "reset": {
+      "title": "Reset App Data",
+      "body": "Reset App Data permanently removes Foxiem-owned local data from this device, including your profile, counter, history, reminders and preferences. Scheduled Foxiem reminders are also cancelled. You can do this from Profile."
+    },
+    "policy": "Privacy Policy",
+    "policyNotConfigured": "Privacy Policy link is not configured yet.",
+    "permission": {
+      "label": "Notification permission",
+      "allowed": "Allowed",
+      "denied": "Not allowed",
+      "undetermined": "Not requested"
+    },
+    "advertising": {
+      "title": "Advertising",
+      "body": "Foxiem uses Google Mobile Ads to show banner ads on selected screens. Google and the advertising SDK may process device and ad-related information for ad delivery, measurement, fraud prevention, and — where allowed by your choices — personalization. Foxiem does not send your name, username, counter, history or reminders to AdMob as targeting data."
+    },
+    "adChoices": "Privacy choices",
+    "adChoicesUnavailable": "Privacy choices are unavailable right now."
+  },
+  "reminders": {
+    "title": "Reminders",
+    "subtitle": "Stay consistent with gentle reminders.",
+    "empty": {
+      "title": "No reminders yet",
+      "body": "Create a reminder to help keep your progress moving."
+    },
+    "add": "Add Reminder",
+    "edit": "Edit Reminder",
+    "time": "Time",
+    "repeat": "Repeat",
+    "message": "Message",
+    "everyDay": "Every day",
+    "weekdays": "Weekdays",
+    "weekends": "Weekends",
+    "delete": "Delete",
+    "deleteTitle": "Delete reminder?",
+    "deleteBody": "This reminder will stop appearing on this device.",
+    "save": "Save Reminder",
+    "enabled": "Reminder enabled",
+    "disabled": "Reminder disabled",
+    "chooseTime": "Reminder time",
+    "selectTime": "Select time",
+    "changeTimeHint": "Change reminder time",
+    "scheduleFailed": "Could not schedule this reminder.",
+    "daysRequired": "Choose at least one day."
+  },
+  "notifications": {
+    "permission": {
+      "title": "Notifications are disabled",
+      "body": "Enable notifications in your device settings to receive reminders.",
+      "openSettings": "Open Settings",
+      "denied": "Notifications were not allowed."
+    },
+    "presets": {
+      "daily": "Daily reminder",
+      "momentum": "Momentum",
+      "progress": "Progress"
+    },
+    "messages": {
+      "daily": "Time for your Foxiem count.",
+      "momentum": "Small steps. Keep your momentum going.",
+      "progress": "A little progress today adds up."
+    }
+  },
+  "about": {
+    "title": "About",
+    "appName": "Foxiem",
+    "tagline": "Small counts. Big progress.",
+    "description": "Foxiem helps you keep track of small actions, see your progress and build consistency over time.",
+    "version": "Version",
+    "build": "Build",
+    "localFirst": {
+      "title": "Local-first",
+      "body": "Foxiem stores your personal product data on this device. No Foxiem account is required. Banner ads may use Google Mobile Ads, which communicates with Google separately from Foxiem product storage."
+    },
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "dev": {
+      "title": "Developer info",
+      "appId": "App identifier",
+      "storageKeys": "Storage keys",
+      "locale": "Locale",
+      "notifications": "Notification permission"
+    }
+  },
+  "reset": {
+    "title": "Reset app data?",
+    "message": "This will permanently remove all Foxiem data stored on this device, including your profile, counts, history, reminders and preferences.\n\nThis action cannot be undone.",
+    "confirm": "Reset App Data"
+  }
+}

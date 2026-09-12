@@ -1,0 +1,301 @@
+{
+  "common": {
+    "cancel": "İptal",
+    "done": "Tamam",
+    "save": "Kaydet",
+    "continue": "Devam",
+    "back": "Geri",
+    "confirm": "Onayla",
+    "reset": "Sıfırla",
+    "notConfigured": "Bu bağlantı henüz ayarlanmadı.",
+    "closeModal": "Pencereyi kapat",
+    "closeSheet": "Paneli kapat",
+    "saveFailed": "Kaydedilemedi. Tekrar dene."
+  },
+  "navigation": {
+    "home": "Ana Sayfa",
+    "statistics": "İstatistikler",
+    "profile": "Profil"
+  },
+  "home": {
+    "goodMorning": "Günaydın",
+    "goodAfternoon": "İyi günler",
+    "goodEvening": "İyi akşamlar",
+    "totalCount": "Toplam sayı",
+    "addOne": "Bir ekle",
+    "subtractOne": "Bir çıkar",
+    "addFive": "Beş ekle",
+    "resetCounter": "Sıfırla",
+    "resetCounterA11y": "Sayacı sıfırla",
+    "wavingHand": "El sallama",
+    "mascotAlt": "Yapraklar arasında Foxiem tilki maskotu",
+    "resetCounterTitle": "Sayaç sıfırlansın mı?",
+    "resetCounterMessage": "Mevcut sayınız sıfıra dönecek."
+  },
+  "statistics": {
+    "title": "İstatistikler",
+    "subtitle": "İlerlemenize bir bakışta.",
+    "day": "Gün",
+    "week": "Hafta",
+    "month": "Ay",
+    "year": "Yıl",
+    "today": "Bugün",
+    "thisWeek": "Bu Hafta",
+    "thisMonth": "Bu Ay",
+    "total": "Toplam",
+    "chartLabel": "İlerleme grafiği",
+    "consistency": "Süreklilik",
+    "viewActivity": "Hareketi gör",
+    "consistencyBody": "Küçük sayılar anlamlı ilerlemeye dönüşür.",
+    "achievementAlt": "Kupa tutan Foxiem",
+    "weekday": {
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt",
+      "sun": "Paz"
+    },
+    "weekNumber": {
+      "w1": "H1",
+      "w2": "H2",
+      "w3": "H3",
+      "w4": "H4",
+      "w5": "H5",
+      "w6": "H6"
+    },
+    "monthShort": {
+      "jan": "Oca",
+      "feb": "Şub",
+      "mar": "Mar",
+      "apr": "Nis",
+      "may": "May",
+      "jun": "Haz",
+      "jul": "Tem",
+      "aug": "Ağu",
+      "sep": "Eyl",
+      "oct": "Eki",
+      "nov": "Kas",
+      "dec": "Ara"
+    },
+    "noActivity": "Henüz hareket yok"
+  },
+  "calendar": {
+    "weekdaysShort": {
+      "monday": "Pzt",
+      "tuesday": "Sal",
+      "wednesday": "Çar",
+      "thursday": "Per",
+      "friday": "Cum",
+      "saturday": "Cmt",
+      "sunday": "Paz"
+    },
+    "monthsShort": {
+      "january": "Oca",
+      "february": "Şub",
+      "march": "Mar",
+      "april": "Nis",
+      "may": "May",
+      "june": "Haz",
+      "july": "Tem",
+      "august": "Ağu",
+      "september": "Eyl",
+      "october": "Eki",
+      "november": "Kas",
+      "december": "Ara"
+    }
+  },
+  "history": {
+    "increment": "Eklendi",
+    "decrement": "Çıkarıldı",
+    "reset": "Sıfırlandı"
+  },
+  "activity": {
+    "title": "Hareket Geçmişi",
+    "subtitle": "Son sayım hareketlerinin kaydı.",
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "result": "Sonuç",
+    "resetDescription": "Sayaç sıfırlandı",
+    "empty": {
+      "title": "Henüz hareket yok",
+      "body": "Sayım hareketlerin burada görünecek."
+    }
+  },
+  "consistency": {
+    "title": "Süreklilik",
+    "subtitle": "Küçük adımlar zamanla birikir.",
+    "currentStreak": "Mevcut seri",
+    "bestStreak": "En iyi seri",
+    "thisWeek": "Bu hafta",
+    "activeDays": "{{count}} / 7 aktif gün",
+    "weekRatio": "{{count}} / 7",
+    "viewConsistency": "Sürekliliği gör",
+    "keepGoing": "Devam et.",
+    "startToday": "Bugün başla.",
+    "noStreak": "Henüz seri yok",
+    "day_one": "{{count}} gün",
+    "day_other": "{{count}} gün",
+    "activeDay": "aktif",
+    "inactiveDay": "aktif değil",
+    "todayActive": "bugün, aktif",
+    "todayPending": "bugün, henüz aktif değil",
+    "futureDay": "gelecek gün",
+    "supporting": "Küçük sayılar. Büyük ilerleme."
+  },
+  "profile": {
+    "title": "Profil",
+    "totalCounts": "Toplam Sayı",
+    "editProfile": "Profili Düzenle",
+    "reminders": "Hatırlatıcılar",
+    "language": "Dil",
+    "privacy": "Gizlilik",
+    "resetData": "Uygulama Verisini Sıfırla",
+    "about": "Hakkında",
+    "chartGraphic": "Dekoratif sayı grafiği",
+    "avatarAlt": "Foxiem profil görseli"
+  },
+  "profileSetup": {
+    "title": "Seni tanıyalım",
+    "subtitle": "Foxiem’in sana nasıl hitap etmesini istediğini söyle.",
+    "name": "Ad",
+    "username": "Kullanıcı adı",
+    "namePlaceholder": "",
+    "usernamePlaceholder": "",
+    "mascotAlt": "Foxiem",
+    "nameRequired": "Adını gir.",
+    "nameTooLong": "Ad en fazla 50 karakter olabilir.",
+    "usernameRequired": "Bir kullanıcı adı gir.",
+    "usernameLength": "Kullanıcı adı 3–24 karakter olmalı.",
+    "usernameChars": "Yalnızca harf, rakam, alt çizgi ve nokta kullan."
+  },
+  "editProfile": {
+    "title": "Profili Düzenle",
+    "saveChanges": "Değişiklikleri Kaydet"
+  },
+  "language": {
+    "title": "Dil",
+    "selected": "Seçili"
+  },
+  "privacy": {
+    "title": "Gizlilik",
+    "subtitle": "Foxiem’in neleri sakladığı ve neleri saklamadığı.",
+    "yourData": {
+      "title": "Verilerin",
+      "body": "Foxiem şu anda bu bilgileri yerelde saklar:",
+      "derived": "İstatistikler ve Süreklilik geçmişinden hesaplanır; ayrıca saklanmaz."
+    },
+    "data": {
+      "name": "Ad",
+      "username": "Kullanıcı adı",
+      "language": "Seçili dil",
+      "counter": "Güncel sayaç",
+      "history": "Sayaç hareket geçmişi",
+      "reminders": "Hatırlatıcı ayarları",
+      "notificationIds": "Bildirim zamanlama kimlikleri",
+      "setupCompleted": "Kurulum tamamlandı durumu"
+    },
+    "storage": {
+      "title": "Verilerin nerede saklanır",
+      "body": "Foxiem verilerin bu cihazda yerelde saklanır. Foxiem şu anda bu veriyi uzak bir sunucuya veya bulut hesabına eşlemez."
+    },
+    "notifications": {
+      "title": "Bildirimler",
+      "body": "Foxiem bu cihazda yerel hatırlatıcılar zamanlayabilir. Bildirim izni yalnızca hatırlatıcı kullandığında istenir. Foxiem uzak bir push bildirim sunucusu kullanmaz."
+    },
+    "cloud": {
+      "title": "Ağ ve bulut",
+      "body": "Foxiem ürün verileriniz — profil, sayım geçmişi, hatırlatıcılar ve tercihler — bu cihazda kalır ve bir Foxiem sunucusuna yüklenmez. Foxiem hesabı gerekmez. Ayrı olarak, reklamlar gösterilirken Google Mobile Ads Google ile iletişim kurabilir."
+    },
+    "reset": {
+      "title": "Uygulama verisini sıfırla",
+      "body": "Uygulama verisini sıfırlamak, profilin, sayaç, geçmiş, hatırlatıcılar ve tercihler dahil bu cihazdaki Foxiem verisini kalıcı olarak siler. Zamanlanmış Foxiem hatırlatıcıları da iptal edilir. Bunu Profil’den yapabilirsin."
+    },
+    "policy": "Gizlilik Politikası",
+    "policyNotConfigured": "Gizlilik Politikası bağlantısı henüz ayarlanmadı.",
+    "permission": {
+      "label": "Bildirim izni",
+      "allowed": "İzin verildi",
+      "denied": "İzin verilmedi",
+      "undetermined": "Henüz sorulmadı"
+    },
+    "advertising": {
+      "title": "Reklamlar",
+      "body": "Foxiem, seçili ekranlarda banner reklam göstermek için Google Mobile Ads kullanır. Google ve reklam SDK’sı; reklam sunumu, ölçüm, dolandırıcılık önleme ve — seçimlerinizin izin verdiği ölçüde — kişiselleştirme için cihaz ve reklamla ilgili bilgileri işleyebilir. Foxiem adınızı, kullanıcı adınızı, sayacınızı, geçmişinizi veya hatırlatıcılarınızı AdMob’a hedefleme verisi olarak göndermez."
+    },
+    "adChoices": "Gizlilik seçimleri",
+    "adChoicesUnavailable": "Gizlilik seçimleri şu anda kullanılamıyor."
+  },
+  "reminders": {
+    "title": "Hatırlatıcılar",
+    "subtitle": "Nazik hatırlatmalarla düzenini koru.",
+    "empty": {
+      "title": "Henüz hatırlatıcı yok",
+      "body": "İlerlemeni sürdürmek için bir hatırlatıcı oluştur."
+    },
+    "add": "Hatırlatıcı Ekle",
+    "edit": "Hatırlatıcıyı Düzenle",
+    "time": "Saat",
+    "repeat": "Tekrar",
+    "message": "Mesaj",
+    "everyDay": "Her gün",
+    "weekdays": "Hafta içi",
+    "weekends": "Hafta sonu",
+    "delete": "Sil",
+    "deleteTitle": "Hatırlatıcı silinsin mi?",
+    "deleteBody": "Bu hatırlatıcı artık bu cihazda görünmeyecek.",
+    "save": "Hatırlatıcıyı Kaydet",
+    "enabled": "Hatırlatıcı açık",
+    "disabled": "Hatırlatıcı kapalı",
+    "chooseTime": "Hatırlatıcı saati",
+    "selectTime": "Saat seç",
+    "changeTimeHint": "Hatırlatıcı saatini değiştir",
+    "scheduleFailed": "Bu hatırlatıcı zamanlanamadı.",
+    "daysRequired": "En az bir gün seç."
+  },
+  "notifications": {
+    "permission": {
+      "title": "Bildirimler kapalı",
+      "body": "Hatırlatıcı almak için cihaz ayarlarından bildirimleri aç.",
+      "openSettings": "Ayarları Aç",
+      "denied": "Bildirimlere izin verilmedi."
+    },
+    "presets": {
+      "daily": "Günlük hatırlatıcı",
+      "momentum": "İvme",
+      "progress": "İlerleme"
+    },
+    "messages": {
+      "daily": "Foxiem sayımının zamanı.",
+      "momentum": "Küçük adımlar. İvmeni koru.",
+      "progress": "Bugünkü küçük ilerleme birikir."
+    }
+  },
+  "about": {
+    "title": "Hakkında",
+    "appName": "Foxiem",
+    "tagline": "Küçük sayılar. Büyük ilerleme.",
+    "description": "Foxiem, küçük adımlarını takip etmene, ilerlemeni görmene ve zamanla düzen kurmana yardımcı olur.",
+    "version": "Sürüm",
+    "build": "Yapı",
+    "localFirst": {
+      "title": "Yerel öncelikli",
+      "body": "Foxiem kişisel ürün verilerinizi bu cihazda saklar. Foxiem hesabı gerekmez. Banner reklamlar Google Mobile Ads kullanabilir; bu, Foxiem ürün depolamasından ayrı olarak Google ile iletişim kurar."
+    },
+    "privacyPolicy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları",
+    "dev": {
+      "title": "Geliştirici bilgisi",
+      "appId": "Uygulama kimliği",
+      "storageKeys": "Depolama anahtarları",
+      "locale": "Dil",
+      "notifications": "Bildirim izni"
+    }
+  },
+  "reset": {
+    "title": "Uygulama verisi sıfırlansın mı?",
+    "message": "Bu işlem, profilin, sayılar, geçmiş, hatırlatıcılar ve tercihler dahil bu cihazda saklanan tüm Foxiem verisini kalıcı olarak siler.\n\nBu işlem geri alınamaz.",
+    "confirm": "Uygulama Verisini Sıfırla"
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "common": {
+    "cancel": "Abbrechen",
+    "done": "Fertig",
+    "save": "Speichern",
+    "continue": "Weiter",
+    "back": "Zurück",
+    "confirm": "Bestätigen",
+    "reset": "Zurücksetzen",
+    "notConfigured": "Dieser Link ist noch nicht eingerichtet.",
+    "closeModal": "Dialog schließen",
+    "closeSheet": "Bereich schließen",
+    "saveFailed": "Speichern fehlgeschlagen. Bitte erneut versuchen."
+  },
+  "navigation": {
+    "home": "Start",
+    "statistics": "Statistik",
+    "profile": "Profil"
+  },
+  "home": {
+    "goodMorning": "Guten Morgen",
+    "goodAfternoon": "Guten Tag",
+    "goodEvening": "Guten Abend",
+    "totalCount": "Gesamtzahl",
+    "addOne": "Eins hinzufügen",
+    "subtractOne": "Eins abziehen",
+    "addFive": "Fünf hinzufügen",
+    "resetCounter": "Zurücksetzen",
+    "resetCounterA11y": "Zähler zurücksetzen",
+    "wavingHand": "Winkende Hand",
+    "mascotAlt": "Foxiem-Fuchs-Maskottchen umgeben von Blättern",
+    "resetCounterTitle": "Zähler zurücksetzen?",
+    "resetCounterMessage": "Dein aktueller Zählerstand wird auf null gesetzt."
+  },
+  "statistics": {
+    "title": "Statistik",
+    "subtitle": "Dein Fortschritt auf einen Blick.",
+    "day": "Tag",
+    "week": "Woche",
+    "month": "Monat",
+    "year": "Jahr",
+    "today": "Heute",
+    "thisWeek": "Diese Woche",
+    "thisMonth": "Dieser Monat",
+    "total": "Gesamt",
+    "chartLabel": "Fortschrittsdiagramm",
+    "consistency": "Beständigkeit",
+    "viewActivity": "Aktivität anzeigen",
+    "consistencyBody": "Kleine Zählungen werden zu echtem Fortschritt.",
+    "achievementAlt": "Foxiem mit einem Pokal",
+    "weekday": {
+      "mon": "Mo",
+      "tue": "Di",
+      "wed": "Mi",
+      "thu": "Do",
+      "fri": "Fr",
+      "sat": "Sa",
+      "sun": "So"
+    },
+    "weekNumber": {
+      "w1": "W1",
+      "w2": "W2",
+      "w3": "W3",
+      "w4": "W4",
+      "w5": "W5",
+      "w6": "W6"
+    },
+    "monthShort": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mär",
+      "apr": "Apr",
+      "may": "Mai",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Okt",
+      "nov": "Nov",
+      "dec": "Dez"
+    },
+    "noActivity": "Noch keine Aktivität"
+  },
+  "calendar": {
+    "weekdaysShort": {
+      "monday": "Mo",
+      "tuesday": "Di",
+      "wednesday": "Mi",
+      "thursday": "Do",
+      "friday": "Fr",
+      "saturday": "Sa",
+      "sunday": "So"
+    },
+    "monthsShort": {
+      "january": "Jan",
+      "february": "Feb",
+      "march": "Mär",
+      "april": "Apr",
+      "may": "Mai",
+      "june": "Jun",
+      "july": "Jul",
+      "august": "Aug",
+      "september": "Sep",
+      "october": "Okt",
+      "november": "Nov",
+      "december": "Dez"
+    }
+  },
+  "history": {
+    "increment": "Hinzugefügt",
+    "decrement": "Abgezogen",
+    "reset": "Zurückgesetzt"
+  },
+  "activity": {
+    "title": "Aktivitätsverlauf",
+    "subtitle": "Eine Aufzeichnung deiner letzten Zählungen.",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "result": "Ergebnis",
+    "resetDescription": "Zähler zurückgesetzt",
+    "empty": {
+      "title": "Noch keine Aktivität",
+      "body": "Deine Zählaktivität erscheint hier."
+    }
+  },
+  "consistency": {
+    "title": "Beständigkeit",
+    "subtitle": "Kleine Schritte summieren sich mit der Zeit.",
+    "currentStreak": "Aktuelle Serie",
+    "bestStreak": "Beste Serie",
+    "thisWeek": "Diese Woche",
+    "activeDays": "{{count}} von 7 aktiven Tagen",
+    "weekRatio": "{{count}} / 7",
+    "viewConsistency": "Beständigkeit ansehen",
+    "keepGoing": "Weiter so.",
+    "startToday": "Fang heute an.",
+    "noStreak": "Noch keine Serie",
+    "day_one": "{{count}} Tag",
+    "day_other": "{{count}} Tage",
+    "activeDay": "aktiv",
+    "inactiveDay": "inaktiv",
+    "todayActive": "heute, aktiv",
+    "todayPending": "heute, noch nicht aktiv",
+    "futureDay": "zukünftiger Tag",
+    "supporting": "Kleine Zahlen. Großer Fortschritt."
+  },
+  "profile": {
+    "title": "Profil",
+    "totalCounts": "Gesamtzahl",
+    "editProfile": "Profil bearbeiten",
+    "reminders": "Erinnerungen",
+    "language": "Sprache",
+    "privacy": "Datenschutz",
+    "resetData": "App-Daten zurücksetzen",
+    "about": "Über",
+    "chartGraphic": "Dekoratives Zähldiagramm",
+    "avatarAlt": "Foxiem-Profilbild"
+  },
+  "profileSetup": {
+    "title": "Lernen wir dich kennen",
+    "subtitle": "Sag uns, wie Foxiem dich nennen soll.",
+    "name": "Name",
+    "username": "Benutzername",
+    "namePlaceholder": "",
+    "usernamePlaceholder": "",
+    "mascotAlt": "Foxiem",
+    "nameRequired": "Gib deinen Namen ein.",
+    "nameTooLong": "Der Name darf höchstens 50 Zeichen lang sein.",
+    "usernameRequired": "Gib einen Benutzernamen ein.",
+    "usernameLength": "Der Benutzername muss 3–24 Zeichen lang sein.",
+    "usernameChars": "Nur Buchstaben, Zahlen, Unterstriche und Punkte verwenden."
+  },
+  "editProfile": {
+    "title": "Profil bearbeiten",
+    "saveChanges": "Änderungen speichern"
+  },
+  "language": {
+    "title": "Sprache",
+    "selected": "Ausgewählt"
+  },
+  "privacy": {
+    "title": "Datenschutz",
+    "subtitle": "Was Foxiem speichert — und was nicht.",
+    "yourData": {
+      "title": "Deine Daten",
+      "body": "Foxiem speichert derzeit diese Informationen lokal:",
+      "derived": "Statistiken und Beständigkeit werden aus deinem Verlauf berechnet und nicht extra gespeichert."
+    },
+    "data": {
+      "name": "Name",
+      "username": "Benutzername",
+      "language": "Gewählte Sprache",
+      "counter": "Aktueller Zähler",
+      "history": "Zählverlauf",
+      "reminders": "Erinnerungseinstellungen",
+      "notificationIds": "Kennungen geplanter Mitteilungen",
+      "setupCompleted": "Status der Ersteinrichtung"
+    },
+    "storage": {
+      "title": "Wo deine Daten liegen",
+      "body": "Deine Foxiem-Daten werden lokal auf diesem Gerät gespeichert. Foxiem gleicht diese Daten derzeit nicht mit einem Remote-Server oder Cloud-Konto ab."
+    },
+    "notifications": {
+      "title": "Mitteilungen",
+      "body": "Foxiem kann lokale Erinnerungen auf diesem Gerät planen. Die Mitteilungsberechtigung wird nur angefragt, wenn du Erinnerungen nutzt. Foxiem verwendet keinen Remote-Push-Server."
+    },
+    "cloud": {
+      "title": "Netzwerk und Cloud",
+      "body": "Foxiem-Produktdaten — Profil, Zählverlauf, Erinnerungen und Einstellungen — bleiben auf diesem Gerät und werden nicht auf einen Foxiem-Server hochgeladen. Kein Foxiem-Konto erforderlich. Unabhängig davon kann Google Mobile Ads bei der Anzeigenausspielung mit Google kommunizieren."
+    },
+    "reset": {
+      "title": "App-Daten zurücksetzen",
+      "body": "App-Daten zurücksetzen entfernt Foxiem-Daten dauerhaft von diesem Gerät — einschließlich Profil, Zähler, Verlauf, Erinnerungen und Einstellungen. Geplante Foxiem-Erinnerungen werden ebenfalls abgebrochen. Du findest das im Profil."
+    },
+    "policy": "Datenschutzrichtlinie",
+    "policyNotConfigured": "Der Link zur Datenschutzrichtlinie ist noch nicht eingerichtet.",
+    "permission": {
+      "label": "Mitteilungsberechtigung",
+      "allowed": "Erlaubt",
+      "denied": "Nicht erlaubt",
+      "undetermined": "Noch nicht angefragt"
+    },
+    "advertising": {
+      "title": "Werbung",
+      "body": "Foxiem nutzt Google Mobile Ads, um Banneranzeigen auf ausgewählten Bildschirmen zu zeigen. Google und das Werbe-SDK können Geräte- und anzeigenbezogene Informationen für Auslieferung, Messung, Betrugsprävention und — sofern Ihre Wahl es zulässt — Personalisierung verarbeiten. Foxiem sendet Ihren Namen, Benutzernamen, Zähler, Verlauf oder Erinnerungen nicht als Targeting-Daten an AdMob."
+    },
+    "adChoices": "Datenschutzoptionen",
+    "adChoicesUnavailable": "Datenschutzoptionen sind derzeit nicht verfügbar."
+  },
+  "reminders": {
+    "title": "Erinnerungen",
+    "subtitle": "Bleib mit sanften Erinnerungen dran.",
+    "empty": {
+      "title": "Noch keine Erinnerungen",
+      "body": "Erstelle eine Erinnerung, um deinen Fortschritt im Blick zu behalten."
+    },
+    "add": "Erinnerung hinzufügen",
+    "edit": "Erinnerung bearbeiten",
+    "time": "Uhrzeit",
+    "repeat": "Wiederholen",
+    "message": "Nachricht",
+    "everyDay": "Täglich",
+    "weekdays": "Wochentage",
+    "weekends": "Wochenende",
+    "delete": "Löschen",
+    "deleteTitle": "Erinnerung löschen?",
+    "deleteBody": "Diese Erinnerung erscheint nicht mehr auf diesem Gerät.",
+    "save": "Erinnerung speichern",
+    "enabled": "Erinnerung aktiv",
+    "disabled": "Erinnerung inaktiv",
+    "chooseTime": "Erinnerungszeit",
+    "selectTime": "Zeit wählen",
+    "changeTimeHint": "Erinnerungszeit ändern",
+    "scheduleFailed": "Diese Erinnerung konnte nicht geplant werden.",
+    "daysRequired": "Wähle mindestens einen Tag."
+  },
+  "notifications": {
+    "permission": {
+      "title": "Mitteilungen sind deaktiviert",
+      "body": "Aktiviere Mitteilungen in den Geräteeinstellungen, um Erinnerungen zu erhalten.",
+      "openSettings": "Einstellungen öffnen",
+      "denied": "Mitteilungen wurden nicht erlaubt."
+    },
+    "presets": {
+      "daily": "Tägliche Erinnerung",
+      "momentum": "Schwung",
+      "progress": "Fortschritt"
+    },
+    "messages": {
+      "daily": "Zeit für deinen Foxiem-Zähler.",
+      "momentum": "Kleine Schritte. Behalte deinen Schwung.",
+      "progress": "Ein wenig Fortschritt heute summiert sich."
+    }
+  },
+  "about": {
+    "title": "Über",
+    "appName": "Foxiem",
+    "tagline": "Kleine Zahlen. Großer Fortschritt.",
+    "description": "Foxiem hilft dir, kleine Aktionen festzuhalten, deinen Fortschritt zu sehen und mit der Zeit beständig zu bleiben.",
+    "version": "Version",
+    "build": "Build",
+    "localFirst": {
+      "title": "Lokal zuerst",
+      "body": "Foxiem speichert Ihre persönlichen Produktdaten auf diesem Gerät. Kein Foxiem-Konto erforderlich. Banneranzeigen können Google Mobile Ads nutzen, das unabhängig von der Foxiem-Produktspeicherung mit Google kommuniziert."
+    },
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "dev": {
+      "title": "Entwicklerinformationen",
+      "appId": "App-Kennung",
+      "storageKeys": "Speicherschlüssel",
+      "locale": "Sprache",
+      "notifications": "Mitteilungsberechtigung"
+    }
+  },
+  "reset": {
+    "title": "App-Daten zurücksetzen?",
+    "message": "Dadurch werden alle auf diesem Gerät gespeicherten Foxiem-Daten dauerhaft entfernt, einschließlich Profil, Zählungen, Verlauf, Erinnerungen und Einstellungen.\n\nDieser Vorgang kann nicht rückgängig gemacht werden.",
+    "confirm": "App-Daten zurücksetzen"
+  }
+}
