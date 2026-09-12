@@ -118,7 +118,7 @@ Record for each platform:
 
 Native plugin currently uses Google **sample App IDs** so the SDK can initialize. Production banner unit IDs are empty (fail closed). Real AdMob App/Unit IDs are required before monetized store release — not invented here.
 
-Android EAS builds pin `play-services-ads` to **25.2.0** via `plugins/withForceCompatiblePlayServicesAds.js`. Ads SDK 25.3+/25.4+ require Kotlin metadata 2.3.0 while Expo SDK 57 library modules still compile with Kotlin 2.1.x.
+Android EAS builds use `react-native-google-mobile-ads@16.3.4` (Play Services Ads **25.0.0**). Newer 16.4+/16.5 pull Ads 25.4.0 which requires Kotlin metadata 2.3.0 while Expo SDK 57 library modules still compile with Kotlin 2.1.x.
 
 ## Next stages (not this document)
 
