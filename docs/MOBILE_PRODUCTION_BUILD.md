@@ -75,6 +75,12 @@ Reuse the linked project in `app.json` → `extra.eas.projectId`. Do not create 
 Prefer **EAS-managed** keystore for `co.uk.solutionvela.foxiem`.  
 Do not commit `.jks` / `.keystore` files.
 
+Verified store AAB:
+
+- Build ID: `7f7ab21f-a4cc-4d7c-b025-a21cc974f1b2`
+- URL: https://expo.dev/accounts/vela-solution-ltd/projects/foxiem/builds/7f7ab21f-a4cc-4d7c-b025-a21cc974f1b2
+- `1.0.0` / versionCode `6` / artifact `.aab`
+
 ### iOS
 
 EAS-managed Apple Distribution certificate + provisioning profile for `co.uk.solutionvela.foxiem`.
@@ -82,8 +88,10 @@ EAS-managed Apple Distribution certificate + provisioning profile for `co.uk.sol
 First-time iOS credentials require **interactive** Apple authentication by the product owner:
 
 ```bash
+cd foxiem-mobile
 npx eas-cli@latest credentials -p ios
-# or
+# choose: production / Set up a new distribution certificate + provisioning profile
+# or:
 npx eas-cli@latest build -p ios --profile production
 ```
 
@@ -91,9 +99,22 @@ Do not paste Apple passwords, MFA codes, or certificate contents into chat or th
 
 CI builds are `--non-interactive` and will fail until iOS credentials are already on Expo.
 
+**Current gate (verified):** non-interactive iOS build fails with  
+`Distribution Certificate is not validated for non-interactive builds` / `Credentials are not set up`.
+
+Remote developer versions (EAS): iOS `buildNumber` **2**, Android `versionCode` **6**.
+
+## EXPO_TOKEN (GitHub)
+
+**Current gate (verified):** repo `solutionvela/foxiem-mobile` has **no** Actions secrets yet.
+
+1. https://expo.dev/accounts/vela-solution-ltd/settings/access-tokens → create token  
+2. GitHub → Settings → Secrets → Actions → `EXPO_TOKEN`  
+3. Never paste the token into chat or git
+
 ## Manual workflow run
 
-1. Confirm iOS + Android signing ready
+1. Confirm iOS + Android signing ready (Android already yes)
 2. Confirm `EXPO_TOKEN` secret exists
 3. GitHub → Actions → **Mobile Production Build** → Run workflow → platform `all`
 4. Wait until the job finishes (`--wait`); green means EAS builds succeeded
