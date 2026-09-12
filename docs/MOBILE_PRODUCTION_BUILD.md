@@ -102,15 +102,20 @@ CI builds are `--non-interactive` and will fail until iOS credentials are alread
 **Current gate (verified):** non-interactive iOS build fails with  
 `Distribution Certificate is not validated for non-interactive builds` / `Credentials are not set up`.
 
-Remote developer versions (EAS): iOS `buildNumber` **2**, Android `versionCode` **6**.
+Remote developer versions (EAS): iOS `buildNumber` **3**, Android `versionCode` **6**.
 
 ## EXPO_TOKEN (GitHub)
 
 **Current gate (verified):** repo `solutionvela/foxiem-mobile` has **no** Actions secrets yet.
 
 1. https://expo.dev/accounts/vela-solution-ltd/settings/access-tokens → create token  
-2. GitHub → Settings → Secrets → Actions → `EXPO_TOKEN`  
-3. Never paste the token into chat or git
+2. Prefer local file (never paste into chat):
+   - save token as `.expo-token` (gitignored)
+   - run `powershell -File scripts/set-expo-token-secret.ps1`
+3. Or GitHub → Settings → Secrets → Actions → `EXPO_TOKEN` manually  
+4. Never put the token in YAML, `.env`, docs, or commit history
+
+Do **not** keep probing `eas build -p ios --non-interactive` until Apple credentials exist — failed probes still increment remote `buildNumber`.
 
 ## Manual workflow run
 
