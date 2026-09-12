@@ -22,25 +22,27 @@ Optional later: set `VITE_SUPPORT_EMAIL` on foxiem-web and point Support URL at 
 
 ---
 
-## Android — ANDROID INTERNAL TESTING SUBMISSION VERIFIED
+## Android — ANDROID RELEASE PREPARATION PENDING
 
 See `docs/ANDROID_RELEASE.md`.
 
-AAB **1.0.0 / versionCode 7** is on Play **Internal testing** as a **draft** via EAS Submit. Play service-account → EAS credentials path is configured. Production is **not** released.
+Internal testing is **active** for **1.0.0 / versionCode 7**. Store listing graphics + locales are uploaded. Official `app-ads.txt` is live. Production remains **INACTIVE**. Do **not** rebuild / re-submit AAB / promote to Production.
 
-### Remaining (store listing / activation — not AAB transfer)
+### Remaining (blocking for “READY FOR PRODUCTION ROLLOUT”)
 
-1. **Internal Testing activation (optional for install):** Play → Internal testing → finish Select testers + Preview and confirm if you want an active internal track.
-2. **Upload store graphics (blocking for production listing):** icon, feature graphic, phone + tablet screenshots under `store/screenshots/`.
-3. **Translations:** tr / de / fr / es / it from `store/play-listing-locales.md`.
-4. **Do not** production rollout until you explicitly authorize it.
+1. Exact Play **versionCode 7** Internal Testing smoke on a working Google Play device (local emulator path abandoned; no physical device on hand), **or** explicitly accept that gap before rollout.
+2. Optional: Firebase Test Lab Robo with `~\.credentials\foxiem-vc7-TEST-LAB-QA-BUILD.apk` (same-source extract from Play AAB; not a store upload).
+3. Pre-launch report still **NOT GENERATED** by Google — do not rebuild solely to force it.
+4. AdMob crawl may stay **PENDING** for up to ~24h–7d — does not block Play publish by itself.
+5. **Do not** production rollout until you explicitly authorize it.
 
 ### Already done (Android)
 
 - App created (`co.uk.solutionvela.foxiem`)
-- Privacy / ads / ratings / data safety / audience
+- Privacy / ads (“Contains ads”) / ratings / data safety / audience
 - Store settings Productivity + contact + website
-- en-GB listing draft text
+- en-GB + tr/de/fr/es/it listing copy; icon, feature, phone + tablet screenshots
+- Internal testing activated (testers + opt-in link available in Console)
 - External / open testing skipped
 - Play submit SA permissions on Foxiem (`expo-upload@baby-namer-vela…`)
 - EAS Google Play Service Credential configured

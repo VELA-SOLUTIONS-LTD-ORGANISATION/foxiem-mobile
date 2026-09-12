@@ -27,20 +27,20 @@ type PlatformBannerUnits = {
 };
 
 /**
- * Real Foxiem banner Ad Unit IDs — leave empty until supplied from AdMob console.
- * Do NOT invent publisher IDs. Empty production units fail closed (no ad).
+ * Real Foxiem banner Ad Unit IDs from AdMob console (banner format only).
+ * Empty strings fail closed (no ad). Never use the wrong platform's unit.
  */
 export const PRODUCTION_BANNER_UNITS: {
   ios: PlatformBannerUnits;
   android: PlatformBannerUnits;
 } = {
   ios: {
-    statistics: '',
-    activityHistory: '',
+    statistics: 'ca-app-pub-3249455013386377/4723929748',
+    activityHistory: 'ca-app-pub-3249455013386377/3370098436',
   },
   android: {
-    statistics: '',
-    activityHistory: '',
+    statistics: 'ca-app-pub-3249455013386377/8663174751',
+    activityHistory: 'ca-app-pub-3249455013386377/4815042040',
   },
 };
 

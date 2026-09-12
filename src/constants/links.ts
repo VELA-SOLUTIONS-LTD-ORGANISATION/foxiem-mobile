@@ -1,5 +1,5 @@
 export const EXTERNAL_LINKS = {
-  privacyPolicy: '',
+  privacyPolicy: 'https://foxiem.com/privacy',
   termsOfUse: '',
 } as const;
 

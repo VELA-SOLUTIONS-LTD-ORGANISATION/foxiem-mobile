@@ -22,36 +22,54 @@ describe('adConfig', () => {
     expect(getBannerUnitId('statistics', { platform: 'web', isDev: false })).toBeNull();
   });
 
-  it('fails closed in production when unit IDs are empty', () => {
-    expect(PRODUCTION_BANNER_UNITS.ios.statistics).toBe('');
-    expect(getBannerUnitId('statistics', { platform: 'ios', isDev: false })).toBeNull();
-    expect(hasProductionBannerUnitsConfigured()).toBe(false);
+  it('has production banner units configured for both platforms', () => {
+    expect(hasProductionBannerUnitsConfigured()).toBe(true);
+    expect(PRODUCTION_BANNER_UNITS.ios.statistics).toMatch(/^ca-app-pub-/);
+    expect(PRODUCTION_BANNER_UNITS.ios.activityHistory).toMatch(/^ca-app-pub-/);
+    expect(PRODUCTION_BANNER_UNITS.android.statistics).toMatch(/^ca-app-pub-/);
+    expect(PRODUCTION_BANNER_UNITS.android.activityHistory).toMatch(/^ca-app-pub-/);
   });
 
-  it('selects platform-specific production IDs when configured', () => {
-    const previousIos = { ...PRODUCTION_BANNER_UNITS.ios };
-    const previousAndroid = { ...PRODUCTION_BANNER_UNITS.android };
-    PRODUCTION_BANNER_UNITS.ios.statistics = 'ca-app-pub-1111111111111111/2222222222';
-    PRODUCTION_BANNER_UNITS.ios.activityHistory = 'ca-app-pub-1111111111111111/3333333333';
-    PRODUCTION_BANNER_UNITS.android.statistics = 'ca-app-pub-4444444444444444/5555555555';
-    PRODUCTION_BANNER_UNITS.android.activityHistory = 'ca-app-pub-4444444444444444/6666666666';
-
+  it('selects platform-specific production IDs in release mode', () => {
     expect(getBannerUnitId('statistics', { platform: 'ios', isDev: false })).toBe(
-      'ca-app-pub-1111111111111111/2222222222',
+      PRODUCTION_BANNER_UNITS.ios.statistics,
+    );
+    expect(getBannerUnitId('activityHistory', { platform: 'ios', isDev: false })).toBe(
+      PRODUCTION_BANNER_UNITS.ios.activityHistory,
     );
     expect(getBannerUnitId('statistics', { platform: 'android', isDev: false })).toBe(
-      'ca-app-pub-4444444444444444/5555555555',
+      PRODUCTION_BANNER_UNITS.android.statistics,
     );
-
-    PRODUCTION_BANNER_UNITS.ios.statistics = previousIos.statistics;
-    PRODUCTION_BANNER_UNITS.ios.activityHistory = previousIos.activityHistory;
-    PRODUCTION_BANNER_UNITS.android.statistics = previousAndroid.statistics;
-    PRODUCTION_BANNER_UNITS.android.activityHistory = previousAndroid.activityHistory;
+    expect(getBannerUnitId('activityHistory', { platform: 'android', isDev: false })).toBe(
+      PRODUCTION_BANNER_UNITS.android.activityHistory,
+    );
   });
 
-  it('recognizes Google sample App IDs used for development native config', () => {
+  it('never crosses platform unit IDs', () => {
+    const iosStats = getBannerUnitId('statistics', { platform: 'ios', isDev: false });
+    const androidStats = getBannerUnitId('statistics', { platform: 'android', isDev: false });
+    expect(iosStats).not.toBe(androidStats);
+    expect(iosStats).toBe(PRODUCTION_BANNER_UNITS.ios.statistics);
+    expect(androidStats).toBe(PRODUCTION_BANNER_UNITS.android.statistics);
+  });
+
+  it('fails closed when a production unit is cleared', () => {
+    const previous = PRODUCTION_BANNER_UNITS.ios.statistics;
+    PRODUCTION_BANNER_UNITS.ios.statistics = '';
+    expect(getBannerUnitId('statistics', { platform: 'ios', isDev: false })).toBeNull();
+    expect(hasProductionBannerUnitsConfigured()).toBe(false);
+    PRODUCTION_BANNER_UNITS.ios.statistics = previous;
+  });
+
+  it('recognizes Google sample App IDs as distinct from Foxiem production App IDs', () => {
     expect(
       usesGoogleSampleAppIds(GOOGLE_SAMPLE_APP_IDS.android, GOOGLE_SAMPLE_APP_IDS.ios),
     ).toBe(true);
+    expect(
+      usesGoogleSampleAppIds(
+        'ca-app-pub-3249455013386377~1127078474',
+        'ca-app-pub-3249455013386377~1517960718',
+      ),
+    ).toBe(false);
   });
 });

@@ -82,8 +82,10 @@ describe('architecture regression guards', () => {
         iosAppId?: string;
         userTrackingUsageDescription?: string;
       };
-      expect(options.androidAppId).toMatch(/^ca-app-pub-/);
-      expect(options.iosAppId).toMatch(/^ca-app-pub-/);
+      expect(options.androidAppId).toBe('ca-app-pub-3249455013386377~1127078474');
+      expect(options.iosAppId).toBe('ca-app-pub-3249455013386377~1517960718');
+      expect(options.androidAppId).not.toMatch(/3940256099942544/);
+      expect(options.iosAppId).not.toMatch(/3940256099942544/);
       expect(options.userTrackingUsageDescription).toBeUndefined();
     }
 
