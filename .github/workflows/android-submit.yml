@@ -1,0 +1,66 @@
+name: Android EAS Submit (explicit build)
+
+# Manual-only: upload an existing EAS Android build to Google Play Internal Testing.
+# Does NOT rebuild. Does NOT submit to Production track.
+# Does NOT run on push.
+# Google Play SA JSON lives on EAS Service Credentials (not in GitHub).
+
+on:
+  workflow_dispatch:
+    inputs:
+      eas_build_id:
+        description: Exact EAS build UUID to submit (never use "latest")
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foxiem-mobile-android-submit
+  cancel-in-progress: false
+
+jobs:
+  android-submit:
+    name: EAS Submit Android (explicit ID)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify EXPO_TOKEN
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "EXPO_TOKEN GitHub secret is missing."
+            exit 1
+          fi
+          echo "EXPO_TOKEN is configured."
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          packager: npm
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Submit existing Android build to Play Internal Testing
+        run: >
+          eas submit
+          --platform android
+          --id "${{ inputs.eas_build_id }}"
+          --profile production
+          --non-interactive
+          --wait
