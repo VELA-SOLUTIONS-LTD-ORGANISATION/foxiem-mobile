@@ -1,0 +1,68 @@
+name: Mobile Production Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to build with EAS production profile
+        required: true
+        type: choice
+        options:
+          - all
+          - ios
+          - android
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foxiem-mobile-production-build
+  cancel-in-progress: false
+
+env:
+  EAS_BUILD_NO_EXPO_GO_WARNING: "true"
+
+jobs:
+  production-build:
+    name: EAS production (${{ inputs.platform }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test
+
+      - name: Verify EXPO_TOKEN
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "EXPO_TOKEN GitHub secret is missing."
+            exit 1
+          fi
+          echo "EXPO_TOKEN is configured."
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          packager: npm
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: EAS production build
+        run: eas build --platform "${{ inputs.platform }}" --profile production --non-interactive --wait

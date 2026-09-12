@@ -32,6 +32,9 @@
       [
         "expo-splash-screen",
         {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 220,
+          "resizeMode": "contain",
           "backgroundColor": "#000000"
         }
       ],
@@ -46,6 +49,7 @@
       [
         "expo-notifications",
         {
+          "icon": "./assets/android-icon-monochrome.png",
           "color": "#3B82F6",
           "defaultChannel": "foxiem-reminders"
         }
@@ -58,6 +62,15 @@
           "iosAppId": "ca-app-pub-3940256099942544~1458002511"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "expo-status-bar": {
+        "style": "light"
+      },
+      "eas": {
+        "projectId": "cf0512da-2372-4fc2-9ec3-2dfc440cd3f1"
+      }
+    },
+    "owner": "vela-solution-ltd"
   }
 }
