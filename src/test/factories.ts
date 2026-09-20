@@ -1,3 +1,4 @@
+import { DEFAULT_TOPIC_ID } from '@/state/topics';
 import type { CounterEvent, CounterEventType } from '@/state/types';
 
 /** Build a local Date. Month is 1–12 (calendar). */
@@ -36,10 +37,12 @@ export function makeEvent( partial: {
   newValue: number;
   createdAt: string;
   id?: string;
+  topicId?: string;
 }): CounterEvent {
   eventSeq += 1;
   return {
     id: partial.id ?? `evt-${eventSeq}`,
+    topicId: partial.topicId ?? DEFAULT_TOPIC_ID,
     type: partial.type,
     amount: partial.amount,
     previousValue: partial.previousValue,
@@ -52,6 +55,7 @@ export function incrementEvent(
   previousValue: number,
   amount: number,
   createdAt: string,
+  topicId?: string,
 ): CounterEvent {
   return makeEvent({
     type: 'increment',
@@ -59,6 +63,7 @@ export function incrementEvent(
     previousValue,
     newValue: previousValue + amount,
     createdAt,
+    topicId,
   });
 }
 

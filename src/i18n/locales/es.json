@@ -30,7 +30,28 @@
     "wavingHand": "Mano saludando",
     "mascotAlt": "Mascota zorro Foxiem rodeada de hojas",
     "resetCounterTitle": "¿Restablecer el contador?",
-    "resetCounterMessage": "Tu conteo actual volverá a cero."
+    "resetCounterMessage": "Tu conteo actual volverá a cero.",
+    "resetTopicTitle": "¿Restablecer {{topic}}?",
+    "resetTopicMessage": "Solo {{topic}} volverá a cero. Los demás topics no cambian."
+  },
+  "topics": {
+    "title": "Topics",
+    "topic": "Topic",
+    "defaultName": "General",
+    "add": "Añadir topic",
+    "new": "Nuevo topic",
+    "name": "Nombre del topic",
+    "create": "Crear",
+    "rename": "Renombrar topic",
+    "renameA11y": "Renombrar {{topic}}",
+    "select": "Elegir topic",
+    "selectA11y": "Elegir topic, ahora {{topic}}",
+    "activeTopic": "Topic activo",
+    "alreadyExists": "Ese nombre de topic ya está en uso.",
+    "nameRequired": "Escribe un nombre de topic.",
+    "nameTooLong": "El nombre del topic debe tener 40 caracteres o menos.",
+    "reservedName": "Elige un nombre distinto de General.",
+    "limitReached": "Puedes tener hasta 20 topics."
   },
   "statistics": {
     "title": "Estadísticas",
@@ -147,6 +168,7 @@
   "profile": {
     "title": "Perfil",
     "totalCounts": "Conteo total",
+    "topicCount": "Conteo de {{topic}}",
     "editProfile": "Editar perfil",
     "reminders": "Recordatorios",
     "language": "Idioma",
@@ -191,6 +213,7 @@
       "username": "Nombre de usuario",
       "language": "Idioma seleccionado",
       "counter": "Contador actual",
+      "topics": "Topics de contador con nombre",
       "history": "Historial de actividad del contador",
       "reminders": "Configuración de recordatorios",
       "notificationIds": "Identificadores de notificaciones programadas",
@@ -222,7 +245,7 @@
     },
     "advertising": {
       "title": "Publicidad",
-      "body": "Foxiem usa Google Mobile Ads para mostrar banners en pantallas seleccionadas. Google y el SDK publicitario pueden procesar información del dispositivo y relacionada con anuncios para entrega, medición, prevención de fraude y — según tus opciones — personalización. Foxiem no envía tu nombre, usuario, contador, historial o recordatorios a AdMob como datos de segmentación."
+      "body": "Foxiem usa Google Mobile Ads para mostrar banners en pantallas seleccionadas. Google y el SDK publicitario pueden procesar información del dispositivo y relacionada con anuncios para entrega, medición, prevención de fraude y — según tus opciones — personalización. Foxiem también envía eventos anónimos de medición publicitaria, como configuración completada y primer recuento, a Google Analytics for Firebase. Foxiem no envía tu nombre, usuario, contador, historial o recordatorios a AdMob como datos de segmentación."
     },
     "adChoices": "Opciones de privacidad",
     "adChoicesUnavailable": "Las opciones de privacidad no están disponibles ahora."

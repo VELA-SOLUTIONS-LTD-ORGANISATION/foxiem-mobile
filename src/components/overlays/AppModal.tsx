@@ -17,9 +17,13 @@ export function AppModal({ visible, onClose, children }: AppModalProps) {
   const insets = useSafeAreaInsets();
   const { height, horizontalPadding } = useResponsiveLayout();
 
+  if (!visible) {
+    return null;
+  }
+
   return (
     <Modal
-      visible={visible}
+      visible
       transparent
       statusBarTranslucent
       presentationStyle="overFullScreen"

@@ -146,9 +146,9 @@ Record for each platform:
 - If either platform fails → do not submit the other platform to a store
 - Fix credentials/config, then re-run manual dispatch
 
-## AdMob note (non-blocking for binary build)
+## AdMob note
 
-Native plugin currently uses Google **sample App IDs** so the SDK can initialize. Production banner unit IDs are empty (fail closed). Real AdMob App/Unit IDs are required before monetized store release — not invented here.
+Production Foxiem AdMob App IDs and banner units are configured in `app.json` + `src/ads/adConfig.ts` (see `docs/ADMOB_SETUP.md`). `__DEV__` uses Google test banners; Expo Go fail-closes without the native module.
 
 Android EAS builds use `react-native-google-mobile-ads@16.3.4` (Play Services Ads **25.0.0**). Newer 16.4+/16.5 pull Ads 25.4.0 which requires Kotlin metadata 2.3.0 while Expo SDK 57 library modules still compile with Kotlin 2.1.x.
 

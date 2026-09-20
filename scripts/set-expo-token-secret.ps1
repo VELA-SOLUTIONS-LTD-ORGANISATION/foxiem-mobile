@@ -1,4 +1,4 @@
-# Sets GitHub Actions secret EXPO_TOKEN from a local file (never prints the token).
+﻿# Sets GitHub Actions secret EXPO_TOKEN from a local file (never prints the token).
 # Usage:
 #   1. Create an Expo access token at:
 #      https://expo.dev/accounts/vela-solution-ltd/settings/access-tokens
@@ -7,8 +7,7 @@
 
 $ErrorActionPreference = 'Stop'
 $repo = 'solutionvela/foxiem-mobile'
-$tokenFile = Join-Path $PSScriptRoot '..' '.expo-token'
-$tokenFile = [System.IO.Path]::GetFullPath($tokenFile)
+$tokenFile = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\.expo-token'))
 
 if (-not (Test-Path $tokenFile)) {
   Write-Host "Missing $tokenFile"
@@ -17,8 +16,12 @@ if (-not (Test-Path $tokenFile)) {
 }
 
 $raw = (Get-Content -Raw $tokenFile).Trim()
-if ($raw.Length -lt 20) {
-  Write-Host "Token file looks empty or too short."
+if ($raw.Length -lt 20 -or $raw.Length -gt 500) {
+  Write-Host "Token file length looks wrong ($($raw.Length)). Expected a short access token."
+  exit 1
+}
+if ($raw -match '\s') {
+  Write-Host "Token file must be a single line with no whitespace."
   exit 1
 }
 

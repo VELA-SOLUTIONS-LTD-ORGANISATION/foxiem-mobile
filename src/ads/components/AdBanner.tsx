@@ -9,13 +9,14 @@ import { getGoogleMobileAds, isGoogleMobileAdsNativeAvailable } from '../nativeA
 
 type AdBannerProps = {
   placement: BannerPlacement;
+  compact?: boolean;
 };
 
 /**
  * Inline adaptive banner slot. Renders nothing until consent + SDK allow requests.
  * On failure / Expo Go / missing native module, collapses with no error UI.
  */
-export function AdBanner({ placement }: AdBannerProps) {
+export function AdBanner({ placement, compact = false }: AdBannerProps) {
   const { canRequestAds, adsReady } = useAds();
   const { width: windowWidth } = useWindowDimensions();
   const [failed, setFailed] = useState(false);
@@ -58,12 +59,18 @@ export function AdBanner({ placement }: AdBannerProps) {
   const { BannerAd, BannerAdSize } = gma;
 
   return (
-    <View style={[styles.slot, loadedHeight != null ? { minHeight: loadedHeight } : null]}>
+    <View
+      style={[
+        styles.slot,
+        compact && styles.slotCompact,
+        loadedHeight != null ? { minHeight: loadedHeight } : null,
+      ]}
+    >
       <BannerAd
         unitId={unitId}
         size={BannerAdSize.INLINE_ADAPTIVE_BANNER}
         width={bannerWidth}
-        maxHeight={120}
+        maxHeight={compact ? 80 : 120}
         onAdLoaded={onAdLoaded}
         onAdFailedToLoad={onAdFailedToLoad}
       />
@@ -80,5 +87,11 @@ const styles = StyleSheet.create({
     paddingTop: space[4],
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.border,
+  },
+  slotCompact: {
+    marginTop: space[2],
+    marginBottom: space[2],
+    paddingTop: 0,
+    borderTopWidth: 0,
   },
 });

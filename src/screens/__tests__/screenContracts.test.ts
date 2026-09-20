@@ -80,6 +80,46 @@ describe('navigation and screen contracts', () => {
     expect(privacy).toContain('privacyOptionsRequired');
   });
 
+  it('Home keeps counter chrome, top banner, and no debug gear', () => {
+    const home = fs.readFileSync(path.join(root, 'screens', 'home', 'HomeScreen.tsx'), 'utf8');
+    const switcher = fs.readFileSync(path.join(root, 'screens', 'home', 'TopicSwitcher.tsx'), 'utf8');
+    const workspace = fs.readFileSync(
+      path.join(root, 'components', 'topics', 'TopicWorkspace.tsx'),
+      'utf8',
+    );
+    expect(home).toContain('TopicSwitcher');
+    expect(home).toContain('ProgressRing');
+    expect(home).toContain('FOXIEM_HOME_IMAGE');
+    expect(home).toContain("t('home.addOne')");
+    expect(home).toContain("t('home.resetTopicTitle'");
+    expect(home).toContain('AdBanner placement="home"');
+    expect(home).not.toMatch(/settings-outline|cog|debug/i);
+    expect(switcher).not.toMatch(/settings-outline|cog|debug/i);
+    expect(switcher).toContain('TopicWorkspace');
+    expect(workspace).toContain('HomeTopicSwitcher');
+  });
+
+  it('topic-dependent screens share one global TopicWorkspace', () => {
+    const statistics = fs.readFileSync(path.join(root, 'screens', 'statistics', 'StatisticsScreen.tsx'), 'utf8');
+    const history = fs.readFileSync(
+      path.join(root, 'screens', 'statistics', 'ActivityHistoryScreen.tsx'),
+      'utf8',
+    );
+    const consistency = fs.readFileSync(
+      path.join(root, 'screens', 'statistics', 'ConsistencyScreen.tsx'),
+      'utf8',
+    );
+
+    for (const source of [statistics, history, consistency]) {
+      expect(source).toContain('TopicWorkspace');
+      expect(source).toContain('variant="compact"');
+      expect(source).not.toContain('localActiveTopicId');
+      expect(source).toContain('activeTopicId');
+    }
+
+    expect(statistics).toContain("t('statistics.subtitle')");
+  });
+
   it('Language screen lists six supported languages', () => {
     const languages = fs.readFileSync(path.join(root, 'i18n', 'languages.ts'), 'utf8');
     expect(languages).toContain("'en'");

@@ -105,4 +105,4 @@ Verify on native builds at widths **320 / 360 / 375 / 390 / 414 / 430 / 480**:
 | No huge empty reserved block when unloaded | ☐ | ☐ |
 | Empty history remains ad-free | n/a | ☐ |
 
-Home must remain completely ad-free at every width.
+Home may show a compact top banner. It must not overlap the counter or `+1` at any width.

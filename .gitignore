@@ -48,6 +48,13 @@ yarn-error.*
 /ios
 /android
 
+# local store binaries (do not commit AABs)
+store/android-builds/
+
 # local EAS log scratch
 .expo-build-check/
 eas-build-*.txt
+
+# local one-shot helpers
+scripts/_token_receiver_once.py
+

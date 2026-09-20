@@ -10,8 +10,9 @@ In Expo Go the app still launches: ads detect the missing native module and stay
 
 - Centralized config: `src/ads/adConfig.ts`
 - Consent (UMP): `src/ads/consent.ts` + `AdsProvider`
-- Banner UI: `AdBanner` on **Statistics** and **Activity History** only
-- Home, Profile, Reminders, Privacy, About, Consistency remain **ad-free**
+- Banner UI: `AdBanner` on **Home** (top, compact), **Statistics**, and **Activity History**
+- Profile, Reminders, Privacy, About, Consistency remain **ad-free**
+- Home banner sits under the greeting, above the topic row / counter / `+1` so it does not overlap the primary action
 - Development (`__DEV__`) always uses official Google test banner ID
 - Production uses platform-specific Foxiem banner units
 - Expo plugin App IDs are **real Foxiem AdMob App IDs** (native rebuild required after change)
@@ -49,6 +50,16 @@ Developer website in store listings: `https://foxiem.com`
 ## Privacy Policy
 
 In-app: `EXTERNAL_LINKS.privacyPolicy` → `https://foxiem.com/privacy`
+
+## Firebase Analytics (Ads measurement)
+
+Project **foxiem-counter** is linked for Google Ads quality bidding only.
+
+- Android config: `google-services.json` (`co.uk.solutionvela.foxiem`)
+- iOS config: `GoogleService-Info.plist` (`co.uk.solutionvela.foxiem`)
+- Plugins: `@react-native-firebase/app` + `@react-native-firebase/analytics` via `app.config.ts`
+- Conversion events: `onboarding_complete`, `first_count` (PII-free; no name, notes, or count values)
+- Native events require an EAS rebuild after these files / plugins change
 
 ## ATT
 

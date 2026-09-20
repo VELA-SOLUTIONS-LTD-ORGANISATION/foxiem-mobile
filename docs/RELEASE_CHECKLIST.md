@@ -27,7 +27,7 @@ Use before a store-facing build. Stage 14 AdMob items are included.
 - [ ] iOS test ads verified on a development build
 - [ ] Android test ads verified on a development build
 - [ ] Production / release build does **not** use `TestIds.BANNER`
-- [ ] Home remains ad-free
+- [ ] Home top banner does not overlap the `+1` action
 - [ ] No accidental-click layout (ads away from +1/+5/−1, tabs, forms)
 - [ ] No interstitial / app-open / rewarded ads shipped
 

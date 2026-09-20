@@ -15,6 +15,7 @@ import {
   WeekConsistency,
   getWeekDayAccessibilityLabel,
 } from '@/components';
+import { TopicWorkspace } from '@/components/topics/TopicWorkspace';
 import type { MainTabScreenProps } from '@/navigation/types';
 import { useAppState } from '@/state';
 import { colors, radius, shadows, space } from '@/theme';
@@ -103,9 +104,9 @@ type Props = MainTabScreenProps<'StatisticsTab'>;
 
 export function StatisticsScreen({ navigation }: Props) {
   const { t, i18n } = useTranslation();
-  const { counter, counterEvents } = useAppState();
+  const { counter, counterEvents, activeTopicId } = useAppState();
   const [period, setPeriod] = useState<Period>('week');
-  const referenceDate = useMemo(() => new Date(), [counterEvents]);
+  const referenceDate = useMemo(() => new Date(), [activeTopicId, counterEvents]);
 
   const periodOptions = useMemo(
     () =>
@@ -120,15 +121,15 @@ export function StatisticsScreen({ navigation }: Props) {
 
   const todayActivity = useMemo(
     () => getTodayActivity(counterEvents, referenceDate),
-    [counterEvents, referenceDate],
+    [activeTopicId, counterEvents, referenceDate],
   );
   const weekActivity = useMemo(
     () => getWeekActivity(counterEvents, referenceDate),
-    [counterEvents, referenceDate],
+    [activeTopicId, counterEvents, referenceDate],
   );
   const monthActivity = useMemo(
     () => getMonthActivity(counterEvents, referenceDate),
-    [counterEvents, referenceDate],
+    [activeTopicId, counterEvents, referenceDate],
   );
 
   const chartData = useMemo<ChartItem[]>(() => {
@@ -146,7 +147,7 @@ export function StatisticsScreen({ navigation }: Props) {
       label: labelForBucket(period, bucket, t),
       value: bucket.value,
     }));
-  }, [counterEvents, period, referenceDate, t]);
+  }, [activeTopicId, counterEvents, period, referenceDate, t]);
 
   const chartScale = useMemo(() => {
     const maxPositive = Math.max(0, ...chartData.map((item) => item.value));
@@ -159,7 +160,7 @@ export function StatisticsScreen({ navigation }: Props) {
 
   const consistency = useMemo(
     () => getConsistencySummary(counterEvents, referenceDate),
-    [counterEvents, referenceDate],
+    [activeTopicId, counterEvents, referenceDate],
   );
 
   const weekConsistencyDays = useMemo(
@@ -239,6 +240,8 @@ export function StatisticsScreen({ navigation }: Props) {
           showBack={false}
           align="center"
         />
+
+        <TopicWorkspace variant="compact" />
 
         <SegmentedControl options={[...periodOptions]} value={period} onChange={setPeriod} />
 

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AdBanner } from '@/ads';
 import { AppHeader, AppText, Card, EmptyState, Screen } from '@/components';
+import { TopicWorkspace } from '@/components/topics/TopicWorkspace';
 import { useAppState, type CounterEvent, type CounterEventType } from '@/state';
 import { colors, radius, space } from '@/theme';
 import {
@@ -17,8 +18,8 @@ import { formatLocaleNumber } from '@/utils/number';
 
 export function ActivityHistoryScreen() {
   const { t, i18n } = useTranslation();
-  const { counterEvents } = useAppState();
-  const referenceDate = useMemo(() => new Date(), [counterEvents, i18n.language]);
+  const { counterEvents, activeTopicId } = useAppState();
+  const referenceDate = useMemo(() => new Date(), [activeTopicId, counterEvents, i18n.language]);
 
   const sections = useMemo(
     () =>
@@ -31,7 +32,7 @@ export function ActivityHistoryScreen() {
               ? t('activity.yesterday')
               : formatHistoryDate(section.date, referenceDate, i18n.language),
       })),
-    [counterEvents, i18n.language, referenceDate, t],
+    [activeTopicId, counterEvents, i18n.language, referenceDate, t],
   );
 
   return (
@@ -42,7 +43,8 @@ export function ActivityHistoryScreen() {
       contentStyle={styles.screenFill}
     >
       <View style={styles.container}>
-        <AppHeader title={t('activity.title')} subtitle={t('activity.subtitle')} align="center" />
+        <AppHeader title={t('activity.title')} align="center" />
+        <TopicWorkspace variant="compact" />
         <SectionList
           style={styles.list}
           sections={sections}

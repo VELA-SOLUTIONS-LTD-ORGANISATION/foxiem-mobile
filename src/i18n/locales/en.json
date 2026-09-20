@@ -30,7 +30,28 @@
     "wavingHand": "Waving hand",
     "mascotAlt": "Foxiem fox mascot surrounded by leaves",
     "resetCounterTitle": "Reset counter?",
-    "resetCounterMessage": "Your current count will return to zero."
+    "resetCounterMessage": "Your current count will return to zero.",
+    "resetTopicTitle": "Reset {{topic}}?",
+    "resetTopicMessage": "Only {{topic}} will return to zero. Other topics stay as they are."
+  },
+  "topics": {
+    "title": "Topics",
+    "topic": "Topic",
+    "defaultName": "General",
+    "add": "Add topic",
+    "new": "New topic",
+    "name": "Topic name",
+    "create": "Create",
+    "rename": "Rename topic",
+    "renameA11y": "Rename {{topic}}",
+    "select": "Select topic",
+    "selectA11y": "Select topic, currently {{topic}}",
+    "activeTopic": "Active topic",
+    "alreadyExists": "That topic name is already in use.",
+    "nameRequired": "Enter a topic name.",
+    "nameTooLong": "Topic name must be 40 characters or fewer.",
+    "reservedName": "Choose a different name than General.",
+    "limitReached": "You can have up to 20 topics."
   },
   "statistics": {
     "title": "Statistics",
@@ -147,6 +168,7 @@
   "profile": {
     "title": "Profile",
     "totalCounts": "Total Counts",
+    "topicCount": "{{topic}} count",
     "editProfile": "Edit Profile",
     "reminders": "Reminders",
     "language": "Language",
@@ -191,6 +213,7 @@
       "username": "Username",
       "language": "Selected language",
       "counter": "Current counter",
+      "topics": "Named counter topics",
       "history": "Counter activity history",
       "reminders": "Reminder configuration",
       "notificationIds": "Notification schedule identifiers",
@@ -222,7 +245,7 @@
     },
     "advertising": {
       "title": "Advertising",
-      "body": "Foxiem uses Google Mobile Ads to show banner ads on selected screens. Google and the advertising SDK may process device and ad-related information for ad delivery, measurement, fraud prevention, and — where allowed by your choices — personalization. Foxiem does not send your name, username, counter, history or reminders to AdMob as targeting data."
+      "body": "Foxiem uses Google Mobile Ads to show banner ads on selected screens. Google and the advertising SDK may process device and ad-related information for ad delivery, measurement, fraud prevention, and — where allowed by your choices — personalization. Foxiem also sends anonymous ads measurement events such as setup complete and first count to Google Analytics for Firebase. Foxiem does not send your name, username, counter, history or reminders to AdMob as targeting data."
     },
     "adChoices": "Privacy choices",
     "adChoicesUnavailable": "Privacy choices are unavailable right now."

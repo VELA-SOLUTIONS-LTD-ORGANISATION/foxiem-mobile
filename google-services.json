@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1056051741191",
+    "project_id": "foxiem-counter",
+    "storage_bucket": "foxiem-counter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056051741191:android:9deabc7f086be55b2060a2",
+        "android_client_info": {
+          "package_name": "co.uk.solutionvela.foxiem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIVz1dE4SgQ1vkAcisNiR_mqEhPVgxNlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

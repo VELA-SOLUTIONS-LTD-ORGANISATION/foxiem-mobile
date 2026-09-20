@@ -1,0 +1,76 @@
+name: iOS EAS Submit (explicit build)
+
+# Manual-only: upload an existing EAS iOS build to App Store Connect.
+# Does NOT rebuild. Does NOT submit for App Review.
+# Does NOT run on push.
+
+on:
+  workflow_dispatch:
+    inputs:
+      eas_build_id:
+        description: Exact EAS build UUID to submit (never use "latest")
+        required: true
+        type: string
+      confirm_build_5:
+        description: Type exactly "c1b47ad6-4084-4a41-ad79-c37d4698fd38" for the verified 1.0.0 build 5 (or the UUID you intend)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foxiem-mobile-ios-submit
+  cancel-in-progress: false
+
+jobs:
+  ios-submit:
+    name: EAS Submit iOS (explicit ID)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Guard — build ID must match confirmation
+        run: |
+          if [ "${{ inputs.eas_build_id }}" != "${{ inputs.confirm_build_5 }}" ]; then
+            echo "eas_build_id and confirm_build_5 must be identical."
+            exit 1
+          fi
+          echo "Submitting EAS build ${{ inputs.eas_build_id }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify EXPO_TOKEN
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "EXPO_TOKEN GitHub secret is missing."
+            exit 1
+          fi
+          echo "EXPO_TOKEN is configured."
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          packager: npm
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Submit existing iOS build to App Store Connect
+        run: >
+          eas submit
+          --platform ios
+          --id "${{ inputs.eas_build_id }}"
+          --profile production
+          --non-interactive
+          --wait

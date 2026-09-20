@@ -12,6 +12,7 @@ import {
   WeekConsistency,
   getWeekDayAccessibilityLabel,
 } from '@/components';
+import { TopicWorkspace } from '@/components/topics/TopicWorkspace';
 import { useAppState } from '@/state';
 import { colors, radius, space } from '@/theme';
 import { getConsistencySummary } from '@/utils/consistency';
@@ -28,11 +29,11 @@ const WEEKDAY_LABEL_KEYS = {
 
 export function ConsistencyScreen() {
   const { t, i18n } = useTranslation();
-  const { counterEvents } = useAppState();
-  const referenceDate = useMemo(() => new Date(), [counterEvents, i18n.language]);
+  const { counterEvents, activeTopicId } = useAppState();
+  const referenceDate = useMemo(() => new Date(), [activeTopicId, counterEvents, i18n.language]);
   const summary = useMemo(
     () => getConsistencySummary(counterEvents, referenceDate),
-    [counterEvents, referenceDate],
+    [activeTopicId, counterEvents, referenceDate],
   );
 
   const weekDays = useMemo(
@@ -61,7 +62,8 @@ export function ConsistencyScreen() {
       maxWidth={520}
       backgroundColor={colors.background}
     >
-      <AppHeader title={t('consistency.title')} subtitle={t('consistency.subtitle')} align="center" />
+      <AppHeader title={t('consistency.title')} align="center" />
+      <TopicWorkspace variant="compact" />
 
       <View
         style={styles.block}

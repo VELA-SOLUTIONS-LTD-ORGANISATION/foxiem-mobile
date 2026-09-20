@@ -151,7 +151,7 @@ describe('createLatestWinsPersistQueue', () => {
     const writes: number[] = [];
     let releaseFirst: (() => void) | undefined;
 
-    const queue = createLatestWinsPersistQueue(async (snapshot) => {
+    const queue = createLatestWinsPersistQueue<CounterSnapshot>(async (snapshot) => {
       const count = snapshot.counter.currentCount;
       if (count === 1) {
         await new Promise<void>((resolve) => {

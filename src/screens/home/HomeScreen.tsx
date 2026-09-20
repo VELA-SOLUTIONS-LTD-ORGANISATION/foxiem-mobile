@@ -3,13 +3,17 @@ import { useMemo, useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { AdBanner } from '@/ads';
 import { AppText, ConfirmDialog, ProgressRing, Screen } from '@/components';
 import { FOXIEM_HOME_IMAGE, FOXIEM_LOGO, FOXIEM_PLUS_BUTTON } from '@/constants/brand';
 import { useResponsiveLayout } from '@/hooks';
 import type { MainTabScreenProps } from '@/navigation/types';
 import { useAppState } from '@/state';
+import { getTopicDisplayName } from '@/state/topics';
 import { colors, fontFamily, radius, shadows, sizes, space } from '@/theme';
 import { formatLocaleNumber } from '@/utils/number';
+
+import { TopicSwitcher } from './TopicSwitcher';
 
 const DEMO_GOAL = 300;
 const HOME_MAX_WIDTH = 520;
@@ -36,7 +40,9 @@ function greetingKey(): 'home.goodMorning' | 'home.goodAfternoon' | 'home.goodEv
 
 export function HomeScreen({ navigation }: Props) {
   const { t, i18n } = useTranslation();
-  const { profile, counter, incrementCounter, decrementCounter, resetCounter } = useAppState();
+  const { profile, counter, activeTopic, activeTopicId, incrementCounter, decrementCounter, resetCounter } =
+    useAppState();
+  const activeTopicName = getTopicDisplayName(activeTopic, (key) => t(key));
   const { isCompact, isLargePhone, height, width, horizontalPadding } = useResponsiveLayout();
   const isVeryShort = height < 560;
   const isShort = height < 700;
@@ -50,7 +56,7 @@ export function HomeScreen({ navigation }: Props) {
     }
 
     return Math.min(count / DEMO_GOAL, 1);
-  }, [count]);
+  }, [activeTopicId, count]);
 
   const contentWidth = Math.min(HOME_MAX_WIDTH, width) - horizontalPadding * 2;
   const ringSize = isVeryShort ? 200 : isCompact || isShort ? 236 : isLargePhone ? 280 : 260;
@@ -112,7 +118,10 @@ export function HomeScreen({ navigation }: Props) {
           </View>
         </View>
 
+        <AdBanner placement="home" compact />
+
         <View style={[styles.stage, { gap: stageGap }]}>
+          <TopicSwitcher />
           <View style={styles.counterSection}>
             <ProgressRing
               progress={progress}
@@ -124,7 +133,7 @@ export function HomeScreen({ navigation }: Props) {
                 style={styles.counterContent}
                 accessible
                 accessibilityRole="text"
-                accessibilityLabel={`${t('home.totalCount')}, ${formatLocaleNumber(count, i18n.language)}`}
+                accessibilityLabel={`${activeTopicName}, ${t('home.totalCount')}, ${formatLocaleNumber(count, i18n.language)}`}
               >
                 <AppText
                   variant="displayNumber"
@@ -205,8 +214,8 @@ export function HomeScreen({ navigation }: Props) {
 
       <ConfirmDialog
         visible={resetVisible}
-        title={t('home.resetCounterTitle')}
-        message={t('home.resetCounterMessage')}
+        title={t('home.resetTopicTitle', { topic: activeTopicName })}
+        message={t('home.resetTopicMessage', { topic: activeTopicName })}
         confirmLabel={t('home.resetCounter')}
         cancelLabel={t('common.cancel')}
         variant="destructive"

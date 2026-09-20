@@ -1,6 +1,7 @@
 import { createLocalId } from '@/utils/id';
 
-import type { CounterEvent, CounterState } from './types';
+import { eventsForTopic, orderTopics, resolveActiveTopicId, DEFAULT_TOPIC_ID } from './topics';
+import type { CounterDomainSnapshot, CounterEvent, CounterState } from './types';
 
 export type CounterAction =
   | { type: 'increment'; amount: number }
@@ -19,9 +20,11 @@ export function createCounterEvent(
   newValue: number,
   createdAt: string = new Date().toISOString(),
   id: string = createLocalId(),
+  topicId: string = DEFAULT_TOPIC_ID,
 ): CounterEvent {
   return {
     id,
+    topicId,
     type,
     amount,
     previousValue,
@@ -38,6 +41,7 @@ export function applyCounterAction(
   snapshot: CounterSnapshot,
   action: CounterAction,
   createdAt: string = new Date().toISOString(),
+  topicId: string = DEFAULT_TOPIC_ID,
 ): CounterSnapshot | null {
   const previousValue = snapshot.counter.currentCount;
 
@@ -52,7 +56,7 @@ export function applyCounterAction(
       counter: { currentCount: newValue },
       events: [
         ...snapshot.events,
-        createCounterEvent('increment', delta, previousValue, newValue, createdAt),
+        createCounterEvent('increment', delta, previousValue, newValue, createdAt, createLocalId(), topicId),
       ],
     };
   }
@@ -78,6 +82,8 @@ export function applyCounterAction(
           previousValue,
           newValue,
           createdAt,
+          createLocalId(),
+          topicId,
         ),
       ],
     };
@@ -89,7 +95,46 @@ export function applyCounterAction(
 
   return {
     counter: { currentCount: 0 },
-    events: [...snapshot.events, createCounterEvent('reset', 0, previousValue, 0, createdAt)],
+    events: [
+      ...snapshot.events,
+      createCounterEvent('reset', 0, previousValue, 0, createdAt, createLocalId(), topicId),
+    ],
+  };
+}
+
+export function applyActionToDomain(
+  domain: CounterDomainSnapshot,
+  topicId: string,
+  action: CounterAction,
+  createdAt: string = new Date().toISOString(),
+): CounterDomainSnapshot | null {
+  const target = domain.topics.find((topic) => topic.id === topicId);
+  if (!target) {
+    return null;
+  }
+
+  const next = applyCounterAction(
+    { counter: { currentCount: target.currentCount }, events: eventsForTopic(domain.events, target.id) },
+    action,
+    createdAt,
+    target.id,
+  );
+  if (!next) {
+    return null;
+  }
+
+  const now = createdAt;
+  return {
+    schemaVersion: domain.schemaVersion,
+    activeTopicId: resolveActiveTopicId(domain.topics, domain.activeTopicId),
+    topics: orderTopics(
+      domain.topics.map((topic) =>
+        topic.id === target.id
+          ? { ...topic, currentCount: next.counter.currentCount, updatedAt: now }
+          : topic,
+      ),
+    ),
+    events: [...domain.events.filter((event) => event.topicId !== target.id), ...next.events],
   };
 }
 
@@ -108,24 +153,19 @@ export function assertEventInvariants(events: readonly CounterEvent[]): void {
   }
 }
 
-export type PersistSnapshot = {
-  counter: CounterState;
-  events: CounterEvent[];
-};
-
 /**
  * Latest-wins serialized persist queue matching AppStateProvider behaviour.
  */
-export function createLatestWinsPersistQueue(
-  write: (snapshot: PersistSnapshot) => Promise<void>,
+export function createLatestWinsPersistQueue<T>(
+  write: (snapshot: T) => Promise<void>,
 ): {
-  enqueue: (snapshot: PersistSnapshot) => void;
+  enqueue: (snapshot: T) => void;
   flush: () => Promise<void>;
 } {
-  let pending: PersistSnapshot | null = null;
+  let pending: T | null = null;
   let tail: Promise<void> = Promise.resolve();
 
-  const enqueue = (snapshot: PersistSnapshot) => {
+  const enqueue = (snapshot: T) => {
     pending = snapshot;
     tail = tail
       .then(async () => {

@@ -1,8 +1,8 @@
 import { Platform } from 'react-native';
 
 /**
- * Official Google sample App IDs for development / pre-production native builds.
- * Replace with real Foxiem AdMob App IDs before monetized store release.
+ * Official Google sample App IDs (reference / detection helpers only).
+ * Shipping App IDs live in `app.json` → `react-native-google-mobile-ads` plugin.
  * @see https://developers.google.com/admob/android/quick-start
  * @see https://developers.google.com/admob/ios/quick-start
  */
@@ -19,11 +19,12 @@ export const GOOGLE_SAMPLE_APP_IDS = {
  */
 export const GOOGLE_TEST_BANNER_UNIT_ID = 'ca-app-pub-3940256099942544/6300978111';
 
-export type BannerPlacement = 'statistics' | 'activityHistory';
+export type BannerPlacement = 'statistics' | 'activityHistory' | 'home';
 
 type PlatformBannerUnits = {
   statistics: string;
   activityHistory: string;
+  home: string;
 };
 
 /**
@@ -37,10 +38,13 @@ export const PRODUCTION_BANNER_UNITS: {
   ios: {
     statistics: 'ca-app-pub-3249455013386377/4723929748',
     activityHistory: 'ca-app-pub-3249455013386377/3370098436',
+    // Dedicated Home unit not created yet — reuse Statistics banner, never invent IDs.
+    home: 'ca-app-pub-3249455013386377/4723929748',
   },
   android: {
     statistics: 'ca-app-pub-3249455013386377/8663174751',
     activityHistory: 'ca-app-pub-3249455013386377/4815042040',
+    home: 'ca-app-pub-3249455013386377/8663174751',
   },
 };
 
@@ -77,8 +81,10 @@ export function hasProductionBannerUnitsConfigured(): boolean {
   const all = [
     PRODUCTION_BANNER_UNITS.ios.statistics,
     PRODUCTION_BANNER_UNITS.ios.activityHistory,
+    PRODUCTION_BANNER_UNITS.ios.home,
     PRODUCTION_BANNER_UNITS.android.statistics,
     PRODUCTION_BANNER_UNITS.android.activityHistory,
+    PRODUCTION_BANNER_UNITS.android.home,
   ];
   return all.every((id) => id.trim().length > 0);
 }

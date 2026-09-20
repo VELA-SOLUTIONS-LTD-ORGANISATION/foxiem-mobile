@@ -1,52 +1,52 @@
 # Owner actions required (release gates)
 
-## Apple — IOS BINARY UPLOADED — TESTFLIGHT QA PENDING
+## Apple — WAITING FOR REVIEW (build 6)
 
-### 1) TestFlight device QA (blocking)
+### Current
 
-Install **Foxiem 1.0.0 (5)** from TestFlight (group **Foxiem Internal**) → exercise Home / Statistics / Profile, reminders, ads paths → reply with QA notes.
+- Version **1.0.0** is **Waiting for Review** with monetized **build 6** (commit `1d1bbf7`, real AdMob IDs).
+- Build **5** was removed from the version and must **not** ship as the public final.
+- Release mode: **Manually release this version**.
 
-### 2) Review phone (if still prompted)
+### Optional owner
 
-ASC may still ask for App Review **phone** (`+` country code) when you Add for Review.
+- Install build **6** from TestFlight (group **Foxiem Internal**) for smoke QA (Home ad-free; Statistics/History banners; consent). Do **not** click live production ads.
+- Watch ASC until Approved → then manually release when ready.
 
 ### Already done (Apple)
 
 - Support URL: `https://foxiem.com/privacy`
-- App Privacy responses **Published**
-- Privacy Policy URL, Age Ratings **4+**, screenshots (iPhone×3 + iPad×3), build **5**
-
-Optional later: set `VITE_SUPPORT_EMAIL` on foxiem-web and point Support URL at a dedicated contact page.
-
-**Stop:** Do **not** click **Add for Review** until device QA is done (or you explicitly authorize submission).
+- App Privacy published; Age Ratings; screenshots
+- Review contact filled
+- Build 5 removed from review → replaced with build 6 → submitted
 
 ---
 
-## Android — ANDROID RELEASE PREPARATION PENDING
+## Android — PRODUCTION PENDING (vc8 Internal + Closed review)
 
 See `docs/ANDROID_RELEASE.md`.
 
-Internal testing is **active** for **1.0.0 / versionCode 7**. Store listing graphics + locales are uploaded. Official `app-ads.txt` is live. Production remains **INACTIVE**. Do **not** rebuild / re-submit AAB / promote to Production.
+| Item | Status |
+|------|--------|
+| Monetized build | **1.0.0 / versionCode 8** (`50a62f42-…`, commit `1d1bbf7`) |
+| Internal testing | **Active** (bundle 8) |
+| Closed Alpha | **Changes in review** (Publishing overview) |
+| Production | **INACTIVE** |
+| vc7 | Superseded — do **not** promote |
 
-### Remaining (blocking for “READY FOR PRODUCTION ROLLOUT”)
+### Remaining
 
-1. Exact Play **versionCode 7** Internal Testing smoke on a working Google Play device (local emulator path abandoned; no physical device on hand), **or** explicitly accept that gap before rollout.
-2. Optional: Firebase Test Lab Robo with `~\.credentials\foxiem-vc7-TEST-LAB-QA-BUILD.apk` (same-source extract from Play AAB; not a store upload).
-3. Pre-launch report still **NOT GENERATED** by Google — do not rebuild solely to force it.
-4. AdMob crawl may stay **PENDING** for up to ~24h–7d — does not block Play publish by itself.
-5. **Do not** production rollout until you explicitly authorize it.
+1. Wait for Play review of Closed Alpha / store content (or accept residual Internal-only risk).
+2. Optional: Firebase Test Lab Robo with `~\.credentials\foxiem-vc8-TEST-LAB-QA-BUILD.apk`.
+3. Promote **only versionCode 8** to Production when gates pass.
+4. Pre-launch may still be NOT GENERATED — do not invent results.
 
 ### Already done (Android)
 
-- App created (`co.uk.solutionvela.foxiem`)
-- Privacy / ads (“Contains ads”) / ratings / data safety / audience
-- Store settings Productivity + contact + website
-- en-GB + tr/de/fr/es/it listing copy; icon, feature, phone + tablet screenshots
-- Internal testing activated (testers + opt-in link available in Console)
-- External / open testing skipped
-- Play submit SA permissions on Foxiem (`expo-upload@baby-namer-vela…`)
-- EAS Google Play Service Credential configured
-- EAS Submit of build `aaea7ba8-6195-475a-aaaf-c34e0199a3e9` → submission `a730ee6f-b9da-48b8-bf44-597d9481e7b2`
-- Manual GitHub workflow `.github/workflows/android-submit.yml`
+- Real AdMob App IDs + four banner units in vc8
+- Privacy / ads / ratings / data safety / listings
+- `app-ads.txt` live
+- Internal vc8 activated; Closed Alpha submitted for review
+- Managed publishing currently **off**
 
-**Stop:** Do **not** production **rollout / publish** until you explicitly authorize it.
+**Stop:** Do **not** promote **vc7**. Do **not** claim LIVE until stores show public availability.

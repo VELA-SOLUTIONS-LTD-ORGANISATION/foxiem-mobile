@@ -1,5 +1,11 @@
-export { AppStateProvider, useAppState, type ReminderMutationResult } from './AppStateProvider';
 export {
+  AppStateProvider,
+  useAppState,
+  type ReminderMutationResult,
+  type TopicMutationResult,
+} from './AppStateProvider';
+export {
+  applyActionToDomain,
   applyCounterAction,
   assertEventInvariants,
   createCounterEvent,
@@ -25,11 +31,29 @@ export {
   type RepeatPreset,
 } from './reminders';
 export {
+  COUNTER_SCHEMA_VERSION,
+  DEFAULT_TOPIC_ID,
+  MAX_TOPIC_COUNT,
+  MAX_TOPIC_NAME_LENGTH,
+  TOPIC_MIGRATION_VERSION,
+  createCustomTopic,
+  createDefaultTopic,
+  eventsForTopic,
+  getActiveTopic,
+  getTopicDisplayName,
+  normalizeTopicName,
+  orderTopics,
+  validateTopicName,
+  type TopicNameError,
+} from './topics';
+export {
   DEFAULT_COUNTER,
   DEFAULT_COUNTER_EVENTS,
   type AppPreferences,
+  type CounterDomainSnapshot,
   type CounterEvent,
   type CounterEventType,
   type CounterState,
+  type CounterTopic,
   type UserProfile,
 } from './types';

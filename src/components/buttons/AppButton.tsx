@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/typography/AppText';
-import { colors, radius, sizes, space } from '@/theme';
+import { colors, radius, sizes, space, type ColorToken } from '@/theme';
 
 export type AppButtonVariant = 'primary' | 'dark' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 export type AppButtonSize = 'sm' | 'md';
@@ -17,6 +17,7 @@ type AppButtonProps = {
   fullWidth?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  labelColor?: ColorToken;
 };
 
 export function AppButton({
@@ -29,6 +30,7 @@ export function AppButton({
   fullWidth = true,
   leftIcon,
   rightIcon,
+  labelColor,
 }: AppButtonProps) {
   const isDisabled = disabled || loading;
 
@@ -59,11 +61,8 @@ export function AppButton({
             variant="button"
             align="center"
             color={
-              variant === 'outline' || variant === 'ghost'
-                ? 'primary'
-                : variant === 'secondary'
-                  ? 'textOnPrimary'
-                  : 'textOnPrimary'
+              labelColor ??
+              (variant === 'outline' || variant === 'ghost' ? 'primary' : 'textOnPrimary')
             }
           >
             {title}

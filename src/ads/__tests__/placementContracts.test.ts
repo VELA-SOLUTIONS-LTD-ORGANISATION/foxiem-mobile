@@ -8,8 +8,7 @@ describe('AdMob placement contracts', () => {
     return fs.readFileSync(path.join(root, rel), 'utf8');
   }
 
-  it('Home / Privacy / Reminder screens do not render AdBanner', () => {
-    expect(read('screens/home/HomeScreen.tsx')).not.toContain('AdBanner');
+  it('Privacy / Reminder screens do not render AdBanner', () => {
     expect(read('screens/settings/PrivacySecurityScreen.tsx')).not.toContain('AdBanner');
     expect(read('screens/reminders/RemindersScreen.tsx')).not.toContain('AdBanner');
     expect(read('screens/reminders/ReminderEditorScreen.tsx')).not.toContain('AdBanner');
@@ -18,7 +17,12 @@ describe('AdMob placement contracts', () => {
     expect(read('screens/statistics/ConsistencyScreen.tsx')).not.toContain('AdBanner');
   });
 
-  it('Statistics and Activity History contain approved AdBanner placements', () => {
+  it('Home, Statistics and Activity History contain approved AdBanner placements', () => {
+    const home = read('screens/home/HomeScreen.tsx');
+    expect(home).toContain('AdBanner placement="home"');
+    expect(home).toContain('compact');
+    expect(home.indexOf('AdBanner placement="home"')).toBeLessThan(home.indexOf('<TopicSwitcher'));
+    expect(home.indexOf('AdBanner placement="home"')).toBeLessThan(home.indexOf("t('home.addOne')"));
     expect(read('screens/statistics/StatisticsScreen.tsx')).toContain(
       'AdBanner placement="statistics"',
     );

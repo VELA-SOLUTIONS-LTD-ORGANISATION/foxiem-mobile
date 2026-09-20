@@ -1,3 +1,4 @@
+import { DEFAULT_TOPIC_ID } from '@/state/topics';
 import type { CounterEvent, CounterEventType, CounterState } from '@/state/types';
 import { DEFAULT_COUNTER, DEFAULT_COUNTER_EVENTS } from '@/state/types';
 
@@ -17,7 +18,7 @@ function parseCounterEvent(value: unknown): CounterEvent | null {
     return null;
   }
 
-  const { id, type, amount, previousValue, newValue, createdAt } = value;
+  const { id, type, amount, previousValue, newValue, createdAt, topicId } = value;
   if (
     typeof id !== 'string' ||
     id.length === 0 ||
@@ -36,6 +37,7 @@ function parseCounterEvent(value: unknown): CounterEvent | null {
 
   return {
     id,
+    topicId: typeof topicId === 'string' && topicId.trim().length > 0 ? topicId : DEFAULT_TOPIC_ID,
     type,
     amount,
     previousValue,

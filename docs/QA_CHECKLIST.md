@@ -44,7 +44,8 @@ Manual checks for the current local-first production loop. iOS and Android physi
 - [ ] Statistics shows a test banner after content (not near chart controls / tabs)
 - [ ] Activity History shows a test footer banner only when history is non-empty
 - [ ] Empty Activity History stays ad-free
-- [ ] Home has no banner / interstitial / floating ad
+- [ ] Home top compact banner does not overlap `+1` / counter
+- [ ] Home has no interstitial / floating ad
 - [ ] Profile, Reminders, Language, Privacy, About, Consistency have no ads
 - [ ] Ad load failure collapses slot without error UI
 - [ ] Offline: core app works

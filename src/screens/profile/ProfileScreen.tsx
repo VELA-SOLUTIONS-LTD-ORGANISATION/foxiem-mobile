@@ -8,6 +8,7 @@ import { FOXIEM_LOGO } from '@/constants/brand';
 import { resetToProfileSetup } from '@/navigation/ref';
 import type { MainTabScreenProps } from '@/navigation/types';
 import { useAppState } from '@/state';
+import { getTopicDisplayName } from '@/state/topics';
 import { colors, radius, sizes, space } from '@/theme';
 import { formatLocaleNumber } from '@/utils/number';
 
@@ -15,11 +16,12 @@ type Props = MainTabScreenProps<'ProfileTab'>;
 
 export function ProfileScreen({ navigation }: Props) {
   const { t, i18n } = useTranslation();
-  const { profile, counter, resetAppData } = useAppState();
+  const { profile, counter, activeTopic, resetAppData } = useAppState();
   const [resetVisible, setResetVisible] = useState(false);
 
   const displayName = profile?.name ?? '';
   const displayUsername = profile?.username ? `@${profile.username}` : '';
+  const activeTopicName = getTopicDisplayName(activeTopic, (key) => t(key));
   const totalCount = formatLocaleNumber(counter.currentCount, i18n.language);
 
   return (
@@ -55,7 +57,7 @@ export function ProfileScreen({ navigation }: Props) {
         <Card variant="soft" style={styles.totalCard}>
           <View>
             <AppText variant="caption" color="textSecondary">
-              {t('profile.totalCounts')}
+              {t('profile.topicCount', { topic: activeTopicName })}
             </AppText>
             <AppText variant="h1" style={styles.totalValue}>
               {totalCount}

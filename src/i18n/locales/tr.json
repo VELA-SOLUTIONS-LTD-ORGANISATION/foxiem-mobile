@@ -30,7 +30,28 @@
     "wavingHand": "El sallama",
     "mascotAlt": "Yapraklar arasında Foxiem tilki maskotu",
     "resetCounterTitle": "Sayaç sıfırlansın mı?",
-    "resetCounterMessage": "Mevcut sayınız sıfıra dönecek."
+    "resetCounterMessage": "Mevcut sayınız sıfıra dönecek.",
+    "resetTopicTitle": "{{topic}} sıfırlansın mı?",
+    "resetTopicMessage": "Yalnızca {{topic}} sıfıra döner. Diğer topic’ler aynı kalır."
+  },
+  "topics": {
+    "title": "Topic’ler",
+    "topic": "Topic",
+    "defaultName": "Genel",
+    "add": "Topic ekle",
+    "new": "Yeni topic",
+    "name": "Topic adı",
+    "create": "Oluştur",
+    "rename": "Topic’i yeniden adlandır",
+    "renameA11y": "{{topic}} adını değiştir",
+    "select": "Topic seç",
+    "selectA11y": "Topic seç, şu an {{topic}}",
+    "activeTopic": "Aktif topic",
+    "alreadyExists": "Bu topic adı zaten kullanılıyor.",
+    "nameRequired": "Bir topic adı girin.",
+    "nameTooLong": "Topic adı en fazla 40 karakter olabilir.",
+    "reservedName": "Genel dışında bir ad seçin.",
+    "limitReached": "En fazla 20 topic oluşturabilirsiniz."
   },
   "statistics": {
     "title": "İstatistikler",
@@ -147,6 +168,7 @@
   "profile": {
     "title": "Profil",
     "totalCounts": "Toplam Sayı",
+    "topicCount": "{{topic}} sayısı",
     "editProfile": "Profili Düzenle",
     "reminders": "Hatırlatıcılar",
     "language": "Dil",
@@ -191,6 +213,7 @@
       "username": "Kullanıcı adı",
       "language": "Seçili dil",
       "counter": "Güncel sayaç",
+      "topics": "İsimli sayaç topic’leri",
       "history": "Sayaç hareket geçmişi",
       "reminders": "Hatırlatıcı ayarları",
       "notificationIds": "Bildirim zamanlama kimlikleri",
@@ -222,7 +245,7 @@
     },
     "advertising": {
       "title": "Reklamlar",
-      "body": "Foxiem, seçili ekranlarda banner reklam göstermek için Google Mobile Ads kullanır. Google ve reklam SDK’sı; reklam sunumu, ölçüm, dolandırıcılık önleme ve — seçimlerinizin izin verdiği ölçüde — kişiselleştirme için cihaz ve reklamla ilgili bilgileri işleyebilir. Foxiem adınızı, kullanıcı adınızı, sayacınızı, geçmişinizi veya hatırlatıcılarınızı AdMob’a hedefleme verisi olarak göndermez."
+      "body": "Foxiem, seçili ekranlarda banner reklam göstermek için Google Mobile Ads kullanır. Google ve reklam SDK’sı; reklam sunumu, ölçüm, dolandırıcılık önleme ve — seçimlerinizin izin verdiği ölçüde — kişiselleştirme için cihaz ve reklamla ilgili bilgileri işleyebilir. Foxiem ayrıca kurulum tamamlandı ve ilk sayım gibi anonim reklam ölçüm olaylarını Google Analytics for Firebase’e gönderir. Foxiem adınızı, kullanıcı adınızı, sayacınızı, geçmişinizi veya hatırlatıcılarınızı AdMob’a hedefleme verisi olarak göndermez."
     },
     "adChoices": "Gizlilik seçimleri",
     "adChoicesUnavailable": "Gizlilik seçimleri şu anda kullanılamıyor."

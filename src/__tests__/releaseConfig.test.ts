@@ -55,6 +55,8 @@ describe('architecture regression guards', () => {
       'foxiem.preferences',
       'foxiem.counter',
       'foxiem.history',
+      'foxiem.counterDomain',
+      'foxiem.topicMigrationVersion',
       'foxiem.reminders',
       'foxiem.setupCompleted',
     ]);
@@ -96,19 +98,60 @@ describe('architecture regression guards', () => {
     expect(packageJson.dependencies?.['expo-tracking-transparency']).toBeUndefined();
   });
 
-  it('does not introduce firebase/analytics SDKs or backend base URL', () => {
-    const packageJson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf8'),
-    ) as { dependencies?: Record<string, string>; devDependencies?: Record<string, string> };
+  it('wires Foxiem Firebase Analytics without third-party product analytics or a Foxiem backend', () => {
+    const root = path.join(__dirname, '..', '..');
+    const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')) as {
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+    };
     const deps = {
       ...packageJson.dependencies,
       ...packageJson.devDependencies,
     };
+    expect(deps['@react-native-firebase/app']).toBeTruthy();
+    expect(deps['@react-native-firebase/analytics']).toBeTruthy();
     expect(
-      Object.keys(deps).some((name) =>
-        /firebase|@react-native-firebase|amplitude|sentry|segment/i.test(name),
-      ),
+      Object.keys(deps).some((name) => /amplitude|sentry|segment/i.test(name)),
     ).toBe(false);
+
+    const androidConfig = JSON.parse(
+      fs.readFileSync(path.join(root, 'google-services.json'), 'utf8'),
+    ) as {
+      project_info?: { project_id?: string };
+      client?: Array<{ client_info?: { android_client_info?: { package_name?: string } } }>;
+    };
+    expect(androidConfig.project_info?.project_id).toBe('foxiem-counter');
+    expect(androidConfig.client?.[0]?.client_info?.android_client_info?.package_name).toBe(
+      'co.uk.solutionvela.foxiem',
+    );
+    expect(androidConfig.project_info?.project_id).not.toBe('kara-mood');
+
+    const iosPlist = fs.readFileSync(path.join(root, 'GoogleService-Info.plist'), 'utf8');
+    expect(iosPlist).toContain('<string>foxiem-counter</string>');
+    expect(iosPlist).toContain('<string>co.uk.solutionvela.foxiem</string>');
+    expect(iosPlist).not.toContain('kara-mood');
+    expect(iosPlist).not.toContain('uk.co.solutionvela.kara');
+
+    const appConfig = fs.readFileSync(path.join(root, 'app.config.ts'), 'utf8');
+    expect(appConfig).toContain('@react-native-firebase/app');
+    expect(appConfig).toContain('@react-native-firebase/analytics');
+    expect(appConfig).toContain('disableSPM: true');
+    expect(appConfig).toContain('./google-services.json');
+    expect(appConfig).toContain('./GoogleService-Info.plist');
+
+    const appJson = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8')) as {
+      expo: {
+        plugins: Array<string | [string, Record<string, unknown>?]>;
+      };
+    };
+    const buildProps = appJson.expo.plugins.find(
+      (plugin) => Array.isArray(plugin) && plugin[0] === 'expo-build-properties',
+    );
+    expect(Array.isArray(buildProps)).toBe(true);
+    if (Array.isArray(buildProps)) {
+      const options = buildProps[1] as { ios?: { useFrameworks?: string } };
+      expect(options.ios?.useFrameworks).toBe('static');
+    }
 
     const joined = readSrcFiles()
       .map((file) => fs.readFileSync(file, 'utf8'))

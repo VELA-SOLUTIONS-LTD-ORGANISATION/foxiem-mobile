@@ -1,5 +1,12 @@
 export { readJson, removeKey, resetFoxiemAppData, writeJson } from './appStorage';
 export {
+  createFreshCounterDomain,
+  loadOrMigrateCounterDomain,
+  migrateLegacyToDomain,
+  parseCounterDomain,
+  saveCounterDomain,
+} from './counterDomainStorage';
+export {
   loadCounterEvents,
   loadCounterState,
   parseCounterEvents,

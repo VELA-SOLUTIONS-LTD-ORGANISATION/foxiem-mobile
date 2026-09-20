@@ -69,15 +69,19 @@
 - [x] Ads / Sign-in / Gov / Financial / Health / Advertising ID declarations
 - [x] Target audience 13+; IARC content ratings completed
 - [x] Data safety (AdMob-aligned) completed
-- [x] en-GB short + full description draft in Console (`store/play-listing-copy.md`)
-- [ ] Graphics uploaded (icon / feature / phone / **7"+10" tablet**) — assets in `store/screenshots/`
+- [x] en-GB short + full description in Console (`store/play-listing-copy.md`)
+- [x] Graphics uploaded (icon / feature / phone / **7"+10" tablet**)
 - [x] Store settings category **Productivity** + contact (`solutionvela@gmail.com`) + website
-- [ ] Listing translations tr/de/fr/es/it (`store/play-listing-locales.md`)
+- [x] Listing translations tr/de/fr/es/it (`store/play-listing-locales.md`; shorts ≤80)
+- [x] Internal testing **activated** (testers + Available to internal testers); Production **INACTIVE**
 - [x] External / open testing skipped
 - [x] **STOP before production rollout** unless owner authorizes
-- [x] Status: **ANDROID INTERNAL TESTING SUBMISSION VERIFIED** (Production inactive)
+- [ ] Pre-launch report results (still pending / not generated)
+- [ ] Emulator + Firebase physical-device QA (emulator ADB offline; FTL not run)
+- [ ] `app-ads.txt` real AdMob publisher line (APP-ADS VERIFICATION PENDING)
+- [x] Status: **ANDROID RELEASE PREPARATION PENDING**
 
 ## NEXT
 
 - [ ] Device QA → support URL + review phone → then owner Add for Review (Apple)
-- [ ] Optional: activate Internal Testing (testers + confirm); upload Play graphics/translations; authorize production only when ready
+- [ ] Clear Android Pre-launch + emulator/FTL QA; then authorize production only when ready

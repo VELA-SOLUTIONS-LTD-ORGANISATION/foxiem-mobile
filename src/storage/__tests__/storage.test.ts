@@ -37,6 +37,7 @@ describe('counter storage parsers', () => {
       },
     ]);
     expect(events.map((event) => event.id)).toEqual(['a', 'b']);
+    expect(events.every((event) => event.topicId === 'topic.default')).toBe(true);
   });
 });
 
