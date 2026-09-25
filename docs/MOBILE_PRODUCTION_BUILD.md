@@ -113,7 +113,7 @@ Remote developer versions after verified Actions run: iOS `buildNumber` **5**, A
 
 ## EXPO_TOKEN (GitHub)
 
-**Status (verified):** GitHub Actions secret `EXPO_TOKEN` is configured for `solutionvela/foxiem-mobile`.
+**Status (verified):** GitHub Actions secret `EXPO_TOKEN` is configured for `VELA-SOLUTIONS-LTD-ORGANISATION/foxiem-mobile`.
 
 If the token was ever pasted into chat, rotate it in Expo access tokens and re-run `scripts/set-expo-token-secret.ps1`.
 

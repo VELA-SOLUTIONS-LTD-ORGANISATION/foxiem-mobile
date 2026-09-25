@@ -1,39 +1,55 @@
-# Foxiem — Google Play listing copy (draft)
+# Foxiem — Google Play listing copy
 
-Aligned with Apple `store/listing-copy.md`. Do not invent support emails.
+Sent for review from Publishing overview (managed publishing off). Category is **Tools**. Do not invent support emails.
 
 ## App name (max 30)
 
-Foxiem
+Foxiem: Tally Counter
 
 ## Short description (max 80)
 
-Small counts. Big progress. A calm, local-first counter for daily habits.
+Track habits, reps and daily goals with multiple counters, stats and streaks.
 
 ## Full description
 
-Foxiem is a simple, focused counter designed to help you track small actions, see your progress, and build consistency over time.
+Foxiem is a simple tally counter and daily count tracker with multiple named counters. Count habits, gym reps, reading, attendance, scores, routines and everyday activities, then review your history, statistics and streaks.
 
-Features:
-• Simple counter with +1, +5, and -1
-• Activity history
-• Progress statistics
-• Consistency and streaks
-• Local reminders
-• Multiple languages (English, Türkçe, Deutsch, Français, Español, Italiano)
-• Local-first profile and preferences
+CREATE MULTIPLE COUNTERS
+Give each counter a name and keep different activities separate. Switch between counters from Home, Statistics, History, and Consistency.
 
-Foxiem works without an account. Your profile, counter, history, reminders, and language stay on your device.
+COUNT FAST
+Use +1, +5, or -1 to record progress in seconds. Reset the active counter whenever you want a fresh start.
+
+SEE YOUR PROGRESS
+Review activity history, daily, weekly and monthly statistics, and consistency streaks for the selected counter.
+
+STAY CONSISTENT
+Create local reminders for the days and times that suit your routine.
+
+SIMPLE BY DESIGN
+Foxiem is built to stay out of the way: no account, no complicated setup, and a clean interface focused on counting.
+
+Your Foxiem counter data, history, profile, reminders and preferences are stored on your device. Advertising and analytics practices are described in the app's privacy information and privacy policy.
+
+Use Foxiem for:
+- daily habits and routines
+- gym reps and practice sessions
+- reading or learning activities
+- attendance and people counting
+- scores and repeated tasks
+- anything else you want to count consistently
+
+Small counts. Big progress.
 
 ## Category
 
-Productivity (primary)
+Tools
 
 ## Contact / policy
 
 - Privacy policy: https://foxiem.com/privacy
 - Marketing: https://foxiem.com
-- Support email: set `VITE_SUPPORT_EMAIL` / Play Console contact (do not invent)
+- Support email: solutionvela@gmail.com
 
 ## Graphics
 
@@ -41,7 +57,6 @@ Productivity (primary)
 - Feature graphic: `store/screenshots/play-feature-graphic.png` (1024×500)
 - App icon: from Expo Android adaptive icon / Play high-res icon
 
-## Localizations (app-supported)
+## Localizations
 
-en (default), tr, de, fr, es, it — same language set as Apple store listing.
-Unsupported Play languages fall back to English default listing.
+en-GB (default), tr-TR, de-DE, fr-FR, es-ES, it-IT. See `store/play-listing-locales.md`.

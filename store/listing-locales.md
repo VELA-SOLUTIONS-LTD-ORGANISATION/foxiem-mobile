@@ -1,19 +1,21 @@
-# App Store localizations (version 1.0)
+# App Store localizations (version 1.0.4)
 
-App languages in Foxiem: **en, tr, de, fr, es, it** (`src/i18n/languages.ts`).
+App languages in Foxiem: **en, tr, de, fr, es, it**. Binary declaration is `expo-localization` `supportedLocales` in `app.json` and takes effect on the next build.
 
 ## ASC configuration
 
-| Locale | Role |
-|--------|------|
-| **en-GB** (primary) | English — used for all App Store countries/languages **without** a dedicated localization |
-| **tr** | Turkish |
-| **de-DE** | German |
-| **fr-FR** | French |
-| **es-ES** | Spanish (Spain) |
-| **it** | Italian |
+| Locale | Name | Subtitle |
+|--------|------|----------|
+| **en-GB** (primary) | Foxiem: Tally Counter | Habits, Reps & Daily Tracker |
+| **tr** | Foxiem: Çoklu Sayaç | Alışkanlık, Tekrar, İlerleme |
+| **de-DE** | Foxiem: Mehrfachzähler | Gewohnheiten & Fortschritt |
+| **fr-FR** | Foxiem : Compteur multiple | Habitudes, séries & progrès |
+| **es-ES** | Foxiem: Contador múltiple | Hábitos, rachas y progreso |
+| **it** | Foxiem: Contatore multiplo | Abitudini, serie e progressi |
 
-Screenshots are on **en-GB** only; other locales inherit primary screenshots on the storefront.
+`ar-SA` keeps the English name and subtitle. Full descriptions, keywords, promotional text, and release notes are in `scripts/apply-aso-store-config.mjs`.
+
+Screenshots on 1.0.4 are the existing three iPhone and three iPad shots (en-GB). The redesigned seven-shot set has not been produced.
 
 Support URL (all): `https://foxiem.com/privacy`  
 Marketing URL (all): `https://foxiem.com`

@@ -58,9 +58,9 @@ Minimum visual pass:
 
 Ideal: all six (`en`, `tr`, `de`, `fr`, `es`, `it`).
 
-## Portrait only
+## Orientation
 
-App orientation is portrait. Landscape is out of scope.
+iOS stays portrait. Android does not lock orientation or resizability, so large screens and Android 16 can rotate and resize the app. Layouts should stay usable in landscape on a tablet-width window.
 
 ## Native-only QA (not replaced by Jest)
 

@@ -1,104 +1,54 @@
 # Foxiem — Google Play listing localizations
 
-Same language set as Apple (`en`, `tr`, `de`, `fr`, `es`, `it`). Default Play listing: **en-GB**.
-
-Screenshots/graphics: upload on **en-GB** only; other locales can inherit.
+Same language set as Apple (`en`, `tr`, `de`, `fr`, `es`, `it`). Default Play listing: **en-GB**. Full descriptions use the App Store sections in `scripts/apply-aso-store-config.mjs`, with the Google opening below as the first paragraph.
 
 Privacy / marketing (all): `https://foxiem.com/privacy` · `https://foxiem.com`  
-Support email: use a real contact in Store settings (do not invent).
+Support email: solutionvela@gmail.com
 
 ## en-GB (default)
 
-**Short** (≤80): Small counts. Big progress. A calm, local-first counter for daily habits.
+**Name:** Foxiem: Tally Counter
 
-**Full:** see `store/play-listing-copy.md`
+**Short:** Track habits, reps and daily goals with multiple counters, stats and streaks.
 
-## tr
+**Opening:** Foxiem is a simple tally counter and daily count tracker with multiple named counters. Count habits, gym reps, reading, attendance, scores, routines and everyday activities, then review your history, statistics and streaks.
 
-**Short:** Küçük sayımlar. Büyük ilerleme. Sakin, yerel bir alışkanlık sayacı.
+## tr-TR
 
-**Full:**
-Foxiem, küçük eylemleri takip etmenize, ilerlemenizi görmenize ve zamanla tutarlılık oluşturmanıza yardımcı olmak için tasarlanmış basit, odaklı bir sayaçtır.
+**Name:** Foxiem: Çoklu Sayaç
 
-Özellikler:
-• +1, +5 ve -1 ile basit sayaç
-• Aktivite geçmişi
-• İlerleme istatistikleri
-• Tutarlılık ve seriler
-• Yerel hatırlatıcılar
-• Birden fazla dil
-• Yerel profil ve tercihler
+**Short:** Çoklu sayaçlarla alışkanlık, tekrar ve günlük hedeflerini kolayca takip et.
 
-Foxiem hesap gerektirmez. Profiliniz, sayacınız, geçmişiniz, hatırlatıcılarınız ve diliniz cihazınızda kalır.
+**Opening:** Foxiem; birden fazla isimli sayaçla alışkanlıklarını, spor tekrarlarını, rutinlerini ve günlük sayımlarını takip etmeni sağlayan sade bir sayaç uygulamasıdır. Geçmişini, istatistiklerini ve devam serilerini tek yerde görebilirsin.
 
 ## de-DE
 
-**Short:** Kleine Zählungen. Großer Fortschritt. Ruhiger lokaler Zähler für Gewohnheiten.
+**Name:** Foxiem: Mehrfachzähler
 
-**Full:**
-Foxiem ist ein einfacher, fokussierter Zähler, der dir hilft, kleine Aktionen zu tracken, deinen Fortschritt zu sehen und langfristig Beständigkeit aufzubauen.
+**Short:** Zähle Gewohnheiten, Wiederholungen und Ziele mit mehreren Zählern.
 
-Funktionen:
-• Einfacher Zähler mit +1, +5 und -1
-• Aktivitätsverlauf
-• Fortschrittsstatistik
-• Beständigkeit und Serien
-• Lokale Erinnerungen
-• Mehrere Sprachen
-• Lokales Profil und Einstellungen
-
-Foxiem funktioniert ohne Konto. Profil, Zähler, Verlauf, Erinnerungen und Sprache bleiben auf deinem Gerät.
+**Opening:** Foxiem ist eine einfache Zähler-App mit mehreren benannten Zählern für Gewohnheiten, Wiederholungen, Routinen und andere Alltagsaktivitäten. Verfolge Verlauf, Statistiken und Serien an einem Ort.
 
 ## fr-FR
 
-**Short:** Petits comptes. Grand progrès. Un compteur calme et local pour le quotidien.
+**Name:** Foxiem : Compteur multiple
 
-**Full:**
-Foxiem est un compteur simple et ciblé pour suivre de petites actions, voir vos progrès et construire de la régularité.
+**Short:** Suivez habitudes, répétitions et objectifs avec plusieurs compteurs.
 
-Fonctionnalités :
-• Compteur simple avec +1, +5 et -1
-• Historique d’activité
-• Statistiques de progrès
-• Régularité et séries
-• Rappels locaux
-• Plusieurs langues
-• Profil et préférences locaux
-
-Foxiem fonctionne sans compte. Votre profil, compteur, historique, rappels et langue restent sur votre appareil.
+**Opening:** Foxiem est une application de comptage simple avec plusieurs compteurs nommés pour vos habitudes, répétitions, routines et activités quotidiennes. Consultez historique, statistiques et séries au même endroit.
 
 ## es-ES
 
-**Short:** Pequeños conteos. Gran progreso. Contador calmado y local para hábitos.
+**Name:** Foxiem: Contador múltiple
 
-**Full:**
-Foxiem es un contador simple y enfocado para registrar pequeñas acciones, ver tu progreso y crear constancia.
+**Short:** Sigue hábitos, repeticiones y metas con varios contadores y estadísticas.
 
-Funciones:
-• Contador simple con +1, +5 y -1
-• Historial de actividad
-• Estadísticas de progreso
-• Constancia y rachas
-• Recordatorios locales
-• Varios idiomas
-• Perfil y preferencias locales
+**Opening:** Foxiem es una app de conteo sencilla con varios contadores con nombre para hábitos, repeticiones, rutinas y actividades diarias. Consulta historial, estadísticas y rachas en un solo lugar.
 
-Foxiem funciona sin cuenta. Tu perfil, contador, historial, recordatorios e idioma permanecen en tu dispositivo.
+## it-IT
 
-## it
+**Name:** Foxiem: Contatore multiplo
 
-**Short:** Piccoli conteggi. Grandi progressi. Contatore calmo e locale per le abitudini.
+**Short:** Tieni traccia di abitudini e ripetizioni con più contatori e statistiche.
 
-**Full:**
-Foxiem è un contatore semplice e mirato per tracciare piccole azioni, vedere i progressi e costruire costanza.
-
-Funzioni:
-• Contatore semplice con +1, +5 e -1
-• Cronologia attività
-• Statistiche di progresso
-• Costanza e serie
-• Promemoria locali
-• Più lingue
-• Profilo e preferenze locali
-
-Foxiem funziona senza account. Profilo, contatore, cronologia, promemoria e lingua restano sul dispositivo.
+**Opening:** Foxiem è una semplice app contatore con più contatori personalizzati per abitudini, ripetizioni, routine e attività quotidiane. Consulta cronologia, statistiche e serie in un unico posto.

@@ -149,9 +149,23 @@ describe('architecture regression guards', () => {
     );
     expect(Array.isArray(buildProps)).toBe(true);
     if (Array.isArray(buildProps)) {
-      const options = buildProps[1] as { ios?: { useFrameworks?: string } };
+      const options = buildProps[1] as {
+        ios?: { useFrameworks?: string };
+        android?: {
+          enableMinifyInReleaseBuilds?: boolean;
+          enableShrinkResourcesInReleaseBuilds?: boolean;
+        };
+      };
       expect(options.ios?.useFrameworks).toBe('static');
+      expect(options.android?.enableMinifyInReleaseBuilds).toBe(true);
+      expect(options.android?.enableShrinkResourcesInReleaseBuilds).toBe(true);
     }
+
+    const appConfigSource = fs.readFileSync(path.join(root, 'app.config.ts'), 'utf8');
+    expect(appConfigSource).toContain('android:resizeableActivity');
+    expect(appConfigSource).toContain("delete activity.$['android:screenOrientation']");
+    expect(appConfigSource).toContain('android:statusBarColor');
+    expect(appConfigSource).toContain('android:navigationBarColor');
 
     const joined = readSrcFiles()
       .map((file) => fs.readFileSync(file, 'utf8'))
