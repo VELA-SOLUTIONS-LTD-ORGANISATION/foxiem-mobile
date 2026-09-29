@@ -1,370 +1,318 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useMemo, useState } from 'react';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
-import { AdBanner } from '@/ads';
-import { AppText, ConfirmDialog, ProgressRing, Screen } from '@/components';
-import { FOXIEM_HOME_IMAGE, FOXIEM_LOGO, FOXIEM_PLUS_BUTTON } from '@/constants/brand';
+import { Banner, EmptyState, IconButton, Text, TrackerIcon } from '@/components';
+import { FOXIEM_HOME_IMAGE } from '@/constants/brand';
+import { activeTrackers, archivedTrackers, findTemplate, TRACKER_TEMPLATES, type Tracker } from '@/domain';
+import { trackerSnapshot, type TrackerSnapshot } from '@/domain/analysis';
+import { formatLongDate } from '@/format';
 import { useResponsiveLayout } from '@/hooks';
-import type { MainTabScreenProps } from '@/navigation/types';
-import { useAppState } from '@/state';
-import { getTopicDisplayName } from '@/state/topics';
-import { colors, fontFamily, radius, shadows, sizes, space } from '@/theme';
-import { formatLocaleNumber } from '@/utils/number';
+import type { TabScreenProps } from '@/navigation/types';
+import { NOTICE_IDS, useCountFeedback, useNotices, usePreferences, useTrackerStore } from '@/state';
+import { contentMaxWidth, useTheme } from '@/theme';
 
-import { TopicSwitcher } from './TopicSwitcher';
+import { AmountSheet } from '../shared/AmountSheet';
+import { useAnalysisContext } from '../shared/useAnalysisContext';
+import { useCounting } from '../shared/useCounting';
+import { TrackerRow } from './TrackerRow';
 
-const DEMO_GOAL = 300;
-const HOME_MAX_WIDTH = 520;
-const PLUS_BUTTON_ASPECT = 1271 / 442;
+const QUICK_TEMPLATES = ['water', 'coffee', 'reading'] as const;
 
-type Props = MainTabScreenProps<'HomeTab'>;
-type QuickActionProps = {
-  label: string;
-  icon?: keyof typeof Ionicons.glyphMap;
-  onPress: () => void;
-  accessibilityLabel: string;
-};
+export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const { language, reduceMotion } = usePreferences();
+  const { horizontalPadding, isCompact } = useResponsiveLayout();
+  const store = useTrackerStore();
+  const feedback = useCountFeedback();
+  const notices = useNotices();
+  const count = useCounting();
+  const context = useAnalysisContext();
+  const [reordering, setReordering] = useState(false);
+  const [amountFor, setAmountFor] = useState<Tracker | null>(null);
 
-function greetingKey(): 'home.goodMorning' | 'home.goodAfternoon' | 'home.goodEvening' {
-  const hour = new Date().getHours();
-  if (hour < 12) {
-    return 'home.goodMorning';
-  }
-  if (hour < 18) {
-    return 'home.goodAfternoon';
-  }
-  return 'home.goodEvening';
-}
+  const trackers = useMemo(() => activeTrackers(store.trackers), [store.trackers]);
+  const archivedCount = useMemo(() => archivedTrackers(store.trackers).length, [store.trackers]);
+  const migrated = store.trackers.some((tracker) => tracker.origin === 'migrated');
 
-export function HomeScreen({ navigation }: Props) {
-  const { t, i18n } = useTranslation();
-  const { profile, counter, activeTopic, activeTopicId, incrementCounter, decrementCounter, resetCounter } =
-    useAppState();
-  const activeTopicName = getTopicDisplayName(activeTopic, (key) => t(key));
-  const { isCompact, isLargePhone, height, width, horizontalPadding } = useResponsiveLayout();
-  const isVeryShort = height < 560;
-  const isShort = height < 700;
+  const onCount = useCallback(
+    (tracker: Tracker, snapshot: TrackerSnapshot, direction: 'up' | 'down') => {
+      count(tracker, snapshot, direction);
+    },
+    [count],
+  );
+  const onOpen = useCallback(
+    (tracker: Tracker) => navigation.navigate('TrackerDetail', { trackerId: tracker.id }),
+    [navigation],
+  );
+  const onMove = useCallback((tracker: Tracker, direction: -1 | 1) => store.moveTracker(tracker.id, direction), [store]);
+  const onUndo = useCallback(() => {
+    feedback.undo();
+  }, [feedback]);
 
-  const count = counter.currentCount;
-  const [resetVisible, setResetVisible] = useState(false);
-
-  const progress = useMemo(() => {
-    if (DEMO_GOAL <= 0) {
-      return 0;
-    }
-
-    return Math.min(count / DEMO_GOAL, 1);
-  }, [activeTopicId, count]);
-
-  const contentWidth = Math.min(HOME_MAX_WIDTH, width) - horizontalPadding * 2;
-  const ringSize = isVeryShort ? 200 : isCompact || isShort ? 236 : isLargePhone ? 280 : 260;
-  const countSize = isVeryShort ? 44 : isCompact || isShort ? 52 : 58;
-  const illustrationHeight = isVeryShort ? 150 : isCompact || isShort ? 200 : isLargePhone ? 250 : 230;
-  const plusButtonWidth = Math.min(width, HOME_MAX_WIDTH);
-  const plusButtonHeight = Math.round(plusButtonWidth / PLUS_BUTTON_ASPECT);
-  const plusOverflow = Math.max(0, (plusButtonWidth - contentWidth) / 2);
-  const homeImageWidth = Math.min(width, HOME_MAX_WIDTH);
-  const homeImageOverflow = Math.max(0, (homeImageWidth - contentWidth) / 2);
-  const stageGap = isVeryShort ? space[2] : space[4];
-
-  const increment = (amount: number) => {
-    void incrementCounter(amount);
-  };
-
-  const decrement = () => {
-    void decrementCounter(1);
-  };
-
-  return (
-    <Screen
-      scroll
-      constrained
-      maxWidth={HOME_MAX_WIDTH}
-      backgroundColor={colors.background}
-      edges={['top', 'left', 'right']}
-      contentStyle={styles.screenFill}
-      scrollContentStyle={styles.scrollFill}
-    >
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerSide} />
-          <View style={styles.greeting}>
-            <AppText variant="body" color="textSecondary" numberOfLines={1}>
-              {t(greetingKey())}
-            </AppText>
-            <AppText variant="body" weight="600" numberOfLines={1} style={styles.name}>
-              {profile?.name ?? ''}
-            </AppText>
-            <AppText variant="body" aria-label={t('home.wavingHand')}>
-              👋
-            </AppText>
-          </View>
-          <View style={styles.headerSide}>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t('profile.reminders')}
-              onPress={() => navigation.navigate('Reminders')}
-              style={({ pressed }) => [styles.logoChip, pressed && styles.logoChipPressed]}
-            >
-              <Image
-                source={FOXIEM_LOGO}
-                style={styles.logoImage}
-                resizeMode="contain"
-                accessible={false}
-              />
-            </Pressable>
-          </View>
+  const header = (
+    <View>
+      <View style={styles.header}>
+        <View style={styles.headerCopy}>
+          <Text variant="wordmark" accessibilityRole="header">
+            Foxiem
+          </Text>
+          <Text variant="caption" tone="inkSecondary" style={styles.date}>
+            {formatLongDate(context.now, language, context.now)}
+          </Text>
         </View>
+        <IconButton
+          testID="home-add"
+          icon="add"
+          variant="outlined"
+          accessibilityLabel={t('home.addTracker')}
+          onPress={() => navigation.navigate('CreateTracker')}
+        />
+      </View>
+      <View style={styles.banners}>
+        {store.saveFailed ? (
+          <Banner tone="caution" icon="warning-outline" title={t('home.saveFailedTitle')} body={t('home.saveFailedBody')} />
+        ) : null}
+        {store.loadSource === 'recovered' ? (
+          <Banner tone="caution" icon="refresh-outline" title={t('home.recoveredTitle')} body={t('home.recoveredBody')} />
+        ) : null}
+        {store.unreadableTrackerIds.length > 0 ? (
+          <Banner tone="caution" icon="alert-circle-outline" title={t('home.unreadableTitle')} body={t('home.unreadableBody')} />
+        ) : null}
+        {migrated && notices.hydrated && !notices.isDismissed(NOTICE_IDS.whatsNewV3) ? (
+          <Banner
+            icon="sparkles-outline"
+            title={t('home.whatsNewTitle')}
+            body={t('home.whatsNewBody')}
+            onDismiss={() => notices.dismiss(NOTICE_IDS.whatsNewV3)}
+          />
+        ) : null}
+      </View>
+    </View>
+  );
 
-        <AdBanner placement="home" compact />
+  const usedTemplates = new Set(trackers.map((tracker) => tracker.templateId));
+  const suggestions = TRACKER_TEMPLATES.filter(
+    (template) => !usedTemplates.has(template.id) && !trackers.some((tracker) => tracker.intent === template.intent),
+  ).slice(0, 3);
 
-        <View style={[styles.stage, { gap: stageGap }]}>
-          <TopicSwitcher />
-          <View style={styles.counterSection}>
-            <ProgressRing
-              progress={progress}
-              size={ringSize}
-              strokeWidth={7}
-              trackColor={colors.border}
-            >
-              <View
-                style={styles.counterContent}
-                accessible
-                accessibilityRole="text"
-                accessibilityLabel={`${activeTopicName}, ${t('home.totalCount')}, ${formatLocaleNumber(count, i18n.language)}`}
-              >
-                <AppText
-                  variant="displayNumber"
-                  style={[
-                    styles.countValue,
-                    { fontSize: countSize, lineHeight: countSize + 6 },
+  const footer =
+    trackers.length > 0 ? (
+      <View style={styles.footer}>
+        {notices.hydrated && !notices.isDismissed(NOTICE_IDS.homeHint) && !reordering ? (
+          <Text variant="caption" tone="inkTertiary" align="center" style={styles.hint}>
+            {t('home.hint')}
+          </Text>
+        ) : null}
+        {trackers.length <= 2 && suggestions.length > 0 && !reordering ? (
+          <View style={styles.suggest}>
+            <Text variant="label" tone="inkSecondary" align="center">
+              {t('home.tryNext')}
+            </Text>
+            <View style={styles.quick}>
+              {suggestions.map((template) => (
+                <Pressable
+                  key={template.id}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${t(`start.templates.${template.id}` as 'start.templates.coffee')}, ${t(`intents.${template.intent}.title`)}`}
+                  onPress={() => navigation.navigate('CreateTracker', { templateId: template.id })}
+                  style={({ pressed }) => [
+                    styles.quickChip,
+                    {
+                      borderRadius: theme.radius.md,
+                      borderColor: theme.colors.line,
+                      backgroundColor: pressed ? theme.colors.sunken : theme.colors.surface,
+                    },
                   ]}
                 >
-                  {formatLocaleNumber(count, i18n.language)}
-                </AppText>
-                <AppText variant="captionSmall" color="textSecondary" style={styles.countLabel}>
-                  {t('home.totalCount')}
-                </AppText>
-              </View>
-            </ProgressRing>
-          </View>
-
-          <View style={styles.mascotBlock}>
-            <View
-              style={[
-                styles.illustrationContainer,
-                {
-                  width: homeImageWidth,
-                  height: illustrationHeight,
-                  marginHorizontal: -homeImageOverflow,
-                  marginBottom: isVeryShort ? -space[3] : -space[5],
-                },
-              ]}
-            >
-              <Image
-                source={FOXIEM_HOME_IMAGE}
-                style={[
-                  styles.illustration,
-                  { width: homeImageWidth, height: illustrationHeight },
-                ]}
-                resizeMode="contain"
-                accessible={false}
-              />
+                  <TrackerIcon icon={template.icon} color={template.color} size={28} />
+                  <View>
+                    <Text variant="label">{t(`start.templates.${template.id}` as 'start.templates.coffee')}</Text>
+                    <Text variant="micro" tone="inkTertiary">
+                      {t(`intents.${template.intent}.short`)}
+                    </Text>
+                  </View>
+                </Pressable>
+              ))}
             </View>
-
+          </View>
+        ) : null}
+        <View style={styles.footerLinks}>
+          {trackers.length > 1 ? (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={t('home.addOne')}
-              onPress={() => increment(1)}
-              style={({ pressed }) => [
-                styles.plusButton,
-                {
-                  width: plusButtonWidth,
-                  marginHorizontal: -plusOverflow,
-                },
-                pressed && styles.primaryButtonPressed,
-              ]}
+              onPress={() => setReordering((value) => !value)}
+              style={({ pressed }) => [styles.link, pressed && { backgroundColor: theme.colors.sunken }]}
             >
-              <Image
-                source={FOXIEM_PLUS_BUTTON}
-                style={[
-                  styles.plusButtonImage,
-                  { width: plusButtonWidth, height: plusButtonHeight },
-                ]}
-                resizeMode="stretch"
-                accessible={false}
-              />
+              <Text variant="label">{reordering ? t('home.reorderDone') : t('home.reorder')}</Text>
             </Pressable>
-          </View>
-
-          <View style={styles.quickActions}>
-            <QuickAction label="-1" accessibilityLabel={t('home.subtractOne')} onPress={decrement} />
-            <QuickAction
-              label={t('home.resetCounter')}
-              icon="refresh-outline"
-              accessibilityLabel={t('home.resetCounterA11y')}
-              onPress={() => setResetVisible(true)}
-            />
-            <QuickAction label="+5" accessibilityLabel={t('home.addFive')} onPress={() => increment(5)} />
-          </View>
+          ) : null}
+          {archivedCount > 0 ? (
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => navigation.navigate('Archived')}
+              style={({ pressed }) => [styles.link, pressed && { backgroundColor: theme.colors.sunken }]}
+            >
+              <Text variant="label" tone="inkSecondary">
+                {t('home.archivedCount', { count: archivedCount })}
+              </Text>
+            </Pressable>
+          ) : null}
         </View>
       </View>
+    ) : (
+      <EmptyState
+        image={FOXIEM_HOME_IMAGE}
+        title={t('home.emptyTitle')}
+        body={t('home.emptyBody')}
+        action={{ label: t('home.emptyCta'), onPress: () => navigation.navigate('CreateTracker') }}
+      >
+        <View style={styles.quick}>
+          {QUICK_TEMPLATES.map((id) => {
+            const template = findTemplate(id)!;
+            return (
+              <Pressable
+                key={id}
+                accessibilityRole="button"
+                onPress={() => navigation.navigate('CreateTracker', { templateId: id })}
+                style={({ pressed }) => [
+                  styles.quickChip,
+                  {
+                    borderRadius: theme.radius.md,
+                    borderColor: theme.colors.line,
+                    backgroundColor: pressed ? theme.colors.sunken : theme.colors.surface,
+                  },
+                ]}
+              >
+                <TrackerIcon icon={template.icon} color={template.color} size={28} />
+                <Text variant="label">{t(`start.templates.${id}`)}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </EmptyState>
+    );
 
-      <ConfirmDialog
-        visible={resetVisible}
-        title={t('home.resetTopicTitle', { topic: activeTopicName })}
-        message={t('home.resetTopicMessage', { topic: activeTopicName })}
-        confirmLabel={t('home.resetCounter')}
-        cancelLabel={t('common.cancel')}
-        variant="destructive"
-        onCancel={() => setResetVisible(false)}
-        onConfirm={async () => {
-          await resetCounter();
-          setResetVisible(false);
+  return (
+    <SafeAreaView edges={['top', 'left', 'right']} style={[styles.fill, { backgroundColor: theme.colors.canvas }]}>
+      <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
+      <FlatList
+        testID="home-list"
+        data={trackers}
+        keyExtractor={(tracker) => tracker.id}
+        ListHeaderComponent={header}
+        ListFooterComponent={footer}
+        contentContainerStyle={[
+          styles.content,
+          { paddingHorizontal: horizontalPadding, maxWidth: contentMaxWidth },
+        ]}
+        initialNumToRender={12}
+        windowSize={7}
+        renderItem={({ item, index }) => (
+          <TrackerRow
+            tracker={item}
+            events={store.events[item.id] ?? EMPTY}
+            context={context}
+            locale={language}
+            reduceMotion={reduceMotion}
+            first={index === 0}
+            last={index === trackers.length - 1}
+            pendingDelta={feedback.pending?.trackerId === item.id ? feedback.pending.delta : null}
+            compact={isCompact}
+            reordering={reordering}
+            canMoveUp={index > 0}
+            canMoveDown={index < trackers.length - 1}
+            onCount={onCount}
+            onAmount={setAmountFor}
+            onOpen={onOpen}
+            onUndo={onUndo}
+            onMove={onMove}
+          />
+        )}
+      />
+      <AmountSheet
+        tracker={amountFor}
+        onClose={() => setAmountFor(null)}
+        onAdd={(amount) => {
+          const tracker = amountFor;
+          setAmountFor(null);
+          if (tracker) {
+            count(tracker, trackerSnapshot(tracker, store.events[tracker.id] ?? EMPTY, context), 'up', amount);
+          }
         }}
       />
-    </Screen>
+    </SafeAreaView>
   );
 }
 
-function QuickAction({ label, icon, onPress, accessibilityLabel }: QuickActionProps) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.quickAction,
-        shadows.sm,
-        pressed && styles.quickActionPressed,
-      ]}
-    >
-      {icon ? (
-        <Ionicons name={icon} size={sizes.iconMd} color={colors.textPrimary} />
-      ) : null}
-      <AppText variant="label" color="textPrimary">
-        {label}
-      </AppText>
-    </Pressable>
-  );
-}
+const EMPTY: never[] = [];
 
 const styles = StyleSheet.create({
-  screenFill: {
-    flexGrow: 1,
+  fill: {
+    flex: 1,
   },
-  scrollFill: {
-    flexGrow: 1,
-    paddingBottom: space[4],
-  },
-  container: {
-    flexGrow: 1,
+  content: {
     width: '100%',
+    alignSelf: 'center',
+    paddingBottom: 32,
+    flexGrow: 1,
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: space[2],
-  },
-  headerSide: {
-    width: sizes.controlMd,
     alignItems: 'flex-end',
-    justifyContent: 'center',
+    paddingTop: 12,
+    paddingBottom: 16,
   },
-  greeting: {
+  headerCopy: {
     flex: 1,
+    minWidth: 0,
+  },
+  date: {
+    marginTop: 2,
+  },
+  banners: {
+    gap: 10,
+    marginBottom: 12,
+  },
+  footer: {
+    paddingTop: 16,
+  },
+  hint: {
+    marginBottom: 8,
+    paddingHorizontal: 16,
+  },
+  suggest: {
+    marginTop: 20,
+    marginBottom: 8,
+  },
+  footerLinks: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    gap: space[2],
+    gap: 8,
   },
-  name: {
-    flexShrink: 1,
-  },
-  logoChip: {
-    width: sizes.controlMd,
-    height: sizes.controlMd,
-    borderRadius: radius.md,
-    backgroundColor: colors.surface,
-    alignItems: 'center',
+  link: {
+    minHeight: 44,
+    paddingHorizontal: 14,
     justifyContent: 'center',
-    overflow: 'hidden',
+    borderRadius: 10,
   },
-  logoChipPressed: {
-    opacity: 0.8,
-  },
-  logoImage: {
-    width: sizes.iconXl,
-    height: sizes.iconXl,
-  },
-  stage: {
-    flexGrow: 1,
-    width: '100%',
+  quick: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'center',
+    gap: 8,
+    marginTop: 16,
   },
-  counterSection: {
-    alignItems: 'center',
-    marginTop: space[4],
-  },
-  counterContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  countValue: {
-    fontFamily: fontFamily.bold,
-    fontWeight: '700',
-    color: colors.textPrimary,
-    letterSpacing: -1,
-  },
-  countLabel: {
-    marginTop: space[1],
-  },
-  illustrationContainer: {
-    overflow: 'visible',
-    marginTop: -space[4],
-    alignSelf: 'center',
-    zIndex: 0,
-  },
-  illustration: {
-    alignSelf: 'center',
-  },
-  mascotBlock: {
-    width: '100%',
-    alignItems: 'center',
-  },
-  plusButton: {
-    width: '100%',
-    alignSelf: 'center',
-    zIndex: 1,
-  },
-  plusButtonImage: {
-    width: '100%',
-  },
-  primaryButtonPressed: {
-    opacity: 0.88,
-    transform: [{ scale: 0.99 }],
-  },
-  quickActions: {
-    width: '100%',
+  quickChip: {
+    minHeight: 48,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space[3],
-  },
-  quickAction: {
-    flex: 1,
-    minHeight: sizes.controlMd,
-    paddingHorizontal: space[3],
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: space[1],
-    backgroundColor: colors.surface,
-    borderRadius: radius.pill,
-  },
-  quickActionPressed: {
-    opacity: 0.75,
+    gap: 8,
+    paddingHorizontal: 12,
+    borderWidth: StyleSheet.hairlineWidth,
   },
 });

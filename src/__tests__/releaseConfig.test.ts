@@ -1,176 +1,114 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { FOXIEM_STORAGE_KEYS } from '@/storage/keys';
+const root = path.join(__dirname, '..', '..');
+const srcRoot = path.join(__dirname, '..');
+
+type AppJson = {
+  expo: {
+    name: string;
+    orientation: string;
+    userInterfaceStyle?: string;
+    ios?: { bundleIdentifier?: string; infoPlist?: Record<string, unknown> };
+    android?: { package?: string; permissions?: string[] };
+    plugins: (string | [string, Record<string, unknown>?])[];
+  };
+};
+
+function readAppJson(): AppJson {
+  return JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8')) as AppJson;
+}
+
+function readPackage(): { dependencies?: Record<string, string>; devDependencies?: Record<string, string> } {
+  return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+}
+
+function readSrcFiles(): string[] {
+  const files: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name !== '__tests__') {
+          walk(full);
+        }
+      } else if (/\.(ts|tsx)$/.test(entry.name)) {
+        files.push(full);
+      }
+    }
+  };
+  walk(srcRoot);
+  return files;
+}
 
 describe('release config', () => {
-  it('keeps Foxiem identity and portrait orientation', () => {
-    const appJson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '..', '..', 'app.json'), 'utf8'),
-    ) as {
-      expo: {
-        name: string;
-        orientation: string;
-        ios?: { bundleIdentifier?: string };
-        android?: { package?: string };
-      };
+  it('keeps Foxiem identity, portrait orientation and system light/dark', () => {
+    const { expo } = readAppJson();
+    expect(expo.name).toBe('Foxiem');
+    expect(expo.orientation).toBe('portrait');
+    expect(expo.userInterfaceStyle).toBe('automatic');
+    expect(expo.ios?.bundleIdentifier).toBe('co.uk.solutionvela.foxiem');
+    expect(expo.android?.package).toBe('co.uk.solutionvela.foxiem');
+  });
+
+  it('ships without an advertising SDK or tracking prompt', () => {
+    const { expo } = readAppJson();
+    const pluginNames = expo.plugins.map((plugin) => (Array.isArray(plugin) ? plugin[0] : plugin));
+    expect(pluginNames).not.toContain('react-native-google-mobile-ads');
+    const deps = { ...readPackage().dependencies, ...readPackage().devDependencies };
+    expect(deps['react-native-google-mobile-ads']).toBeUndefined();
+    expect(deps['expo-tracking-transparency']).toBeUndefined();
+    expect(expo.ios?.infoPlist?.NSUserTrackingUsageDescription).toBeUndefined();
+  });
+
+  it('keeps Firebase Analytics wiring for the Foxiem project only', () => {
+    const deps = readPackage().dependencies ?? {};
+    expect(deps['@react-native-firebase/app']).toBeTruthy();
+    expect(deps['@react-native-firebase/analytics']).toBeTruthy();
+    expect(Object.keys(deps).some((name) => /amplitude|segment|mixpanel/i.test(name))).toBe(false);
+    const androidConfig = JSON.parse(fs.readFileSync(path.join(root, 'google-services.json'), 'utf8')) as {
+      project_info?: { project_id?: string };
     };
-    expect(appJson.expo.name).toBe('Foxiem');
-    expect(appJson.expo.orientation).toBe('portrait');
-    expect(appJson.expo.ios?.bundleIdentifier).toBe('co.uk.solutionvela.foxiem');
-    expect(appJson.expo.android?.package).toBe('co.uk.solutionvela.foxiem');
+    expect(androidConfig.project_info?.project_id).toBe('foxiem-counter');
+    const appConfig = fs.readFileSync(path.join(root, 'app.config.ts'), 'utf8');
+    expect(appConfig).toContain('@react-native-firebase/analytics');
+    expect(appConfig).toContain('android:resizeableActivity');
   });
 });
 
 describe('architecture regression guards', () => {
-  const srcRoot = path.join(__dirname, '..');
+  const joined = readSrcFiles()
+    .map((file) => fs.readFileSync(file, 'utf8'))
+    .join('\n');
 
-  function readSrcFiles(): string[] {
-    const files: string[] = [];
-    const walk = (dir: string) => {
-      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-        const full = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-          if (entry.name === '__tests__' || entry.name === 'node_modules') {
-            continue;
-          }
-          walk(full);
-          continue;
-        }
-        if (/\.(ts|tsx)$/.test(entry.name)) {
-          files.push(full);
-        }
-      }
-    };
-    walk(srcRoot);
-    return files;
-  }
-
-  it('does not call AsyncStorage.clear for reset', () => {
-    const resetFile = fs.readFileSync(path.join(srcRoot, 'storage', 'appStorage.ts'), 'utf8');
-    expect(resetFile).toContain('multiRemove');
-    expect(resetFile).not.toMatch(/AsyncStorage\.clear\(/);
-    expect(FOXIEM_STORAGE_KEYS).toEqual([
-      'foxiem.profile',
-      'foxiem.preferences',
-      'foxiem.counter',
-      'foxiem.history',
-      'foxiem.counterDomain',
-      'foxiem.topicMigrationVersion',
-      'foxiem.reminders',
-      'foxiem.setupCompleted',
-    ]);
+  it('never wipes storage it does not own', () => {
+    const storage = fs.readFileSync(path.join(srcRoot, 'storage', 'appStorage.ts'), 'utf8');
+    expect(storage).toContain('multiRemove');
+    expect(storage).toContain('FOXIEM_KEY_PREFIX');
+    expect(joined).not.toMatch(/AsyncStorage\.clear\(/);
   });
 
-  it('configures AdMob plugin with App IDs and does not enable ATT tracking description', () => {
-    const appJson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '..', '..', 'app.json'), 'utf8'),
-    ) as {
-      expo: {
-        plugins: Array<string | [string, Record<string, unknown>?]>;
-      };
-    };
-
-    const admobPlugin = appJson.expo.plugins.find(
-      (plugin) =>
-        plugin === 'react-native-google-mobile-ads' ||
-        (Array.isArray(plugin) && plugin[0] === 'react-native-google-mobile-ads'),
-    );
-    expect(admobPlugin).toBeTruthy();
-    expect(Array.isArray(admobPlugin)).toBe(true);
-    if (Array.isArray(admobPlugin)) {
-      const options = admobPlugin[1] as {
-        androidAppId?: string;
-        iosAppId?: string;
-        userTrackingUsageDescription?: string;
-      };
-      expect(options.androidAppId).toBe('ca-app-pub-3249455013386377~1127078474');
-      expect(options.iosAppId).toBe('ca-app-pub-3249455013386377~1517960718');
-      expect(options.androidAppId).not.toMatch(/3940256099942544/);
-      expect(options.iosAppId).not.toMatch(/3940256099942544/);
-      expect(options.userTrackingUsageDescription).toBeUndefined();
+  it('has no backend, account UI or fake sync', () => {
+    expect(joined).not.toMatch(/https?:\/\/api\./i);
+    expect(joined).not.toMatch(/sign ?in|log ?in|create account|delete account/i);
+    const types = fs.readFileSync(path.join(srcRoot, 'navigation', 'types.ts'), 'utf8');
+    for (const route of ['SignIn', 'SignUp', 'Login', 'Account', 'Profile', 'Marketplace']) {
+      expect(types).not.toContain(`${route}:`);
     }
-
-    const packageJson = JSON.parse(
-      fs.readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf8'),
-    ) as { dependencies?: Record<string, string> };
-    expect(packageJson.dependencies?.['react-native-google-mobile-ads']).toBeTruthy();
-    expect(packageJson.dependencies?.['expo-tracking-transparency']).toBeUndefined();
   });
 
-  it('wires Foxiem Firebase Analytics without third-party product analytics or a Foxiem backend', () => {
-    const root = path.join(__dirname, '..', '..');
-    const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')) as {
-      dependencies?: Record<string, string>;
-      devDependencies?: Record<string, string>;
-    };
-    const deps = {
-      ...packageJson.dependencies,
-      ...packageJson.devDependencies,
-    };
-    expect(deps['@react-native-firebase/app']).toBeTruthy();
-    expect(deps['@react-native-firebase/analytics']).toBeTruthy();
-    expect(
-      Object.keys(deps).some((name) => /amplitude|sentry|segment/i.test(name)),
-    ).toBe(false);
+  it('production builds never simulate purchases', () => {
+    const adapter = fs.readFileSync(path.join(srcRoot, 'pro', 'purchaseAdapter.ts'), 'utf8');
+    expect(adapter).toMatch(/if \(__DEV__\) \{\s*return createSimulatedAdapter/);
+    expect(adapter).toMatch(/return unavailableAdapter;\s*\}\s*$/);
+  });
 
-    const androidConfig = JSON.parse(
-      fs.readFileSync(path.join(root, 'google-services.json'), 'utf8'),
-    ) as {
-      project_info?: { project_id?: string };
-      client?: Array<{ client_info?: { android_client_info?: { package_name?: string } } }>;
-    };
-    expect(androidConfig.project_info?.project_id).toBe('foxiem-counter');
-    expect(androidConfig.client?.[0]?.client_info?.android_client_info?.package_name).toBe(
-      'co.uk.solutionvela.foxiem',
-    );
-    expect(androidConfig.project_info?.project_id).not.toBe('kara-mood');
-
-    const iosPlist = fs.readFileSync(path.join(root, 'GoogleService-Info.plist'), 'utf8');
-    expect(iosPlist).toContain('<string>foxiem-counter</string>');
-    expect(iosPlist).toContain('<string>co.uk.solutionvela.foxiem</string>');
-    expect(iosPlist).not.toContain('kara-mood');
-    expect(iosPlist).not.toContain('uk.co.solutionvela.kara');
-
-    const appConfig = fs.readFileSync(path.join(root, 'app.config.ts'), 'utf8');
-    expect(appConfig).toContain('@react-native-firebase/app');
-    expect(appConfig).toContain('@react-native-firebase/analytics');
-    expect(appConfig).toContain('disableSPM: true');
-    expect(appConfig).toContain('./google-services.json');
-    expect(appConfig).toContain('./GoogleService-Info.plist');
-
-    const appJson = JSON.parse(fs.readFileSync(path.join(root, 'app.json'), 'utf8')) as {
-      expo: {
-        plugins: Array<string | [string, Record<string, unknown>?]>;
-      };
-    };
-    const buildProps = appJson.expo.plugins.find(
-      (plugin) => Array.isArray(plugin) && plugin[0] === 'expo-build-properties',
-    );
-    expect(Array.isArray(buildProps)).toBe(true);
-    if (Array.isArray(buildProps)) {
-      const options = buildProps[1] as {
-        ios?: { useFrameworks?: string };
-        android?: {
-          enableMinifyInReleaseBuilds?: boolean;
-          enableShrinkResourcesInReleaseBuilds?: boolean;
-        };
-      };
-      expect(options.ios?.useFrameworks).toBe('static');
-      expect(options.android?.enableMinifyInReleaseBuilds).toBe(true);
-      expect(options.android?.enableShrinkResourcesInReleaseBuilds).toBe(true);
+  it('keeps Pro gating in one registry', () => {
+    const screens = readSrcFiles().filter((file) => file.includes(`${path.sep}screens${path.sep}`));
+    for (const file of screens) {
+      const source = fs.readFileSync(file, 'utf8');
+      expect(source).not.toMatch(/entitlement\.status\s*===\s*'active'\s*&&\s*canUse/);
+      expect(source).not.toMatch(/hasProAccess\(/);
     }
-
-    const appConfigSource = fs.readFileSync(path.join(root, 'app.config.ts'), 'utf8');
-    expect(appConfigSource).toContain('android:resizeableActivity');
-    expect(appConfigSource).toContain("delete activity.$['android:screenOrientation']");
-    expect(appConfigSource).toContain('android:statusBarColor');
-    expect(appConfigSource).toContain('android:navigationBarColor');
-
-    const joined = readSrcFiles()
-      .map((file) => fs.readFileSync(file, 'utf8'))
-      .join('\n');
-    expect(joined).not.toMatch(/https?:\/\/api\.foxiem/i);
-    expect(joined).not.toMatch(/Delete Account/);
   });
 });

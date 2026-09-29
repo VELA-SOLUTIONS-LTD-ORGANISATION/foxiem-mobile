@@ -3,322 +3,870 @@
     "cancel": "Cancel",
     "done": "Done",
     "save": "Save",
+    "saveChanges": "Save changes",
     "continue": "Continue",
     "back": "Back",
-    "confirm": "Confirm",
-    "reset": "Reset",
-    "notConfigured": "This link is not configured yet.",
-    "closeModal": "Close dialog",
-    "closeSheet": "Close sheet",
-    "saveFailed": "Could not save. Try again."
+    "close": "Close",
+    "undo": "Undo",
+    "notNow": "Not now",
+    "openSettings": "Open Settings",
+    "retry": "Try again",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "optional": "Optional",
+    "closeSheet": "Close",
+    "saveFailed": "Couldn't save. Try again."
   },
   "navigation": {
     "home": "Home",
-    "statistics": "Statistics",
-    "profile": "Profile"
+    "insights": "Insights",
+    "settings": "Settings"
   },
-  "home": {
-    "goodMorning": "Good morning",
-    "goodAfternoon": "Good afternoon",
-    "goodEvening": "Good evening",
-    "totalCount": "Total count",
-    "addOne": "Add one",
-    "subtractOne": "Subtract one",
-    "addFive": "Add five",
-    "resetCounter": "Reset",
-    "resetCounterA11y": "Reset counter",
-    "wavingHand": "Waving hand",
-    "mascotAlt": "Foxiem fox mascot surrounded by leaves",
-    "resetCounterTitle": "Reset counter?",
-    "resetCounterMessage": "Your current count will return to zero.",
-    "resetTopicTitle": "Reset {{topic}}?",
-    "resetTopicMessage": "Only {{topic}} will return to zero. Other topics stay as they are."
+  "trackers": {
+    "defaultName": "General"
   },
-  "topics": {
-    "title": "Topics",
-    "topic": "Topic",
-    "defaultName": "General",
-    "add": "Add topic",
-    "new": "New topic",
-    "name": "Topic name",
-    "create": "Create",
-    "rename": "Rename topic",
-    "renameA11y": "Rename {{topic}}",
-    "select": "Select topic",
-    "selectA11y": "Select topic, currently {{topic}}",
-    "activeTopic": "Active topic",
-    "alreadyExists": "That topic name is already in use.",
-    "nameRequired": "Enter a topic name.",
-    "nameTooLong": "Topic name must be 40 characters or fewer.",
-    "reservedName": "Choose a different name than General.",
-    "limitReached": "You can have up to 20 topics."
+  "colours": {
+    "fox": "Orange",
+    "honey": "Yellow",
+    "leaf": "Green",
+    "teal": "Teal",
+    "sky": "Blue",
+    "iris": "Violet",
+    "berry": "Pink",
+    "cocoa": "Brown",
+    "slate": "Grey"
   },
-  "statistics": {
-    "title": "Statistics",
-    "subtitle": "Your progress at a glance.",
+  "units": {
+    "glasses": "glasses",
+    "pages": "pages",
+    "reps": "reps",
+    "rows": "rows"
+  },
+  "intents": {
+    "count": {
+      "title": "Just count it",
+      "body": "Keep a tally. No goal, no judgement.",
+      "short": "Just counting"
+    },
+    "reach": {
+      "title": "Reach a target",
+      "body": "Work toward a number, like 8 glasses a day.",
+      "short": "Reach"
+    },
+    "limit": {
+      "title": "Stay under a limit",
+      "body": "Keep within a maximum, like 3 coffees a day.",
+      "short": "Stay under"
+    },
+    "reduce": {
+      "title": "Reduce it over time",
+      "body": "Bring it down gradually and watch the trend.",
+      "short": "Reduce"
+    },
+    "consistency": {
+      "title": "Build consistency",
+      "body": "Show up regularly, on the days that suit you.",
+      "short": "Consistency"
+    }
+  },
+  "periods": {
     "day": "Day",
     "week": "Week",
     "month": "Month",
-    "year": "Year",
-    "today": "Today",
-    "thisWeek": "This Week",
-    "thisMonth": "This Month",
-    "total": "Total",
-    "chartLabel": "Progress chart",
+    "all": "All time",
+    "current": {
+      "day": "today",
+      "week": "this week",
+      "month": "this month",
+      "all": "total"
+    }
+  },
+  "goal": {
+    "count": {
+      "all": "Just count · keeps a running total",
+      "day": "Just count · starts fresh every day",
+      "week": "Just count · starts fresh every week",
+      "month": "Just count · starts fresh every month"
+    },
+    "reach": {
+      "day": "Reach {{target}} {{unit}} a day",
+      "week": "Reach {{target}} {{unit}} a week",
+      "month": "Reach {{target}} {{unit}} a month",
+      "all": "Reach {{target}} {{unit}} in total"
+    },
+    "limit": {
+      "day": "Stay under {{target}} {{unit}} a day",
+      "week": "Stay under {{target}} {{unit}} a week",
+      "month": "Stay under {{target}} {{unit}} a month"
+    },
+    "reduce": {
+      "day": "Reduce · compared day by day",
+      "week": "Reduce · compared week by week",
+      "month": "Reduce · compared month by month"
+    },
+    "consistency_one": "{{count}} day a week",
+    "consistency_other": "{{count}} days a week",
+    "consistencyDaily": "Every day"
+  },
+  "welcome": {
+    "title": "Count what matters.",
+    "body": "Track anything in a tap.\nSee how it changes over time.",
+    "cta": "Start counting",
+    "foxAlt": "The Foxiem fox sitting among leaves"
+  },
+  "start": {
+    "title": "Start with something useful",
+    "subtitle": "Each one counts in a different way. You can change anything later.",
+    "custom": "Create my own",
+    "templates": {
+      "coffee": "Coffee",
+      "water": "Water",
+      "reading": "Reading",
+      "pushups": "Push-ups",
+      "cigarettes": "Cigarettes",
+      "knitting": "Knitting rows",
+      "dogWalks": "Dog walks",
+      "prayer": "Prayer",
+      "salesCalls": "Sales calls",
+      "ideas": "Ideas"
+    }
+  },
+  "create": {
+    "title": "New tracker",
+    "stepName": "What are you counting?",
+    "stepIntent": "What matters about this number?",
+    "stepSetup": "Set it up",
+    "stepOf": "Step {{step}} of {{total}}",
+    "namePlaceholder": "Coffee, pages, calls…",
+    "nameLabel": "Name",
+    "chooseIcon": "Choose an icon",
+    "colour": "Colour",
+    "colourA11y": "Colour {{colour}}",
+    "howMany": "How many?",
+    "limitQuestion": "What's your limit?",
+    "every": "Every",
+    "compare": "Compare",
+    "resets": "Starts fresh",
+    "resetsNever": "Never",
+    "howOften": "How often?",
+    "daysAWeek_one": "{{count}} day a week",
+    "daysAWeek_other": "{{count}} days a week",
+    "everyDay": "Every day",
+    "usual": {
+      "day": "Usually, how many a day?",
+      "week": "Usually, how many a week?",
+      "month": "Usually, how many a month?"
+    },
+    "usualHint": "Optional. Gives Foxiem a starting point before there is history.",
+    "unit": "Unit",
+    "unitPlaceholder": "pages, glasses, £…",
+    "step": "Each tap adds",
+    "startingValue": "Starting value",
+    "startingValueHint": "Already counted some? Start from that number.",
+    "notes": "Notes",
+    "notesPlaceholder": "Anything you want to remember about this tracker",
+    "moreOptions": "More options",
+    "fewerOptions": "Fewer options",
+    "cta": "Create tracker",
+    "summary": "Summary",
+    "decrease": "Decrease {{label}}",
+    "increase": "Increase {{label}}",
+    "errors": {
+      "nameRequired": "Give your tracker a name.",
+      "nameTooLong": "Keep the name under 40 characters.",
+      "nameDuplicate": "You already have a tracker with this name.",
+      "targetRequired": "Enter a number.",
+      "targetRange": "Choose a number in range.",
+      "stepRange": "Each tap can add 1 to 1,000.",
+      "startingValueRange": "Starting value is too large.",
+      "unitTooLong": "Keep the unit under 16 characters.",
+      "baselineRange": "That number is out of range.",
+      "trackerLimit": "You have reached the maximum of 100 active trackers. Archive one to add another."
+    }
+  },
+  "home": {
+    "addTracker": "New tracker",
+    "reorder": "Reorder",
+    "reorderDone": "Done",
+    "archivedCount_one": "{{count}} archived tracker",
+    "archivedCount_other": "{{count}} archived trackers",
+    "moveUp": "Move {{name}} up",
+    "moveDown": "Move {{name}} down",
+    "countA11y": "Add {{amount}} to {{name}}",
+    "decrementA11y": "Subtract {{amount}} from {{name}}",
+    "rowHint": "Opens details",
+    "hint": "Tap + to count. Tap a tracker to see its progress.",
+    "tryNext": "Try another way to count",
+    "emptyTitle": "Start with something you want to count.",
+    "emptyBody": "Coffee, pages, calls, walks — anything that matters to you.",
+    "emptyCta": "Create a tracker",
+    "whatsNewTitle": "Foxiem now counts with intent",
+    "whatsNewBody": "Your counters are all here. Open one and use ⚙ to give it a target, a limit, or keep just counting.",
+    "saveFailedTitle": "Foxiem couldn't save your latest changes",
+    "saveFailedBody": "Your device may be low on storage. Foxiem will keep trying.",
+    "recoveredTitle": "Foxiem restored your trackers",
+    "recoveredBody": "Stored data couldn't be read, so Foxiem used its backup. Your most recent entries may be missing.",
+    "unreadableTitle": "Some history couldn't be read",
+    "unreadableBody": "Foxiem kept a copy on this device and started the affected trackers fresh."
+  },
+  "status": {
+    "total": "total",
+    "thisMonth": "{{count}} this month",
+    "lastEntry": "Last entry {{when}}",
+    "noEntries": "No entries yet",
+    "yesterday": "Yesterday: {{count}}",
+    "lastWeek": "Last week: {{count}}",
+    "lastMonth": "Last month: {{count}}",
+    "toGo": {
+      "day": "{{count}} to go today",
+      "week": "{{count}} to go this week",
+      "month": "{{count}} to go this month",
+      "all": "{{count}} to go"
+    },
+    "reached": "Target reached",
+    "reachedOver": "Target reached · {{count}} over",
+    "left": {
+      "day": "{{count}} left today",
+      "week": "{{count}} left this week",
+      "month": "{{count}} left this month"
+    },
+    "leftLong": {
+      "day": "{{count}} left within today's limit",
+      "week": "{{count}} left within this week's limit",
+      "month": "{{count}} left within this month's limit"
+    },
+    "atLimit": {
+      "day": "Limit reached for today",
+      "week": "Limit reached for this week",
+      "month": "Limit reached for this month"
+    },
+    "over": {
+      "day": "{{count}} over today's limit",
+      "week": "{{count}} over this week's limit",
+      "month": "{{count}} over this month's limit"
+    },
+    "down": {
+      "day": "↓ {{percent}} vs yesterday",
+      "week": "↓ {{percent}} vs last week",
+      "month": "↓ {{percent}} vs last month"
+    },
+    "up": {
+      "day": "↑ {{percent}} vs yesterday",
+      "week": "↑ {{percent}} vs last week",
+      "month": "↑ {{percent}} vs last month"
+    },
+    "same": {
+      "day": "Same as yesterday",
+      "week": "Same as last week",
+      "month": "Same as last month"
+    },
+    "upFromZero": {
+      "day": "{{count}} vs none yesterday",
+      "week": "{{count}} vs none last week",
+      "month": "{{count}} vs none last month"
+    },
+    "comparisonSoon": {
+      "day": "First comparison after a full day",
+      "week": "First comparison after a full week",
+      "month": "First comparison after a full month"
+    },
+    "usual": {
+      "day": "Your usual: {{count}} a day",
+      "week": "Your usual: {{count}} a week",
+      "month": "Your usual: {{count}} a month"
+    },
+    "loggedToday": "Logged today",
+    "sessionsToday": "{{count}} times today",
+    "notYetToday": "Not logged yet today",
+    "rhythmMet": "This week's rhythm is complete",
+    "of": "of {{target}}",
+    "max": "max {{target}}",
+    "ofDays": "of {{target}} days",
+    "a11ySummary": "{{name}}, {{value}}, {{status}}"
+  },
+  "detail": {
+    "settings": "Tracker settings",
+    "heroOf": {
+      "day": "of {{target}} {{unit}} today",
+      "week": "of {{target}} {{unit}} this week",
+      "month": "of {{target}} {{unit}} this month",
+      "all": "of {{target}} {{unit}}"
+    },
+    "heroMax": {
+      "day": "of max {{target}} {{unit}} today",
+      "week": "of max {{target}} {{unit}} this week",
+      "month": "of max {{target}} {{unit}} this month"
+    },
+    "heroPeriod": {
+      "day": "{{unit}} today",
+      "week": "{{unit}} this week",
+      "month": "{{unit}} this month",
+      "all": "{{unit}} in total"
+    },
+    "heroDays": "of {{target}} days this week",
+    "increment": "Add {{amount}}",
+    "decrement": "Subtract {{amount}}",
+    "addAmount": "Add amount",
+    "addAmountHint": "Long press + to add any amount",
+    "added": "Added {{amount}}",
+    "subtracted": "Subtracted {{amount}}",
+    "thisWeek": "This week",
+    "weekChartA11y": "This week by day: {{values}}",
+    "targetLine": "Target {{target}}",
+    "limitLine": "Limit {{target}}",
     "consistency": "Consistency",
-    "viewActivity": "View activity",
-    "consistencyBody": "Small counts turn into meaningful progress.",
-    "achievementAlt": "Foxiem holding a trophy",
-    "weekday": {
-      "mon": "Mon",
-      "tue": "Tue",
-      "wed": "Wed",
-      "thu": "Thu",
-      "fri": "Fri",
-      "sat": "Sat",
-      "sun": "Sun"
+    "consistencyWindow": "{{success}} of the last {{days}} days",
+    "consistencyPlanned": "{{success}} active days of {{planned}} planned",
+    "consistencyPeriods": {
+      "week": "{{success}} of the last {{count}} weeks",
+      "month": "{{success}} of the last {{count}} months"
     },
-    "weekNumber": {
-      "w1": "W1",
-      "w2": "W2",
-      "w3": "W3",
-      "w4": "W4",
-      "w5": "W5",
-      "w6": "W6"
+    "consistencyRule": {
+      "active": "Days with an entry",
+      "target": "Days the target was reached",
+      "limit": "Days within the limit",
+      "rhythm": "Active days against your rhythm"
     },
-    "monthShort": {
-      "jan": "Jan",
-      "feb": "Feb",
-      "mar": "Mar",
-      "apr": "Apr",
-      "may": "May",
-      "jun": "Jun",
-      "jul": "Jul",
-      "aug": "Aug",
-      "sep": "Sep",
-      "oct": "Oct",
-      "nov": "Nov",
-      "dec": "Dec"
+    "consistencyRulePeriod": {
+      "week": {
+        "target": "Weeks the target was reached",
+        "limit": "Weeks within the limit"
+      },
+      "month": {
+        "target": "Months the target was reached",
+        "limit": "Months within the limit"
+      }
     },
-    "noActivity": "No activity yet"
+    "consistencySoon_one": "Consistency appears after {{count}} more day of history.",
+    "consistencySoon_other": "Consistency appears after {{count}} more days of history.",
+    "streak": "Current streak",
+    "bestStreak": "Best",
+    "streakDays_one": "{{count}} day",
+    "streakDays_other": "{{count}} days",
+    "streakWeeks_one": "{{count}} week",
+    "streakWeeks_other": "{{count}} weeks",
+    "streakMonths_one": "{{count}} month",
+    "streakMonths_other": "{{count}} months",
+    "calendar": "Calendar",
+    "insights": "Insights",
+    "insightsEmpty": "Keep counting for a few more days to reveal trends.",
+    "recent": "Recent",
+    "allHistory": "All history",
+    "addEntry": "Add entry",
+    "emptyTitle": "Your counts will appear here.",
+    "emptyBody": "Tap + to count. You can add or fix past entries any time.",
+    "reduce": {
+      "samePoint": {
+        "day": "This time yesterday",
+        "week": "This point last week",
+        "month": "This point last month"
+      },
+      "last": {
+        "day": "Yesterday",
+        "week": "Last week",
+        "month": "Last month"
+      },
+      "usual": "Your usual"
+    },
+    "notFound": "This tracker no longer exists.",
+    "archivedNotice": "This tracker is archived. Restore it to count again.",
+    "restore": "Restore"
   },
   "calendar": {
-    "weekdaysShort": {
-      "monday": "Mon",
-      "tuesday": "Tue",
-      "wednesday": "Wed",
-      "thursday": "Thu",
-      "friday": "Fri",
-      "saturday": "Sat",
-      "sunday": "Sun"
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "dayA11y": "{{date}}: {{value}}",
+    "dayGoalMet": "{{date}}: {{value}}, goal met",
+    "dayGoalMissed": "{{date}}: {{value}}, goal not met",
+    "noEntries": "no entries",
+    "moreWithPro": "Earlier months are part of Foxiem Pro",
+    "legendLess": "Less",
+    "legendMore": "More",
+    "year": "Year",
+    "yearTitle": "{{year}} at a glance"
+  },
+  "insight": {
+    "comparison": {
+      "down": {
+        "day": "{{name}} is down {{percent}} compared with this time yesterday.",
+        "week": "{{name}} is down {{percent}} compared with this point last week.",
+        "month": "{{name}} is down {{percent}} compared with this point last month."
+      },
+      "up": {
+        "day": "{{name}} is up {{percent}} compared with this time yesterday.",
+        "week": "{{name}} is up {{percent}} compared with this point last week.",
+        "month": "{{name}} is up {{percent}} compared with this point last month."
+      },
+      "same": {
+        "day": "{{name}} is level with this time yesterday.",
+        "week": "{{name}} is level with this point last week.",
+        "month": "{{name}} is level with this point last month."
+      },
+      "upFromZero": {
+        "day": "{{name}}: {{count}} so far, none by this time yesterday.",
+        "week": "{{name}}: {{count}} so far, none by this point last week.",
+        "month": "{{name}}: {{count}} so far, none by this point last month."
+      }
     },
-    "monthsShort": {
-      "january": "Jan",
-      "february": "Feb",
-      "march": "Mar",
-      "april": "Apr",
-      "may": "May",
-      "june": "Jun",
-      "july": "Jul",
-      "august": "Aug",
-      "september": "Sep",
-      "october": "Oct",
-      "november": "Nov",
-      "december": "Dec"
+    "hitRate": {
+      "target": "You reached your {{name}} target on {{success}} of the last {{days}} days.",
+      "limit": "You stayed within your {{name}} limit on {{success}} of the last {{days}} days."
+    },
+    "average": "{{name}}: about {{average}} a day over the last {{days}} days.",
+    "averageUnit": "{{name}}: about {{average}} {{unit}} a day over the last {{days}} days.",
+    "weekday": {
+      "sunday": "Sunday is usually your highest {{name}} day.",
+      "monday": "Monday is usually your highest {{name}} day.",
+      "tuesday": "Tuesday is usually your highest {{name}} day.",
+      "wednesday": "Wednesday is usually your highest {{name}} day.",
+      "thursday": "Thursday is usually your highest {{name}} day.",
+      "friday": "Friday is usually your highest {{name}} day.",
+      "saturday": "Saturday is usually your highest {{name}} day."
+    },
+    "dayPart": {
+      "morning": "Most of your {{name}} entries happen in the morning.",
+      "afternoon": "Most of your {{name}} entries happen in the afternoon.",
+      "evening": "Most of your {{name}} entries happen in the evening.",
+      "night": "Most of your {{name}} entries happen late at night."
+    },
+    "pace": {
+      "ahead": {
+        "week": "You're ahead of pace for {{name}} this week.",
+        "month": "You're ahead of pace for {{name}} this month."
+      },
+      "onPace": {
+        "week": "You're on pace for {{name}} this week.",
+        "month": "You're on pace for {{name}} this month."
+      },
+      "needed": {
+        "week": "About {{count}} a day reaches your {{name}} target this week.",
+        "month": "About {{count}} a day reaches your {{name}} target this month."
+      },
+      "projected": {
+        "week": "At this pace, about {{count}} by the end of the week.",
+        "month": "At this pace, about {{count}} by the end of the month."
+      },
+      "eta": "At your recent pace you'll reach {{target}} around {{date}}.",
+      "etaNone": "Log a few more days to project when you'll reach {{target}}."
+    },
+    "weeks": "Your last four weeks of {{name}}: {{values}}.",
+    "cross": {
+      "higher": "On days you log {{driver}}, {{subject}} is {{percent}} higher.",
+      "lower": "On days you log {{driver}}, {{subject}} is {{percent}} lower."
+    },
+    "activeDays": "You logged something on {{success}} of the last {{days}} days.",
+    "targetsThisWeek_one": "{{count}} target reached this week.",
+    "targetsThisWeek_other": "{{count}} targets reached this week.",
+    "patternsSoon_one": "Patterns need about {{count}} more day of history.",
+    "patternsSoon_other": "Patterns need about {{count}} more days of history."
+  },
+  "insights": {
+    "title": "Insights",
+    "thisWeek": "This week",
+    "weekRange": "This week · {{range}}",
+    "highlights": "Highlights",
+    "reviews": "Reviews",
+    "patterns": "Patterns",
+    "emptyTitle": "Nothing to understand yet",
+    "emptyBody": "Create a tracker and count for a few days. Insights appear as soon as there is enough history.",
+    "emptyCta": "Create a tracker",
+    "earlyTitle": "Keep counting to reveal your first trend",
+    "earlyBody": "Your first weekly comparison appears after a full week of history.",
+    "noHighlights": "Highlights appear once there are a few days to compare.",
+    "patternsLocked": "See how your numbers move together and which days they rise.",
+    "noPatterns": "No clear patterns yet. Foxiem only shows a pattern when your history supports it.",
+    "weeklyReview": "Weekly review",
+    "weeklyReviewBody": "Last week, {{range}}",
+    "monthlyReview": "Monthly review",
+    "monthlyReviewBody": "{{month}}",
+    "weekLine": {
+      "daysOnTarget": "Target reached on {{success}} of {{days}} days",
+      "daysWithinLimit": "Within the limit on {{success}} of {{days}} days",
+      "periodTarget": "{{value}} of {{target}} this week",
+      "periodLimit": "{{value}} of max {{target}} this week",
+      "total": "{{value}} this week",
+      "rhythm": "{{value}} of {{target}} days this week",
+      "noDays": "Week just started"
+    }
+  },
+  "review": {
+    "weeklyTitle": "Weekly review",
+    "monthlyTitle": "Monthly review",
+    "targetsLabel": "Targets reached",
+    "activeDaysLabel": "Days with an entry",
+    "byTracker": "Tracker by tracker",
+    "dailyTarget": "Target reached on {{success}} of {{days}} days",
+    "dailyLimit": "Within the limit on {{success}} of {{days}} days",
+    "periodTargetMet": "Target reached · {{total}} of {{target}}",
+    "periodTargetMissed": "{{total}} of {{target}}",
+    "periodLimitMet": "Within the limit · {{total}} of max {{limit}}",
+    "periodLimitMissed": "{{total}} · limit {{limit}}",
+    "rhythmMet": "{{active}} of {{target}} days · rhythm complete",
+    "rhythmMissed": "{{active}} of {{target}} days",
+    "changeUp": "{{total}} · ↑ {{percent}}",
+    "changeDown": "{{total}} · ↓ {{percent}}",
+    "changeSame": "{{total}} · level",
+    "changeNew": "{{total}} · first full week",
+    "pattern": "Strongest {{name}} days",
+    "next": "Next",
+    "nextPerDay": "About {{count}} a day reaches this month's {{name}} target.",
+    "unavailableWeek": "Your first weekly review appears after a full week of tracking.",
+    "unavailableMonth": "Your first monthly review appears after a full month of tracking.",
+    "vsPrevious": "vs {{month}}",
+    "bestWeek": "Best week: {{total}} from {{date}}",
+    "direction": {
+      "up": "Rising over three months",
+      "down": "Falling over three months",
+      "steady": "Steady over three months"
+    },
+    "successRate": {
+      "target": "Target reached on {{success}} of {{days}} days",
+      "limit": "Within the limit on {{success}} of {{days}} days"
     }
   },
   "history": {
-    "increment": "Added",
-    "decrement": "Subtracted",
-    "reset": "Reset"
+    "title": "History",
+    "empty": "Your counts will appear here.",
+    "added": "+{{amount}}",
+    "subtracted": "−{{amount}}",
+    "reset": "Reset to 0",
+    "adjusted": "Set to {{value}}",
+    "result": "→ {{value}}",
+    "edited": "edited",
+    "entryA11y": "{{change}} at {{time}}",
+    "deleted": "Entry deleted"
   },
-  "activity": {
-    "title": "Activity History",
-    "subtitle": "A record of your recent counting activity.",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "result": "Result",
-    "resetDescription": "Counter reset",
-    "empty": {
-      "title": "No activity yet",
-      "body": "Your counting activity will appear here."
-    }
+  "entry": {
+    "addTitle": "Add entry",
+    "editTitle": "Edit entry",
+    "amount": "Amount",
+    "when": "When",
+    "date": "Date",
+    "time": "Time",
+    "pickDate": "Pick a date",
+    "note": "Note",
+    "notePlaceholder": "Optional note",
+    "delete": "Delete entry",
+    "resetEntry": "This entry reset the count to 0. Delete it to undo the reset.",
+    "adjustEntry": "Foxiem added this while updating, so your count matched what you last saw.",
+    "invalidAmount": "Enter an amount above 0.",
+    "futureTime": "Entries can't be in the future.",
+    "addButton": "Add {{amount}}",
+    "quickAmounts": "Quick amounts"
   },
-  "consistency": {
-    "title": "Consistency",
-    "subtitle": "Small actions add up over time.",
-    "currentStreak": "Current streak",
-    "bestStreak": "Best streak",
-    "thisWeek": "This week",
-    "activeDays": "{{count}} of 7 active days",
-    "weekRatio": "{{count}} / 7",
-    "viewConsistency": "View consistency",
-    "keepGoing": "Keep going.",
-    "startToday": "Start today.",
-    "noStreak": "No streak yet",
-    "day_one": "{{count}} day",
-    "day_other": "{{count}} days",
-    "activeDay": "active",
-    "inactiveDay": "inactive",
-    "todayActive": "today, active",
-    "todayPending": "today, not active yet",
-    "futureDay": "future day",
-    "supporting": "Small counts. Big progress."
-  },
-  "profile": {
-    "title": "Profile",
-    "totalCounts": "Total Counts",
-    "topicCount": "{{topic}} count",
-    "editProfile": "Edit Profile",
+  "trackerSettings": {
+    "title": "Tracker settings",
+    "basics": "Basics",
+    "purpose": "What this number does",
+    "changeIntent": "Change",
+    "counting": "Counting",
     "reminders": "Reminders",
-    "language": "Language",
-    "privacy": "Privacy",
-    "resetData": "Reset App Data",
-    "about": "About",
-    "chartGraphic": "Decorative count chart",
-    "avatarAlt": "Foxiem profile avatar"
-  },
-  "profileSetup": {
-    "title": "Let's get to know you",
-    "subtitle": "Tell us what you'd like Foxiem to call you.",
-    "name": "Name",
-    "username": "Username",
-    "namePlaceholder": "",
-    "usernamePlaceholder": "",
-    "mascotAlt": "Foxiem",
-    "nameRequired": "Enter your name.",
-    "nameTooLong": "Name must be 50 characters or fewer.",
-    "usernameRequired": "Enter a username.",
-    "usernameLength": "Username must be 3–24 characters.",
-    "usernameChars": "Use only letters, numbers, underscores, and periods."
-  },
-  "editProfile": {
-    "title": "Edit Profile",
-    "saveChanges": "Save Changes"
-  },
-  "language": {
-    "title": "Language",
-    "selected": "Selected"
-  },
-  "privacy": {
-    "title": "Privacy",
-    "subtitle": "What Foxiem stores, and what it does not.",
-    "yourData": {
-      "title": "Your data",
-      "body": "Foxiem currently stores this information locally:",
-      "derived": "Statistics and Consistency are calculated from your history and are not stored separately."
-    },
-    "data": {
-      "name": "Name",
-      "username": "Username",
-      "language": "Selected language",
-      "counter": "Current counter",
-      "topics": "Named counter topics",
-      "history": "Counter activity history",
-      "reminders": "Reminder configuration",
-      "notificationIds": "Notification schedule identifiers",
-      "setupCompleted": "Setup-completed state"
-    },
-    "storage": {
-      "title": "Where your data is stored",
-      "body": "Your Foxiem data is stored locally on this device. Foxiem does not currently sync this data to a remote server or cloud account."
-    },
-    "notifications": {
-      "title": "Notifications",
-      "body": "Foxiem can schedule local reminders on this device. Notification permission is requested only when you use reminders. Foxiem does not use a remote push-notification server."
-    },
-    "cloud": {
-      "title": "Network and cloud",
-      "body": "Foxiem product data — your profile, counting history, reminders and preferences — stays on this device and is not uploaded to a Foxiem server. No Foxiem account is required. Separately, Google Mobile Ads may communicate with Google when ads are shown."
-    },
-    "reset": {
-      "title": "Reset App Data",
-      "body": "Reset App Data permanently removes Foxiem-owned local data from this device, including your profile, counter, history, reminders and preferences. Scheduled Foxiem reminders are also cancelled. You can do this from Profile."
-    },
-    "policy": "Privacy Policy",
-    "policyNotConfigured": "Privacy Policy link is not configured yet.",
-    "permission": {
-      "label": "Notification permission",
-      "allowed": "Allowed",
-      "denied": "Not allowed",
-      "undetermined": "Not requested"
-    },
-    "advertising": {
-      "title": "Advertising",
-      "body": "Foxiem uses Google Mobile Ads to show banner ads on selected screens. Google and the advertising SDK may process device and ad-related information for ad delivery, measurement, fraud prevention, and — where allowed by your choices — personalization. Foxiem also sends anonymous ads measurement events such as setup complete and first count to Google Analytics for Firebase. Foxiem does not send your name, username, counter, history or reminders to AdMob as targeting data."
-    },
-    "adChoices": "Privacy choices",
-    "adChoicesUnavailable": "Privacy choices are unavailable right now."
+    "addReminder": "Add reminder",
+    "moreRemindersPro": "More reminders with Foxiem Pro",
+    "reminderPaused": "Paused · extra reminders are part of Pro",
+    "notes": "Notes",
+    "manage": "Manage",
+    "resetCount": "Reset to 0",
+    "resetTitle": "Reset {{name}} to 0?",
+    "resetBody": "The count starts again from 0. Your history stays, including this reset.",
+    "archive": "Archive tracker",
+    "archiveHint": "Hides it from Home. History is kept and you can restore it any time.",
+    "archived": "{{name}} archived",
+    "delete": "Delete tracker",
+    "deleteTitle": "Delete {{name}}?",
+    "deleteBody": "This permanently deletes the tracker, its {{count}} entries and its reminders from this device. This can't be undone. Archive it instead to keep the history.",
+    "deleteConfirm": "Delete permanently",
+    "unsavedTitle": "Discard changes?",
+    "unsavedBody": "Your edits to this tracker haven't been saved.",
+    "discard": "Discard",
+    "saved": "Saved",
+    "intentChangeNote": "Changing this never changes your history. All numbers are recalculated from your entries."
   },
   "reminders": {
-    "title": "Reminders",
-    "subtitle": "Stay consistent with gentle reminders.",
-    "empty": {
-      "title": "No reminders yet",
-      "body": "Create a reminder to help keep your progress moving."
-    },
-    "add": "Add Reminder",
-    "edit": "Edit Reminder",
+    "title": "Reminder",
+    "newTitle": "New reminder",
+    "general": "Daily check-in",
     "time": "Time",
+    "changeTime": "Change time",
     "repeat": "Repeat",
-    "message": "Message",
     "everyDay": "Every day",
     "weekdays": "Weekdays",
     "weekends": "Weekends",
-    "delete": "Delete",
-    "deleteTitle": "Delete reminder?",
-    "deleteBody": "This reminder will stop appearing on this device.",
-    "save": "Save Reminder",
-    "enabled": "Reminder enabled",
-    "disabled": "Reminder disabled",
-    "chooseTime": "Reminder time",
-    "selectTime": "Select time",
-    "changeTimeHint": "Change reminder time",
-    "scheduleFailed": "Could not schedule this reminder.",
-    "daysRequired": "Choose at least one day."
+    "dayToggle": "{{day}}, {{state}}",
+    "selected": "selected",
+    "notSelected": "not selected",
+    "daysRequired": "Choose at least one day.",
+    "smart": "Progress-aware",
+    "smartBody": "Says what's left and skips days you've already done it.",
+    "suggested": "You usually log around {{time}}",
+    "useSuggested": "Use {{time}}",
+    "permissionTitle": "Foxiem will ask to send notifications",
+    "permissionBody": "Only the reminders you set, at the times you choose. You can turn them off any time.",
+    "blockedTitle": "Notifications are off for Foxiem",
+    "blockedBody": "Reminders are saved but won't appear until you allow notifications in Settings.",
+    "save": "Save reminder",
+    "delete": "Delete reminder",
+    "deleted": "Reminder deleted",
+    "saved": "Reminder saved",
+    "limitReached": "You've reached the reminder limit for this tracker.",
+    "scheduleFailed": "Couldn't schedule this reminder. Try again.",
+    "summary": "{{time}} · {{days}}",
+    "channelName": "Reminders",
+    "copy": {
+      "checkIn": "A quick check-in: anything to count today?",
+      "count": "Anything to log?",
+      "reach": {
+        "day": "Today's target: {{target}}.",
+        "week": "This week's target: {{target}}.",
+        "month": "This month's target: {{target}}.",
+        "all": "Your target: {{target}}."
+      },
+      "limit": {
+        "day": "A quick check-in on today's count. Limit: {{limit}}.",
+        "week": "A quick check-in on this week's count. Limit: {{limit}}.",
+        "month": "A quick check-in on this month's count. Limit: {{limit}}."
+      },
+      "reduce": "Log today's count so your trend stays accurate.",
+      "consistency": "Time for today's session?",
+      "smart": {
+        "reachRemaining": {
+          "day": "{{count}} to go for today's target.",
+          "week": "{{count}} to go for this week's target.",
+          "month": "{{count}} to go for this month's target.",
+          "all": "{{count}} to go to your target."
+        },
+        "limitLeft": {
+          "day": "{{count}} left within today's limit.",
+          "week": "{{count}} left within this week's limit.",
+          "month": "{{count}} left within this month's limit."
+        },
+        "limitReached": "{{value}} so far, limit {{limit}}.",
+        "rhythm": "Not logged yet today · {{active}} of {{target}} days this week.",
+        "reduce": {
+          "day": "{{current}} so far today · {{previous}} by this time yesterday.",
+          "week": "{{current}} so far this week · {{previous}} by this time last week.",
+          "month": "{{current}} so far this month · {{previous}} by this time last month."
+        },
+        "countToday": "{{count}} logged today."
+      }
+    }
   },
   "notifications": {
-    "permission": {
-      "title": "Notifications are disabled",
-      "body": "Enable notifications in your device settings to receive reminders.",
-      "openSettings": "Open Settings",
-      "denied": "Notifications were not allowed."
-    },
-    "presets": {
-      "daily": "Daily reminder",
-      "momentum": "Momentum",
-      "progress": "Progress"
-    },
     "messages": {
       "daily": "Time for your Foxiem count.",
       "momentum": "Small steps. Keep your momentum going.",
       "progress": "A little progress today adds up."
+    },
+    "title": "Notifications",
+    "status": "Notifications",
+    "statusGranted": "Allowed",
+    "statusOff": "Off in system settings",
+    "statusUndetermined": "Not requested yet",
+    "statusHint": "Foxiem asks only when you turn on a reminder.",
+    "checkIns": "Check-in reminders",
+    "checkInsBody": "General reminders that aren't tied to one tracker.",
+    "addCheckIn": "Add check-in reminder",
+    "trackerReminders": "Tracker reminders",
+    "trackerRemindersBody": "Set these from each tracker's settings.",
+    "noTrackerReminders": "No tracker reminders yet.",
+    "legacy": "From an earlier version"
+  },
+  "pro": {
+    "name": "Foxiem Pro",
+    "badge": "Pro",
+    "headline": "See what's changing, not just what you counted.",
+    "contextTitle": "{{feature}} is part of Foxiem Pro",
+    "features": {
+      "patterns": {
+        "title": "Patterns",
+        "body": "Which days and times your numbers rise."
+      },
+      "crossTracker": {
+        "title": "Cross-tracker patterns",
+        "body": "How your trackers move together."
+      },
+      "pace": {
+        "title": "Progress intelligence",
+        "body": "Ahead, behind or on pace, and when you'll get there."
+      },
+      "trends": {
+        "title": "Long-term trends",
+        "body": "Twelve weeks of direction at a glance."
+      },
+      "fullHistory": {
+        "title": "Your complete story",
+        "body": "Every month in the calendar and your year at a glance."
+      },
+      "weeklyReview": {
+        "title": "Weekly review",
+        "body": "A calm summary of last week."
+      },
+      "monthlyReview": {
+        "title": "Monthly review",
+        "body": "The direction of each tracker over months."
+      },
+      "multipleReminders": {
+        "title": "Multiple reminders",
+        "body": "Up to five reminders per tracker."
+      },
+      "smartReminders": {
+        "title": "Smarter reminders",
+        "body": "Progress-aware copy, and quiet on days you're done."
+      },
+      "reports": {
+        "title": "Reports",
+        "body": "Weekly summary exports across trackers."
+      }
+    },
+    "sections": {
+      "patterns": {
+        "title": "Patterns",
+        "body": "Understand how your numbers change."
+      },
+      "intelligence": {
+        "title": "Progress intelligence",
+        "body": "Know whether you're ahead, behind or on pace."
+      },
+      "reminders": {
+        "title": "Smarter reminders",
+        "body": "Reminders that know what's left."
+      },
+      "story": {
+        "title": "Your complete story",
+        "body": "Weekly and monthly reviews, full history and your year."
+      }
+    },
+    "plans": {
+      "yearly": "Yearly",
+      "monthly": "Monthly",
+      "lifetime": "Founding lifetime",
+      "bestValue": "Best value",
+      "yearlyPrice": "{{price}} a year",
+      "yearlyPerMonth": "{{price}} a month, billed yearly",
+      "monthlyPrice": "{{price}} a month",
+      "lifetimePrice": "{{price}} once",
+      "lifetimeBody": "Pay once. Pro forever on this account."
+    },
+    "cta": "Continue · {{price}}",
+    "restore": "Restore purchases",
+    "manage": "Manage subscription",
+    "cancelAnytime": "Cancel anytime in your {{store}} account settings. Payment is charged to your {{store}} account.",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "loading": "Loading plans…",
+    "loadFailed": "Couldn't load plans. Check your connection and try again.",
+    "purchaseFailed": "The purchase didn't go through. You haven't been charged.",
+    "purchasePending": "Your purchase is waiting for approval. Pro unlocks as soon as it's confirmed.",
+    "welcomeTitle": "You're Pro",
+    "welcomeBody": "Thank you for supporting Foxiem. Everything in Pro is ready.",
+    "restored": "Purchases restored. Foxiem Pro is active.",
+    "nothingToRestore": "No previous Foxiem Pro purchase was found for this account.",
+    "restoreFailed": "Couldn't restore purchases. Check your connection and try again.",
+    "simulated": "Development build: purchases are simulated and nothing is charged.",
+    "status": {
+      "freeBody": "See what's changing, not just what you counted.",
+      "active": "Pro · {{plan}}",
+      "renews": "Renews {{date}}",
+      "ends": "Ends {{date}}",
+      "lifetime": "Pro · Lifetime",
+      "grace": "Payment issue · Pro stays on until {{date}}",
+      "billingRetry": "Payment issue · update your payment method to keep Pro",
+      "expired": "Pro ended {{date}}",
+      "expiredBody": "Your trackers and history are all still here."
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "pro": "Foxiem Pro",
+    "preferences": "Preferences",
+    "language": "Language",
+    "appearance": "Appearance",
+    "haptics": "Haptics",
+    "hapticsBody": "A light tap when you count.",
+    "weekStart": "Week starts on",
+    "weekStartDevice": "Device setting ({{day}})",
+    "notifications": "Notifications",
+    "reminders": "Reminders",
+    "data": "Data",
+    "export": "Export data",
+    "exportBody": "All trackers and entries as CSV",
+    "report": "Weekly summary report",
+    "reportBody": "Totals per week for every tracker",
+    "exportFailed": "Couldn't create the export. Try again.",
+    "shareUnavailable": "Sharing isn't available on this device.",
+    "archived": "Archived trackers",
+    "reset": "Reset Foxiem",
+    "privacy": "Privacy",
+    "about": "About Foxiem",
+    "developer": "Developer",
+    "devScenario": "Next simulated purchase",
+    "devExpire": "Expire simulated Pro",
+    "devClear": "Clear simulated store",
+    "devSeed": "Load sample trackers",
+    "devSeeded": "Sample trackers added"
+  },
+  "appearance": {
+    "title": "Appearance",
+    "system": "Match device",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "title": "Language",
+    "device": "Match device"
+  },
+  "archive": {
+    "title": "Archived trackers",
+    "empty": "No archived trackers.",
+    "emptyBody": "Archived trackers keep their history and can be restored any time.",
+    "restore": "Restore",
+    "restored": "{{name}} restored",
+    "entries_one": "{{count}} entry",
+    "entries_other": "{{count}} entries"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "local": "Your data stays on this device",
+    "localBody": "Trackers, entries, notes, reminders and preferences are stored only on this device. Foxiem has no account and no server, and your history is never uploaded.",
+    "notifications": "Notifications",
+    "notificationsBody": "Reminders are scheduled locally on this device. Foxiem asks for permission only when you turn a reminder on.",
+    "analytics": "Anonymous measurement",
+    "analyticsBody": "Foxiem sends a few anonymous events to Google Analytics for Firebase, such as that a tracker was created and which kind. Tracker names, notes, counts and history are never sent.",
+    "analyticsToggle": "Share anonymous usage events",
+    "export": "Your data is yours",
+    "exportBody": "Export everything as CSV from Settings at any time. Reset Foxiem removes all of it from this device.",
+    "policy": "Privacy Policy"
   },
   "about": {
     "title": "About",
     "appName": "Foxiem",
-    "tagline": "Small counts. Big progress.",
-    "description": "Foxiem helps you keep track of small actions, see your progress and build consistency over time.",
-    "version": "Version",
-    "build": "Build",
-    "localFirst": {
-      "title": "Local-first",
-      "body": "Foxiem stores your personal product data on this device. No Foxiem account is required. Banner ads may use Google Mobile Ads, which communicates with Google separately from Foxiem product storage."
-    },
+    "tagline": "Count with intent.",
+    "description": "Foxiem is a personal count and progress tracker. Count anything in a tap and see how it changes over time.",
+    "version": "Version {{version}} ({{build}})",
+    "versionOnly": "Version {{version}}",
+    "support": "Contact support",
     "privacyPolicy": "Privacy Policy",
-    "terms": "Terms of Use",
-    "dev": {
-      "title": "Developer info",
-      "appId": "App identifier",
-      "storageKeys": "Storage keys",
-      "locale": "Locale",
-      "notifications": "Notification permission"
-    }
+    "licenses": "Open-source licences",
+    "licensesBody": "Foxiem is built with React Native, Expo and other open-source software. Typefaces: Bricolage Grotesque and Figtree, both under the SIL Open Font License 1.1. Icons: Ionicons and Material Design Icons.",
+    "linkFailed": "Couldn't open the link."
   },
   "reset": {
-    "title": "Reset app data?",
-    "message": "This will permanently remove all Foxiem data stored on this device, including your profile, counts, history, reminders and preferences.\n\nThis action cannot be undone.",
-    "confirm": "Reset App Data"
+    "title": "Reset Foxiem?",
+    "body": "This permanently removes every tracker, entry, note, reminder and preference from this device. It can't be undone.\n\nA subscription is not cancelled by resetting.",
+    "confirm": "Reset everything",
+    "exportFirst": "Export data first"
+  },
+  "errors": {
+    "boundaryTitle": "Something went wrong",
+    "boundaryBody": "Foxiem hit an unexpected problem. Your data is stored on this device and hasn't been removed.",
+    "boundaryRetry": "Reload Foxiem"
+  },
+  "a11y": {
+    "proBadge": "Requires Foxiem Pro",
+    "counted": "{{name}}: {{value}}",
+    "countedGoal": "{{name}}: {{value}}. Target reached.",
+    "countedLogged": "{{name}}: logged today"
   }
 }

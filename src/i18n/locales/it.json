@@ -3,322 +3,880 @@
     "cancel": "Annulla",
     "done": "Fine",
     "save": "Salva",
+    "saveChanges": "Salva modifiche",
     "continue": "Continua",
     "back": "Indietro",
-    "confirm": "Conferma",
-    "reset": "Reimposta",
-    "notConfigured": "Questo link non è ancora configurato.",
-    "closeModal": "Chiudi la finestra",
-    "closeSheet": "Chiudi il pannello",
-    "saveFailed": "Salvataggio non riuscito. Riprova."
+    "close": "Chiudi",
+    "undo": "Annulla",
+    "notNow": "Non ora",
+    "openSettings": "Apri Impostazioni",
+    "retry": "Riprova",
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "optional": "Facoltativo",
+    "closeSheet": "Chiudi",
+    "saveFailed": "Impossibile salvare. Riprova."
   },
   "navigation": {
     "home": "Home",
-    "statistics": "Statistiche",
-    "profile": "Profilo"
+    "insights": "Analisi",
+    "settings": "Impostazioni"
   },
-  "home": {
-    "goodMorning": "Buongiorno",
-    "goodAfternoon": "Buon pomeriggio",
-    "goodEvening": "Buonasera",
-    "totalCount": "Totale",
-    "addOne": "Aggiungi uno",
-    "subtractOne": "Togli uno",
-    "addFive": "Aggiungi cinque",
-    "resetCounter": "Reimposta",
-    "resetCounterA11y": "Reimposta il contatore",
-    "wavingHand": "Mano che saluta",
-    "mascotAlt": "Mascotte volpe Foxiem circondata da foglie",
-    "resetCounterTitle": "Reimpostare il contatore?",
-    "resetCounterMessage": "Il conteggio attuale tornerà a zero.",
-    "resetTopicTitle": "Reimpostare {{topic}}?",
-    "resetTopicMessage": "Solo {{topic}} tornerà a zero. Gli altri topic restano invariati."
+  "trackers": {
+    "defaultName": "Generale"
   },
-  "topics": {
-    "title": "Topic",
-    "topic": "Topic",
-    "defaultName": "Generale",
-    "add": "Aggiungi topic",
-    "new": "Nuovo topic",
-    "name": "Nome del topic",
-    "create": "Crea",
-    "rename": "Rinomina topic",
-    "renameA11y": "Rinomina {{topic}}",
-    "select": "Seleziona topic",
-    "selectA11y": "Seleziona topic, ora {{topic}}",
-    "activeTopic": "Topic attivo",
-    "alreadyExists": "Questo nome di topic è già in uso.",
-    "nameRequired": "Inserisci un nome di topic.",
-    "nameTooLong": "Il nome del topic deve avere al massimo 40 caratteri.",
-    "reservedName": "Scegli un nome diverso da Generale.",
-    "limitReached": "Puoi avere al massimo 20 topic."
+  "colours": {
+    "fox": "Arancione",
+    "honey": "Giallo",
+    "leaf": "Verde",
+    "teal": "Verde acqua",
+    "sky": "Blu",
+    "iris": "Viola",
+    "berry": "Rosa",
+    "cocoa": "Marrone",
+    "slate": "Grigio"
   },
-  "statistics": {
-    "title": "Statistiche",
-    "subtitle": "I tuoi progressi a colpo d’occhio.",
+  "units": {
+    "glasses": "bicchieri",
+    "pages": "pagine",
+    "reps": "rip.",
+    "rows": "ferri"
+  },
+  "intents": {
+    "count": {
+      "title": "Conta e basta",
+      "body": "Tieni il conto. Nessun obiettivo, nessun giudizio.",
+      "short": "Solo conteggio"
+    },
+    "reach": {
+      "title": "Raggiungi un obiettivo",
+      "body": "Punta a un numero, come 8 bicchieri al giorno.",
+      "short": "Obiettivo"
+    },
+    "limit": {
+      "title": "Resta sotto un limite",
+      "body": "Non superare un massimo, come 3 caffè al giorno.",
+      "short": "Limite"
+    },
+    "reduce": {
+      "title": "Riduci nel tempo",
+      "body": "Scendi un po' alla volta e osserva l'andamento.",
+      "short": "Riduci"
+    },
+    "consistency": {
+      "title": "Costruisci costanza",
+      "body": "Sii costante, nei giorni che preferisci.",
+      "short": "Costanza"
+    }
+  },
+  "periods": {
     "day": "Giorno",
     "week": "Settimana",
     "month": "Mese",
-    "year": "Anno",
-    "today": "Oggi",
+    "all": "Sempre",
+    "current": {
+      "day": "oggi",
+      "week": "questa settimana",
+      "month": "questo mese",
+      "all": "in totale"
+    }
+  },
+  "goal": {
+    "count": {
+      "all": "Conta e basta · tiene il totale",
+      "day": "Conta e basta · riparte da zero ogni giorno",
+      "week": "Conta e basta · riparte da zero ogni settimana",
+      "month": "Conta e basta · riparte da zero ogni mese"
+    },
+    "reach": {
+      "day": "Raggiungi {{target}} {{unit}} al giorno",
+      "week": "Raggiungi {{target}} {{unit}} a settimana",
+      "month": "Raggiungi {{target}} {{unit}} al mese",
+      "all": "Raggiungi {{target}} {{unit}} in totale"
+    },
+    "limit": {
+      "day": "Resta sotto {{target}} {{unit}} al giorno",
+      "week": "Resta sotto {{target}} {{unit}} a settimana",
+      "month": "Resta sotto {{target}} {{unit}} al mese"
+    },
+    "reduce": {
+      "day": "Riduci · confronto giorno per giorno",
+      "week": "Riduci · confronto settimana per settimana",
+      "month": "Riduci · confronto mese per mese"
+    },
+    "consistency_one": "{{count}} giorno a settimana",
+    "consistency_many": "{{count}} giorni a settimana",
+    "consistency_other": "{{count}} giorni a settimana",
+    "consistencyDaily": "Ogni giorno"
+  },
+  "welcome": {
+    "title": "Conta ciò che conta.",
+    "body": "Registra qualsiasi cosa con un tocco.\nGuarda come cambia nel tempo.",
+    "cta": "Inizia a contare",
+    "foxAlt": "La volpe di Foxiem seduta tra le foglie"
+  },
+  "start": {
+    "title": "Inizia con qualcosa di utile",
+    "subtitle": "Ognuno conta in modo diverso. Puoi cambiare tutto in seguito.",
+    "custom": "Crea il mio",
+    "templates": {
+      "coffee": "Caffè",
+      "water": "Acqua",
+      "reading": "Lettura",
+      "pushups": "Flessioni",
+      "cigarettes": "Sigarette",
+      "knitting": "Ferri di maglia",
+      "dogWalks": "Passeggiate col cane",
+      "prayer": "Preghiera",
+      "salesCalls": "Chiamate di vendita",
+      "ideas": "Idee"
+    }
+  },
+  "create": {
+    "title": "Nuovo contatore",
+    "stepName": "Cosa stai contando?",
+    "stepIntent": "Cosa conta di questo numero?",
+    "stepSetup": "Configura",
+    "stepOf": "Passo {{step}} di {{total}}",
+    "namePlaceholder": "Caffè, pagine, chiamate…",
+    "nameLabel": "Nome",
+    "chooseIcon": "Scegli un'icona",
+    "colour": "Colore",
+    "colourA11y": "Colore {{colour}}",
+    "howMany": "Quanti?",
+    "limitQuestion": "Qual è il tuo limite?",
+    "every": "Periodo",
+    "compare": "Confronta",
+    "resets": "Riparte da zero",
+    "resetsNever": "Mai",
+    "howOften": "Quanto spesso?",
+    "daysAWeek_one": "{{count}} giorno a settimana",
+    "daysAWeek_many": "{{count}} giorni a settimana",
+    "daysAWeek_other": "{{count}} giorni a settimana",
+    "everyDay": "Ogni giorno",
+    "usual": {
+      "day": "Di solito, quanti al giorno?",
+      "week": "Di solito, quanti a settimana?",
+      "month": "Di solito, quanti al mese?"
+    },
+    "usualHint": "Facoltativo. Dà a Foxiem un punto di partenza prima che ci sia uno storico.",
+    "unit": "Unità",
+    "unitPlaceholder": "pagine, bicchieri, €…",
+    "step": "Ogni tocco aggiunge",
+    "startingValue": "Valore iniziale",
+    "startingValueHint": "Hai già contato qualcosa? Parti da quel numero.",
+    "notes": "Note",
+    "notesPlaceholder": "Tutto ciò che vuoi ricordare su questo contatore",
+    "moreOptions": "Altre opzioni",
+    "fewerOptions": "Meno opzioni",
+    "cta": "Crea contatore",
+    "summary": "Riepilogo",
+    "decrease": "Diminuisci {{label}}",
+    "increase": "Aumenta {{label}}",
+    "errors": {
+      "nameRequired": "Dai un nome al tuo contatore.",
+      "nameTooLong": "Il nome deve avere meno di 40 caratteri.",
+      "nameDuplicate": "Hai già un contatore con questo nome.",
+      "targetRequired": "Inserisci un numero.",
+      "targetRange": "Scegli un numero nell'intervallo consentito.",
+      "stepRange": "Ogni tocco può aggiungere da 1 a 1.000.",
+      "startingValueRange": "Il valore iniziale è troppo grande.",
+      "unitTooLong": "L'unità deve avere meno di 16 caratteri.",
+      "baselineRange": "Questo numero è fuori intervallo.",
+      "trackerLimit": "Hai raggiunto il massimo di 100 contatori attivi. Archiviane uno per aggiungerne un altro."
+    }
+  },
+  "home": {
+    "addTracker": "Nuovo contatore",
+    "reorder": "Riordina",
+    "reorderDone": "Fine",
+    "archivedCount_one": "{{count}} contatore archiviato",
+    "archivedCount_many": "{{count}} contatori archiviati",
+    "archivedCount_other": "{{count}} contatori archiviati",
+    "moveUp": "Sposta su {{name}}",
+    "moveDown": "Sposta giù {{name}}",
+    "countA11y": "Aggiungi {{amount}} a {{name}}",
+    "decrementA11y": "Togli {{amount}} da {{name}}",
+    "rowHint": "Apre i dettagli",
+    "hint": "Tocca + per contare. Tocca un contatore per vedere i progressi.",
+    "tryNext": "Prova un altro modo di contare",
+    "emptyTitle": "Inizia con qualcosa che vuoi contare.",
+    "emptyBody": "Caffè, pagine, chiamate, passeggiate: tutto ciò che conta per te.",
+    "emptyCta": "Crea un contatore",
+    "whatsNewTitle": "Ora Foxiem conta con intenzione",
+    "whatsNewBody": "I tuoi contatori sono tutti qui. Aprine uno e usa ⚙ per dargli un obiettivo, un limite o per continuare semplicemente a contare.",
+    "saveFailedTitle": "Foxiem non è riuscito a salvare le ultime modifiche",
+    "saveFailedBody": "Il dispositivo potrebbe avere poco spazio. Foxiem continuerà a provare.",
+    "recoveredTitle": "Foxiem ha ripristinato i tuoi contatori",
+    "recoveredBody": "I dati salvati non erano leggibili, quindi Foxiem ha usato il backup. Le voci più recenti potrebbero mancare.",
+    "unreadableTitle": "Parte dello storico non era leggibile",
+    "unreadableBody": "Foxiem ne ha conservato una copia su questo dispositivo e ha fatto ripartire i contatori interessati."
+  },
+  "status": {
+    "total": "totale",
+    "thisMonth": "{{count}} questo mese",
+    "lastEntry": "Ultima voce: {{when}}",
+    "noEntries": "Ancora nessuna voce",
+    "yesterday": "Ieri: {{count}}",
+    "lastWeek": "Settimana scorsa: {{count}}",
+    "lastMonth": "Mese scorso: {{count}}",
+    "toGo": {
+      "day": "Ne mancano {{count}} oggi",
+      "week": "Ne mancano {{count}} questa settimana",
+      "month": "Ne mancano {{count}} questo mese",
+      "all": "Ne mancano {{count}}"
+    },
+    "reached": "Obiettivo raggiunto",
+    "reachedOver": "Obiettivo raggiunto · {{count}} in più",
+    "left": {
+      "day": "Ancora {{count}} oggi",
+      "week": "Ancora {{count}} questa settimana",
+      "month": "Ancora {{count}} questo mese"
+    },
+    "leftLong": {
+      "day": "Ancora {{count}} entro il limite di oggi",
+      "week": "Ancora {{count}} entro il limite di questa settimana",
+      "month": "Ancora {{count}} entro il limite di questo mese"
+    },
+    "atLimit": {
+      "day": "Limite di oggi raggiunto",
+      "week": "Limite della settimana raggiunto",
+      "month": "Limite del mese raggiunto"
+    },
+    "over": {
+      "day": "{{count}} oltre il limite di oggi",
+      "week": "{{count}} oltre il limite della settimana",
+      "month": "{{count}} oltre il limite del mese"
+    },
+    "down": {
+      "day": "↓ {{percent}} rispetto a ieri",
+      "week": "↓ {{percent}} rispetto alla settimana scorsa",
+      "month": "↓ {{percent}} rispetto al mese scorso"
+    },
+    "up": {
+      "day": "↑ {{percent}} rispetto a ieri",
+      "week": "↑ {{percent}} rispetto alla settimana scorsa",
+      "month": "↑ {{percent}} rispetto al mese scorso"
+    },
+    "same": {
+      "day": "Come ieri",
+      "week": "Come la settimana scorsa",
+      "month": "Come il mese scorso"
+    },
+    "upFromZero": {
+      "day": "{{count}} · nessuno ieri",
+      "week": "{{count}} · nessuno la settimana scorsa",
+      "month": "{{count}} · nessuno il mese scorso"
+    },
+    "usual": {
+      "day": "Di solito: {{count}} al giorno",
+      "week": "Di solito: {{count}} a settimana",
+      "month": "Di solito: {{count}} al mese"
+    },
+    "comparisonSoon": {
+      "day": "Primo confronto dopo un giorno intero",
+      "week": "Primo confronto dopo una settimana intera",
+      "month": "Primo confronto dopo un mese intero"
+    },
+    "loggedToday": "Registrato oggi",
+    "sessionsToday": "{{count}} volte oggi",
+    "notYetToday": "Non ancora registrato oggi",
+    "rhythmMet": "Il ritmo di questa settimana è completo",
+    "of": "di {{target}}",
+    "max": "max {{target}}",
+    "ofDays": "di {{target}} giorni",
+    "a11ySummary": "{{name}}, {{value}}, {{status}}"
+  },
+  "detail": {
+    "settings": "Impostazioni contatore",
+    "heroOf": {
+      "day": "di {{target}} {{unit}} oggi",
+      "week": "di {{target}} {{unit}} questa settimana",
+      "month": "di {{target}} {{unit}} questo mese",
+      "all": "di {{target}} {{unit}}"
+    },
+    "heroMax": {
+      "day": "di max {{target}} {{unit}} oggi",
+      "week": "di max {{target}} {{unit}} questa settimana",
+      "month": "di max {{target}} {{unit}} questo mese"
+    },
+    "heroPeriod": {
+      "day": "{{unit}} oggi",
+      "week": "{{unit}} questa settimana",
+      "month": "{{unit}} questo mese",
+      "all": "{{unit}} in totale"
+    },
+    "heroDays": "di {{target}} giorni questa settimana",
+    "increment": "Aggiungi {{amount}}",
+    "decrement": "Togli {{amount}}",
+    "addAmount": "Aggiungi quantità",
+    "addAmountHint": "Tieni premuto + per aggiungere qualsiasi quantità",
+    "added": "{{amount}} aggiunto",
+    "subtracted": "{{amount}} tolto",
     "thisWeek": "Questa settimana",
-    "thisMonth": "Questo mese",
-    "total": "Totale",
-    "chartLabel": "Grafico dei progressi",
+    "weekChartA11y": "Questa settimana per giorno: {{values}}",
+    "targetLine": "Obiettivo {{target}}",
+    "limitLine": "Limite {{target}}",
     "consistency": "Costanza",
-    "viewActivity": "Vedi attività",
-    "consistencyBody": "I piccoli conteggi diventano progressi veri.",
-    "achievementAlt": "Foxiem con un trofeo",
-    "weekday": {
-      "mon": "Lun",
-      "tue": "Mar",
-      "wed": "Mer",
-      "thu": "Gio",
-      "fri": "Ven",
-      "sat": "Sab",
-      "sun": "Dom"
+    "consistencyWindow": "{{success}} degli ultimi {{days}} giorni",
+    "consistencyPlanned": "{{success}} giorni attivi su {{planned}} previsti",
+    "consistencyPeriods": {
+      "week": "{{success}} delle ultime {{count}} settimane",
+      "month": "{{success}} degli ultimi {{count}} mesi"
     },
-    "weekNumber": {
-      "w1": "S1",
-      "w2": "S2",
-      "w3": "S3",
-      "w4": "S4",
-      "w5": "S5",
-      "w6": "S6"
+    "consistencyRule": {
+      "active": "Giorni con almeno una voce",
+      "target": "Giorni con obiettivo raggiunto",
+      "limit": "Giorni entro il limite",
+      "rhythm": "Giorni attivi rispetto al tuo ritmo"
     },
-    "monthShort": {
-      "jan": "Gen",
-      "feb": "Feb",
-      "mar": "Mar",
-      "apr": "Apr",
-      "may": "Mag",
-      "jun": "Giu",
-      "jul": "Lug",
-      "aug": "Ago",
-      "sep": "Set",
-      "oct": "Ott",
-      "nov": "Nov",
-      "dec": "Dic"
+    "consistencyRulePeriod": {
+      "week": {
+        "target": "Settimane con obiettivo raggiunto",
+        "limit": "Settimane entro il limite"
+      },
+      "month": {
+        "target": "Mesi con obiettivo raggiunto",
+        "limit": "Mesi entro il limite"
+      }
     },
-    "noActivity": "Nessuna attività ancora"
+    "consistencySoon_one": "La costanza compare dopo {{count}} altro giorno di storico.",
+    "consistencySoon_many": "La costanza compare dopo altri {{count}} giorni di storico.",
+    "consistencySoon_other": "La costanza compare dopo altri {{count}} giorni di storico.",
+    "streak": "Serie attuale",
+    "bestStreak": "Record",
+    "streakDays_one": "{{count}} giorno",
+    "streakDays_many": "{{count}} giorni",
+    "streakDays_other": "{{count}} giorni",
+    "streakWeeks_one": "{{count}} settimana",
+    "streakWeeks_many": "{{count}} settimane",
+    "streakWeeks_other": "{{count}} settimane",
+    "streakMonths_one": "{{count}} mese",
+    "streakMonths_many": "{{count}} mesi",
+    "streakMonths_other": "{{count}} mesi",
+    "calendar": "Calendario",
+    "insights": "Analisi",
+    "insightsEmpty": "Continua a contare ancora qualche giorno per vedere le tendenze.",
+    "recent": "Recenti",
+    "allHistory": "Tutto lo storico",
+    "addEntry": "Aggiungi voce",
+    "emptyTitle": "I tuoi conteggi appariranno qui.",
+    "emptyBody": "Tocca + per contare. Puoi aggiungere o correggere voci passate in qualsiasi momento.",
+    "reduce": {
+      "samePoint": {
+        "day": "Ieri a quest'ora",
+        "week": "Settimana scorsa, stesso punto",
+        "month": "Mese scorso, stesso punto"
+      },
+      "last": {
+        "day": "Ieri",
+        "week": "Settimana scorsa",
+        "month": "Mese scorso"
+      },
+      "usual": "Di solito"
+    },
+    "notFound": "Questo contatore non esiste più.",
+    "archivedNotice": "Questo contatore è archiviato. Ripristinalo per contare di nuovo.",
+    "restore": "Ripristina"
   },
   "calendar": {
-    "weekdaysShort": {
-      "monday": "Lun",
-      "tuesday": "Mar",
-      "wednesday": "Mer",
-      "thursday": "Gio",
-      "friday": "Ven",
-      "saturday": "Sab",
-      "sunday": "Dom"
+    "previousMonth": "Mese precedente",
+    "nextMonth": "Mese successivo",
+    "dayA11y": "{{date}}: {{value}}",
+    "dayGoalMet": "{{date}}: {{value}}, obiettivo raggiunto",
+    "dayGoalMissed": "{{date}}: {{value}}, obiettivo non raggiunto",
+    "noEntries": "nessuna voce",
+    "moreWithPro": "I mesi precedenti fanno parte di Foxiem Pro",
+    "legendLess": "Meno",
+    "legendMore": "Più",
+    "year": "Anno",
+    "yearTitle": "{{year}} a colpo d'occhio"
+  },
+  "insight": {
+    "comparison": {
+      "down": {
+        "day": "{{name}} è in calo del {{percent}} rispetto a ieri a quest'ora.",
+        "week": "{{name}} è in calo del {{percent}} rispetto allo stesso punto della settimana scorsa.",
+        "month": "{{name}} è in calo del {{percent}} rispetto allo stesso punto del mese scorso."
+      },
+      "up": {
+        "day": "{{name}} è in aumento del {{percent}} rispetto a ieri a quest'ora.",
+        "week": "{{name}} è in aumento del {{percent}} rispetto allo stesso punto della settimana scorsa.",
+        "month": "{{name}} è in aumento del {{percent}} rispetto allo stesso punto del mese scorso."
+      },
+      "same": {
+        "day": "{{name}} è allo stesso livello di ieri a quest'ora.",
+        "week": "{{name}} è allo stesso livello dello stesso punto della settimana scorsa.",
+        "month": "{{name}} è allo stesso livello dello stesso punto del mese scorso."
+      },
+      "upFromZero": {
+        "day": "{{name}}: {{count}} finora, nessuno ieri a quest'ora.",
+        "week": "{{name}}: {{count}} finora, nessuno allo stesso punto della settimana scorsa.",
+        "month": "{{name}}: {{count}} finora, nessuno allo stesso punto del mese scorso."
+      }
     },
-    "monthsShort": {
-      "january": "Gen",
-      "february": "Feb",
-      "march": "Mar",
-      "april": "Apr",
-      "may": "Mag",
-      "june": "Giu",
-      "july": "Lug",
-      "august": "Ago",
-      "september": "Set",
-      "october": "Ott",
-      "november": "Nov",
-      "december": "Dic"
+    "hitRate": {
+      "target": "Hai raggiunto l'obiettivo di {{name}} in {{success}} degli ultimi {{days}} giorni.",
+      "limit": "Sei rimasto entro il limite di {{name}} in {{success}} degli ultimi {{days}} giorni."
+    },
+    "average": "{{name}}: circa {{average}} al giorno negli ultimi {{days}} giorni.",
+    "averageUnit": "{{name}}: circa {{average}} {{unit}} al giorno negli ultimi {{days}} giorni.",
+    "weekday": {
+      "sunday": "Di solito la domenica è il tuo giorno più alto per {{name}}.",
+      "monday": "Di solito il lunedì è il tuo giorno più alto per {{name}}.",
+      "tuesday": "Di solito il martedì è il tuo giorno più alto per {{name}}.",
+      "wednesday": "Di solito il mercoledì è il tuo giorno più alto per {{name}}.",
+      "thursday": "Di solito il giovedì è il tuo giorno più alto per {{name}}.",
+      "friday": "Di solito il venerdì è il tuo giorno più alto per {{name}}.",
+      "saturday": "Di solito il sabato è il tuo giorno più alto per {{name}}."
+    },
+    "dayPart": {
+      "morning": "La maggior parte delle tue voci di {{name}} è al mattino.",
+      "afternoon": "La maggior parte delle tue voci di {{name}} è al pomeriggio.",
+      "evening": "La maggior parte delle tue voci di {{name}} è alla sera.",
+      "night": "La maggior parte delle tue voci di {{name}} è a tarda notte."
+    },
+    "pace": {
+      "ahead": {
+        "week": "Sei avanti rispetto al ritmo per {{name}} questa settimana.",
+        "month": "Sei avanti rispetto al ritmo per {{name}} questo mese."
+      },
+      "onPace": {
+        "week": "Sei in linea con il ritmo per {{name}} questa settimana.",
+        "month": "Sei in linea con il ritmo per {{name}} questo mese."
+      },
+      "needed": {
+        "week": "Con circa {{count}} al giorno raggiungi l'obiettivo di {{name}} questa settimana.",
+        "month": "Con circa {{count}} al giorno raggiungi l'obiettivo di {{name}} questo mese."
+      },
+      "projected": {
+        "week": "A questo ritmo, circa {{count}} entro fine settimana.",
+        "month": "A questo ritmo, circa {{count}} entro fine mese."
+      },
+      "eta": "Al tuo ritmo recente raggiungerai {{target}} intorno al {{date}}.",
+      "etaNone": "Registra ancora qualche giorno per stimare quando raggiungerai {{target}}."
+    },
+    "weeks": "Le tue ultime quattro settimane di {{name}}: {{values}}.",
+    "cross": {
+      "higher": "Nei giorni in cui registri {{driver}}, {{subject}} è più alto del {{percent}}.",
+      "lower": "Nei giorni in cui registri {{driver}}, {{subject}} è più basso del {{percent}}."
+    },
+    "activeDays": "Hai registrato qualcosa in {{success}} degli ultimi {{days}} giorni.",
+    "targetsThisWeek_one": "{{count}} obiettivo raggiunto questa settimana.",
+    "targetsThisWeek_many": "{{count}} obiettivi raggiunti questa settimana.",
+    "targetsThisWeek_other": "{{count}} obiettivi raggiunti questa settimana.",
+    "patternsSoon_one": "Per gli schemi serve ancora circa {{count}} giorno di storico.",
+    "patternsSoon_many": "Per gli schemi servono ancora circa {{count}} giorni di storico.",
+    "patternsSoon_other": "Per gli schemi servono ancora circa {{count}} giorni di storico."
+  },
+  "insights": {
+    "title": "Analisi",
+    "thisWeek": "Questa settimana",
+    "weekRange": "Questa settimana · {{range}}",
+    "highlights": "In evidenza",
+    "reviews": "Riepiloghi",
+    "patterns": "Schemi",
+    "emptyTitle": "Ancora niente da capire",
+    "emptyBody": "Crea un contatore e conta per qualche giorno. Le analisi compaiono non appena c'è abbastanza storico.",
+    "emptyCta": "Crea un contatore",
+    "earlyTitle": "Continua a contare per vedere la tua prima tendenza",
+    "earlyBody": "Il primo confronto settimanale compare dopo una settimana intera di storico.",
+    "noHighlights": "I punti in evidenza compaiono quando ci sono alcuni giorni da confrontare.",
+    "patternsLocked": "Scopri come si muovono insieme i tuoi numeri e in quali giorni salgono.",
+    "noPatterns": "Ancora nessuno schema chiaro. Foxiem mostra uno schema solo se il tuo storico lo conferma.",
+    "weeklyReview": "Riepilogo settimanale",
+    "weeklyReviewBody": "Settimana scorsa, {{range}}",
+    "monthlyReview": "Riepilogo mensile",
+    "monthlyReviewBody": "{{month}}",
+    "weekLine": {
+      "daysOnTarget": "Obiettivo raggiunto in {{success}} giorni su {{days}}",
+      "daysWithinLimit": "Entro il limite in {{success}} giorni su {{days}}",
+      "periodTarget": "{{value}} di {{target}} questa settimana",
+      "periodLimit": "{{value}} di max {{target}} questa settimana",
+      "total": "{{value}} questa settimana",
+      "rhythm": "{{value}} di {{target}} giorni questa settimana",
+      "noDays": "La settimana è appena iniziata"
+    }
+  },
+  "review": {
+    "weeklyTitle": "Riepilogo settimanale",
+    "monthlyTitle": "Riepilogo mensile",
+    "targetsLabel": "Obiettivi raggiunti",
+    "activeDaysLabel": "Giorni con voci",
+    "byTracker": "Contatore per contatore",
+    "dailyTarget": "Obiettivo raggiunto in {{success}} giorni su {{days}}",
+    "dailyLimit": "Entro il limite in {{success}} giorni su {{days}}",
+    "periodTargetMet": "Obiettivo raggiunto · {{total}} di {{target}}",
+    "periodTargetMissed": "{{total}} di {{target}}",
+    "periodLimitMet": "Entro il limite · {{total}} di max {{limit}}",
+    "periodLimitMissed": "{{total}} · limite {{limit}}",
+    "rhythmMet": "{{active}} di {{target}} giorni · ritmo completo",
+    "rhythmMissed": "{{active}} di {{target}} giorni",
+    "changeUp": "{{total}} · ↑ {{percent}}",
+    "changeDown": "{{total}} · ↓ {{percent}}",
+    "changeSame": "{{total}} · stabile",
+    "changeNew": "{{total}} · prima settimana intera",
+    "pattern": "Giorni più forti per {{name}}",
+    "next": "Prossimo passo",
+    "nextPerDay": "Con circa {{count}} al giorno raggiungi l'obiettivo mensile di {{name}}.",
+    "unavailableWeek": "Il primo riepilogo settimanale compare dopo una settimana intera di registrazioni.",
+    "unavailableMonth": "Il primo riepilogo mensile compare dopo un mese intero di registrazioni.",
+    "vsPrevious": "rispetto a {{month}}",
+    "bestWeek": "Settimana migliore: {{total}} dal {{date}}",
+    "direction": {
+      "up": "In crescita da tre mesi",
+      "down": "In calo da tre mesi",
+      "steady": "Stabile da tre mesi"
+    },
+    "successRate": {
+      "target": "Obiettivo raggiunto in {{success}} giorni su {{days}}",
+      "limit": "Entro il limite in {{success}} giorni su {{days}}"
     }
   },
   "history": {
-    "increment": "Aggiunto",
-    "decrement": "Sottratto",
-    "reset": "Reimpostato"
+    "title": "Storico",
+    "empty": "I tuoi conteggi appariranno qui.",
+    "added": "+{{amount}}",
+    "subtracted": "−{{amount}}",
+    "reset": "Azzerato",
+    "adjusted": "Impostato a {{value}}",
+    "result": "→ {{value}}",
+    "edited": "modificato",
+    "entryA11y": "{{change}} alle {{time}}",
+    "deleted": "Voce eliminata"
   },
-  "activity": {
-    "title": "Cronologia attività",
-    "subtitle": "Un registro delle tue conte recenti.",
-    "today": "Oggi",
-    "yesterday": "Ieri",
-    "result": "Risultato",
-    "resetDescription": "Contatore reimpostato",
-    "empty": {
-      "title": "Nessuna attività ancora",
-      "body": "La tua attività di conteggio apparirà qui."
-    }
+  "entry": {
+    "addTitle": "Aggiungi voce",
+    "editTitle": "Modifica voce",
+    "amount": "Quantità",
+    "when": "Quando",
+    "date": "Data",
+    "time": "Ora",
+    "pickDate": "Data…",
+    "note": "Nota",
+    "notePlaceholder": "Nota facoltativa",
+    "delete": "Elimina voce",
+    "resetEntry": "Questa voce ha azzerato il conteggio. Eliminala per annullare l'azzeramento.",
+    "adjustEntry": "Foxiem l'ha aggiunta durante l'aggiornamento, così il conteggio corrisponde a quello che vedevi.",
+    "invalidAmount": "Inserisci una quantità maggiore di 0.",
+    "futureTime": "Le voci non possono essere nel futuro.",
+    "addButton": "Aggiungi {{amount}}",
+    "quickAmounts": "Quantità rapide"
   },
-  "consistency": {
-    "title": "Costanza",
-    "subtitle": "Le piccole azioni si sommano nel tempo.",
-    "currentStreak": "Serie attuale",
-    "bestStreak": "Serie migliore",
-    "thisWeek": "Questa settimana",
-    "activeDays": "{{count}} di 7 giorni attivi",
-    "weekRatio": "{{count}} / 7",
-    "viewConsistency": "Vedi costanza",
-    "keepGoing": "Continua così.",
-    "startToday": "Inizia oggi.",
-    "noStreak": "Nessuna serie ancora",
-    "day_one": "{{count}} giorno",
-    "day_other": "{{count}} giorni",
-    "activeDay": "attivo",
-    "inactiveDay": "inattivo",
-    "todayActive": "oggi, attivo",
-    "todayPending": "oggi, non ancora attivo",
-    "futureDay": "giorno futuro",
-    "supporting": "Piccoli conteggi. Grandi progressi."
-  },
-  "profile": {
-    "title": "Profilo",
-    "totalCounts": "Conteggio totale",
-    "topicCount": "Conteggio {{topic}}",
-    "editProfile": "Modifica profilo",
+  "trackerSettings": {
+    "title": "Impostazioni contatore",
+    "basics": "Informazioni di base",
+    "purpose": "A cosa serve questo numero",
+    "changeIntent": "Cambia",
+    "counting": "Conteggio",
     "reminders": "Promemoria",
-    "language": "Lingua",
-    "privacy": "Privacy",
-    "resetData": "Reimposta i dati",
-    "about": "Informazioni",
-    "chartGraphic": "Grafico decorativo",
-    "avatarAlt": "Avatar Foxiem"
-  },
-  "profileSetup": {
-    "title": "Conosciamoci",
-    "subtitle": "Dicci come vuoi che Foxiem ti chiami.",
-    "name": "Nome",
-    "username": "Nome utente",
-    "namePlaceholder": "",
-    "usernamePlaceholder": "",
-    "mascotAlt": "Foxiem",
-    "nameRequired": "Inserisci il tuo nome.",
-    "nameTooLong": "Il nome deve avere al massimo 50 caratteri.",
-    "usernameRequired": "Inserisci un nome utente.",
-    "usernameLength": "Il nome utente deve avere da 3 a 24 caratteri.",
-    "usernameChars": "Usa solo lettere, numeri, trattini bassi e punti."
-  },
-  "editProfile": {
-    "title": "Modifica profilo",
-    "saveChanges": "Salva modifiche"
-  },
-  "language": {
-    "title": "Lingua",
-    "selected": "Selezionata"
-  },
-  "privacy": {
-    "title": "Privacy",
-    "subtitle": "Cosa Foxiem salva e cosa no.",
-    "yourData": {
-      "title": "I tuoi dati",
-      "body": "Foxiem al momento salva queste informazioni in locale:",
-      "derived": "Statistiche e costanza si calcolano dalla cronologia e non vengono salvate a parte."
-    },
-    "data": {
-      "name": "Nome",
-      "username": "Nome utente",
-      "language": "Lingua selezionata",
-      "counter": "Contatore attuale",
-      "topics": "Topic del contatore con nome",
-      "history": "Cronologia delle attività del contatore",
-      "reminders": "Configurazione dei promemoria",
-      "notificationIds": "Identificatori delle notifiche programmate",
-      "setupCompleted": "Stato della configurazione iniziale"
-    },
-    "storage": {
-      "title": "Dove sono i tuoi dati",
-      "body": "I tuoi dati Foxiem sono salvati in locale su questo dispositivo. Foxiem al momento non sincronizza questi dati con un server remoto o un account cloud."
-    },
-    "notifications": {
-      "title": "Notifiche",
-      "body": "Foxiem può programmare promemoria locali su questo dispositivo. Il permesso di notifica viene chiesto solo quando usi i promemoria. Foxiem non usa un server remoto di notifiche push."
-    },
-    "cloud": {
-      "title": "Rete e cloud",
-      "body": "I dati di prodotto Foxiem — profilo, cronologia dei conteggi, promemoria e preferenze — restano su questo dispositivo e non vengono caricati su un server Foxiem. Non è richiesto un account Foxiem. Separatamente, Google Mobile Ads può comunicare con Google quando vengono mostrati annunci."
-    },
-    "reset": {
-      "title": "Reimposta i dati",
-      "body": "Reimposta i dati rimuove in modo permanente i dati Foxiem da questo dispositivo, inclusi profilo, contatore, cronologia, promemoria e preferenze. Anche i promemoria Foxiem programmati vengono annullati. Puoi farlo dal Profilo."
-    },
-    "policy": "Informativa sulla privacy",
-    "policyNotConfigured": "Il link all’informativa sulla privacy non è ancora configurato.",
-    "permission": {
-      "label": "Permesso di notifica",
-      "allowed": "Consentito",
-      "denied": "Non consentito",
-      "undetermined": "Non ancora richiesto"
-    },
-    "advertising": {
-      "title": "Pubblicità",
-      "body": "Foxiem usa Google Mobile Ads per mostrare banner su schermate selezionate. Google e l’SDK pubblicitario possono elaborare informazioni sul dispositivo e relative agli annunci per erogazione, misurazione, prevenzione delle frodi e — in base alle tue scelte — personalizzazione. Foxiem invia anche eventi anonimi di misurazione pubblicitaria, come configurazione completata e primo conteggio, a Google Analytics for Firebase. Foxiem non invia nome, username, contatore, cronologia o promemoria ad AdMob come dati di targeting."
-    },
-    "adChoices": "Scelte sulla privacy",
-    "adChoicesUnavailable": "Le scelte sulla privacy non sono disponibili al momento."
+    "addReminder": "Aggiungi promemoria",
+    "moreRemindersPro": "Più promemoria con Foxiem Pro",
+    "reminderPaused": "In pausa · i promemoria aggiuntivi fanno parte di Pro",
+    "notes": "Note",
+    "manage": "Gestisci",
+    "resetCount": "Azzera",
+    "resetTitle": "Azzerare {{name}}?",
+    "resetBody": "Il conteggio riparte da 0. Lo storico resta, compreso questo azzeramento.",
+    "archive": "Archivia contatore",
+    "archiveHint": "Lo nasconde dalla Home. Lo storico resta e puoi ripristinarlo quando vuoi.",
+    "archived": "{{name}} archiviato",
+    "delete": "Elimina contatore",
+    "deleteTitle": "Eliminare {{name}}?",
+    "deleteBody": "Il contatore, le sue {{count}} voci e i suoi promemoria verranno eliminati definitivamente da questo dispositivo. L'operazione non si può annullare. Archivialo invece per conservare lo storico.",
+    "deleteConfirm": "Elimina definitivamente",
+    "unsavedTitle": "Scartare le modifiche?",
+    "unsavedBody": "Le modifiche a questo contatore non sono state salvate.",
+    "discard": "Scarta",
+    "saved": "Salvato",
+    "intentChangeNote": "Modificarlo non cambia mai lo storico. Tutti i numeri vengono ricalcolati dalle tue voci."
   },
   "reminders": {
     "title": "Promemoria",
-    "subtitle": "Resta costante con promemoria delicati.",
-    "empty": {
-      "title": "Nessun promemoria ancora",
-      "body": "Crea un promemoria per continuare a fare progressi."
-    },
-    "add": "Aggiungi promemoria",
-    "edit": "Modifica promemoria",
-    "time": "Orario",
+    "newTitle": "Nuovo promemoria",
+    "general": "Controllo quotidiano",
+    "time": "Ora",
+    "changeTime": "Cambia ora",
     "repeat": "Ripeti",
-    "message": "Messaggio",
     "everyDay": "Ogni giorno",
-    "weekdays": "Giorni feriali",
-    "weekends": "Fine settimana",
-    "delete": "Elimina",
-    "deleteTitle": "Eliminare il promemoria?",
-    "deleteBody": "Questo promemoria non apparirà più su questo dispositivo.",
+    "weekdays": "Lun–ven",
+    "weekends": "Weekend",
+    "dayToggle": "{{day}}, {{state}}",
+    "selected": "selezionato",
+    "notSelected": "non selezionato",
+    "daysRequired": "Scegli almeno un giorno.",
+    "smart": "In base ai progressi",
+    "smartBody": "Ti dice cosa manca e tace nei giorni in cui hai già fatto.",
+    "suggested": "Di solito registri verso le {{time}}",
+    "useSuggested": "Usa {{time}}",
+    "permissionTitle": "Foxiem chiederà il permesso di inviare notifiche",
+    "permissionBody": "Solo i promemoria che imposti, agli orari che scegli. Puoi disattivarli quando vuoi.",
+    "blockedTitle": "Le notifiche di Foxiem sono disattivate",
+    "blockedBody": "I promemoria sono salvati, ma non compariranno finché non consenti le notifiche nelle Impostazioni.",
     "save": "Salva promemoria",
-    "enabled": "Promemoria attivo",
-    "disabled": "Promemoria disattivato",
-    "chooseTime": "Orario del promemoria",
-    "selectTime": "Seleziona orario",
-    "changeTimeHint": "Modifica l’orario del promemoria",
-    "scheduleFailed": "Impossibile programmare questo promemoria.",
-    "daysRequired": "Scegli almeno un giorno."
+    "delete": "Elimina promemoria",
+    "deleted": "Promemoria eliminato",
+    "saved": "Promemoria salvato",
+    "limitReached": "Hai raggiunto il limite di promemoria per questo contatore.",
+    "scheduleFailed": "Impossibile programmare questo promemoria. Riprova.",
+    "summary": "{{time}} · {{days}}",
+    "channelName": "Promemoria",
+    "copy": {
+      "checkIn": "Un controllo veloce: qualcosa da contare oggi?",
+      "count": "Qualcosa da registrare?",
+      "reach": {
+        "day": "Obiettivo di oggi: {{target}}.",
+        "week": "Obiettivo della settimana: {{target}}.",
+        "month": "Obiettivo del mese: {{target}}.",
+        "all": "Il tuo obiettivo: {{target}}."
+      },
+      "limit": {
+        "day": "Un controllo veloce del conteggio di oggi. Limite: {{limit}}.",
+        "week": "Un controllo veloce del conteggio della settimana. Limite: {{limit}}.",
+        "month": "Un controllo veloce del conteggio del mese. Limite: {{limit}}."
+      },
+      "reduce": "Registra il conteggio di oggi così l'andamento resta preciso.",
+      "consistency": "È l'ora della sessione di oggi?",
+      "smart": {
+        "reachRemaining": {
+          "day": "Ne mancano {{count}} per l'obiettivo di oggi.",
+          "week": "Ne mancano {{count}} per l'obiettivo della settimana.",
+          "month": "Ne mancano {{count}} per l'obiettivo del mese.",
+          "all": "Ne mancano {{count}} al tuo obiettivo."
+        },
+        "limitLeft": {
+          "day": "Ancora {{count}} entro il limite di oggi.",
+          "week": "Ancora {{count}} entro il limite della settimana.",
+          "month": "Ancora {{count}} entro il limite del mese."
+        },
+        "limitReached": "{{value}} finora, limite {{limit}}.",
+        "rhythm": "Non ancora registrato oggi · {{active}} di {{target}} giorni questa settimana.",
+        "reduce": {
+          "day": "{{current}} finora oggi · {{previous}} ieri a quest'ora.",
+          "week": "{{current}} finora questa settimana · {{previous}} allo stesso punto della settimana scorsa.",
+          "month": "{{current}} finora questo mese · {{previous}} allo stesso punto del mese scorso."
+        },
+        "countToday": "Oggi: {{count}}."
+      }
+    }
   },
   "notifications": {
-    "permission": {
-      "title": "Le notifiche sono disattivate",
-      "body": "Attiva le notifiche nelle impostazioni del dispositivo per ricevere i promemoria.",
-      "openSettings": "Apri impostazioni",
-      "denied": "Le notifiche non sono state consentite."
-    },
-    "presets": {
-      "daily": "Promemoria giornaliero",
-      "momentum": "Slancio",
-      "progress": "Progresso"
-    },
     "messages": {
       "daily": "È ora del tuo conteggio Foxiem.",
       "momentum": "Piccoli passi. Mantieni lo slancio.",
       "progress": "Un po’ di progresso oggi si somma."
+    },
+    "title": "Notifiche",
+    "status": "Notifiche",
+    "statusGranted": "Consentite",
+    "statusOff": "Disattivate nelle impostazioni di sistema",
+    "statusUndetermined": "Non ancora richieste",
+    "statusHint": "Foxiem lo chiede solo quando attivi un promemoria.",
+    "checkIns": "Promemoria di controllo",
+    "checkInsBody": "Promemoria generali non legati a un contatore.",
+    "addCheckIn": "Aggiungi promemoria di controllo",
+    "trackerReminders": "Promemoria dei contatori",
+    "trackerRemindersBody": "Impostali dalle impostazioni di ciascun contatore.",
+    "noTrackerReminders": "Ancora nessun promemoria dei contatori.",
+    "legacy": "Da una versione precedente"
+  },
+  "pro": {
+    "name": "Foxiem Pro",
+    "badge": "Pro",
+    "headline": "Guarda cosa sta cambiando, non solo cosa hai contato.",
+    "contextTitle": "Incluso in Foxiem Pro: {{feature}}",
+    "features": {
+      "patterns": {
+        "title": "Schemi",
+        "body": "In quali giorni e a che ora salgono i tuoi numeri."
+      },
+      "crossTracker": {
+        "title": "Schemi tra contatori",
+        "body": "Come si muovono insieme i tuoi contatori."
+      },
+      "pace": {
+        "title": "Analisi del ritmo",
+        "body": "Avanti, indietro o in linea, e quando arriverai."
+      },
+      "trends": {
+        "title": "Tendenze a lungo termine",
+        "body": "Dodici settimane di andamento a colpo d'occhio."
+      },
+      "fullHistory": {
+        "title": "Tutta la tua storia",
+        "body": "Ogni mese nel calendario e il tuo anno a colpo d'occhio."
+      },
+      "weeklyReview": {
+        "title": "Riepilogo settimanale",
+        "body": "Un riepilogo sereno della settimana scorsa."
+      },
+      "monthlyReview": {
+        "title": "Riepilogo mensile",
+        "body": "L'andamento di ogni contatore nel corso dei mesi."
+      },
+      "multipleReminders": {
+        "title": "Più promemoria",
+        "body": "Fino a cinque promemoria per contatore."
+      },
+      "smartReminders": {
+        "title": "Promemoria più intelligenti",
+        "body": "Messaggi che conoscono i tuoi progressi e silenzio nei giorni già completati."
+      },
+      "reports": {
+        "title": "Report",
+        "body": "Esportazioni con il riepilogo settimanale di tutti i contatori."
+      }
+    },
+    "sections": {
+      "patterns": {
+        "title": "Schemi",
+        "body": "Capisci come cambiano i tuoi numeri."
+      },
+      "intelligence": {
+        "title": "Analisi del ritmo",
+        "body": "Sappi se sei avanti, indietro o in linea."
+      },
+      "reminders": {
+        "title": "Promemoria più intelligenti",
+        "body": "Promemoria che sanno cosa manca."
+      },
+      "story": {
+        "title": "Tutta la tua storia",
+        "body": "Riepiloghi settimanali e mensili, storico completo e il tuo anno."
+      }
+    },
+    "plans": {
+      "yearly": "Annuale",
+      "monthly": "Mensile",
+      "lifetime": "A vita (fondatore)",
+      "bestValue": "Più conveniente",
+      "yearlyPrice": "{{price}} all'anno",
+      "yearlyPerMonth": "{{price}} al mese, fatturato annualmente",
+      "monthlyPrice": "{{price}} al mese",
+      "lifetimePrice": "{{price}} una tantum",
+      "lifetimeBody": "Paghi una volta. Pro per sempre su questo account."
+    },
+    "cta": "Continua · {{price}}",
+    "restore": "Ripristina acquisti",
+    "manage": "Gestisci abbonamento",
+    "cancelAnytime": "Puoi annullare quando vuoi dalle impostazioni del tuo account {{store}}. Il pagamento viene addebitato sul tuo account {{store}}.",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "terms": "Condizioni d'uso",
+    "privacy": "Informativa sulla privacy",
+    "loading": "Caricamento dei piani…",
+    "loadFailed": "Impossibile caricare i piani. Controlla la connessione e riprova.",
+    "purchaseFailed": "L'acquisto non è andato a buon fine. Non ti è stato addebitato nulla.",
+    "purchasePending": "Il tuo acquisto è in attesa di approvazione. Pro si sblocca appena viene confermato.",
+    "welcomeTitle": "Ora sei Pro",
+    "welcomeBody": "Grazie per sostenere Foxiem. Tutto ciò che è in Pro è pronto.",
+    "restored": "Acquisti ripristinati. Foxiem Pro è attivo.",
+    "nothingToRestore": "Non è stato trovato alcun acquisto precedente di Foxiem Pro per questo account.",
+    "restoreFailed": "Impossibile ripristinare gli acquisti. Controlla la connessione e riprova.",
+    "simulated": "Versione di sviluppo: gli acquisti sono simulati e non viene addebitato nulla.",
+    "status": {
+      "freeBody": "Guarda cosa sta cambiando, non solo cosa hai contato.",
+      "active": "Pro · {{plan}}",
+      "renews": "Si rinnova il {{date}}",
+      "ends": "Termina il {{date}}",
+      "lifetime": "Pro · A vita",
+      "grace": "Problema di pagamento · Pro resta attivo fino al {{date}}",
+      "billingRetry": "Problema di pagamento · aggiorna il metodo di pagamento per mantenere Pro",
+      "expired": "Pro è terminato il {{date}}",
+      "expiredBody": "I tuoi contatori e lo storico sono ancora tutti qui."
     }
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "pro": "Foxiem Pro",
+    "preferences": "Preferenze",
+    "language": "Lingua",
+    "appearance": "Aspetto",
+    "haptics": "Feedback aptico",
+    "hapticsBody": "Una leggera vibrazione quando conti.",
+    "weekStart": "La settimana inizia di",
+    "weekStartDevice": "Impostazione del dispositivo ({{day}})",
+    "notifications": "Notifiche",
+    "reminders": "Promemoria",
+    "data": "Dati",
+    "export": "Esporta dati",
+    "exportBody": "Tutti i contatori e le voci in CSV",
+    "report": "Report settimanale",
+    "reportBody": "Totali settimanali per ogni contatore",
+    "exportFailed": "Impossibile creare l'esportazione. Riprova.",
+    "shareUnavailable": "La condivisione non è disponibile su questo dispositivo.",
+    "archived": "Contatori archiviati",
+    "reset": "Reimposta Foxiem",
+    "privacy": "Privacy",
+    "about": "Informazioni su Foxiem",
+    "developer": "Sviluppatore",
+    "devScenario": "Prossimo acquisto simulato",
+    "devExpire": "Fai scadere Pro simulato",
+    "devClear": "Svuota negozio simulato",
+    "devSeed": "Carica contatori di esempio",
+    "devSeeded": "Contatori di esempio aggiunti"
+  },
+  "appearance": {
+    "title": "Aspetto",
+    "system": "Come il dispositivo",
+    "light": "Chiaro",
+    "dark": "Scuro"
+  },
+  "language": {
+    "title": "Lingua",
+    "device": "Come il dispositivo"
+  },
+  "archive": {
+    "title": "Contatori archiviati",
+    "empty": "Nessun contatore archiviato.",
+    "emptyBody": "I contatori archiviati conservano lo storico e si possono ripristinare in qualsiasi momento.",
+    "restore": "Ripristina",
+    "restored": "{{name}} ripristinato",
+    "entries_one": "{{count}} voce",
+    "entries_many": "{{count}} voci",
+    "entries_other": "{{count}} voci"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "local": "I tuoi dati restano su questo dispositivo",
+    "localBody": "Contatori, voci, note, promemoria e preferenze sono salvati solo su questo dispositivo. Foxiem non ha account né server e il tuo storico non viene mai caricato.",
+    "notifications": "Notifiche",
+    "notificationsBody": "I promemoria sono programmati localmente su questo dispositivo. Foxiem chiede il permesso solo quando attivi un promemoria.",
+    "analytics": "Misurazione anonima",
+    "analyticsBody": "Foxiem invia alcuni eventi anonimi a Google Analytics for Firebase, ad esempio che è stato creato un contatore e di che tipo. Nomi dei contatori, note, numeri e storico non vengono mai inviati.",
+    "analyticsToggle": "Condividi eventi di utilizzo anonimi",
+    "export": "I tuoi dati sono tuoi",
+    "exportBody": "Esporta tutto in CSV dalle Impostazioni quando vuoi. Reimposta Foxiem elimina tutto da questo dispositivo.",
+    "policy": "Informativa sulla privacy"
   },
   "about": {
     "title": "Informazioni",
     "appName": "Foxiem",
-    "tagline": "Piccoli conteggi. Grandi progressi.",
-    "description": "Foxiem ti aiuta a tenere traccia di piccole azioni, vedere i tuoi progressi e costruire costanza nel tempo.",
-    "version": "Versione",
-    "build": "Build",
-    "localFirst": {
-      "title": "Prima di tutto locale",
-      "body": "Foxiem conserva i tuoi dati personali di prodotto su questo dispositivo. Non è richiesto un account Foxiem. I banner possono usare Google Mobile Ads, che comunica con Google separatamente dall’archiviazione dei prodotti Foxiem."
-    },
+    "tagline": "Conta con intenzione.",
+    "description": "Foxiem è un contatore personale per seguire i tuoi progressi. Conta qualsiasi cosa con un tocco e guarda come cambia nel tempo.",
+    "version": "Versione {{version}} ({{build}})",
+    "versionOnly": "Versione {{version}}",
+    "support": "Contatta l'assistenza",
     "privacyPolicy": "Informativa sulla privacy",
-    "terms": "Termini di utilizzo",
-    "dev": {
-      "title": "Info sviluppatore",
-      "appId": "Identificatore dell’app",
-      "storageKeys": "Chiavi di archiviazione",
-      "locale": "Lingua",
-      "notifications": "Permesso di notifica"
-    }
+    "licenses": "Licenze open source",
+    "licensesBody": "Foxiem è realizzato con React Native, Expo e altro software open source. Caratteri: Bricolage Grotesque e Figtree, entrambi con licenza SIL Open Font License 1.1. Icone: Ionicons e Material Design Icons.",
+    "linkFailed": "Impossibile aprire il link."
   },
   "reset": {
-    "title": "Reimpostare i dati dell’app?",
-    "message": "Questo rimuoverà in modo permanente tutti i dati Foxiem salvati su questo dispositivo, incluso il profilo, i conteggi, la cronologia, i promemoria e le preferenze.\n\nQuesta azione non può essere annullata.",
-    "confirm": "Reimposta i dati"
+    "title": "Reimpostare Foxiem?",
+    "body": "Vengono eliminati definitivamente tutti i contatori, le voci, le note, i promemoria e le preferenze da questo dispositivo. L'operazione non si può annullare.\n\nLa reimpostazione non annulla un abbonamento.",
+    "confirm": "Reimposta tutto",
+    "exportFirst": "Esporta prima i dati"
+  },
+  "errors": {
+    "boundaryTitle": "Qualcosa è andato storto",
+    "boundaryBody": "Foxiem ha riscontrato un problema imprevisto. I tuoi dati sono salvati su questo dispositivo e non sono stati eliminati.",
+    "boundaryRetry": "Ricarica Foxiem"
+  },
+  "a11y": {
+    "proBadge": "Richiede Foxiem Pro",
+    "counted": "{{name}}: {{value}}",
+    "countedGoal": "{{name}}: {{value}}. Obiettivo raggiunto.",
+    "countedLogged": "{{name}}: registrato oggi"
   }
 }

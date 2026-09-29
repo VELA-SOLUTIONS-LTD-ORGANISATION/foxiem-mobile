@@ -12,8 +12,9 @@ App languages in Foxiem: **en, tr, de, fr, es, it**. Binary declaration is `expo
 | **fr-FR** | Foxiem : Compteur multiple | Habitudes, séries & progrès |
 | **es-ES** | Foxiem: Contador múltiple | Hábitos, rachas y progreso |
 | **it** | Foxiem: Contatore multiplo | Abitudini, serie e progressi |
+| **ar-SA** | Foxiem: عداد متعدد | عادات وتكرار وتتبع يومي |
 
-`ar-SA` keeps the English name and subtitle. Full descriptions, keywords, promotional text, and release notes are in `scripts/apply-aso-store-config.mjs`.
+Arabic is a store listing only. The app interface stays English, Turkish, German, French, Spanish, and Italian. Full descriptions, keywords, promotional text, and release notes are in `scripts/apply-aso-store-config.mjs`.
 
 Screenshots on 1.0.4 are the existing three iPhone and three iPad shots (en-GB). The redesigned seven-shot set has not been produced.
 

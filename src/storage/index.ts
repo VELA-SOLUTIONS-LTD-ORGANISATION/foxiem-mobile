@@ -1,19 +1,24 @@
 export { readJson, removeKey, resetFoxiemAppData, writeJson } from './appStorage';
 export {
-  createFreshCounterDomain,
-  loadOrMigrateCounterDomain,
-  migrateLegacyToDomain,
-  parseCounterDomain,
-  saveCounterDomain,
-} from './counterDomainStorage';
+  loadDomain,
+  markFirstRunCompleted,
+  removeTrackerEvents,
+  saveTrackerEvents,
+  saveTrackers,
+  type LoadedDomain,
+  type LoadSource,
+} from './domainStorage';
+export { CURRENT_SCHEMA_VERSION, FOXIEM_KEY_PREFIX, STORAGE_KEYS, eventsKey } from './keys';
+export { createKeyedWriter, createLatestWinsQueue } from './persistQueue';
 export {
-  loadCounterEvents,
-  loadCounterState,
-  parseCounterEvents,
-  parseCounterState,
-  saveCounterEvents,
-  saveCounterState,
-} from './counterStorage';
-export { STORAGE_KEYS, FOXIEM_STORAGE_KEYS } from './keys';
-export { getStoredProfile, saveStoredProfile } from './profileStorage';
+  DEFAULT_PREFERENCES,
+  loadNotices,
+  loadPreferences,
+  parsePreferences,
+  saveNotices,
+  savePreferences,
+  type Appearance,
+  type Notices,
+  type Preferences,
+} from './preferencesStorage';
 export { loadReminders, parseReminders, saveReminders } from './reminderStorage';

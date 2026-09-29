@@ -1,0 +1,227 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "version": "1.0.4",
+    "copyright": "2026 VELA SOLUTIONS LTD",
+    "release": {
+      "automaticRelease": true
+    },
+    "info": {
+      "fr-FR": {
+        "description": "Foxiem est un compteur multiple simple et apaisant pour tout ce que vous souhaitez compter : habitudes, répétitions sportives, lecture, personnes, scores, routines ou activités du quotidien.\n\nPLUSIEURS COMPTEURS\nDonnez un nom à chaque compteur et séparez vos activités. Passez facilement d’un compteur à l’autre depuis l’accueil, les statistiques, l’historique et la régularité.\n\nCOMPTEZ RAPIDEMENT\nUtilisez +1, +5 et -1 pour enregistrer une progression en quelques secondes. Réinitialisez le compteur actif lorsque vous souhaitez recommencer.\n\nSUIVEZ VOS PROGRÈS\nConsultez l’historique, les statistiques quotidiennes, hebdomadaires et mensuelles, ainsi que les séries du compteur sélectionné.\n\nRESTEZ RÉGULIER\nCréez des rappels locaux adaptés à votre routine.\n\nSIMPLE ET LOCAL\nAucun compte n’est nécessaire. Vos compteurs Foxiem, votre historique, votre profil, vos rappels et vos préférences sont stockés sur votre appareil. Les pratiques liées à la publicité et aux statistiques sont décrites dans les informations de confidentialité de l’app.\n\nDe petits comptes. De grands progrès.",
+        "keywords": [
+          "comptage",
+          "clic",
+          "répétitions",
+          "score",
+          "inventaire",
+          "objectif",
+          "routine",
+          "personnes",
+          "statistiques",
+          "quotidien"
+        ],
+        "releaseNotes": "L’App Store affiche désormais Foxiem en anglais, turc, allemand, français, espagnol et italien.",
+        "marketingUrl": "https://foxiem.com",
+        "supportUrl": "https://foxiem.com/privacy",
+        "title": "Foxiem : Compteur multiple",
+        "subtitle": "Habitudes, séries & progrès",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "promoText": "Désormais avec plusieurs compteurs nommés : passez d’une activité à l’autre et consultez statistiques, historique et séries."
+      },
+      "tr": {
+        "description": "Foxiem; alışkanlıkları, spor tekrarlarını, okumayı, günlük rutinleri, kişi sayısını, skorları veya saymak istediğin herhangi bir şeyi takip etmek için sade bir çoklu sayaçtır.\n\nBİRDEN FAZLA SAYAÇ OLUŞTUR\nHer sayaca bir isim ver ve farklı aktivitelerini birbirinden ayır. Ana Sayfa, İstatistikler, Geçmiş ve Tutarlılık ekranlarında aktif sayaçlar arasında kolayca geçiş yap.\n\nHIZLI SAY\n+1, +5 ve -1 kontrolleriyle ilerlemeni saniyeler içinde kaydet. Yeniden başlamak istediğinde aktif sayacı sıfırla.\n\nİLERLEMENİ GÖR\nSeçili sayacın aktivite geçmişini, günlük/haftalık/aylık istatistiklerini ve devam serilerini incele.\n\nDÜZENİNİ KORU\nSana uygun gün ve saatler için cihazında çalışan yerel hatırlatıcılar oluştur.\n\nSADE KALIR\nFoxiem hesap açmanı istemez ve karmaşık kurulumlarla uğraştırmaz. Sayaçların, sayım geçmişin, profilin, hatırlatıcıların ve tercihlerin cihazında saklanır. Reklam ve analiz hizmetleriyle ilgili veri kullanımı uygulamanın gizlilik bilgilerinde ve gizlilik politikasında açıklanır.\n\nFoxiem'i şunlar için kullanabilirsin:\n- günlük alışkanlıklar ve rutinler\n- spor tekrarları ve antrenman\n- okuma ve çalışma\n- kişi ve katılım sayımı\n- skor veya tekrar eden işler\n- zikir/tesbih gibi tekrar sayımları\n- düzenli olarak saymak istediğin her şey\n\nKüçük sayımlar. Büyük ilerleme.",
+        "keywords": [
+          "sayma",
+          "sayıcı",
+          "tıklama",
+          "zikir",
+          "tesbih",
+          "zikirmatik",
+          "skor",
+          "spor",
+          "rutin",
+          "günlük",
+          "kişi",
+          "adet",
+          "sayım"
+        ],
+        "releaseNotes": "App Store artık Foxiem’i İngilizce, Türkçe, Almanca, Fransızca, İspanyolca ve İtalyanca olarak listeliyor.",
+        "marketingUrl": "https://foxiem.com",
+        "supportUrl": "https://foxiem.com/privacy",
+        "title": "Foxiem: Çoklu Sayaç",
+        "subtitle": "Alışkanlık, Tekrar, İlerleme",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "promoText": "Artık birden fazla isimli sayaç var: aktiviteler arasında geçiş yap, her biri için istatistik, geçmiş ve serileri gör."
+      },
+      "en-GB": {
+        "description": "Foxiem is a calm, simple tally counter for anything you want to count — habits, gym reps, reading, attendance, scores, routines, or everyday activities.\n\nCREATE MULTIPLE COUNTERS\nGive each counter a name and keep different activities separate. Switch between counters from Home, Statistics, History, and Consistency.\n\nCOUNT FAST\nUse +1, +5, or -1 to record progress in seconds. Reset the active counter whenever you want a fresh start.\n\nSEE YOUR PROGRESS\nReview activity history, daily, weekly and monthly statistics, and consistency streaks for the selected counter.\n\nSTAY CONSISTENT\nCreate local reminders for the days and times that suit your routine.\n\nSIMPLE BY DESIGN\nFoxiem is built to stay out of the way: no account, no complicated setup, and a clean interface focused on counting.\n\nYour Foxiem counter data, history, profile, reminders and preferences are stored on your device. Advertising and analytics practices are described in the app's privacy information and privacy policy.\n\nUse Foxiem for:\n- daily habits and routines\n- gym reps and practice sessions\n- reading or learning activities\n- attendance and people counting\n- scores and repeated tasks\n- anything else you want to count consistently\n\nSmall counts. Big progress.",
+        "keywords": [
+          "multi",
+          "clicker",
+          "counting",
+          "score",
+          "inventory",
+          "attendance",
+          "streak",
+          "goal",
+          "routine",
+          "people",
+          "number",
+          "progress"
+        ],
+        "releaseNotes": "The App Store now lists Foxiem in English, Turkish, German, French, Spanish and Italian.",
+        "marketingUrl": "https://foxiem.com",
+        "supportUrl": "https://foxiem.com/privacy",
+        "title": "Foxiem: Tally Counter",
+        "subtitle": "Habits, Reps & Daily Tracker",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "screenshots": {
+          "APP_IPAD_PRO_3GEN_129": [
+            "store\\apple\\screenshot\\en-GB\\APP_IPAD_PRO_3GEN_129\\foxiem-ipad-1-2064x2752.png",
+            "store\\apple\\screenshot\\en-GB\\APP_IPAD_PRO_3GEN_129\\02-see-your-progress.png",
+            "store\\apple\\screenshot\\en-GB\\APP_IPAD_PRO_3GEN_129\\03-make-it-yours.png"
+          ],
+          "APP_IPHONE_65": [
+            "store\\apple\\screenshot\\en-GB\\APP_IPHONE_65\\01-count-what-matters.png",
+            "store\\apple\\screenshot\\en-GB\\APP_IPHONE_65\\02-see-your-progress.png",
+            "store\\apple\\screenshot\\en-GB\\APP_IPHONE_65\\03-make-it-yours.png"
+          ]
+        },
+        "promoText": "Now with multiple named counters: switch between activities and view stats, history and streaks for each one."
+      },
+      "de-DE": {
+        "description": "Foxiem ist ein ruhiger, einfacher Mehrfachzähler für alles, was du zählen möchtest — Gewohnheiten, Wiederholungen beim Training, Lesen, Personen, Punkte, Routinen oder andere Alltagsaktivitäten.\n\nMEHRERE ZÄHLER\nGib jedem Zähler einen Namen und halte deine Aktivitäten getrennt. Wechsle auf Start, Statistik, Verlauf und Konsistenz zwischen deinen Zählern.\n\nSCHNELL ZÄHLEN\nErfasse mit +1, +5 und -1 jeden Schritt in Sekunden und setze den aktiven Zähler bei Bedarf zurück.\n\nFORTSCHRITT VERFOLGEN\nSieh Verlauf, tägliche, wöchentliche und monatliche Statistiken sowie deine Serien für den ausgewählten Zähler.\n\nERINNERUNGEN\nErstelle lokale Erinnerungen für die Tage und Uhrzeiten, die zu deiner Routine passen.\n\nEINFACH UND LOKAL\nKein Konto und keine komplizierte Einrichtung. Deine Foxiem-Zähler, dein Verlauf, Profil, Erinnerungen und Einstellungen werden auf deinem Gerät gespeichert. Informationen zu Werbung und Analyse findest du in den Datenschutzangaben und der Datenschutzerklärung.\n\nKleine Zählungen. Großer Fortschritt.",
+        "keywords": [
+          "klickzähler",
+          "zählen",
+          "wiederholungen",
+          "punkte",
+          "inventar",
+          "serie",
+          "ziele",
+          "routine",
+          "personen",
+          "statistik",
+          "täglich"
+        ],
+        "releaseNotes": "Der App Store listet Foxiem jetzt auf Englisch, Türkisch, Deutsch, Französisch, Spanisch und Italienisch.",
+        "marketingUrl": "https://foxiem.com",
+        "supportUrl": "https://foxiem.com/privacy",
+        "title": "Foxiem: Mehrfachzähler",
+        "subtitle": "Gewohnheiten & Fortschritt",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "promoText": "Jetzt mit mehreren benannten Zählern: Wechsle zwischen Aktivitäten und sieh Statistiken, Verlauf und Serien für jeden Zähler."
+      },
+      "it": {
+        "description": "Foxiem è un contatore multiplo semplice e rilassante per tutto ciò che vuoi contare: abitudini, ripetizioni in palestra, lettura, persone, punteggi, routine o attività quotidiane.\n\nPIÙ CONTATORI\nDai un nome a ogni contatore e mantieni separate le diverse attività. Passa da un contatore all’altro da Home, Statistiche, Cronologia e Costanza.\n\nCONTA VELOCEMENTE\nUsa +1, +5 e -1 per registrare i progressi in pochi secondi. Reimposta il contatore attivo quando vuoi ricominciare.\n\nVEDI I TUOI PROGRESSI\nConsulta cronologia, statistiche giornaliere, settimanali e mensili e le serie del contatore selezionato.\n\nMANTIENI LA COSTANZA\nCrea promemoria locali nei giorni e negli orari più adatti alla tua routine.\n\nSEMPLICE E LOCALE\nNon serve un account. I contatori Foxiem, la cronologia, il profilo, i promemoria e le preferenze vengono archiviati sul dispositivo. Le pratiche relative a pubblicità e analisi sono descritte nelle informazioni sulla privacy dell’app.\n\nPiccoli conteggi. Grandi progressi.",
+        "keywords": [
+          "conteggio",
+          "clic",
+          "ripetizioni",
+          "punteggio",
+          "inventario",
+          "obiettivo",
+          "routine",
+          "persone",
+          "statistiche",
+          "giornaliero"
+        ],
+        "releaseNotes": "L’App Store mostra Foxiem in inglese, turco, tedesco, francese, spagnolo e italiano.",
+        "marketingUrl": "https://foxiem.com",
+        "supportUrl": "https://foxiem.com/privacy",
+        "title": "Foxiem: Contatore multiplo",
+        "subtitle": "Abitudini, serie e progressi",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "promoText": "Ora con più contatori personalizzati: passa tra le attività e consulta statistiche, cronologia e serie per ogni contatore."
+      },
+      "es-ES": {
+        "description": "Foxiem es un contador múltiple sencillo y tranquilo para todo lo que quieras contar: hábitos, repeticiones de ejercicio, lectura, personas, puntuaciones, rutinas o actividades diarias.\n\nVARIOS CONTADORES\nPon un nombre a cada contador y mantén separadas tus actividades. Cambia de contador desde Inicio, Estadísticas, Historial y Constancia.\n\nCUENTA RÁPIDO\nUsa +1, +5 y -1 para registrar tu progreso en segundos. Restablece el contador activo cuando quieras empezar de nuevo.\n\nMIRA TU PROGRESO\nConsulta el historial, las estadísticas diarias, semanales y mensuales y las rachas del contador seleccionado.\n\nMANTÉN LA CONSTANCIA\nCrea recordatorios locales para los días y horas que mejor encajen con tu rutina.\n\nSIMPLE Y LOCAL\nNo necesitas una cuenta. Tus contadores de Foxiem, historial, perfil, recordatorios y preferencias se guardan en tu dispositivo. Las prácticas de publicidad y analítica se explican en la información de privacidad de la app.\n\nPequeños conteos. Gran progreso.",
+        "keywords": [
+          "conteo",
+          "clic",
+          "repeticiones",
+          "puntuación",
+          "inventario",
+          "objetivo",
+          "rutina",
+          "personas",
+          "estadísticas",
+          "diario"
+        ],
+        "releaseNotes": "El App Store muestra Foxiem en inglés, turco, alemán, francés, español e italiano.",
+        "marketingUrl": "https://foxiem.com",
+        "supportUrl": "https://foxiem.com/privacy",
+        "title": "Foxiem: Contador múltiple",
+        "subtitle": "Hábitos, rachas y progreso",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "promoText": "Ahora con varios contadores con nombre: cambia de actividad y consulta estadísticas, historial y rachas de cada contador."
+      },
+      "ar-SA": {
+        "title": "Foxiem: عداد متعدد",
+        "subtitle": "عادات وتكرار وتتبع يومي",
+        "privacyPolicyUrl": "https://foxiem.com/privacy",
+        "description": "Foxiem عدّاد بسيط وهادئ لكل ما تريد إحصاءه: العادات، تكرارات التمرين، القراءة، الحضور، النقاط، الروتين، أو أي نشاط يومي.\n\nعدّادات متعددة\nامنح كل عدّاد اسمًا وافصل بين أنشطتك. انتقل بين العدّادات من الرئيسية والإحصائيات والسجل والانتظام.\n\nعدّ بسرعة\nاستخدم +1 و+5 و-1 لتسجيل تقدّمك خلال ثوانٍ. أعد ضبط العدّاد النشط عندما تريد البداية من جديد.\n\nشاهد تقدّمك\nراجع سجل النشاط والإحصائيات اليومية والأسبوعية والشهرية وسلاسل الانتظام للعدّاد الذي تختاره.\n\nحافظ على انتظامك\nأنشئ تذكيرات محلية في الأيام والأوقات التي تناسب روتينك.\n\nبسيط ومحلي\nلا حاجة إلى حساب. تُحفظ عدّادات Foxiem وسجلك وملفك وتذكيراتك وتفضيلاتك على جهازك. تُوضَّح ممارسات الإعلانات والتحليلات في معلومات الخصوصية وسياسة الخصوصية.\n\nاستخدم Foxiem من أجل:\n- العادات والروتين اليومي\n- تكرارات التمرين وجلسات التدريب\n- القراءة والتعلّم\n- الحضور وعدّ الأشخاص\n- النقاط والمهام المتكررة\n- أي شيء تريد إحصاءه بانتظام\n\nعدّات صغيرة. تقدّم كبير.",
+        "keywords": [
+          "عداد",
+          "نقر",
+          "عادات",
+          "تكرار",
+          "سلسلة",
+          "هدف",
+          "روتين",
+          "حضور",
+          "مخزون",
+          "نقاط",
+          "عدد",
+          "تقدم"
+        ],
+        "supportUrl": "https://foxiem.com/privacy",
+        "marketingUrl": "https://foxiem.com",
+        "releaseNotes": "يعرض App Store الآن Foxiem بالإنجليزية والتركية والألمانية والفرنسية والإسبانية والإيطالية.",
+        "promoText": "عدادات متعددة بأسماء: بدّل بين الأنشطة وشاهد الإحصائيات والسجل والسلاسل لكل عداد."
+      }
+    },
+    "categories": [
+      "UTILITIES",
+      "PRODUCTIVITY"
+    ],
+    "advisory": {
+      "ageRatingOverride": "NONE",
+      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+      "contests": "NONE",
+      "gambling": false,
+      "gamblingSimulated": "NONE",
+      "horrorOrFearThemes": "NONE",
+      "kidsAgeBand": null,
+      "koreaAgeRatingOverride": "NONE",
+      "lootBox": false,
+      "matureOrSuggestiveThemes": "NONE",
+      "medicalOrTreatmentInformation": "NONE",
+      "profanityOrCrudeHumor": "NONE",
+      "sexualContentGraphicAndNudity": "NONE",
+      "sexualContentOrNudity": "NONE",
+      "unrestrictedWebAccess": false,
+      "violenceCartoonOrFantasy": "NONE",
+      "violenceRealistic": "NONE",
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+      "advertising": true,
+      "ageAssurance": false,
+      "ageRatingOverrideV2": "NONE",
+      "developerAgeRatingInfoUrl": null,
+      "gunsOrOtherWeapons": "NONE",
+      "healthOrWellnessTopics": false,
+      "messagingAndChat": false,
+      "parentalControls": false,
+      "userGeneratedContent": false
+    },
+    "review": {
+      "firstName": "Hakan",
+      "lastName": "Kuzudisli",
+      "email": "solutionvela@gmail.com",
+      "phone": "+447462066583",
+      "demoRequired": false,
+      "notes": "You don't have to sign-In information"
+    }
+  }
+}

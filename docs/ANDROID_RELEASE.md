@@ -1,5 +1,7 @@
 # Foxiem — Google Play release status
 
+> **Foxiem 2.0:** ads (AdMob, UMP consent, banners), the profile and the single-counter screens were removed. Steps below that mention them apply to 1.0.x only. The current checklist and store declarations are in `docs/RELEASE_CHECKLIST.md`; storage and migration are in `docs/DATA-MIGRATION.md`.
+
 Last updated: 2026-09-12 (AdMob production candidate)
 
 ## Final status (current)

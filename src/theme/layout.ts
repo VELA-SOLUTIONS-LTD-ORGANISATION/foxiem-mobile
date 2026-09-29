@@ -5,9 +5,8 @@ export const layoutBreakpoints = {
   largePhoneMin: 430,
 } as const;
 
-export const contentMaxWidth = 600;
-export const modalMaxWidth = 420;
-export const gridDefaultColumns = 2;
+/** Content never stretches wider than this on tablets and landscape. */
+export const contentMaxWidth = 560;
 
 export type LayoutRange = 'compact' | 'standard' | 'largePhone';
 
@@ -30,20 +29,4 @@ export function getHorizontalPadding(width: number): number {
     return space[5];
   }
   return space[4];
-}
-
-export function getGridItemWidth({
-  containerWidth,
-  columns = gridDefaultColumns,
-  gap = space[3],
-  horizontalPadding = 0,
-}: {
-  containerWidth: number;
-  columns?: number;
-  gap?: number;
-  horizontalPadding?: number;
-}): number {
-  const safeColumns = Math.max(1, columns);
-  const totalGaps = gap * Math.max(0, safeColumns - 1);
-  return (containerWidth - horizontalPadding - totalGaps) / safeColumns;
 }

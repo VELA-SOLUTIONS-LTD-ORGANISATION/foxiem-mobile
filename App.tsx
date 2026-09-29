@@ -1,41 +1,61 @@
 import { useFonts } from 'expo-font';
-import { StatusBar } from 'expo-status-bar';
-import * as SystemUI from 'expo-system-ui';
-import { StyleSheet, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import type { ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
 
-import { AdsProvider } from '@/ads';
 import { ToastProvider } from '@/components';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import '@/i18n';
 import { AppNavigation } from '@/navigation';
-import { NotificationBootstrap } from '@/notifications/NotificationBootstrap';
-import { AppStateProvider } from '@/state';
-import { APP_FONT_MAP, ThemeProvider, colors } from '@/theme';
+import { ProProvider } from '@/pro/ProProvider';
+import {
+  CountFeedbackProvider,
+  NoticesProvider,
+  PreferencesProvider,
+  ReminderProvider,
+  TrackerStoreProvider,
+  usePreferences,
+} from '@/state';
+import { APP_FONT_MAP, ThemeProvider } from '@/theme';
 
-void SystemUI.setBackgroundColorAsync(colors.background);
+void SplashScreen.preventAutoHideAsync().catch(() => undefined);
+
+function ThemedApp({ children }: { children: ReactNode }) {
+  const { preferences } = usePreferences();
+  return <ThemeProvider appearance={preferences.appearance}>{children}</ThemeProvider>;
+}
 
 export default function App() {
-  const [fontsLoaded] = useFonts(APP_FONT_MAP);
+  const [fontsLoaded, fontError] = useFonts(APP_FONT_MAP);
 
-  if (!fontsLoaded) {
-    return <View style={styles.boot} />;
+  if (!fontsLoaded && !fontError) {
+    return null;
   }
 
   return (
     <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
-        <ThemeProvider>
-          <AppStateProvider>
-            <AdsProvider>
-              <ToastProvider>
-                <NotificationBootstrap />
-                <StatusBar style="dark" />
-                <AppNavigation />
-              </ToastProvider>
-            </AdsProvider>
-          </AppStateProvider>
-        </ThemeProvider>
+        <PreferencesProvider>
+          <ThemedApp>
+            <ErrorBoundary>
+              <TrackerStoreProvider>
+                <ProProvider>
+                  <ReminderProvider>
+                    <NoticesProvider>
+                      <CountFeedbackProvider>
+                        <ToastProvider>
+                          <AppNavigation />
+                        </ToastProvider>
+                      </CountFeedbackProvider>
+                    </NoticesProvider>
+                  </ReminderProvider>
+                </ProProvider>
+              </TrackerStoreProvider>
+            </ErrorBoundary>
+          </ThemedApp>
+        </PreferencesProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
@@ -44,9 +64,5 @@ export default function App() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-  },
-  boot: {
-    flex: 1,
-    backgroundColor: colors.splashBackground,
   },
 });

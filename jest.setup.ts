@@ -3,116 +3,82 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 );
 
 jest.mock('expo-localization', () => ({
-  getLocales: () => [{ languageCode: 'en', languageTag: 'en-GB' }],
+  getLocales: () => [{ languageCode: 'en', languageTag: 'en-GB', regionCode: 'GB' }],
+  getCalendars: () => [{ firstWeekday: 2, uses24hourClock: true, timeZone: 'Europe/London', calendar: 'gregory' }],
 }));
 
 jest.mock('expo-font', () => ({
   loadAsync: jest.fn(async () => undefined),
   isLoaded: jest.fn(() => true),
   isLoading: jest.fn(() => false),
+  useFonts: () => [true, null],
 }));
 
-jest.mock('@expo-google-fonts/inter', () => ({
-  Inter_400Regular: 'Inter_400Regular',
-  Inter_500Medium: 'Inter_500Medium',
-  Inter_600SemiBold: 'Inter_600SemiBold',
-  Inter_700Bold: 'Inter_700Bold',
-  useFonts: () => [true],
+jest.mock('@expo-google-fonts/bricolage-grotesque', () => ({
+  BricolageGrotesque_700Bold: 'BricolageGrotesque_700Bold',
+  BricolageGrotesque_800ExtraBold: 'BricolageGrotesque_800ExtraBold',
 }));
+
+jest.mock('@expo-google-fonts/figtree', () => ({
+  Figtree_400Regular: 'Figtree_400Regular',
+  Figtree_500Medium: 'Figtree_500Medium',
+  Figtree_600SemiBold: 'Figtree_600SemiBold',
+  Figtree_700Bold: 'Figtree_700Bold',
+}));
+
+jest.mock('expo-haptics', () => ({
+  impactAsync: jest.fn(async () => undefined),
+  notificationAsync: jest.fn(async () => undefined),
+  selectionAsync: jest.fn(async () => undefined),
+  ImpactFeedbackStyle: { Light: 'light', Medium: 'medium', Heavy: 'heavy', Soft: 'soft', Rigid: 'rigid' },
+  NotificationFeedbackType: { Success: 'success', Warning: 'warning', Error: 'error' },
+}));
+
+jest.mock('expo-splash-screen', () => ({
+  preventAutoHideAsync: jest.fn(async () => undefined),
+  hideAsync: jest.fn(async () => undefined),
+}));
+
+jest.mock('expo-system-ui', () => ({
+  setBackgroundColorAsync: jest.fn(async () => undefined),
+}));
+
+jest.mock('expo-sharing', () => ({
+  isAvailableAsync: jest.fn(async () => true),
+  shareAsync: jest.fn(async () => undefined),
+}));
+
+jest.mock('expo-file-system', () => {
+  class File {
+    uri: string;
+    exists = false;
+    content = '';
+    constructor(...parts: unknown[]) {
+      this.uri = parts.map(String).join('/');
+    }
+    create() {
+      this.exists = true;
+    }
+    delete() {
+      this.exists = false;
+    }
+    write(content: string) {
+      this.content = content;
+    }
+  }
+  return { File, Paths: { cache: 'cache', document: 'document' } };
+});
 
 jest.mock('expo-notifications', () => ({
   setNotificationHandler: jest.fn(),
-  getPermissionsAsync: jest.fn(async () => ({
-    granted: true,
-    status: 'granted',
-    canAskAgain: true,
-  })),
-  requestPermissionsAsync: jest.fn(async () => ({
-    granted: true,
-    status: 'granted',
-    canAskAgain: true,
-  })),
+  getPermissionsAsync: jest.fn(async () => ({ granted: true, status: 'granted', canAskAgain: true })),
+  requestPermissionsAsync: jest.fn(async () => ({ granted: true, status: 'granted', canAskAgain: true })),
   scheduleNotificationAsync: jest.fn(async () => `notif-${Math.random().toString(36).slice(2, 8)}`),
   cancelScheduledNotificationAsync: jest.fn(async () => undefined),
   setNotificationChannelAsync: jest.fn(async () => undefined),
+  addNotificationResponseReceivedListener: jest.fn(() => ({ remove: jest.fn() })),
+  getLastNotificationResponseAsync: jest.fn(async () => null),
   AndroidImportance: { DEFAULT: 3 },
   PermissionStatus: { DENIED: 'denied', GRANTED: 'granted', UNDETERMINED: 'undetermined' },
-  SchedulableTriggerInputTypes: { WEEKLY: 'weekly' },
+  SchedulableTriggerInputTypes: { WEEKLY: 'weekly', DATE: 'date' },
 }));
-
-jest.mock('react-native-google-mobile-ads', () => {
-  const React = require('react');
-  const { View } = require('react-native');
-
-  const AdsConsentPrivacyOptionsRequirementStatus = {
-    UNKNOWN: 'UNKNOWN',
-    REQUIRED: 'REQUIRED',
-    NOT_REQUIRED: 'NOT_REQUIRED',
-  };
-
-  const AdsConsentStatus = {
-    UNKNOWN: 'UNKNOWN',
-    REQUIRED: 'REQUIRED',
-    NOT_REQUIRED: 'NOT_REQUIRED',
-    OBTAINED: 'OBTAINED',
-  };
-
-  const initialize = jest.fn(async () => []);
-  const mobileAds = jest.fn(() => ({ initialize }));
-
-  return {
-    __esModule: true,
-    default: mobileAds,
-    MobileAds: mobileAds,
-    TestIds: {
-      BANNER: 'ca-app-pub-3940256099942544/6300978111',
-      ADAPTIVE_BANNER: 'ca-app-pub-3940256099942544/9214589741',
-    },
-    BannerAdSize: {
-      INLINE_ADAPTIVE_BANNER: 'INLINE_ADAPTIVE_BANNER',
-      BANNER: 'BANNER',
-    },
-    BannerAd: ({ unitId }: { unitId: string }) =>
-      React.createElement(View, { testID: `banner-ad-${unitId}` }),
-    AdsConsent: {
-      gatherConsent: jest.fn(async () => ({
-        status: AdsConsentStatus.NOT_REQUIRED,
-        canRequestAds: true,
-        privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.NOT_REQUIRED,
-        isConsentFormAvailable: false,
-      })),
-      getConsentInfo: jest.fn(async () => ({
-        status: AdsConsentStatus.NOT_REQUIRED,
-        canRequestAds: true,
-        privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.NOT_REQUIRED,
-        isConsentFormAvailable: false,
-      })),
-      showForm: jest.fn(async () => ({
-        status: AdsConsentStatus.OBTAINED,
-        canRequestAds: true,
-        privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.REQUIRED,
-        isConsentFormAvailable: true,
-      })),
-      showPrivacyOptionsForm: jest.fn(async () => ({
-        status: AdsConsentStatus.OBTAINED,
-        canRequestAds: true,
-        privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.REQUIRED,
-        isConsentFormAvailable: true,
-      })),
-      loadAndShowConsentFormIfRequired: jest.fn(async () => ({
-        status: AdsConsentStatus.OBTAINED,
-        canRequestAds: true,
-        privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.NOT_REQUIRED,
-        isConsentFormAvailable: true,
-      })),
-      requestInfoUpdate: jest.fn(async () => ({
-        status: AdsConsentStatus.NOT_REQUIRED,
-        canRequestAds: true,
-        privacyOptionsRequirementStatus: AdsConsentPrivacyOptionsRequirementStatus.NOT_REQUIRED,
-        isConsentFormAvailable: false,
-      })),
-    },
-    AdsConsentPrivacyOptionsRequirementStatus,
-    AdsConsentStatus,
-  };
-});

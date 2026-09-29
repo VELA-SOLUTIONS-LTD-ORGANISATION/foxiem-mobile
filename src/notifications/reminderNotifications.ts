@@ -1,30 +1,14 @@
-import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { i18n } from '@/i18n';
-import {
-  parseTimeString,
-  type Reminder,
-  type ReminderDay,
-} from '@/state/reminders';
+import { Platform } from 'react-native';
+
+import { jsWeekday, parseTimeString, type ReminderDay } from '@/domain/reminders';
 
 export const FOXIEM_REMINDER_CHANNEL = 'foxiem-reminders';
 
-const EXPO_WEEKDAY: Record<ReminderDay, number> = {
-  sunday: 1,
-  monday: 2,
-  tuesday: 3,
-  wednesday: 4,
-  thursday: 5,
-  friday: 6,
-  saturday: 7,
-};
+/** `blocked` means the OS will not show the prompt again; only Settings can change it. */
+export type NotificationPermission = 'granted' | 'undetermined' | 'denied' | 'blocked';
 
-/** Expo WEEKLY trigger weekday mapping used by Foxiem reminders. */
-export function expoWeekdayForReminderDay(day: ReminderDay): number {
-  return EXPO_WEEKDAY[day];
-}
-
-export type NotificationPermissionState = 'granted' | 'denied' | 'undetermined';
+export type ScheduledContent = { title: string; body: string };
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -35,143 +19,147 @@ Notifications.setNotificationHandler({
   }),
 });
 
-function canUseNativeNotifications(): boolean {
+function nativePlatform(): boolean {
   return Platform.OS === 'ios' || Platform.OS === 'android';
 }
 
-export async function configureReminderNotifications(): Promise<void> {
+/** Expo WEEKLY trigger weekday: 1 = Sunday … 7 = Saturday. */
+export function expoWeekday(day: ReminderDay): number {
+  return jsWeekday(day) + 1;
+}
+
+export async function configureReminderChannel(name: string): Promise<void> {
   if (Platform.OS !== 'android') {
     return;
   }
-
   await Notifications.setNotificationChannelAsync(FOXIEM_REMINDER_CHANNEL, {
-    name: i18n.t('reminders.title'),
+    name,
     importance: Notifications.AndroidImportance.DEFAULT,
   });
 }
 
-export async function getNotificationPermissionState(): Promise<NotificationPermissionState> {
-  if (!canUseNativeNotifications()) {
-    return 'granted';
-  }
-
-  const settings = await Notifications.getPermissionsAsync();
+function mapPermission(settings: Notifications.NotificationPermissionsStatus): NotificationPermission {
   if (settings.granted) {
     return 'granted';
   }
-
   if (settings.status === Notifications.PermissionStatus.DENIED) {
-    return 'denied';
+    return settings.canAskAgain === false ? 'blocked' : 'denied';
   }
-
   return 'undetermined';
 }
 
-export async function requestNotificationPermission(): Promise<NotificationPermissionState> {
-  if (!canUseNativeNotifications()) {
+export async function getNotificationPermission(): Promise<NotificationPermission> {
+  if (!nativePlatform()) {
     return 'granted';
   }
-
-  const current = await Notifications.getPermissionsAsync();
-  if (current.granted) {
-    return 'granted';
+  try {
+    return mapPermission(await Notifications.getPermissionsAsync());
+  } catch {
+    return 'undetermined';
   }
-
-  if (current.status === Notifications.PermissionStatus.DENIED && current.canAskAgain === false) {
-    return 'denied';
-  }
-
-  const requested = await Notifications.requestPermissionsAsync({
-    ios: {
-      allowAlert: true,
-      allowBadge: false,
-      allowSound: true,
-    },
-  });
-
-  if (requested.granted) {
-    return 'granted';
-  }
-
-  if (requested.status === Notifications.PermissionStatus.DENIED) {
-    return 'denied';
-  }
-
-  return 'undetermined';
 }
 
-export async function cancelReminderNotifications(notificationIds: readonly string[]): Promise<void> {
-  if (!canUseNativeNotifications() || notificationIds.length === 0) {
+export async function requestNotificationPermission(): Promise<NotificationPermission> {
+  if (!nativePlatform()) {
+    return 'granted';
+  }
+  const current = await getNotificationPermission();
+  if (current === 'granted' || current === 'blocked') {
+    return current;
+  }
+  try {
+    return mapPermission(
+      await Notifications.requestPermissionsAsync({ ios: { allowAlert: true, allowBadge: false, allowSound: true } }),
+    );
+  } catch {
+    return 'undetermined';
+  }
+}
+
+export async function cancelNotifications(ids: readonly string[]): Promise<void> {
+  if (!nativePlatform() || ids.length === 0) {
     return;
   }
-
   await Promise.all(
-    notificationIds.map(async (id) => {
+    ids.map(async (id) => {
       try {
         await Notifications.cancelScheduledNotificationAsync(id);
-      } catch (error) {
-        console.warn('Failed to cancel Foxiem reminder notification', id, error);
+      } catch {
+        // Already fired or gone.
       }
     }),
   );
 }
 
-export async function cancelReminders(reminders: readonly Reminder[]): Promise<void> {
-  const ids = reminders.flatMap((reminder) => reminder.notificationIds);
-  await cancelReminderNotifications(ids);
+function data(reminderId: string, trackerId: string | null) {
+  return { foxiem: 'reminder', reminderId, trackerId: trackerId ?? '' };
 }
 
-export async function scheduleReminderNotifications(reminder: Reminder): Promise<string[]> {
-  if (!canUseNativeNotifications() || !reminder.enabled) {
+/** Repeating weekly notifications with fixed copy (standard reminders). */
+export async function scheduleWeekly(
+  reminder: { id: string; trackerId: string | null; time: string; days: readonly ReminderDay[] },
+  content: ScheduledContent,
+): Promise<string[]> {
+  const time = parseTimeString(reminder.time);
+  if (!nativePlatform() || !time) {
     return [];
   }
-
-  const parsedTime = parseTimeString(reminder.time);
-  if (!parsedTime || reminder.days.length === 0) {
-    return [];
-  }
-
-  await configureReminderNotifications();
-  await cancelReminderNotifications(reminder.notificationIds);
-
-  const title = i18n.t('about.appName');
-  const body = i18n.t(reminder.messageKey);
   const ids: string[] = [];
-
   try {
     for (const day of reminder.days) {
-      const id = await Notifications.scheduleNotificationAsync({
-        content: {
-          title,
-          body,
-          sound: 'default',
-          data: {
-            foxiem: 'reminder',
-            reminderId: reminder.id,
+      ids.push(
+        await Notifications.scheduleNotificationAsync({
+          content: { ...content, sound: 'default', data: data(reminder.id, reminder.trackerId) },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
+            weekday: expoWeekday(day),
+            hour: time.hour,
+            minute: time.minute,
+            channelId: Platform.OS === 'android' ? FOXIEM_REMINDER_CHANNEL : undefined,
           },
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
-          weekday: expoWeekdayForReminderDay(day),
-          hour: parsedTime.hour,
-          minute: parsedTime.minute,
-          channelId: Platform.OS === 'android' ? FOXIEM_REMINDER_CHANNEL : undefined,
-        },
-      });
-      ids.push(id);
+        }),
+      );
     }
   } catch (error) {
-    await cancelReminderNotifications(ids);
-    if (__DEV__) {
-      console.warn('Failed to schedule Foxiem reminder notifications', error);
-    }
+    await cancelNotifications(ids);
     throw error;
   }
-
   return ids;
 }
 
-export function isFoxiemReminderResponse(response: Notifications.NotificationResponse): boolean {
-  const data = response.notification.request.content.data;
-  return data?.foxiem === 'reminder';
+/** One-off notifications with copy computed per occurrence (smart reminders). */
+export async function scheduleOccurrences(
+  reminder: { id: string; trackerId: string | null },
+  occurrences: readonly { date: Date; content: ScheduledContent }[],
+): Promise<string[]> {
+  if (!nativePlatform()) {
+    return [];
+  }
+  const ids: string[] = [];
+  try {
+    for (const occurrence of occurrences) {
+      ids.push(
+        await Notifications.scheduleNotificationAsync({
+          content: { ...occurrence.content, sound: 'default', data: data(reminder.id, reminder.trackerId) },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.DATE,
+            date: occurrence.date,
+            channelId: Platform.OS === 'android' ? FOXIEM_REMINDER_CHANNEL : undefined,
+          },
+        }),
+      );
+    }
+  } catch (error) {
+    await cancelNotifications(ids);
+    throw error;
+  }
+  return ids;
+}
+
+export function reminderTarget(response: Notifications.NotificationResponse): { trackerId: string | null } | null {
+  const payload = response.notification.request.content.data as Record<string, unknown> | undefined;
+  if (payload?.foxiem !== 'reminder') {
+    return null;
+  }
+  return { trackerId: typeof payload.trackerId === 'string' && payload.trackerId ? payload.trackerId : null };
 }

@@ -1,324 +1,872 @@
 {
   "common": {
-    "cancel": "İptal",
+    "cancel": "Vazgeç",
     "done": "Tamam",
     "save": "Kaydet",
+    "saveChanges": "Değişiklikleri kaydet",
     "continue": "Devam",
     "back": "Geri",
-    "confirm": "Onayla",
-    "reset": "Sıfırla",
-    "notConfigured": "Bu bağlantı henüz ayarlanmadı.",
-    "closeModal": "Pencereyi kapat",
-    "closeSheet": "Paneli kapat",
+    "close": "Kapat",
+    "undo": "Geri al",
+    "notNow": "Şimdi değil",
+    "openSettings": "Ayarları aç",
+    "retry": "Tekrar dene",
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "optional": "İsteğe bağlı",
+    "closeSheet": "Kapat",
     "saveFailed": "Kaydedilemedi. Tekrar dene."
   },
   "navigation": {
-    "home": "Ana Sayfa",
-    "statistics": "İstatistikler",
-    "profile": "Profil"
+    "home": "Ana sayfa",
+    "insights": "İçgörüler",
+    "settings": "Ayarlar"
   },
-  "home": {
-    "goodMorning": "Günaydın",
-    "goodAfternoon": "İyi günler",
-    "goodEvening": "İyi akşamlar",
-    "totalCount": "Toplam sayı",
-    "addOne": "Bir ekle",
-    "subtractOne": "Bir çıkar",
-    "addFive": "Beş ekle",
-    "resetCounter": "Sıfırla",
-    "resetCounterA11y": "Sayacı sıfırla",
-    "wavingHand": "El sallama",
-    "mascotAlt": "Yapraklar arasında Foxiem tilki maskotu",
-    "resetCounterTitle": "Sayaç sıfırlansın mı?",
-    "resetCounterMessage": "Mevcut sayınız sıfıra dönecek.",
-    "resetTopicTitle": "{{topic}} sıfırlansın mı?",
-    "resetTopicMessage": "Yalnızca {{topic}} sıfıra döner. Diğer topic’ler aynı kalır."
+  "trackers": {
+    "defaultName": "Genel"
   },
-  "topics": {
-    "title": "Topic’ler",
-    "topic": "Topic",
-    "defaultName": "Genel",
-    "add": "Topic ekle",
-    "new": "Yeni topic",
-    "name": "Topic adı",
-    "create": "Oluştur",
-    "rename": "Topic’i yeniden adlandır",
-    "renameA11y": "{{topic}} adını değiştir",
-    "select": "Topic seç",
-    "selectA11y": "Topic seç, şu an {{topic}}",
-    "activeTopic": "Aktif topic",
-    "alreadyExists": "Bu topic adı zaten kullanılıyor.",
-    "nameRequired": "Bir topic adı girin.",
-    "nameTooLong": "Topic adı en fazla 40 karakter olabilir.",
-    "reservedName": "Genel dışında bir ad seçin.",
-    "limitReached": "En fazla 20 topic oluşturabilirsiniz."
+  "colours": {
+    "fox": "Turuncu",
+    "honey": "Sarı",
+    "leaf": "Yeşil",
+    "teal": "Camgöbeği",
+    "sky": "Mavi",
+    "iris": "Mor",
+    "berry": "Pembe",
+    "cocoa": "Kahverengi",
+    "slate": "Gri"
   },
-  "statistics": {
-    "title": "İstatistikler",
-    "subtitle": "İlerlemenize bir bakışta.",
+  "units": {
+    "glasses": "bardak",
+    "pages": "sayfa",
+    "reps": "tekrar",
+    "rows": "sıra"
+  },
+  "intents": {
+    "count": {
+      "title": "Sadece say",
+      "body": "Sayını tut. Hedef yok, yargı yok.",
+      "short": "Sadece sayım"
+    },
+    "reach": {
+      "title": "Bir hedefe ulaş",
+      "body": "Bir sayıya doğru ilerle; örneğin günde 8 bardak su.",
+      "short": "Hedef"
+    },
+    "limit": {
+      "title": "Sınırın altında kal",
+      "body": "Bir üst sınırı aşma; örneğin günde en fazla 3 kahve.",
+      "short": "Sınır"
+    },
+    "reduce": {
+      "title": "Zamanla azalt",
+      "body": "Yavaş yavaş azalt ve eğilimi izle.",
+      "short": "Azalt"
+    },
+    "consistency": {
+      "title": "Düzen oluştur",
+      "body": "Sana uyan günlerde düzenli olarak devam et.",
+      "short": "Düzen"
+    }
+  },
+  "periods": {
     "day": "Gün",
     "week": "Hafta",
     "month": "Ay",
-    "year": "Yıl",
-    "today": "Bugün",
-    "thisWeek": "Bu Hafta",
-    "thisMonth": "Bu Ay",
-    "total": "Toplam",
-    "chartLabel": "İlerleme grafiği",
-    "consistency": "Süreklilik",
-    "viewActivity": "Hareketi gör",
-    "consistencyBody": "Küçük sayılar anlamlı ilerlemeye dönüşür.",
-    "achievementAlt": "Kupa tutan Foxiem",
-    "weekday": {
-      "mon": "Pzt",
-      "tue": "Sal",
-      "wed": "Çar",
-      "thu": "Per",
-      "fri": "Cum",
-      "sat": "Cmt",
-      "sun": "Paz"
+    "all": "Toplam",
+    "current": {
+      "day": "bugün",
+      "week": "bu hafta",
+      "month": "bu ay",
+      "all": "toplam"
+    }
+  },
+  "goal": {
+    "count": {
+      "all": "Sadece say · toplamı tutar",
+      "day": "Sadece say · her gün sıfırdan başlar",
+      "week": "Sadece say · her hafta sıfırdan başlar",
+      "month": "Sadece say · her ay sıfırdan başlar"
     },
-    "weekNumber": {
-      "w1": "H1",
-      "w2": "H2",
-      "w3": "H3",
-      "w4": "H4",
-      "w5": "H5",
-      "w6": "H6"
+    "reach": {
+      "day": "Hedef: günde {{target}} {{unit}}",
+      "week": "Hedef: haftada {{target}} {{unit}}",
+      "month": "Hedef: ayda {{target}} {{unit}}",
+      "all": "Hedef: toplam {{target}} {{unit}}"
     },
-    "monthShort": {
-      "jan": "Oca",
-      "feb": "Şub",
-      "mar": "Mar",
-      "apr": "Nis",
-      "may": "May",
-      "jun": "Haz",
-      "jul": "Tem",
-      "aug": "Ağu",
-      "sep": "Eyl",
-      "oct": "Eki",
-      "nov": "Kas",
-      "dec": "Ara"
+    "limit": {
+      "day": "Sınır: günde en fazla {{target}} {{unit}}",
+      "week": "Sınır: haftada en fazla {{target}} {{unit}}",
+      "month": "Sınır: ayda en fazla {{target}} {{unit}}"
     },
-    "noActivity": "Henüz hareket yok"
+    "reduce": {
+      "day": "Azalt · günden güne karşılaştırılır",
+      "week": "Azalt · haftadan haftaya karşılaştırılır",
+      "month": "Azalt · aydan aya karşılaştırılır"
+    },
+    "consistency_one": "Haftada {{count}} gün",
+    "consistency_other": "Haftada {{count}} gün",
+    "consistencyDaily": "Her gün"
+  },
+  "welcome": {
+    "title": "Önemli olanı say.",
+    "body": "Her şeyi tek dokunuşla takip et.\nZamanla nasıl değiştiğini gör.",
+    "cta": "Saymaya başla",
+    "foxAlt": "Yaprakların arasında oturan Foxiem tilkisi"
+  },
+  "start": {
+    "title": "İşine yarayacak bir şeyle başla",
+    "subtitle": "Her biri farklı bir şekilde sayar. İstediğin her şeyi sonra değiştirebilirsin.",
+    "custom": "Kendim oluşturayım",
+    "templates": {
+      "coffee": "Kahve",
+      "water": "Su",
+      "reading": "Okuma",
+      "pushups": "Şınav",
+      "cigarettes": "Sigara",
+      "knitting": "Örgü sırası",
+      "dogWalks": "Köpek yürüyüşü",
+      "prayer": "Dua",
+      "salesCalls": "Satış aramaları",
+      "ideas": "Fikirler"
+    }
+  },
+  "create": {
+    "title": "Yeni sayaç",
+    "stepName": "Neyi sayıyorsun?",
+    "stepIntent": "Bu sayıda önemli olan ne?",
+    "stepSetup": "Ayarla",
+    "stepOf": "Adım {{step}} / {{total}}",
+    "namePlaceholder": "Kahve, sayfa, arama…",
+    "nameLabel": "Ad",
+    "chooseIcon": "Simge seç",
+    "colour": "Renk",
+    "colourA11y": "Renk: {{colour}}",
+    "howMany": "Kaç tane?",
+    "limitQuestion": "Sınırın ne?",
+    "every": "Sıklık",
+    "compare": "Karşılaştır",
+    "resets": "Sıfırdan başlar",
+    "resetsNever": "Hiç",
+    "howOften": "Ne sıklıkla?",
+    "daysAWeek_one": "Haftada {{count}} gün",
+    "daysAWeek_other": "Haftada {{count}} gün",
+    "everyDay": "Her gün",
+    "usual": {
+      "day": "Genelde günde kaç tane?",
+      "week": "Genelde haftada kaç tane?",
+      "month": "Genelde ayda kaç tane?"
+    },
+    "usualHint": "İsteğe bağlı. Geçmiş oluşmadan önce Foxiem'e bir başlangıç noktası verir.",
+    "unit": "Birim",
+    "unitPlaceholder": "sayfa, bardak, ₺…",
+    "step": "Her dokunuş ekler",
+    "startingValue": "Başlangıç değeri",
+    "startingValueHint": "Daha önce saydın mı? O sayıdan başla.",
+    "notes": "Notlar",
+    "notesPlaceholder": "Bu sayaçla ilgili hatırlamak istediğin her şey",
+    "moreOptions": "Diğer seçenekler",
+    "fewerOptions": "Daha az seçenek",
+    "cta": "Sayacı oluştur",
+    "summary": "Özet",
+    "decrease": "{{label}}: azalt",
+    "increase": "{{label}}: artır",
+    "errors": {
+      "nameRequired": "Sayacına bir ad ver.",
+      "nameTooLong": "Ad 40 karakterden kısa olmalı.",
+      "nameDuplicate": "Bu adla bir sayacın zaten var.",
+      "targetRequired": "Bir sayı gir.",
+      "targetRange": "Aralıkta bir sayı seç.",
+      "stepRange": "Her dokunuş 1 ile 1.000 arasında ekleyebilir.",
+      "startingValueRange": "Başlangıç değeri çok büyük.",
+      "unitTooLong": "Birim 16 karakterden kısa olmalı.",
+      "baselineRange": "Bu sayı aralığın dışında.",
+      "trackerLimit": "En fazla 100 etkin sayaca ulaştın. Yenisini eklemek için birini arşivle."
+    }
+  },
+  "home": {
+    "addTracker": "Yeni sayaç",
+    "reorder": "Sırala",
+    "reorderDone": "Tamam",
+    "archivedCount_one": "{{count}} arşivlenmiş sayaç",
+    "archivedCount_other": "{{count}} arşivlenmiş sayaç",
+    "moveUp": "{{name}} yukarı taşı",
+    "moveDown": "{{name}} aşağı taşı",
+    "countA11y": "{{name}} için {{amount}} ekle",
+    "decrementA11y": "{{name}} için {{amount}} çıkar",
+    "rowHint": "Ayrıntıları açar",
+    "hint": "Saymak için + simgesine dokun. İlerlemeyi görmek için bir sayaca dokun.",
+    "tryNext": "Başka bir sayma biçimi dene",
+    "emptyTitle": "Saymak istediğin bir şeyle başla.",
+    "emptyBody": "Kahve, sayfa, arama, yürüyüş — senin için önemli olan her şey.",
+    "emptyCta": "Sayaç oluştur",
+    "whatsNewTitle": "Foxiem artık amaçla sayıyor",
+    "whatsNewBody": "Sayaçlarının hepsi burada. Birini aç ve ⚙ ile ona bir hedef ya da sınır ver veya sadece saymaya devam et.",
+    "saveFailedTitle": "Foxiem son değişikliklerini kaydedemedi",
+    "saveFailedBody": "Cihazında yer azalmış olabilir. Foxiem denemeye devam edecek.",
+    "recoveredTitle": "Foxiem sayaçlarını geri yükledi",
+    "recoveredBody": "Kayıtlı veriler okunamadığı için Foxiem yedeğini kullandı. En son girişlerin eksik olabilir.",
+    "unreadableTitle": "Geçmişin bir kısmı okunamadı",
+    "unreadableBody": "Foxiem bu cihazda bir kopya sakladı ve etkilenen sayaçları sıfırdan başlattı."
+  },
+  "status": {
+    "total": "toplam",
+    "thisMonth": "Bu ay {{count}}",
+    "lastEntry": "Son giriş: {{when}}",
+    "noEntries": "Henüz giriş yok",
+    "yesterday": "Dün: {{count}}",
+    "lastWeek": "Geçen hafta: {{count}}",
+    "lastMonth": "Geçen ay: {{count}}",
+    "toGo": {
+      "day": "Bugün {{count}} kaldı",
+      "week": "Bu hafta {{count}} kaldı",
+      "month": "Bu ay {{count}} kaldı",
+      "all": "{{count}} kaldı"
+    },
+    "reached": "Hedefe ulaşıldı",
+    "reachedOver": "Hedefe ulaşıldı · {{count}} fazla",
+    "left": {
+      "day": "Bugün {{count}} hak kaldı",
+      "week": "Bu hafta {{count}} hak kaldı",
+      "month": "Bu ay {{count}} hak kaldı"
+    },
+    "leftLong": {
+      "day": "Bugünkü sınırın içinde {{count}} hak kaldı",
+      "week": "Bu haftaki sınırın içinde {{count}} hak kaldı",
+      "month": "Bu ayki sınırın içinde {{count}} hak kaldı"
+    },
+    "atLimit": {
+      "day": "Bugünkü sınıra ulaşıldı",
+      "week": "Bu haftaki sınıra ulaşıldı",
+      "month": "Bu ayki sınıra ulaşıldı"
+    },
+    "over": {
+      "day": "Bugünkü sınırın {{count}} üstünde",
+      "week": "Bu haftaki sınırın {{count}} üstünde",
+      "month": "Bu ayki sınırın {{count}} üstünde"
+    },
+    "down": {
+      "day": "Düne göre ↓ {{percent}}",
+      "week": "Geçen haftaya göre ↓ {{percent}}",
+      "month": "Geçen aya göre ↓ {{percent}}"
+    },
+    "up": {
+      "day": "Düne göre ↑ {{percent}}",
+      "week": "Geçen haftaya göre ↑ {{percent}}",
+      "month": "Geçen aya göre ↑ {{percent}}"
+    },
+    "same": {
+      "day": "Dünle aynı",
+      "week": "Geçen haftayla aynı",
+      "month": "Geçen ayla aynı"
+    },
+    "upFromZero": {
+      "day": "{{count}} · dün hiç yoktu",
+      "week": "{{count}} · geçen hafta hiç yoktu",
+      "month": "{{count}} · geçen ay hiç yoktu"
+    },
+    "comparisonSoon": {
+      "day": "İlk karşılaştırma tam bir günden sonra",
+      "week": "İlk karşılaştırma tam bir haftadan sonra",
+      "month": "İlk karşılaştırma tam bir aydan sonra"
+    },
+    "usual": {
+      "day": "Her zamanki: günde {{count}}",
+      "week": "Her zamanki: haftada {{count}}",
+      "month": "Her zamanki: ayda {{count}}"
+    },
+    "loggedToday": "Bugün kaydedildi",
+    "sessionsToday": "Bugün {{count}} kez",
+    "notYetToday": "Bugün henüz kaydedilmedi",
+    "rhythmMet": "Bu haftanın düzeni tamamlandı",
+    "of": "/ {{target}}",
+    "max": "en fazla {{target}}",
+    "ofDays": "/ {{target}} gün",
+    "a11ySummary": "{{name}}, {{value}}, {{status}}"
+  },
+  "detail": {
+    "settings": "Sayaç ayarları",
+    "heroOf": {
+      "day": "/ {{target}} {{unit}} · bugün",
+      "week": "/ {{target}} {{unit}} · bu hafta",
+      "month": "/ {{target}} {{unit}} · bu ay",
+      "all": "/ {{target}} {{unit}}"
+    },
+    "heroMax": {
+      "day": "/ en fazla {{target}} {{unit}} · bugün",
+      "week": "/ en fazla {{target}} {{unit}} · bu hafta",
+      "month": "/ en fazla {{target}} {{unit}} · bu ay"
+    },
+    "heroPeriod": {
+      "day": "{{unit}} · bugün",
+      "week": "{{unit}} · bu hafta",
+      "month": "{{unit}} · bu ay",
+      "all": "{{unit}} · toplam"
+    },
+    "heroDays": "/ {{target}} gün · bu hafta",
+    "increment": "{{amount}} ekle",
+    "decrement": "{{amount}} çıkar",
+    "addAmount": "Miktar ekle",
+    "addAmountHint": "Herhangi bir miktar eklemek için + simgesine basılı tut",
+    "added": "{{amount}} eklendi",
+    "subtracted": "{{amount}} çıkarıldı",
+    "thisWeek": "Bu hafta",
+    "weekChartA11y": "Bu hafta günlere göre: {{values}}",
+    "targetLine": "Hedef {{target}}",
+    "limitLine": "Sınır {{target}}",
+    "consistency": "Düzen",
+    "consistencyWindow": "Son {{days}} günün {{success}} günü",
+    "consistencyPlanned": "Planlanan {{planned}} günün {{success}} günü etkin",
+    "consistencyPeriods": {
+      "week": "Son {{count}} haftanın {{success}} haftası",
+      "month": "Son {{count}} ayın {{success}} ayı"
+    },
+    "consistencyRule": {
+      "active": "Giriş olan günler",
+      "target": "Hedefe ulaşılan günler",
+      "limit": "Sınırın içinde kalınan günler",
+      "rhythm": "Düzenine göre etkin günler"
+    },
+    "consistencyRulePeriod": {
+      "week": {
+        "target": "Hedefe ulaşılan haftalar",
+        "limit": "Sınırın içinde kalınan haftalar"
+      },
+      "month": {
+        "target": "Hedefe ulaşılan aylar",
+        "limit": "Sınırın içinde kalınan aylar"
+      }
+    },
+    "consistencySoon_one": "Düzen, {{count}} günlük daha geçmişten sonra görünür.",
+    "consistencySoon_other": "Düzen, {{count}} günlük daha geçmişten sonra görünür.",
+    "streak": "Mevcut seri",
+    "bestStreak": "En iyi",
+    "streakDays_one": "{{count}} gün",
+    "streakDays_other": "{{count}} gün",
+    "streakWeeks_one": "{{count}} hafta",
+    "streakWeeks_other": "{{count}} hafta",
+    "streakMonths_one": "{{count}} ay",
+    "streakMonths_other": "{{count}} ay",
+    "calendar": "Takvim",
+    "insights": "İçgörüler",
+    "insightsEmpty": "Eğilimleri görmek için birkaç gün daha saymaya devam et.",
+    "recent": "Son girişler",
+    "allHistory": "Tüm geçmiş",
+    "addEntry": "Giriş ekle",
+    "emptyTitle": "Sayımların burada görünecek.",
+    "emptyBody": "Saymak için + simgesine dokun. Geçmiş girişleri istediğin zaman ekleyip düzeltebilirsin.",
+    "reduce": {
+      "samePoint": {
+        "day": "Dün bu saatte",
+        "week": "Geçen hafta bu noktada",
+        "month": "Geçen ay bu noktada"
+      },
+      "last": {
+        "day": "Dün",
+        "week": "Geçen hafta",
+        "month": "Geçen ay"
+      },
+      "usual": "Her zamanki"
+    },
+    "notFound": "Bu sayaç artık yok.",
+    "archivedNotice": "Bu sayaç arşivde. Tekrar saymak için geri yükle.",
+    "restore": "Geri yükle"
   },
   "calendar": {
-    "weekdaysShort": {
-      "monday": "Pzt",
-      "tuesday": "Sal",
-      "wednesday": "Çar",
-      "thursday": "Per",
-      "friday": "Cum",
-      "saturday": "Cmt",
-      "sunday": "Paz"
+    "previousMonth": "Önceki ay",
+    "nextMonth": "Sonraki ay",
+    "dayA11y": "{{date}}: {{value}}",
+    "dayGoalMet": "{{date}}: {{value}}, hedefe ulaşıldı",
+    "dayGoalMissed": "{{date}}: {{value}}, hedefe ulaşılmadı",
+    "noEntries": "giriş yok",
+    "moreWithPro": "Önceki aylar Foxiem Pro'nun bir parçası",
+    "legendLess": "Az",
+    "legendMore": "Çok",
+    "year": "Yıl",
+    "yearTitle": "Bir bakışta {{year}}"
+  },
+  "insight": {
+    "comparison": {
+      "down": {
+        "day": "{{name}}, dün bu saate göre {{percent}} daha az.",
+        "week": "{{name}}, geçen hafta bu noktaya göre {{percent}} daha az.",
+        "month": "{{name}}, geçen ay bu noktaya göre {{percent}} daha az."
+      },
+      "up": {
+        "day": "{{name}}, dün bu saate göre {{percent}} daha fazla.",
+        "week": "{{name}}, geçen hafta bu noktaya göre {{percent}} daha fazla.",
+        "month": "{{name}}, geçen ay bu noktaya göre {{percent}} daha fazla."
+      },
+      "same": {
+        "day": "{{name}}, dün bu saatle aynı düzeyde.",
+        "week": "{{name}}, geçen hafta bu noktayla aynı düzeyde.",
+        "month": "{{name}}, geçen ay bu noktayla aynı düzeyde."
+      },
+      "upFromZero": {
+        "day": "{{name}}: şimdiye kadar {{count}}, dün bu saatte hiç yoktu.",
+        "week": "{{name}}: şimdiye kadar {{count}}, geçen hafta bu noktada hiç yoktu.",
+        "month": "{{name}}: şimdiye kadar {{count}}, geçen ay bu noktada hiç yoktu."
+      }
     },
-    "monthsShort": {
-      "january": "Oca",
-      "february": "Şub",
-      "march": "Mar",
-      "april": "Nis",
-      "may": "May",
-      "june": "Haz",
-      "july": "Tem",
-      "august": "Ağu",
-      "september": "Eyl",
-      "october": "Eki",
-      "november": "Kas",
-      "december": "Ara"
+    "hitRate": {
+      "target": "Son {{days}} günün {{success}} gününde {{name}} hedefine ulaştın.",
+      "limit": "Son {{days}} günün {{success}} gününde {{name}} sınırının içinde kaldın."
+    },
+    "average": "{{name}}: son {{days}} günde günde ortalama {{average}}.",
+    "averageUnit": "{{name}}: son {{days}} günde günde ortalama {{average}} {{unit}}.",
+    "weekday": {
+      "sunday": "{{name}} için en yüksek gün genellikle pazar.",
+      "monday": "{{name}} için en yüksek gün genellikle pazartesi.",
+      "tuesday": "{{name}} için en yüksek gün genellikle salı.",
+      "wednesday": "{{name}} için en yüksek gün genellikle çarşamba.",
+      "thursday": "{{name}} için en yüksek gün genellikle perşembe.",
+      "friday": "{{name}} için en yüksek gün genellikle cuma.",
+      "saturday": "{{name}} için en yüksek gün genellikle cumartesi."
+    },
+    "dayPart": {
+      "morning": "{{name}} girişlerinin çoğu sabah oluyor.",
+      "afternoon": "{{name}} girişlerinin çoğu öğleden sonra oluyor.",
+      "evening": "{{name}} girişlerinin çoğu akşam oluyor.",
+      "night": "{{name}} girişlerinin çoğu gece geç saatte oluyor."
+    },
+    "pace": {
+      "ahead": {
+        "week": "{{name}} için bu hafta tempodan öndesin.",
+        "month": "{{name}} için bu ay tempodan öndesin."
+      },
+      "onPace": {
+        "week": "{{name}} için bu hafta tempondasın.",
+        "month": "{{name}} için bu ay tempondasın."
+      },
+      "needed": {
+        "week": "{{name}} hedefine bu hafta ulaşmak için günde yaklaşık {{count}} yeterli.",
+        "month": "{{name}} hedefine bu ay ulaşmak için günde yaklaşık {{count}} yeterli."
+      },
+      "projected": {
+        "week": "Bu tempoyla hafta sonunda yaklaşık {{count}}.",
+        "month": "Bu tempoyla ay sonunda yaklaşık {{count}}."
+      },
+      "eta": "Son temponla {{target}} hedefine yaklaşık {{date}} tarihinde ulaşırsın.",
+      "etaNone": "{{target}} hedefine ne zaman ulaşacağını görmek için birkaç gün daha kaydet."
+    },
+    "weeks": "{{name}} için son dört hafta: {{values}}.",
+    "cross": {
+      "higher": "{{driver}} kaydettiğin günlerde {{subject}} {{percent}} daha yüksek.",
+      "lower": "{{driver}} kaydettiğin günlerde {{subject}} {{percent}} daha düşük."
+    },
+    "activeDays": "Son {{days}} günün {{success}} gününde bir şey kaydettin.",
+    "targetsThisWeek_one": "Bu hafta {{count}} hedefe ulaşıldı.",
+    "targetsThisWeek_other": "Bu hafta {{count}} hedefe ulaşıldı.",
+    "patternsSoon_one": "Örüntüler için yaklaşık {{count}} günlük daha geçmiş gerekiyor.",
+    "patternsSoon_other": "Örüntüler için yaklaşık {{count}} günlük daha geçmiş gerekiyor."
+  },
+  "insights": {
+    "title": "İçgörüler",
+    "thisWeek": "Bu hafta",
+    "weekRange": "Bu hafta · {{range}}",
+    "highlights": "Öne çıkanlar",
+    "reviews": "Değerlendirmeler",
+    "patterns": "Örüntüler",
+    "emptyTitle": "Henüz anlaşılacak bir şey yok",
+    "emptyBody": "Bir sayaç oluştur ve birkaç gün say. Yeterli geçmiş olunca içgörüler görünür.",
+    "emptyCta": "Sayaç oluştur",
+    "earlyTitle": "İlk eğilimini görmek için saymaya devam et",
+    "earlyBody": "İlk haftalık karşılaştırman tam bir haftalık geçmişten sonra görünür.",
+    "noHighlights": "Karşılaştırılacak birkaç gün olunca öne çıkanlar görünür.",
+    "patternsLocked": "Sayılarının birlikte nasıl değiştiğini ve hangi günler arttığını gör.",
+    "noPatterns": "Henüz belirgin bir örüntü yok. Foxiem bir örüntüyü yalnızca geçmişin destekliyorsa gösterir.",
+    "weeklyReview": "Haftalık değerlendirme",
+    "weeklyReviewBody": "Geçen hafta, {{range}}",
+    "monthlyReview": "Aylık değerlendirme",
+    "monthlyReviewBody": "{{month}}",
+    "weekLine": {
+      "daysOnTarget": "{{days}} günün {{success}} gününde hedefe ulaşıldı",
+      "daysWithinLimit": "{{days}} günün {{success}} gününde sınırın içinde",
+      "periodTarget": "Bu hafta {{value}} / {{target}}",
+      "periodLimit": "Bu hafta {{value}} / en fazla {{target}}",
+      "total": "Bu hafta {{value}}",
+      "rhythm": "Bu hafta {{value}} / {{target}} gün",
+      "noDays": "Hafta yeni başladı"
+    }
+  },
+  "review": {
+    "weeklyTitle": "Haftalık değerlendirme",
+    "monthlyTitle": "Aylık değerlendirme",
+    "targetsLabel": "Ulaşılan hedefler",
+    "activeDaysLabel": "Giriş olan günler",
+    "byTracker": "Sayaç sayaç",
+    "dailyTarget": "{{days}} günün {{success}} gününde hedefe ulaşıldı",
+    "dailyLimit": "{{days}} günün {{success}} gününde sınırın içinde",
+    "periodTargetMet": "Hedefe ulaşıldı · {{total}} / {{target}}",
+    "periodTargetMissed": "{{total}} / {{target}}",
+    "periodLimitMet": "Sınırın içinde · {{total}} / en fazla {{limit}}",
+    "periodLimitMissed": "{{total}} · sınır {{limit}}",
+    "rhythmMet": "{{active}} / {{target}} gün · düzen tamamlandı",
+    "rhythmMissed": "{{active}} / {{target}} gün",
+    "changeUp": "{{total}} · ↑ {{percent}}",
+    "changeDown": "{{total}} · ↓ {{percent}}",
+    "changeSame": "{{total}} · aynı düzey",
+    "changeNew": "{{total}} · ilk tam hafta",
+    "pattern": "{{name}} için en güçlü günler",
+    "next": "Sırada",
+    "nextPerDay": "Bu ayki {{name}} hedefine ulaşmak için günde yaklaşık {{count}} yeterli.",
+    "unavailableWeek": "İlk haftalık değerlendirmen tam bir haftalık takipten sonra görünür.",
+    "unavailableMonth": "İlk aylık değerlendirmen tam bir aylık takipten sonra görünür.",
+    "vsPrevious": "{{month}} ayına göre",
+    "bestWeek": "En iyi hafta: {{date}} başlayan haftada {{total}}",
+    "direction": {
+      "up": "Üç aydır yükseliyor",
+      "down": "Üç aydır düşüyor",
+      "steady": "Üç aydır sabit"
+    },
+    "successRate": {
+      "target": "{{days}} günün {{success}} gününde hedefe ulaşıldı",
+      "limit": "{{days}} günün {{success}} gününde sınırın içinde"
     }
   },
   "history": {
-    "increment": "Eklendi",
-    "decrement": "Çıkarıldı",
-    "reset": "Sıfırlandı"
+    "title": "Geçmiş",
+    "empty": "Sayımların burada görünecek.",
+    "added": "+{{amount}}",
+    "subtracted": "−{{amount}}",
+    "reset": "0'a sıfırlandı",
+    "adjusted": "{{value}} olarak ayarlandı",
+    "result": "→ {{value}}",
+    "edited": "düzenlendi",
+    "entryA11y": "{{time}}: {{change}}",
+    "deleted": "Giriş silindi"
   },
-  "activity": {
-    "title": "Hareket Geçmişi",
-    "subtitle": "Son sayım hareketlerinin kaydı.",
-    "today": "Bugün",
-    "yesterday": "Dün",
-    "result": "Sonuç",
-    "resetDescription": "Sayaç sıfırlandı",
-    "empty": {
-      "title": "Henüz hareket yok",
-      "body": "Sayım hareketlerin burada görünecek."
-    }
+  "entry": {
+    "addTitle": "Giriş ekle",
+    "editTitle": "Girişi düzenle",
+    "amount": "Miktar",
+    "when": "Ne zaman",
+    "date": "Tarih",
+    "time": "Saat",
+    "pickDate": "Başka gün",
+    "note": "Not",
+    "notePlaceholder": "İsteğe bağlı not",
+    "delete": "Girişi sil",
+    "resetEntry": "Bu giriş sayıyı 0'a sıfırladı. Sıfırlamayı geri almak için sil.",
+    "adjustEntry": "Foxiem bunu güncelleme sırasında ekledi; böylece sayın en son gördüğünle eşleşti.",
+    "invalidAmount": "0'dan büyük bir miktar gir.",
+    "futureTime": "Girişler gelecekte olamaz.",
+    "addButton": "{{amount}} ekle",
+    "quickAmounts": "Hızlı miktarlar"
   },
-  "consistency": {
-    "title": "Süreklilik",
-    "subtitle": "Küçük adımlar zamanla birikir.",
-    "currentStreak": "Mevcut seri",
-    "bestStreak": "En iyi seri",
-    "thisWeek": "Bu hafta",
-    "activeDays": "{{count}} / 7 aktif gün",
-    "weekRatio": "{{count}} / 7",
-    "viewConsistency": "Sürekliliği gör",
-    "keepGoing": "Devam et.",
-    "startToday": "Bugün başla.",
-    "noStreak": "Henüz seri yok",
-    "day_one": "{{count}} gün",
-    "day_other": "{{count}} gün",
-    "activeDay": "aktif",
-    "inactiveDay": "aktif değil",
-    "todayActive": "bugün, aktif",
-    "todayPending": "bugün, henüz aktif değil",
-    "futureDay": "gelecek gün",
-    "supporting": "Küçük sayılar. Büyük ilerleme."
-  },
-  "profile": {
-    "title": "Profil",
-    "totalCounts": "Toplam Sayı",
-    "topicCount": "{{topic}} sayısı",
-    "editProfile": "Profili Düzenle",
+  "trackerSettings": {
+    "title": "Sayaç ayarları",
+    "basics": "Temel",
+    "purpose": "Bu sayı ne işe yarıyor",
+    "changeIntent": "Değiştir",
+    "counting": "Sayım",
     "reminders": "Hatırlatıcılar",
-    "language": "Dil",
-    "privacy": "Gizlilik",
-    "resetData": "Uygulama Verisini Sıfırla",
-    "about": "Hakkında",
-    "chartGraphic": "Dekoratif sayı grafiği",
-    "avatarAlt": "Foxiem profil görseli"
-  },
-  "profileSetup": {
-    "title": "Seni tanıyalım",
-    "subtitle": "Foxiem’in sana nasıl hitap etmesini istediğini söyle.",
-    "name": "Ad",
-    "username": "Kullanıcı adı",
-    "namePlaceholder": "",
-    "usernamePlaceholder": "",
-    "mascotAlt": "Foxiem",
-    "nameRequired": "Adını gir.",
-    "nameTooLong": "Ad en fazla 50 karakter olabilir.",
-    "usernameRequired": "Bir kullanıcı adı gir.",
-    "usernameLength": "Kullanıcı adı 3–24 karakter olmalı.",
-    "usernameChars": "Yalnızca harf, rakam, alt çizgi ve nokta kullan."
-  },
-  "editProfile": {
-    "title": "Profili Düzenle",
-    "saveChanges": "Değişiklikleri Kaydet"
-  },
-  "language": {
-    "title": "Dil",
-    "selected": "Seçili"
-  },
-  "privacy": {
-    "title": "Gizlilik",
-    "subtitle": "Foxiem’in neleri sakladığı ve neleri saklamadığı.",
-    "yourData": {
-      "title": "Verilerin",
-      "body": "Foxiem şu anda bu bilgileri yerelde saklar:",
-      "derived": "İstatistikler ve Süreklilik geçmişinden hesaplanır; ayrıca saklanmaz."
-    },
-    "data": {
-      "name": "Ad",
-      "username": "Kullanıcı adı",
-      "language": "Seçili dil",
-      "counter": "Güncel sayaç",
-      "topics": "İsimli sayaç topic’leri",
-      "history": "Sayaç hareket geçmişi",
-      "reminders": "Hatırlatıcı ayarları",
-      "notificationIds": "Bildirim zamanlama kimlikleri",
-      "setupCompleted": "Kurulum tamamlandı durumu"
-    },
-    "storage": {
-      "title": "Verilerin nerede saklanır",
-      "body": "Foxiem verilerin bu cihazda yerelde saklanır. Foxiem şu anda bu veriyi uzak bir sunucuya veya bulut hesabına eşlemez."
-    },
-    "notifications": {
-      "title": "Bildirimler",
-      "body": "Foxiem bu cihazda yerel hatırlatıcılar zamanlayabilir. Bildirim izni yalnızca hatırlatıcı kullandığında istenir. Foxiem uzak bir push bildirim sunucusu kullanmaz."
-    },
-    "cloud": {
-      "title": "Ağ ve bulut",
-      "body": "Foxiem ürün verileriniz — profil, sayım geçmişi, hatırlatıcılar ve tercihler — bu cihazda kalır ve bir Foxiem sunucusuna yüklenmez. Foxiem hesabı gerekmez. Ayrı olarak, reklamlar gösterilirken Google Mobile Ads Google ile iletişim kurabilir."
-    },
-    "reset": {
-      "title": "Uygulama verisini sıfırla",
-      "body": "Uygulama verisini sıfırlamak, profilin, sayaç, geçmiş, hatırlatıcılar ve tercihler dahil bu cihazdaki Foxiem verisini kalıcı olarak siler. Zamanlanmış Foxiem hatırlatıcıları da iptal edilir. Bunu Profil’den yapabilirsin."
-    },
-    "policy": "Gizlilik Politikası",
-    "policyNotConfigured": "Gizlilik Politikası bağlantısı henüz ayarlanmadı.",
-    "permission": {
-      "label": "Bildirim izni",
-      "allowed": "İzin verildi",
-      "denied": "İzin verilmedi",
-      "undetermined": "Henüz sorulmadı"
-    },
-    "advertising": {
-      "title": "Reklamlar",
-      "body": "Foxiem, seçili ekranlarda banner reklam göstermek için Google Mobile Ads kullanır. Google ve reklam SDK’sı; reklam sunumu, ölçüm, dolandırıcılık önleme ve — seçimlerinizin izin verdiği ölçüde — kişiselleştirme için cihaz ve reklamla ilgili bilgileri işleyebilir. Foxiem ayrıca kurulum tamamlandı ve ilk sayım gibi anonim reklam ölçüm olaylarını Google Analytics for Firebase’e gönderir. Foxiem adınızı, kullanıcı adınızı, sayacınızı, geçmişinizi veya hatırlatıcılarınızı AdMob’a hedefleme verisi olarak göndermez."
-    },
-    "adChoices": "Gizlilik seçimleri",
-    "adChoicesUnavailable": "Gizlilik seçimleri şu anda kullanılamıyor."
+    "addReminder": "Hatırlatıcı ekle",
+    "moreRemindersPro": "Foxiem Pro ile daha fazla hatırlatıcı",
+    "reminderPaused": "Duraklatıldı · ek hatırlatıcılar Pro'ya dahil",
+    "notes": "Notlar",
+    "manage": "Yönet",
+    "resetCount": "0'a sıfırla",
+    "resetTitle": "{{name}} 0'a sıfırlansın mı?",
+    "resetBody": "Sayım yeniden 0'dan başlar. Bu sıfırlama dahil geçmişin korunur.",
+    "archive": "Sayacı arşivle",
+    "archiveHint": "Ana sayfadan gizler. Geçmiş korunur ve istediğin zaman geri yükleyebilirsin.",
+    "archived": "{{name}} arşivlendi",
+    "delete": "Sayacı sil",
+    "deleteTitle": "{{name}} silinsin mi?",
+    "deleteBody": "Bu, sayacı, {{count}} girişini ve hatırlatıcılarını bu cihazdan kalıcı olarak siler. Geri alınamaz. Geçmişi saklamak için arşivlemeyi seçebilirsin.",
+    "deleteConfirm": "Kalıcı olarak sil",
+    "unsavedTitle": "Değişiklikler silinsin mi?",
+    "unsavedBody": "Bu sayaçtaki düzenlemelerin kaydedilmedi.",
+    "discard": "Sil",
+    "saved": "Kaydedildi",
+    "intentChangeNote": "Bunu değiştirmek geçmişini asla değiştirmez. Tüm sayılar girişlerinden yeniden hesaplanır."
   },
   "reminders": {
-    "title": "Hatırlatıcılar",
-    "subtitle": "Nazik hatırlatmalarla düzenini koru.",
-    "empty": {
-      "title": "Henüz hatırlatıcı yok",
-      "body": "İlerlemeni sürdürmek için bir hatırlatıcı oluştur."
-    },
-    "add": "Hatırlatıcı Ekle",
-    "edit": "Hatırlatıcıyı Düzenle",
+    "title": "Hatırlatıcı",
+    "newTitle": "Yeni hatırlatıcı",
+    "general": "Günlük kontrol",
     "time": "Saat",
+    "changeTime": "Saati değiştir",
     "repeat": "Tekrar",
-    "message": "Mesaj",
     "everyDay": "Her gün",
     "weekdays": "Hafta içi",
     "weekends": "Hafta sonu",
-    "delete": "Sil",
-    "deleteTitle": "Hatırlatıcı silinsin mi?",
-    "deleteBody": "Bu hatırlatıcı artık bu cihazda görünmeyecek.",
-    "save": "Hatırlatıcıyı Kaydet",
-    "enabled": "Hatırlatıcı açık",
-    "disabled": "Hatırlatıcı kapalı",
-    "chooseTime": "Hatırlatıcı saati",
-    "selectTime": "Saat seç",
-    "changeTimeHint": "Hatırlatıcı saatini değiştir",
-    "scheduleFailed": "Bu hatırlatıcı zamanlanamadı.",
-    "daysRequired": "En az bir gün seç."
+    "dayToggle": "{{day}}, {{state}}",
+    "selected": "seçili",
+    "notSelected": "seçili değil",
+    "daysRequired": "En az bir gün seç.",
+    "smart": "İlerlemeye duyarlı",
+    "smartBody": "Ne kaldığını söyler ve tamamladığın günlerde sessiz kalır.",
+    "suggested": "Genelde {{time}} civarında kaydediyorsun",
+    "useSuggested": "{{time}} kullan",
+    "permissionTitle": "Foxiem bildirim göndermek için izin isteyecek",
+    "permissionBody": "Yalnızca kurduğun hatırlatıcılar, seçtiğin saatlerde. İstediğin zaman kapatabilirsin.",
+    "blockedTitle": "Foxiem için bildirimler kapalı",
+    "blockedBody": "Hatırlatıcılar kaydedildi ama Ayarlar'dan bildirimlere izin verene kadar görünmeyecek.",
+    "save": "Hatırlatıcıyı kaydet",
+    "delete": "Hatırlatıcıyı sil",
+    "deleted": "Hatırlatıcı silindi",
+    "saved": "Hatırlatıcı kaydedildi",
+    "limitReached": "Bu sayaç için hatırlatıcı sınırına ulaştın.",
+    "scheduleFailed": "Bu hatırlatıcı planlanamadı. Tekrar dene.",
+    "summary": "{{time}} · {{days}}",
+    "channelName": "Hatırlatıcılar",
+    "copy": {
+      "checkIn": "Kısa bir kontrol: bugün sayacak bir şey var mı?",
+      "count": "Kaydedecek bir şey var mı?",
+      "reach": {
+        "day": "Bugünkü hedef: {{target}}.",
+        "week": "Bu haftaki hedef: {{target}}.",
+        "month": "Bu ayki hedef: {{target}}.",
+        "all": "Hedefin: {{target}}."
+      },
+      "limit": {
+        "day": "Bugünkü sayına kısa bir bakış. Sınır: {{limit}}.",
+        "week": "Bu haftaki sayına kısa bir bakış. Sınır: {{limit}}.",
+        "month": "Bu ayki sayına kısa bir bakış. Sınır: {{limit}}."
+      },
+      "reduce": "Eğilimin doğru kalsın diye bugünkü sayını kaydet.",
+      "consistency": "Bugünkü oturum zamanı mı?",
+      "smart": {
+        "reachRemaining": {
+          "day": "Bugünkü hedef için {{count}} kaldı.",
+          "week": "Bu haftaki hedef için {{count}} kaldı.",
+          "month": "Bu ayki hedef için {{count}} kaldı.",
+          "all": "Hedefine {{count}} kaldı."
+        },
+        "limitLeft": {
+          "day": "Bugünkü sınırın içinde {{count}} hak kaldı.",
+          "week": "Bu haftaki sınırın içinde {{count}} hak kaldı.",
+          "month": "Bu ayki sınırın içinde {{count}} hak kaldı."
+        },
+        "limitReached": "Şimdiye kadar {{value}}, sınır {{limit}}.",
+        "rhythm": "Bugün henüz kaydedilmedi · bu hafta {{active}} / {{target}} gün.",
+        "reduce": {
+          "day": "Bugün şimdiye kadar {{current}} · dün bu saatte {{previous}}.",
+          "week": "Bu hafta şimdiye kadar {{current}} · geçen hafta bu noktada {{previous}}.",
+          "month": "Bu ay şimdiye kadar {{current}} · geçen ay bu noktada {{previous}}."
+        },
+        "countToday": "Bugün {{count}} kaydedildi."
+      }
+    }
   },
   "notifications": {
-    "permission": {
-      "title": "Bildirimler kapalı",
-      "body": "Hatırlatıcı almak için cihaz ayarlarından bildirimleri aç.",
-      "openSettings": "Ayarları Aç",
-      "denied": "Bildirimlere izin verilmedi."
-    },
-    "presets": {
-      "daily": "Günlük hatırlatıcı",
-      "momentum": "İvme",
-      "progress": "İlerleme"
-    },
     "messages": {
       "daily": "Foxiem sayımının zamanı.",
       "momentum": "Küçük adımlar. İvmeni koru.",
       "progress": "Bugünkü küçük ilerleme birikir."
+    },
+    "title": "Bildirimler",
+    "status": "Bildirimler",
+    "statusGranted": "İzin verildi",
+    "statusOff": "Sistem ayarlarında kapalı",
+    "statusUndetermined": "Henüz istenmedi",
+    "statusHint": "Foxiem yalnızca bir hatırlatıcıyı açtığında izin ister.",
+    "checkIns": "Kontrol hatırlatıcıları",
+    "checkInsBody": "Tek bir sayaca bağlı olmayan genel hatırlatıcılar.",
+    "addCheckIn": "Kontrol hatırlatıcısı ekle",
+    "trackerReminders": "Sayaç hatırlatıcıları",
+    "trackerRemindersBody": "Bunları her sayacın ayarlarından kur.",
+    "noTrackerReminders": "Henüz sayaç hatırlatıcısı yok.",
+    "legacy": "Önceki bir sürümden"
+  },
+  "pro": {
+    "name": "Foxiem Pro",
+    "badge": "Pro",
+    "headline": "Sadece ne saydığını değil, neyin değiştiğini gör.",
+    "contextTitle": "{{feature}}, Foxiem Pro'nun bir parçası",
+    "features": {
+      "patterns": {
+        "title": "Örüntüler",
+        "body": "Sayılarının hangi gün ve saatlerde arttığı."
+      },
+      "crossTracker": {
+        "title": "Sayaçlar arası örüntüler",
+        "body": "Sayaçlarının birlikte nasıl değiştiği."
+      },
+      "pace": {
+        "title": "İlerleme zekâsı",
+        "body": "Tempodan önde mi, geride mi, tam mı; ve oraya ne zaman varacağın."
+      },
+      "trends": {
+        "title": "Uzun vadeli eğilimler",
+        "body": "Bir bakışta on iki haftalık yön."
+      },
+      "fullHistory": {
+        "title": "Hikâyenin tamamı",
+        "body": "Takvimde her ay ve bir bakışta yılın."
+      },
+      "weeklyReview": {
+        "title": "Haftalık değerlendirme",
+        "body": "Geçen haftanın sakin bir özeti."
+      },
+      "monthlyReview": {
+        "title": "Aylık değerlendirme",
+        "body": "Her sayacın aylar içindeki yönü."
+      },
+      "multipleReminders": {
+        "title": "Birden çok hatırlatıcı",
+        "body": "Sayaç başına en fazla beş hatırlatıcı."
+      },
+      "smartReminders": {
+        "title": "Daha akıllı hatırlatıcılar",
+        "body": "İlerlemeye duyarlı metinler; tamamladığın günlerde sessizlik."
+      },
+      "reports": {
+        "title": "Raporlar",
+        "body": "Sayaçlar genelinde haftalık özet dışa aktarımları."
+      }
+    },
+    "sections": {
+      "patterns": {
+        "title": "Örüntüler",
+        "body": "Sayılarının nasıl değiştiğini anla."
+      },
+      "intelligence": {
+        "title": "İlerleme zekâsı",
+        "body": "Önde mi, geride mi yoksa tempoda mı olduğunu bil."
+      },
+      "reminders": {
+        "title": "Daha akıllı hatırlatıcılar",
+        "body": "Ne kaldığını bilen hatırlatıcılar."
+      },
+      "story": {
+        "title": "Hikâyenin tamamı",
+        "body": "Haftalık ve aylık değerlendirmeler, tüm geçmiş ve yılın."
+      }
+    },
+    "plans": {
+      "yearly": "Yıllık",
+      "monthly": "Aylık",
+      "lifetime": "Kurucu ömür boyu",
+      "bestValue": "En iyi değer",
+      "yearlyPrice": "Yılda {{price}}",
+      "yearlyPerMonth": "Ayda {{price}}, yıllık faturalandırılır",
+      "monthlyPrice": "Ayda {{price}}",
+      "lifetimePrice": "Tek seferlik {{price}}",
+      "lifetimeBody": "Bir kez öde. Bu hesapta sonsuza kadar Pro."
+    },
+    "cta": "Devam · {{price}}",
+    "restore": "Satın alımları geri yükle",
+    "manage": "Aboneliği yönet",
+    "cancelAnytime": "İstediğin zaman {{store}} hesap ayarlarından iptal et. Ödeme {{store}} hesabından alınır.",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "terms": "Kullanım Koşulları",
+    "privacy": "Gizlilik Politikası",
+    "loading": "Planlar yükleniyor…",
+    "loadFailed": "Planlar yüklenemedi. Bağlantını kontrol et ve tekrar dene.",
+    "purchaseFailed": "Satın alma tamamlanmadı. Senden ücret alınmadı.",
+    "purchasePending": "Satın alman onay bekliyor. Onaylanır onaylanmaz Pro açılır.",
+    "welcomeTitle": "Artık Pro'sun",
+    "welcomeBody": "Foxiem'i desteklediğin için teşekkürler. Pro'daki her şey hazır.",
+    "restored": "Satın alımlar geri yüklendi. Foxiem Pro etkin.",
+    "nothingToRestore": "Bu hesap için önceki bir Foxiem Pro satın alımı bulunamadı.",
+    "restoreFailed": "Satın alımlar geri yüklenemedi. Bağlantını kontrol et ve tekrar dene.",
+    "simulated": "Geliştirme sürümü: satın alımlar taklit edilir ve ücret alınmaz.",
+    "status": {
+      "freeBody": "Sadece ne saydığını değil, neyin değiştiğini gör.",
+      "active": "Pro · {{plan}}",
+      "renews": "{{date}} tarihinde yenilenir",
+      "ends": "{{date}} tarihinde biter",
+      "lifetime": "Pro · Ömür boyu",
+      "grace": "Ödeme sorunu · Pro {{date}} tarihine kadar açık",
+      "billingRetry": "Ödeme sorunu · Pro'yu korumak için ödeme yöntemini güncelle",
+      "expired": "Pro {{date}} tarihinde sona erdi",
+      "expiredBody": "Sayaçların ve geçmişin olduğu gibi duruyor."
     }
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "pro": "Foxiem Pro",
+    "preferences": "Tercihler",
+    "language": "Dil",
+    "appearance": "Görünüm",
+    "haptics": "Titreşim",
+    "hapticsBody": "Saydığında hafif bir dokunuş.",
+    "weekStart": "Hafta şu günle başlar",
+    "weekStartDevice": "Cihaz ayarı ({{day}})",
+    "notifications": "Bildirimler",
+    "reminders": "Hatırlatıcılar",
+    "data": "Veri",
+    "export": "Verileri dışa aktar",
+    "exportBody": "Tüm sayaçlar ve girişler CSV olarak",
+    "report": "Haftalık özet raporu",
+    "reportBody": "Her sayaç için haftalık toplamlar",
+    "exportFailed": "Dışa aktarım oluşturulamadı. Tekrar dene.",
+    "shareUnavailable": "Bu cihazda paylaşım kullanılamıyor.",
+    "archived": "Arşivlenmiş sayaçlar",
+    "reset": "Foxiem'i sıfırla",
+    "privacy": "Gizlilik",
+    "about": "Foxiem hakkında",
+    "developer": "Geliştirici",
+    "devScenario": "Sonraki taklit satın alma",
+    "devExpire": "Taklit Pro'yu sona erdir",
+    "devClear": "Taklit mağazayı temizle",
+    "devSeed": "Örnek sayaçları yükle",
+    "devSeeded": "Örnek sayaçlar eklendi"
+  },
+  "appearance": {
+    "title": "Görünüm",
+    "system": "Cihaza uy",
+    "light": "Açık",
+    "dark": "Koyu"
+  },
+  "language": {
+    "title": "Dil",
+    "device": "Cihaza uy"
+  },
+  "archive": {
+    "title": "Arşivlenmiş sayaçlar",
+    "empty": "Arşivlenmiş sayaç yok.",
+    "emptyBody": "Arşivlenen sayaçlar geçmişlerini korur ve istediğin zaman geri yüklenebilir.",
+    "restore": "Geri yükle",
+    "restored": "{{name}} geri yüklendi",
+    "entries_one": "{{count}} giriş",
+    "entries_other": "{{count}} giriş"
+  },
+  "privacy": {
+    "title": "Gizlilik",
+    "local": "Verilerin bu cihazda kalır",
+    "localBody": "Sayaçlar, girişler, notlar, hatırlatıcılar ve tercihler yalnızca bu cihazda saklanır. Foxiem'in hesabı ya da sunucusu yoktur ve geçmişin asla yüklenmez.",
+    "notifications": "Bildirimler",
+    "notificationsBody": "Hatırlatıcılar bu cihazda yerel olarak planlanır. Foxiem yalnızca bir hatırlatıcıyı açtığında izin ister.",
+    "analytics": "Anonim ölçüm",
+    "analyticsBody": "Foxiem, Firebase için Google Analytics'e birkaç anonim olay gönderir; örneğin bir sayacın oluşturulduğu ve türü. Sayaç adları, notlar, sayılar ve geçmiş asla gönderilmez.",
+    "analyticsToggle": "Anonim kullanım olaylarını paylaş",
+    "export": "Verilerin senindir",
+    "exportBody": "Her şeyi istediğin zaman Ayarlar'dan CSV olarak dışa aktar. Foxiem'i sıfırlamak hepsini bu cihazdan siler.",
+    "policy": "Gizlilik Politikası"
   },
   "about": {
     "title": "Hakkında",
     "appName": "Foxiem",
-    "tagline": "Küçük sayılar. Büyük ilerleme.",
-    "description": "Foxiem, küçük adımlarını takip etmene, ilerlemeni görmene ve zamanla düzen kurmana yardımcı olur.",
-    "version": "Sürüm",
-    "build": "Yapı",
-    "localFirst": {
-      "title": "Yerel öncelikli",
-      "body": "Foxiem kişisel ürün verilerinizi bu cihazda saklar. Foxiem hesabı gerekmez. Banner reklamlar Google Mobile Ads kullanabilir; bu, Foxiem ürün depolamasından ayrı olarak Google ile iletişim kurar."
-    },
+    "tagline": "Amaçla say.",
+    "description": "Foxiem kişisel bir sayım ve ilerleme takipçisidir. Her şeyi tek dokunuşla say ve zamanla nasıl değiştiğini gör.",
+    "version": "Sürüm {{version}} ({{build}})",
+    "versionOnly": "Sürüm {{version}}",
+    "support": "Destekle iletişime geç",
     "privacyPolicy": "Gizlilik Politikası",
-    "terms": "Kullanım Koşulları",
-    "dev": {
-      "title": "Geliştirici bilgisi",
-      "appId": "Uygulama kimliği",
-      "storageKeys": "Depolama anahtarları",
-      "locale": "Dil",
-      "notifications": "Bildirim izni"
-    }
+    "licenses": "Açık kaynak lisansları",
+    "licensesBody": "Foxiem, React Native, Expo ve diğer açık kaynak yazılımlarla geliştirilmiştir. Yazı tipleri: Bricolage Grotesque ve Figtree; ikisi de SIL Open Font License 1.1 kapsamında. Simgeler: Ionicons ve Material Design Icons.",
+    "linkFailed": "Bağlantı açılamadı."
   },
   "reset": {
-    "title": "Uygulama verisi sıfırlansın mı?",
-    "message": "Bu işlem, profilin, sayılar, geçmiş, hatırlatıcılar ve tercihler dahil bu cihazda saklanan tüm Foxiem verisini kalıcı olarak siler.\n\nBu işlem geri alınamaz.",
-    "confirm": "Uygulama Verisini Sıfırla"
+    "title": "Foxiem sıfırlansın mı?",
+    "body": "Bu, bu cihazdaki tüm sayaçları, girişleri, notları, hatırlatıcıları ve tercihleri kalıcı olarak siler. Geri alınamaz.\n\nSıfırlamak aboneliği iptal etmez.",
+    "confirm": "Her şeyi sıfırla",
+    "exportFirst": "Önce verileri dışa aktar"
+  },
+  "errors": {
+    "boundaryTitle": "Bir şeyler ters gitti",
+    "boundaryBody": "Foxiem beklenmedik bir sorunla karşılaştı. Verilerin bu cihazda saklanıyor ve silinmedi.",
+    "boundaryRetry": "Foxiem'i yeniden yükle"
+  },
+  "a11y": {
+    "proBadge": "Foxiem Pro gerektirir",
+    "counted": "{{name}}: {{value}}",
+    "countedGoal": "{{name}}: {{value}}. Hedefe ulaşıldı.",
+    "countedLogged": "{{name}}: bugün kaydedildi"
   }
 }

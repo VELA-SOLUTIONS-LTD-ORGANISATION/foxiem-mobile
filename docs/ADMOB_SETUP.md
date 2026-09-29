@@ -1,6 +1,8 @@
-# AdMob setup (Foxiem)
+# AdMob setup (Foxiem 1.0.x, obsolete)
 
-Foxiem monetizes with **banner ads only** via `react-native-google-mobile-ads` **16.3.4**.
+> **Foxiem 2.0 removed ads.** `react-native-google-mobile-ads`, the UMP consent flow and every banner are gone, and none of the files below exist any more. This page is kept only as a record of the 1.0.x setup. See `docs/RELEASE_CHECKLIST.md` for the 2.0 store declarations.
+
+Foxiem 1.0.x monetized with **banner ads only** via `react-native-google-mobile-ads` **16.3.4**.
 Expo Go **cannot** run AdMob (native module). Use a development client / native build.
 
 In Expo Go the app still launches: ads detect the missing native module and stay disabled

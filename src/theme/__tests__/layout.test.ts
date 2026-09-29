@@ -19,6 +19,6 @@ describe('responsive layout helpers', () => {
   });
 
   it('keeps content max width constrained', () => {
-    expect(contentMaxWidth).toBe(600);
+    expect(contentMaxWidth).toBe(560);
   });
 });

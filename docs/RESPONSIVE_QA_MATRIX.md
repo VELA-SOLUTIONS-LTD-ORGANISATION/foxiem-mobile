@@ -1,5 +1,7 @@
 # Responsive QA Matrix
 
+> **Foxiem 2.0:** ads (AdMob, UMP consent, banners), the profile and the single-counter screens were removed. Steps below that mention them apply to 1.0.x only. The current checklist and store declarations are in `docs/RELEASE_CHECKLIST.md`; storage and migration are in `docs/DATA-MIGRATION.md`.
+
 Foxiem Stage 13 companion document.
 
 Automated Jest tests cover breakpoints, padding tokens, locale parity, and structural contracts.

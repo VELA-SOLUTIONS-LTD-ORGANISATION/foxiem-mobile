@@ -1,24 +1,31 @@
-import { createNavigationContainerRef } from '@react-navigation/native';
+import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
 
 import type { RootStackParamList } from './types';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
-export function resetToProfileSetup(): void {
+export function openTracker(trackerId: string): void {
   if (!navigationRef.isReady()) {
     return;
   }
-
-  navigationRef.reset({
-    index: 0,
-    routes: [{ name: 'ProfileSetup' }],
-  });
+  navigationRef.dispatch(
+    CommonActions.reset({
+      index: 1,
+      routes: [{ name: 'Main', params: { screen: 'HomeTab' } }, { name: 'TrackerDetail', params: { trackerId } }],
+    }),
+  );
 }
 
-export function navigateToHome(): void {
+export function openHome(): void {
   if (!navigationRef.isReady()) {
     return;
   }
+  navigationRef.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Main', params: { screen: 'HomeTab' } }] }));
+}
 
-  navigationRef.navigate('Main', { screen: 'Tabs', params: { screen: 'HomeTab' } });
+export function resetToWelcome(): void {
+  if (!navigationRef.isReady()) {
+    return;
+  }
+  navigationRef.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Welcome' }] }));
 }

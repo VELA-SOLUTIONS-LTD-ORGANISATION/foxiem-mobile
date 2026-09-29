@@ -2,7 +2,7 @@
   "expo": {
     "name": "Foxiem",
     "slug": "foxiem",
-    "version": "1.0.4",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -58,18 +58,11 @@
         "expo-notifications",
         {
           "icon": "./assets/android-icon-monochrome.png",
-          "color": "#3B82F6",
+          "color": "#E2622A",
           "defaultChannel": "foxiem-reminders"
         }
       ],
       "@react-native-community/datetimepicker",
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-3249455013386377~1127078474",
-          "iosAppId": "ca-app-pub-3249455013386377~1517960718"
-        }
-      ],
       [
         "expo-build-properties",
         {

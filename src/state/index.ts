@@ -1,59 +1,12 @@
+export { CountFeedbackProvider, UNDO_WINDOW_MS, useCountFeedback } from './CountFeedbackProvider';
+export { NOTICE_IDS, NoticesProvider, useNotices } from './NoticesProvider';
+export { deviceWeekStart, PreferencesProvider, usePreferences, type HapticKind } from './PreferencesProvider';
+export { ReminderProvider, useReminders, type ReminderSaveResult } from './ReminderProvider';
 export {
-  AppStateProvider,
-  useAppState,
-  type ReminderMutationResult,
-  type TopicMutationResult,
-} from './AppStateProvider';
-export {
-  applyActionToDomain,
-  applyCounterAction,
-  assertEventInvariants,
-  createCounterEvent,
-  createLatestWinsPersistQueue,
-  type CounterAction,
-  type CounterSnapshot,
-} from './counterLogic';
-export {
-  DEFAULT_REMINDER_TIME,
-  EVERY_DAY,
-  REMINDER_DAYS,
-  REMINDER_MESSAGE_KEYS,
-  WEEKDAY_DAYS,
-  WEEKEND_DAYS,
-  daysForPreset,
-  formatTimeString,
-  getRepeatPreset,
-  parseTimeString,
-  type Reminder,
-  type ReminderDay,
-  type ReminderDraft,
-  type ReminderMessageKey,
-  type RepeatPreset,
-} from './reminders';
-export {
-  COUNTER_SCHEMA_VERSION,
-  DEFAULT_TOPIC_ID,
-  MAX_TOPIC_COUNT,
-  MAX_TOPIC_NAME_LENGTH,
-  TOPIC_MIGRATION_VERSION,
-  createCustomTopic,
-  createDefaultTopic,
-  eventsForTopic,
-  getActiveTopic,
-  getTopicDisplayName,
-  normalizeTopicName,
-  orderTopics,
-  validateTopicName,
-  type TopicNameError,
-} from './topics';
-export {
-  DEFAULT_COUNTER,
-  DEFAULT_COUNTER_EVENTS,
-  type AppPreferences,
-  type CounterDomainSnapshot,
-  type CounterEvent,
-  type CounterEventType,
-  type CounterState,
-  type CounterTopic,
-  type UserProfile,
-} from './types';
+  TrackerStoreProvider,
+  useTracker,
+  useTrackerStore,
+  type DraftResult,
+  type TapReceipt,
+} from './TrackerStore';
+export { useResetFoxiem } from './useResetFoxiem';

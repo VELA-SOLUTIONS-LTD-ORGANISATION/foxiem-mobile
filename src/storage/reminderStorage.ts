@@ -1,9 +1,10 @@
 import {
+  isLegacyMessageKey,
   isReminderDay,
-  isReminderMessageKey,
   parseTimeString,
+  sortDays,
   type Reminder,
-} from '@/state/reminders';
+} from '@/domain/reminders';
 
 import { readJson, writeJson } from './appStorage';
 import { STORAGE_KEYS } from './keys';
@@ -12,78 +13,65 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
-function parseReminder(value: unknown): Reminder | null {
+/** Reads both 1.0.x reminders (no tracker, message preset) and current ones. */
+export function parseReminder(value: unknown): Reminder | null {
   if (!isRecord(value)) {
     return null;
   }
-
-  const { id, enabled, time, days, messageKey, notificationIds, createdAt } = value;
+  const { id, enabled, time, days, createdAt } = value;
   if (
     typeof id !== 'string' ||
-    id.length === 0 ||
+    !id ||
     typeof enabled !== 'boolean' ||
     typeof time !== 'string' ||
     !parseTimeString(time) ||
     !Array.isArray(days) ||
-    days.length === 0 ||
-    !days.every((day) => typeof day === 'string' && isReminderDay(day)) ||
-    typeof messageKey !== 'string' ||
-    !isReminderMessageKey(messageKey) ||
     typeof createdAt !== 'string' ||
     Number.isNaN(Date.parse(createdAt))
   ) {
     return null;
   }
-
-  const parsedDays = days.filter((day): day is Reminder['days'][number] => {
-    return typeof day === 'string' && isReminderDay(day);
-  });
-
-  const parsedIds = Array.isArray(notificationIds)
-    ? notificationIds.filter((item): item is string => typeof item === 'string' && item.length > 0)
-    : typeof value.notificationId === 'string' && value.notificationId.length > 0
+  const parsedDays = sortDays(days.filter(isReminderDay));
+  if (parsedDays.length === 0) {
+    return null;
+  }
+  const messageKey = isLegacyMessageKey(value.messageKey) ? value.messageKey : null;
+  const hasTracker = typeof value.trackerId === 'string' && value.trackerId.length > 0;
+  const notificationIds = Array.isArray(value.notificationIds)
+    ? value.notificationIds.filter((item): item is string => typeof item === 'string' && item.length > 0)
+    : typeof value.notificationId === 'string' && value.notificationId
       ? [value.notificationId]
       : [];
-
   return {
     id,
+    trackerId: hasTracker ? (value.trackerId as string) : null,
     enabled,
     time,
     days: parsedDays,
-    messageKey,
-    notificationIds: parsedIds,
+    smart: value.smart === true,
+    // A reminder without a tracker and without the new fields came from 1.0.x.
+    messageKey: messageKey ?? (!hasTracker && !('smart' in value) ? 'notifications.messages.daily' : null),
+    notificationIds,
     createdAt,
   };
 }
 
 export function parseReminders(value: unknown): Reminder[] {
-  if (value == null) {
-    return [];
-  }
-
-  if (isRecord(value) && typeof value.enabled === 'boolean' && !Array.isArray(value.items)) {
-    return [];
-  }
-
-  const list = Array.isArray(value)
-    ? value
-    : isRecord(value) && Array.isArray(value.items)
-      ? value.items
-      : null;
-
-  if (!list) {
-    return [];
-  }
-
-  return list.flatMap((item) => {
+  const list = Array.isArray(value) ? value : isRecord(value) && Array.isArray(value.items) ? value.items : [];
+  const seen = new Set<string>();
+  const reminders: Reminder[] = [];
+  for (const item of list) {
     const reminder = parseReminder(item);
-    return reminder ? [reminder] : [];
-  });
+    if (reminder && !seen.has(reminder.id)) {
+      seen.add(reminder.id);
+      reminders.push(reminder);
+    }
+  }
+  return reminders;
 }
 
 export async function loadReminders(): Promise<Reminder[]> {
-  const stored = await readJson<unknown>(STORAGE_KEYS.reminders);
-  return parseReminders(stored);
+  return parseReminders(await readJson<unknown>(STORAGE_KEYS.reminders));
 }
 
 export async function saveReminders(reminders: readonly Reminder[]): Promise<void> {
