@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { chainIsConsistent, runningValue } from '@/domain/events';
+import { makeEvents, makeTracker, at } from '@/domain/__tests__/helpers';
+import { chainIsConsistent, rebuildChain, runningValue } from '@/domain/events';
 import { resetFoxiemAppData, writeJson } from '@/storage/appStorage';
 import {
   loadDomain,
@@ -8,6 +9,9 @@ import {
   saveTrackers,
 } from '@/storage/domainStorage';
 import { CURRENT_SCHEMA_VERSION, STORAGE_KEYS, eventsKey } from '@/storage/keys';
+import { mergeDomains, migrateLegacyDomain } from '@/storage/migration';
+import { readMigrationRecord } from '@/storage/migrationState';
+import { parseLegacyDomainV2 } from '@/storage/legacy';
 import { parseReminders } from '@/storage/reminderStorage';
 import { parsePreferences } from '@/storage/preferencesStorage';
 
@@ -180,5 +184,186 @@ describe('current storage', () => {
     expect(keys).toEqual(['other.library.key']);
     const fresh = await loadDomain(options);
     expect(fresh).toMatchObject({ source: 'fresh', trackers: [] });
+  });
+});
+
+describe('an interrupted migration never overwrites what the user did afterwards', () => {
+  const newTracker = () => makeTracker({ name: 'Coffee', intent: 'limit', target: 3, period: 'day' });
+  const newEvents = (tracker: ReturnType<typeof newTracker>) => makeEvents(tracker, [[at(2026, 9, 20, 9), 1], [at(2026, 9, 20, 11), 1]]);
+
+  const original = { setItem: AsyncStorage.setItem, multiSet: AsyncStorage.multiSet };
+
+  /** Make matching writes throw until estoreStorage runs. */
+  function failWrites(match: (key: string) => boolean, options: { times?: number } = {}) {
+    let remaining = options.times ?? Number.POSITIVE_INFINITY;
+    const guard = (keys: string[]) => {
+      if (remaining > 0 && keys.some(match)) {
+        remaining -= 1;
+        throw new Error('storage write failed');
+      }
+    };
+    AsyncStorage.setItem = (async (key: string, value: string) => {
+      guard([key]);
+      return original.setItem(key, value);
+    }) as typeof AsyncStorage.setItem;
+    AsyncStorage.multiSet = (async (pairs: [string, string][]) => {
+      guard(pairs.map(([key]) => key));
+      return original.multiSet(pairs);
+    }) as typeof AsyncStorage.multiSet;
+  }
+
+  function restoreStorage() {
+    AsyncStorage.setItem = original.setItem;
+    AsyncStorage.multiSet = original.multiSet;
+  }
+
+  afterEach(restoreStorage);
+
+  it('records started ? staged ? committed and keeps the legacy backup', async () => {
+    await writeJson(STORAGE_KEYS.legacyCounterDomain, v2Domain);
+    const loaded = await loadDomain(options);
+    expect(loaded).toMatchObject({ persisted: true, migration: 'committed' });
+    const record = await readMigrationRecord();
+    expect(record).toMatchObject({ state: 'committed', source: 'v2', attempts: 1 });
+    expect(record?.stagedAt).not.toBeNull();
+    expect(JSON.parse((await AsyncStorage.getItem(STORAGE_KEYS.legacyCounterDomain))!)).toEqual(v2Domain);
+  });
+
+  it('shows migrated counters from memory when storage refuses every write, and retries later', async () => {
+    await writeJson(STORAGE_KEYS.legacyCounterDomain, v2Domain);
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    failWrites(() => true);
+
+    const failed = await loadDomain(options);
+    expect(failed).toMatchObject({ persisted: false, migration: 'started', source: 'migratedV2' });
+    expect(failed.trackers).toHaveLength(2);
+    expect(await AsyncStorage.getItem(STORAGE_KEYS.schemaVersion)).toBeNull();
+
+    restoreStorage();
+    const retried = await loadDomain(options);
+    expect(retried).toMatchObject({ persisted: true, migration: 'committed' });
+    expect(retried.trackers.map((tracker) => tracker.id)).toEqual(['topic.water', 'topic.default']);
+    expect((await readMigrationRecord())?.attempts).toBe(1);
+  });
+
+  it('keeps trackers created in a failed session (nothing was loaded, index saved without a version marker)', async () => {
+    await writeJson(STORAGE_KEYS.legacyCounterDomain, v2Domain);
+    const coffee = newTracker();
+    // The failed session had an empty in-memory state, so it only wrote what the user made.
+    await saveTrackerEvents(coffee.id, newEvents(coffee));
+    await saveTrackers([coffee]);
+    expect(await AsyncStorage.getItem(STORAGE_KEYS.schemaVersion)).toBeNull();
+
+    const loaded = await loadDomain(options);
+    expect(loaded.trackers.map((tracker) => tracker.id)).toEqual(['topic.water', 'topic.default', coffee.id]);
+    expect(loaded.events[coffee.id]).toHaveLength(2);
+    expect(runningValue(coffee, loaded.events[coffee.id]!)).toBe(2);
+    const water = loaded.trackers.find((tracker) => tracker.id === 'topic.water')!;
+    expect(runningValue(water, loaded.events[water.id]!)).toBe(6);
+
+    const again = await loadDomain(options);
+    expect(again.source).toBe('current');
+    expect(again.trackers.map((tracker) => tracker.id)).toEqual(['topic.water', 'topic.default', coffee.id]);
+  });
+
+  it('keeps new activity on a migrated counter whose index write never happened', async () => {
+    await writeJson(STORAGE_KEYS.legacyCounterDomain, v2Domain);
+    const first = await loadDomain(options);
+    await AsyncStorage.removeItem(STORAGE_KEYS.schemaVersion);
+    await AsyncStorage.removeItem(STORAGE_KEYS.trackers);
+    await AsyncStorage.removeItem(STORAGE_KEYS.migration);
+    const water = first.trackers.find((tracker) => tracker.id === 'topic.water')!;
+    const events = [
+      ...first.events[water.id]!,
+      {
+        id: 'after-migration',
+        trackerId: water.id,
+        type: 'increment' as const,
+        amount: 2,
+        previousValue: 6,
+        newValue: 8,
+        createdAt: '2026-09-25T10:00:00.000Z',
+      },
+    ];
+    await saveTrackerEvents(water.id, events);
+
+    const loaded = await loadDomain(options);
+    expect(runningValue(water, loaded.events[water.id]!)).toBe(8);
+    expect(loaded.events[water.id]!.map((event) => event.id)).toContain('after-migration');
+    expect(chainIsConsistent(water, loaded.events[water.id]!)).toBe(true);
+  });
+
+  it('a fresh install that failed to write its first state does not lose trackers made in that session', async () => {
+    const coffee = newTracker();
+    await saveTrackerEvents(coffee.id, newEvents(coffee));
+    await saveTrackers([coffee]);
+    const loaded = await loadDomain(options);
+    expect(loaded.trackers.map((tracker) => tracker.id)).toEqual([coffee.id]);
+    expect(loaded.events[coffee.id]).toHaveLength(2);
+    expect(loaded.firstRunCompleted).toBe(true);
+  });
+
+  it('commits a fully staged result without transforming again when only the version marker failed', async () => {
+    await writeJson(STORAGE_KEYS.legacyCounterDomain, v2Domain);
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    failWrites((key) => key === STORAGE_KEYS.schemaVersion);
+    const first = await loadDomain(options);
+    expect(first.persisted).toBe(true);
+    expect(await AsyncStorage.getItem(STORAGE_KEYS.schemaVersion)).toBeNull();
+    expect((await readMigrationRecord())?.state).toBe('staged');
+    restoreStorage();
+
+    // The user keeps counting in that session; the app writes straight to the live keys.
+    const water = first.trackers.find((tracker) => tracker.id === 'topic.water')!;
+    await saveTrackerEvents(
+      water.id,
+      rebuildChain(water.startingValue, [
+        ...first.events[water.id]!,
+        { id: 'later', trackerId: water.id, type: 'increment', amount: 1, previousValue: 6, newValue: 7, createdAt: '2026-09-26T10:00:00.000Z' },
+      ]),
+    );
+
+    const second = await loadDomain(options);
+    expect(runningValue(water, second.events[water.id]!)).toBe(7);
+    expect(await AsyncStorage.getItem(STORAGE_KEYS.schemaVersion)).toBe(String(CURRENT_SCHEMA_VERSION));
+    expect((await readMigrationRecord())?.state).toBe('committed');
+    expect((await readMigrationRecord())?.attempts).toBe(1);
+  });
+
+  it('a rebuilt index keeps history written after the migration and never deletes orphaned history', async () => {
+    await writeJson(STORAGE_KEYS.legacyCounterDomain, v2Domain);
+    const first = await loadDomain(options);
+    const water = first.trackers.find((tracker) => tracker.id === 'topic.water')!;
+    await saveTrackerEvents(
+      water.id,
+      rebuildChain(water.startingValue, [
+        ...first.events[water.id]!,
+        { id: 'post', trackerId: water.id, type: 'increment', amount: 3, previousValue: 6, newValue: 9, createdAt: '2026-09-27T10:00:00.000Z' },
+      ]),
+    );
+    const coffee = newTracker();
+    await saveTrackerEvents(coffee.id, newEvents(coffee));
+    await AsyncStorage.setItem(STORAGE_KEYS.trackers, '{not json');
+
+    const recovered = await loadDomain(options);
+    expect(recovered.source).toBe('recovered');
+    expect(runningValue(water, recovered.events[water.id]!)).toBe(9);
+    // The coffee tracker's name is lost with the index, but its history is not deleted.
+    await loadDomain(options);
+    expect(JSON.parse((await AsyncStorage.getItem(eventsKey(coffee.id)))!)).toHaveLength(2);
+    expect((await readMigrationRecord())?.recoveredAt).not.toBeNull();
+  });
+
+  it('merges by id: live edits win, events are unioned, nothing is duplicated', () => {
+    const base = migrateLegacyDomain(parseLegacyDomainV2(v2Domain)!, options);
+    const live = {
+      trackers: base.trackers.map((tracker) => (tracker.id === 'topic.water' ? { ...tracker, name: 'Hydration' } : tracker)),
+      events: { 'topic.water': base.events['topic.water']! },
+    };
+    const merged = mergeDomains(base, live);
+    expect(merged.trackers.find((tracker) => tracker.id === 'topic.water')?.name).toBe('Hydration');
+    expect(merged.trackers).toHaveLength(2);
+    expect(merged.events['topic.water']).toHaveLength(base.events['topic.water']!.length);
+    expect(merged.trackers.map((tracker) => tracker.sortIndex)).toEqual([0, 1]);
   });
 });

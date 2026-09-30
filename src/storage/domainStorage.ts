@@ -27,7 +27,14 @@ import {
   parseLegacyDomainV2,
   type LegacyDomain,
 } from './legacy';
-import { migrateLegacyDomain } from './migration';
+import { mergeDomains, migrateLegacyDomain, type MigrationResult } from './migration';
+import {
+  readMigrationRecord,
+  writeMigrationRecord,
+  type MigrationRecord,
+  type MigrationSource,
+  type MigrationState,
+} from './migrationState';
 
 export type LoadSource = 'current' | 'migratedV1' | 'migratedV2' | 'fresh' | 'recovered' | 'unreadable';
 
@@ -39,6 +46,10 @@ export type LoadedDomain = {
   unreadableTrackerIds: string[];
   /** Whether this device already went through first-run (or had 1.0.x data). */
   firstRunCompleted: boolean;
+  /** False when the migrated data could not be written yet; the app shows it from memory and retries next launch. */
+  persisted: boolean;
+  /** Migration state after this load; null when no migration ran. */
+  migration: MigrationState | null;
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -175,14 +186,12 @@ async function readLegacy(): Promise<LegacyDomain | null> {
   return parsedV2 ?? v1;
 }
 
-async function writeDomain(trackers: readonly Tracker[], events: EventsByTracker): Promise<void> {
-  // Shards first, then the tracker index, then the version marker: a crash at any point
-  // leaves either the old state or a state that re-running the migration reproduces.
+/** Shards first, then the tracker index: the index is what makes a shard "belong" to a tracker. */
+async function writeShardsAndIndex(trackers: readonly Tracker[], events: EventsByTracker): Promise<void> {
   await writeManyJson(
     trackers.map((tracker): [StorageKey, unknown] => [eventsKey(tracker.id), events[tracker.id] ?? []]),
   );
   await writeJson(STORAGE_KEYS.trackers, { schemaVersion: CURRENT_SCHEMA_VERSION, trackers });
-  await writeJson(STORAGE_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
 }
 
 async function quarantine(reason: string, raw: string): Promise<void> {
@@ -224,28 +233,156 @@ export async function markFirstRunCompleted(now: Date = new Date()): Promise<voi
   await writeJson(STORAGE_KEYS.firstRun, { completedAt: now.toISOString() });
 }
 
+const EMPTY_DOMAIN: MigrationResult = { trackers: [], events: {} };
+
+/** Whatever the live keys hold right now (e.g. trackers created during a failed migration session). Never throws. */
+async function readLiveDomain(base: readonly Tracker[]): Promise<MigrationResult> {
+  try {
+    const index = await readJsonResult<unknown>(STORAGE_KEYS.trackers);
+    const parsed = index.status === 'ok' ? parseTrackerList(index.value) : null;
+    if (!parsed && index.status === 'corrupt') {
+      await quarantine('trackers', index.raw);
+    }
+    const trackers = parsed ?? [];
+    // A session that could not save the index may still have saved a shard for a migrated tracker.
+    const known = new Set(trackers.map((tracker) => tracker.id));
+    const { events } = await loadShards([...trackers, ...base.filter((tracker) => !known.has(tracker.id))]);
+    return { trackers, events };
+  } catch {
+    return EMPTY_DOMAIN;
+  }
+}
+
+/** The staged domain is only trusted when the index and every shard read back cleanly. */
+async function readStagedDomain(): Promise<MigrationResult | null> {
+  try {
+    const index = await readJsonResult<unknown>(STORAGE_KEYS.trackers);
+    const trackers = index.status === 'ok' ? parseTrackerList(index.value) : null;
+    if (!trackers) {
+      return null;
+    }
+    const results = await readManyJson(trackers.map((tracker) => eventsKey(tracker.id)));
+    if (trackers.some((tracker) => results.get(eventsKey(tracker.id))?.status !== 'ok')) {
+      return null;
+    }
+    const { events } = await loadShards(trackers);
+    return { trackers, events };
+  } catch {
+    return null;
+  }
+}
+
+type MigrationRun = {
+  source: MigrationSource;
+  /** What the legacy keys produce (empty when there is nothing to migrate). */
+  base: MigrationResult;
+  /** Override for what the app already holds; defaults to reading the live keys. */
+  live?: MigrationResult;
+  recovered?: boolean;
+};
+
+/**
+ * started → staged → committed, with the legacy keys untouched throughout.
+ *
+ * - The record is written first, so a crash is always visible on the next launch.
+ * - The result is merged with whatever the live keys already hold, so activity from an earlier
+ *   failed attempt is never overwritten (`mergeDomains`).
+ * - The version marker is written last. If only the marker fails, the staged data is complete
+ *   and the next launch just commits it (no second transform, nothing to overwrite).
+ * - If storage cannot be written at all, the merged domain is still returned so the user keeps
+ *   seeing their counters; the next launch tries again from the same legacy backup.
+ */
+async function runMigration(run: MigrationRun): Promise<{ domain: MigrationResult; persisted: boolean }> {
+  const prior = await readMigrationRecord();
+  const startedAt = new Date().toISOString();
+  let record: MigrationRecord = {
+    state: 'started',
+    source: run.source,
+    attempts: (prior?.attempts ?? 0) + 1,
+    startedAt,
+    stagedAt: null,
+    committedAt: null,
+    recoveredAt: run.recovered ? startedAt : prior?.recoveredAt ?? null,
+  };
+
+  let merged = run.base;
+  let staged = false;
+  try {
+    await writeMigrationRecord(record);
+    const live = run.live ?? (await readLiveDomain(run.base.trackers));
+    merged = mergeDomains(run.base, live);
+    await writeShardsAndIndex(merged.trackers, merged.events);
+    staged = true;
+    record = { ...record, state: 'staged', stagedAt: new Date().toISOString() };
+    await writeMigrationRecord(record);
+    await writeJson(STORAGE_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
+    await writeMigrationRecord({ ...record, state: 'committed', committedAt: new Date().toISOString() });
+  } catch (error) {
+    if (__DEV__) {
+      console.warn('Foxiem migration did not finish; it will resume on the next launch', error);
+    }
+    if (!staged) {
+      // Nothing durable yet: hand back the merged domain in memory so the user keeps their counters.
+      merged = mergeDomains(run.base, run.live ?? (await readLiveDomain(run.base.trackers)));
+      return { domain: merged, persisted: false };
+    }
+  }
+  return { domain: merged, persisted: staged };
+}
+
 async function migrateFromLegacy(defaultTrackerName: string): Promise<LoadedDomain> {
   const legacy = await readLegacy();
-  if (!legacy || !legacyHasUserData(legacy)) {
-    // Nothing was ever counted: everyone without data gets the new first-run introduction.
-    await writeDomain([], {});
-    return {
-      trackers: [],
-      events: {},
-      source: 'fresh',
-      unreadableTrackerIds: [],
-      firstRunCompleted: await firstRunDone(),
-    };
+  const hasLegacy = Boolean(legacy && legacyHasUserData(legacy));
+  const base = legacy && hasLegacy ? migrateLegacyDomain(legacy, { defaultTrackerName }) : EMPTY_DOMAIN;
+  const source: MigrationSource = !legacy || !hasLegacy ? 'none' : legacy.version === 1 ? 'v1' : 'v2';
+
+  const { domain, persisted } = await runMigration({ source, base });
+
+  if (hasLegacy) {
+    try {
+      await markFirstRunCompleted();
+    } catch {
+      // The tracker index also proves this device has been through first run.
+    }
   }
-  const migrated = migrateLegacyDomain(legacy, { defaultTrackerName });
-  await writeDomain(migrated.trackers, migrated.events);
-  await markFirstRunCompleted();
+  const migrated = hasLegacy && legacy;
   return {
-    trackers: migrated.trackers,
-    events: migrated.events,
-    source: legacy.version === 1 ? 'migratedV1' : 'migratedV2',
+    trackers: domain.trackers,
+    events: domain.events,
+    source: migrated ? (legacy.version === 1 ? 'migratedV1' : 'migratedV2') : domain.trackers.length > 0 ? 'current' : 'fresh',
     unreadableTrackerIds: [],
-    firstRunCompleted: true,
+    firstRunCompleted: hasLegacy || domain.trackers.length > 0 || (await safeFirstRunDone()),
+    persisted,
+    migration: persisted ? 'committed' : 'started',
+  };
+}
+
+async function safeFirstRunDone(): Promise<boolean> {
+  try {
+    return await firstRunDone();
+  } catch {
+    return false;
+  }
+}
+
+/** The previous launch staged a complete result but could not write the version marker: just commit it. */
+async function commitStaged(record: MigrationRecord, staged: MigrationResult): Promise<LoadedDomain | null> {
+  try {
+    await writeJson(STORAGE_KEYS.schemaVersion, CURRENT_SCHEMA_VERSION);
+    await writeMigrationRecord({ ...record, state: 'committed', committedAt: new Date().toISOString() });
+  } catch {
+    // Still safe to use; the next launch commits again.
+  }
+  const source: LoadSource =
+    record.source === 'v1' ? 'migratedV1' : record.source === 'v2' ? 'migratedV2' : record.source === 'recovery' ? 'recovered' : 'current';
+  return {
+    trackers: staged.trackers,
+    events: staged.events,
+    source,
+    unreadableTrackerIds: [],
+    firstRunCompleted: source !== 'current' || staged.trackers.length > 0 || (await safeFirstRunDone()),
+    persisted: true,
+    migration: 'committed',
   };
 }
 
@@ -257,6 +394,16 @@ export async function loadDomain(options: { defaultTrackerName: string }): Promi
   const version = await readJson<unknown>(STORAGE_KEYS.schemaVersion);
 
   if (version !== CURRENT_SCHEMA_VERSION) {
+    const record = await readMigrationRecord();
+    if (record?.state === 'staged') {
+      const staged = await readStagedDomain();
+      if (staged) {
+        const committed = await commitStaged(record, staged);
+        if (committed) {
+          return committed;
+        }
+      }
+    }
     return migrateFromLegacy(options.defaultTrackerName);
   }
 
@@ -270,14 +417,23 @@ export async function loadDomain(options: { defaultTrackerName: string }): Promi
     }
     const legacy = await readLegacy();
     if (legacy && legacyHasUserData(legacy)) {
-      const migrated = migrateLegacyDomain(legacy, { defaultTrackerName: options.defaultTrackerName });
-      await writeDomain(migrated.trackers, migrated.events);
+      const base = migrateLegacyDomain(legacy, { defaultTrackerName: options.defaultTrackerName });
+      // History written after the migration lives in the shards even when the index is lost.
+      const shards = await loadShards(base.trackers);
+      const { domain, persisted } = await runMigration({
+        source: 'recovery',
+        base,
+        live: { trackers: [], events: shards.events },
+        recovered: true,
+      });
       return {
-        trackers: migrated.trackers,
-        events: migrated.events,
+        trackers: domain.trackers,
+        events: domain.events,
         source: 'recovered',
-        unreadableTrackerIds: [],
+        unreadableTrackerIds: shards.unreadable,
         firstRunCompleted: true,
+        persisted,
+        migration: persisted ? 'committed' : 'started',
       };
     }
     return {
@@ -286,6 +442,8 @@ export async function loadDomain(options: { defaultTrackerName: string }): Promi
       source: index.status === 'corrupt' ? 'unreadable' : 'current',
       unreadableTrackerIds: [],
       firstRunCompleted: await firstRunDone(),
+      persisted: true,
+      migration: null,
     };
   }
 
@@ -297,10 +455,15 @@ export async function loadDomain(options: { defaultTrackerName: string }): Promi
     source: 'current',
     unreadableTrackerIds: unreadable,
     firstRunCompleted: (await firstRunDone()) || trackers.length > 0,
+    persisted: true,
+    migration: null,
   };
 }
 
-/** Only called after the tracker index parsed successfully. */
+/**
+ * Only called after the tracker index parsed successfully. After a rebuilt index the orphaned
+ * history could belong to trackers whose names were lost, so only empty shards are removed then.
+ */
 async function removeOrphanShards(trackers: readonly Tracker[]): Promise<void> {
   try {
     const known = new Set(trackers.map((tracker) => eventsKey(tracker.id)));
@@ -308,7 +471,16 @@ async function removeOrphanShards(trackers: readonly Tracker[]): Promise<void> {
     const orphans = keys.filter(
       (key): key is `foxiem.events.${string}` => key.startsWith(EVENTS_KEY_PREFIX) && !known.has(key as `foxiem.events.${string}`),
     );
+    if (orphans.length === 0) {
+      return;
+    }
+    const recovered = (await readMigrationRecord())?.recoveredAt != null;
+    const contents = recovered ? await readManyJson(orphans) : null;
     for (const key of orphans) {
+      const result = contents?.get(key);
+      if (recovered && !(result?.status === 'ok' && Array.isArray(result.value) && result.value.length === 0)) {
+        continue;
+      }
       await removeKey(key);
     }
   } catch {

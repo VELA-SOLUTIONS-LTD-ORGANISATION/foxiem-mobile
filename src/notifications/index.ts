@@ -1,9 +1,13 @@
 export {
   cancelNotifications,
+  configureQuickActions,
   configureReminderChannel,
+  COUNT_ACTION,
   expoWeekday,
   FOXIEM_REMINDER_CHANNEL,
   getNotificationPermission,
+  QUICK_CATEGORY,
+  quickCountTarget,
   reminderTarget,
   requestNotificationPermission,
   scheduleOccurrences,

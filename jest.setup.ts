@@ -76,6 +76,7 @@ jest.mock('expo-notifications', () => ({
   scheduleNotificationAsync: jest.fn(async () => `notif-${Math.random().toString(36).slice(2, 8)}`),
   cancelScheduledNotificationAsync: jest.fn(async () => undefined),
   setNotificationChannelAsync: jest.fn(async () => undefined),
+  setNotificationCategoryAsync: jest.fn(async () => []),
   addNotificationResponseReceivedListener: jest.fn(() => ({ remove: jest.fn() })),
   getLastNotificationResponseAsync: jest.fn(async () => null),
   AndroidImportance: { DEFAULT: 3 },

@@ -26,8 +26,8 @@ import {
   type TrackerDraft,
   type TrackerDraftError,
 } from '@/domain';
-import { repeatPreset, type Reminder } from '@/domain/reminders';
-import { formatNumber, weekdayName } from '@/format';
+import { parseTimeString, repeatPreset, type Reminder } from '@/domain/reminders';
+import { formatNumber, formatTime, weekdayName } from '@/format';
 import type { RootScreenProps } from '@/navigation/types';
 import { useFeature } from '@/pro/useFeature';
 import { usePreferences, useReminders, useTracker, useTrackerStore } from '@/state';
@@ -50,7 +50,10 @@ export function reminderSummary(reminder: Reminder, t: ReturnType<typeof useTran
         : preset === 'weekends'
           ? t('reminders.weekends')
           : reminder.days.map((day) => weekdayName(DAY_INDEX[day]!, locale, 'short')).join(', ');
-  return t('reminders.summary', { time: reminder.time, days });
+  const parsed = parseTimeString(reminder.time);
+  const clock = new Date();
+  clock.setHours(parsed?.hour ?? 0, parsed?.minute ?? 0, 0, 0);
+  return t('reminders.summary', { time: parsed ? formatTime(clock, locale) : reminder.time, days });
 }
 
 export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'TrackerSettings'>) {
@@ -220,7 +223,15 @@ export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'Tr
               <Row
                 key={reminder.id}
                 title={reminderSummary(reminder, t, language)}
-                subtitle={paused ? t('trackerSettings.reminderPaused') : reminder.smart ? t('reminders.smart') : undefined}
+                subtitle={
+                  paused
+                    ? t('trackerSettings.reminderPaused')
+                    : reminder.enabled && reminders.isQuiet(reminder)
+                      ? t('reminders.quietNote')
+                      : reminder.smart
+                        ? t('reminders.smart')
+                        : undefined
+                }
                 onPress={() => navigation.navigate('ReminderEditor', { trackerId: tracker.id, reminderId: reminder.id })}
                 switchValue={reminder.enabled}
                 onSwitch={(enabled) => void reminders.setEnabled(reminder.id, enabled)}

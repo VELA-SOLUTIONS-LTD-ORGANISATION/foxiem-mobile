@@ -1,5 +1,7 @@
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
 
+import type { ProFeature } from '@/pro/features';
+
 import type { RootStackParamList } from './types';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
@@ -28,4 +30,16 @@ export function resetToWelcome(): void {
     return;
   }
   navigationRef.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Welcome' }] }));
+}
+
+export function openPaywall(feature?: ProFeature): void {
+  if (!navigationRef.isReady()) {
+    return;
+  }
+  navigationRef.dispatch(
+    CommonActions.reset({
+      index: 1,
+      routes: [{ name: 'Main', params: { screen: 'HomeTab' } }, { name: 'Paywall', params: { feature } }],
+    }),
+  );
 }

@@ -142,3 +142,20 @@ export function upcomingOccurrences(
   }
   return occurrences;
 }
+
+/**
+ * The time of day a tracker is usually logged, from the median of recent entries. Only returned
+ * when there is enough history (7+ entries on 5+ different days in 30 days) for it to be true.
+ */
+export function usualLogTime(createdAts: readonly string[], now: Date): string | null {
+  const since = now.getTime() - 30 * 86_400_000;
+  const recent = createdAts.map((value) => new Date(value)).filter((date) => date.getTime() >= since);
+  const days = new Set(recent.map((date) => date.toDateString()));
+  if (recent.length < 7 || days.size < 5) {
+    return null;
+  }
+  const minutes = recent.map((date) => date.getHours() * 60 + date.getMinutes()).sort((a, b) => a - b);
+  const median = minutes[Math.floor(minutes.length / 2)]!;
+  const rounded = Math.round(median / 15) * 15;
+  return formatTimeString(Math.floor(rounded / 60) % 24, rounded % 60);
+}

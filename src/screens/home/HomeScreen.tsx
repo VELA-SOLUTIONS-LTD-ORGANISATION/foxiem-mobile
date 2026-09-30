@@ -1,10 +1,11 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 import { Banner, EmptyState, IconButton, Text, TrackerIcon } from '@/components';
+import { animateNextLayout } from '@/components/motion';
 import { FOXIEM_HOME_IMAGE } from '@/constants/brand';
 import { activeTrackers, archivedTrackers, findTemplate, TRACKER_TEMPLATES, type Tracker } from '@/domain';
 import { trackerSnapshot, type TrackerSnapshot } from '@/domain/analysis';
@@ -24,7 +25,7 @@ const QUICK_TEMPLATES = ['water', 'coffee', 'reading'] as const;
 export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { language, reduceMotion } = usePreferences();
+  const { language, reduceMotion, hydrated: preferencesHydrated, preferences, setAnalyticsConsent } = usePreferences();
   const { horizontalPadding, isCompact } = useResponsiveLayout();
   const store = useTrackerStore();
   const feedback = useCountFeedback();
@@ -35,8 +36,20 @@ export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
   const [amountFor, setAmountFor] = useState<Tracker | null>(null);
 
   const trackers = useMemo(() => activeTrackers(store.trackers), [store.trackers]);
+  // A tracker created, archived or moved animates into place; the first render and Reduce Motion do not.
+  const orderKey = trackers.map((tracker) => tracker.id).join('|');
+  const previousOrder = useRef(orderKey);
+  useLayoutEffect(() => {
+    if (previousOrder.current !== orderKey) {
+      previousOrder.current = orderKey;
+      animateNextLayout(reduceMotion);
+    }
+  }, [orderKey, reduceMotion]);
   const archivedCount = useMemo(() => archivedTrackers(store.trackers).length, [store.trackers]);
   const migrated = store.trackers.some((tracker) => tracker.origin === 'migrated');
+  // Asked once, in context, only after the person has something on Home. Never as a first-launch wall.
+  const showConsent =
+    preferencesHydrated && preferences.analyticsConsent === 'unknown' && store.firstRunCompleted && trackers.length > 0;
 
   const onCount = useCallback(
     (tracker: Tracker, snapshot: TrackerSnapshot, direction: 'up' | 'down') => {
@@ -81,6 +94,15 @@ export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
         ) : null}
         {store.unreadableTrackerIds.length > 0 ? (
           <Banner tone="caution" icon="alert-circle-outline" title={t('home.unreadableTitle')} body={t('home.unreadableBody')} />
+        ) : null}
+        {showConsent ? (
+          <Banner
+            icon="shield-checkmark-outline"
+            title={t('privacy.consent.title')}
+            body={t('privacy.consent.body')}
+            action={{ label: t('privacy.consent.allow'), onPress: () => void setAnalyticsConsent('granted') }}
+            secondaryAction={{ label: t('privacy.consent.decline'), onPress: () => void setAnalyticsConsent('denied') }}
+          />
         ) : null}
         {migrated && notices.hydrated && !notices.isDismissed(NOTICE_IDS.whatsNewV3) ? (
           <Banner

@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import { usePro } from '@/pro/ProProvider';
 import { resetFoxiemAppData } from '@/storage';
+import { getSurfaceBridge } from '@/widgets/bridge';
 
 import { useCountFeedback } from './CountFeedbackProvider';
 import { useNotices } from './NoticesProvider';
@@ -26,6 +27,8 @@ export function useResetFoxiem(): () => Promise<void> {
     feedback.dismiss();
     await reminders.cancelAll();
     await store.flush();
+    // Forget what widgets and the Watch were showing or had queued, before the data underneath them goes.
+    await getSurfaceBridge().clear().catch(() => undefined);
     await resetFoxiemAppData();
     store.clearAll();
     reminders.clearAll();

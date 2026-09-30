@@ -1,17 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, Image, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { Button, IconButton, Screen, Text } from '@/components';
+import { Banner, Button, IconButton, Screen, Text } from '@/components';
+import { useAnimatedFlag } from '@/components/motion';
+import { useReducedMotion } from '@/hooks';
 import { FOXIEM_LOGO } from '@/constants/brand';
 import { EXTERNAL_LINKS, termsUrl } from '@/constants/links';
 import { trackEvent } from '@/lib/telemetry/analytics';
+import { formatShortDate } from '@/format';
 import type { RootScreenProps } from '@/navigation/types';
 import { HIGHLIGHTED_PLAN, type ProPlan } from '@/pro/config';
 import { PRO_FEATURES } from '@/pro/features';
 import { usePro } from '@/pro/ProProvider';
 import type { ProOffering } from '@/pro/purchaseAdapter';
+import { usePreferences } from '@/state';
 import { useTheme } from '@/theme';
 import { openExternalUrl } from '@/utils/externalLinks';
 
@@ -20,6 +24,7 @@ const SECTIONS = [
   { key: 'intelligence', icon: 'speedometer-outline' },
   { key: 'reminders', icon: 'notifications-outline' },
   { key: 'story', icon: 'calendar-outline' },
+  { key: 'everywhere', icon: 'apps-outline' },
 ] as const;
 
 type Message = { tone: 'neutral' | 'danger'; text: string } | null;
@@ -28,6 +33,7 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
   const { t } = useTranslation();
   const theme = useTheme();
   const pro = usePro();
+  const { language } = usePreferences();
   const feature = route.params?.feature;
   const [plan, setPlan] = useState<ProPlan>(HIGHLIGHTED_PLAN);
   const [busy, setBusy] = useState<'purchase' | 'restore' | null>(null);
@@ -43,6 +49,16 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
   const store = Platform.OS === 'ios' ? t('pro.appStore') : t('pro.googlePlay');
   const offerings = pro.offerings.status === 'ready' ? pro.offerings.offerings : [];
   const selected = offerings.find((offering) => offering.plan === plan) ?? null;
+  // The store answered but has nothing for sale (products not live yet, or store config missing).
+  const notAvailable = pro.offerings.status === 'ready' && offerings.length === 0;
+  const { entitlement } = pro;
+  const lapsedOn = entitlement.expiresAt ? formatShortDate(new Date(entitlement.expiresAt), language, new Date()) : '';
+  const billingIssue = entitlement.status === 'grace' || entitlement.status === 'billingRetry';
+  const canManage = pro.manageUrl !== null && entitlement.status !== 'free';
+  const sectionBody = (key: (typeof SECTIONS)[number]['key']) =>
+    key === 'everywhere'
+      ? t(`pro.sections.everywhere.${Platform.OS === 'ios' ? 'bodyIos' : 'bodyAndroid'}`)
+      : t(`pro.sections.${key}.body`);
 
   const buy = async () => {
     if (!selected || busy) {
@@ -143,6 +159,22 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
         </Text>
       </View>
 
+      {entitlement.status === 'expired' ? (
+        <View style={styles.status}>
+          <Banner icon="hand-left-outline" title={t('pro.welcomeBackTitle')} body={t('pro.welcomeBackBody', { date: lapsedOn })} />
+        </View>
+      ) : null}
+      {billingIssue ? (
+        <View style={styles.status}>
+          <Banner
+            tone="caution"
+            icon="card-outline"
+            title={entitlement.status === 'grace' ? t('pro.status.grace', { date: lapsedOn }) : t('pro.status.billingRetry')}
+            action={pro.manageUrl ? { label: t('pro.manage'), onPress: () => void openExternalUrl(pro.manageUrl!) } : undefined}
+          />
+        </View>
+      ) : null}
+
       {feature ? (
         <View style={[styles.context, { backgroundColor: theme.colors.surface, borderColor: theme.colors.line, borderRadius: theme.radius.lg }]}>
           <Ionicons name={PRO_FEATURES[feature].icon} size={22} color={theme.colors.ink} />
@@ -164,7 +196,7 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
             <View style={styles.sectionCopy}>
               <Text variant="bodyStrong">{t(`pro.sections.${section.key}.title`)}</Text>
               <Text variant="caption" tone="inkSecondary">
-                {t(`pro.sections.${section.key}.body`)}
+                {sectionBody(section.key)}
               </Text>
             </View>
           </View>
@@ -188,6 +220,18 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
         </View>
       ) : null}
 
+      {notAvailable ? (
+        <View style={styles.loading}>
+          <Text variant="bodyStrong" align="center" accessibilityRole="header">
+            {t('pro.notAvailableTitle')}
+          </Text>
+          <Text variant="body" tone="inkSecondary" align="center">
+            {t('pro.notAvailableBody')}
+          </Text>
+          <Button title={t('common.retry')} variant="secondary" compact onPress={() => void pro.loadOfferings()} />
+        </View>
+      ) : null}
+
       <View accessibilityRole="radiogroup" style={styles.plans}>
         {offerings.map((offering) => (
           <PlanCard key={offering.plan} offering={offering} selected={offering.plan === plan} onSelect={() => setPlan(offering.plan)} />
@@ -204,6 +248,13 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
         {t('pro.cancelAnytime', { store })}
       </Text>
       <View style={styles.links}>
+        {canManage ? (
+          <Pressable accessibilityRole="link" onPress={() => void openExternalUrl(pro.manageUrl!)} hitSlop={8} style={styles.link}>
+            <Text variant="caption" tone="inkSecondary" style={styles.underline}>
+              {t('pro.manage')}
+            </Text>
+          </Pressable>
+        ) : null}
         <Pressable accessibilityRole="link" onPress={() => void openExternalUrl(EXTERNAL_LINKS.privacyPolicy)} hitSlop={8} style={styles.link}>
           <Text variant="caption" tone="inkSecondary" style={styles.underline}>
             {t('pro.privacy')}
@@ -235,6 +286,9 @@ function planPrice(offering: ProOffering, t: ReturnType<typeof useTranslation>['
 function PlanCard({ offering, selected, onSelect }: { offering: ProOffering; selected: boolean; onSelect: () => void }) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const reduceMotion = useReducedMotion();
+  // Colour and scale are JS-driven (a border colour cannot use the native driver); one small card, so it is cheap.
+  const highlight = useAnimatedFlag(selected, reduceMotion, { native: false });
   const priceLine = planPrice(offering, t);
   const detail =
     offering.billing === 'year' && offering.pricePerMonth
@@ -249,16 +303,20 @@ function PlanCard({ offering, selected, onSelect }: { offering: ProOffering; sel
       accessibilityState={{ selected, checked: selected }}
       accessibilityLabel={[t(`pro.plans.${offering.plan}`), priceLine, detail].filter(Boolean).join(', ')}
       onPress={onSelect}
-      style={[
-        styles.plan,
-        {
-          borderRadius: theme.radius.lg,
-          borderColor: selected ? theme.colors.ink : theme.colors.line,
-          borderWidth: selected ? 2 : StyleSheet.hairlineWidth,
-          backgroundColor: theme.colors.surface,
-        },
-      ]}
     >
+      <Animated.View
+        style={[
+          styles.plan,
+          {
+            borderRadius: theme.radius.lg,
+            // The border keeps one width so selecting a plan never nudges its content; only colour moves.
+            borderWidth: 2,
+            borderColor: highlight.interpolate({ inputRange: [0, 1], outputRange: [theme.colors.line, theme.colors.ink] }),
+            backgroundColor: theme.colors.surface,
+            transform: [{ scale: highlight.interpolate({ inputRange: [0, 1], outputRange: [1, reduceMotion ? 1 : 1.012] }) }],
+          },
+        ]}
+      >
       <Ionicons name={selected ? 'radio-button-on' : 'radio-button-off'} size={24} color={theme.colors.ink} />
       <View style={styles.planCopy}>
         <View style={styles.planTitle}>
@@ -280,6 +338,7 @@ function PlanCard({ offering, selected, onSelect }: { offering: ProOffering; sel
       <Text variant="bodyStrong" style={styles.price}>
         {priceLine}
       </Text>
+      </Animated.View>
     </Pressable>
   );
 }
@@ -288,6 +347,9 @@ const styles = StyleSheet.create({
   closeRow: {
     alignItems: 'flex-end',
     paddingTop: 8,
+  },
+  status: {
+    marginTop: 16,
   },
   hero: {
     gap: 6,

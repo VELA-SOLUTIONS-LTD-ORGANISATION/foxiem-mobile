@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, Platform, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { ConfirmDialog, Group, Header, ProBadge, Row, Screen, Section, Segmented, Sheet, Text, useToast } from '@/components';
-import { buildSampleTrackers } from '@/dev/sampleData';
+import { useAccount, type DeleteOutcome, type SignInOutcome } from '@/account';
+import { ConfirmDialog, Group, Header, ProBadge, Row, Screen, Section, Sheet, useToast } from '@/components';
 import { archivedTrackers, buildEventsCsv, buildWeeklySummaryCsv, exportFileName } from '@/domain';
 import { addDays, startOfDay } from '@/domain/periods';
 import { formatShortDate, weekdayName } from '@/format';
@@ -13,12 +13,15 @@ import { trackEvent } from '@/lib/telemetry/analytics';
 import { resetToWelcome } from '@/navigation/ref';
 import type { TabScreenProps } from '@/navigation/types';
 import { usePro } from '@/pro/ProProvider';
-import type { SimulatedScenario } from '@/pro/purchaseAdapter';
 import { useFeature } from '@/pro/useFeature';
 import { deviceWeekStart, usePreferences, useReminders, useResetFoxiem, useTrackerStore } from '@/state';
 import { useTheme } from '@/theme';
 
 import { shareCsv } from './shareFile';
+
+// Loaded lazily so development tools are stripped from production bundles.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const DeveloperPanel = __DEV__ ? (require('@/dev/DeveloperPanel') as typeof import('@/dev/DeveloperPanel')).DeveloperPanel : null;
 
 function Icon({ name, danger = false }: { name: keyof typeof Ionicons.glyphMap; danger?: boolean }) {
   const theme = useTheme();
@@ -34,9 +37,50 @@ export function SettingsScreen({ navigation }: TabScreenProps<'SettingsTab'>) {
   const pro = usePro();
   const reports = useFeature('reports');
   const resetFoxiem = useResetFoxiem();
+  const account = useAccount();
   const [confirmReset, setConfirmReset] = useState(false);
+  const [confirmSignOut, setConfirmSignOut] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [weekSheet, setWeekSheet] = useState(false);
   const [busy, setBusy] = useState(false);
+
+  const signIn = async (provider: 'google' | 'apple') => {
+    const outcome = provider === 'apple' ? await account.signInWithApple() : await account.signInWithGoogle();
+    if (outcome !== 'cancelled' && outcome !== 'unavailable') {
+      toast.show({ message: signInMessage(outcome) });
+    }
+  };
+
+  const signInMessage = (outcome: Exclude<SignInOutcome, 'cancelled' | 'unavailable'>): string => {
+    switch (outcome) {
+      case 'success':
+        return t('account.toast.signedIn');
+      case 'conflict':
+        return t('account.toast.conflict');
+      case 'unverified':
+        return t('account.toast.unverified');
+      case 'network':
+        return t('account.toast.network');
+      default:
+        return t('account.toast.failed');
+    }
+  };
+
+  const signedInWith =
+    account.user?.provider === 'apple' ? t('account.signedInWithApple') : t('account.signedInWithGoogle');
+
+  const deleteMessage = (outcome: Exclude<DeleteOutcome, 'cancelled'>): string => {
+    switch (outcome) {
+      case 'deleted':
+        return t('account.toast.deleted');
+      case 'stepUpFailed':
+        return t('account.toast.stepUpFailed');
+      case 'network':
+        return t('account.toast.network');
+      default:
+        return t('account.toast.deleteFailed');
+    }
+  };
 
   const languageLabel = preferences.language
     ? SUPPORTED_LANGUAGES.find((item) => item.code === preferences.language)?.label ?? preferences.language
@@ -154,7 +198,56 @@ export function SettingsScreen({ navigation }: TabScreenProps<'SettingsTab'>) {
         </Section>
       ) : null}
 
-      <Section title={t('settings.preferences')} style={pro.available ? undefined : styles.first}>
+      {account.available ? (
+        <Section title={t('account.title')} style={pro.available ? undefined : styles.first}>
+          <Group>
+            {account.status === 'signedIn' && account.user ? (
+              <>
+                <Row
+                  testID="settings-account"
+                  title={account.user.email}
+                  subtitle={signedInWith}
+                  leading={<Icon name="person-circle-outline" />}
+                />
+                <Row
+                  testID="settings-sign-out"
+                  title={t('account.signOut')}
+                  leading={<Icon name="log-out-outline" />}
+                  onPress={() => setConfirmSignOut(true)}
+                />
+                <Row
+                  testID="settings-delete-account"
+                  title={t('account.delete')}
+                  destructive
+                  leading={<Icon name="trash-outline" danger />}
+                  onPress={() => setConfirmDelete(true)}
+                />
+              </>
+            ) : (
+              <>
+                {account.appleAvailable ? (
+                  <Row
+                    testID="settings-sign-in-apple"
+                    title={t('account.signInApple')}
+                    subtitle={t('account.signInBody')}
+                    leading={<Icon name="logo-apple" />}
+                    onPress={account.status === 'loading' || account.busy ? undefined : () => void signIn('apple')}
+                  />
+                ) : null}
+                <Row
+                  testID="settings-sign-in"
+                  title={t('account.signInGoogle')}
+                  subtitle={account.appleAvailable ? undefined : t('account.signInBody')}
+                  leading={<Icon name="logo-google" />}
+                  onPress={account.status === 'loading' || account.busy ? undefined : () => void signIn('google')}
+                />
+              </>
+            )}
+          </Group>
+        </Section>
+      ) : null}
+
+      <Section title={t('settings.preferences')} style={pro.available || account.available ? undefined : styles.first}>
         <Group>
           <Row title={t('settings.language')} value={languageLabel} leading={<Icon name="language-outline" />} onPress={() => navigation.navigate('Language')} />
           <Row title={t('settings.appearance')} value={appearanceLabel} leading={<Icon name="contrast-outline" />} onPress={() => navigation.navigate('Appearance')} />
@@ -166,6 +259,15 @@ export function SettingsScreen({ navigation }: TabScreenProps<'SettingsTab'>) {
             onSwitch={(haptics) => void update({ haptics })}
           />
           <Row title={t('settings.weekStart')} value={weekLabel} leading={<Icon name="calendar-outline" />} onPress={() => setWeekSheet(true)} />
+          {Platform.OS === 'web' ? null : (
+            <Row
+              testID="settings-widgets"
+              title={t('settings.widgets')}
+              subtitle={t('settings.widgetsBody')}
+              leading={<Icon name="apps-outline" />}
+              onPress={() => navigation.navigate('Widgets')}
+            />
+          )}
         </Group>
       </Section>
 
@@ -210,7 +312,7 @@ export function SettingsScreen({ navigation }: TabScreenProps<'SettingsTab'>) {
         </Group>
       </Section>
 
-      {__DEV__ ? <DeveloperSection /> : null}
+      {DeveloperPanel ? <DeveloperPanel /> : null}
 
       <Sheet visible={weekSheet} title={t('settings.weekStart')} onClose={() => setWeekSheet(false)}>
         <Group>
@@ -237,6 +339,34 @@ export function SettingsScreen({ navigation }: TabScreenProps<'SettingsTab'>) {
       </Sheet>
 
       <ConfirmDialog
+        visible={confirmSignOut}
+        title={t('account.signOutTitle')}
+        message={t('account.signOutBody')}
+        confirmLabel={t('account.signOut')}
+        onCancel={() => setConfirmSignOut(false)}
+        onConfirm={async () => {
+          await account.signOut();
+          setConfirmSignOut(false);
+        }}
+      />
+
+      <ConfirmDialog
+        visible={confirmDelete}
+        destructive
+        title={t('account.deleteTitle')}
+        message={account.user?.provider === 'apple' ? t('account.deleteBodyApple') : t('account.deleteBodyGoogle')}
+        confirmLabel={t('account.deleteConfirm')}
+        onCancel={() => setConfirmDelete(false)}
+        onConfirm={async () => {
+          const outcome = await account.deleteAccount();
+          setConfirmDelete(false);
+          if (outcome !== 'cancelled') {
+            toast.show({ message: deleteMessage(outcome) });
+          }
+        }}
+      />
+
+      <ConfirmDialog
         visible={confirmReset}
         destructive
         title={t('reset.title')}
@@ -260,84 +390,8 @@ export function SettingsScreen({ navigation }: TabScreenProps<'SettingsTab'>) {
   );
 }
 
-function DeveloperSection() {
-  const { t } = useTranslation();
-  const toast = useToast();
-  const pro = usePro();
-  const store = useTrackerStore();
-  const [scenario, setScenario] = useState<SimulatedScenario>('success');
-
-  return (
-    <Section title={t('settings.developer')}>
-      <View style={styles.dev}>
-        {pro.simulator ? (
-          <>
-            <Text variant="label" tone="inkSecondary">
-              {t('settings.devScenario')}
-            </Text>
-            <Segmented
-              value={scenario}
-              onChange={(next) => {
-                setScenario(next);
-                void pro.simulator?.setScenario(next);
-              }}
-              options={[
-                { value: 'success', label: 'OK' },
-                { value: 'cancelled', label: 'Cancel' },
-                { value: 'failed', label: 'Fail' },
-                { value: 'pending', label: 'Pending' },
-              ]}
-            />
-          </>
-        ) : null}
-        <Group>
-          {pro.simulator ? (
-            <Row
-              title={t('settings.devExpire')}
-              onPress={() => {
-                void (async () => {
-                  await pro.simulator?.expireNow();
-                  await pro.refresh();
-                })();
-              }}
-            />
-          ) : null}
-          {pro.simulator ? (
-            <Row
-              title={t('settings.devClear')}
-              onPress={() => {
-                void (async () => {
-                  await pro.simulator?.clear();
-                  await pro.refresh();
-                })();
-              }}
-            />
-          ) : null}
-          <Row
-            title={t('settings.devSeed')}
-            onPress={() => {
-              store.importTrackers(buildSampleTrackers(store.trackers, 'core'));
-              toast.show({ message: t('settings.devSeeded') });
-            }}
-          />
-          <Row
-            title={`${t('settings.devSeed')} ×20`}
-            onPress={() => {
-              store.importTrackers(buildSampleTrackers(store.trackers, 'many'));
-              toast.show({ message: t('settings.devSeeded') });
-            }}
-          />
-        </Group>
-      </View>
-    </Section>
-  );
-}
-
 const styles = StyleSheet.create({
   first: {
     marginTop: 12,
-  },
-  dev: {
-    gap: 10,
   },
 });

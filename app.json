@@ -10,8 +10,14 @@
     "ios": {
       "bundleIdentifier": "co.uk.solutionvela.foxiem",
       "supportsTablet": true,
+      "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.co.uk.solutionvela.foxiem"
+        ]
       }
     },
     "android": {
@@ -49,8 +55,22 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["en", "tr", "de", "fr", "es", "it"],
-            "android": ["en", "tr", "de", "fr", "es", "it"]
+            "ios": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it"
+            ],
+            "android": [
+              "en",
+              "tr",
+              "de",
+              "fr",
+              "es",
+              "it"
+            ]
           }
         }
       ],
@@ -75,6 +95,44 @@
             "useFrameworks": "static"
           }
         }
+      ],
+      "@bacons/apple-targets",
+      [
+        "react-native-android-widget",
+        {
+          "fonts": [
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"
+          ],
+          "widgets": [
+            {
+              "name": "FoxiemCounter",
+              "label": "Foxiem counter",
+              "description": "Count one tracker from your Home Screen.",
+              "minWidth": "110dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "maxResizeWidth": "320dp",
+              "maxResizeHeight": "220dp",
+              "resizeMode": "horizontal|vertical",
+              "updatePeriodMillis": 1800000,
+              "widgetFeatures": "reconfigurable|configuration_optional"
+            },
+            {
+              "name": "FoxiemTrackers",
+              "label": "Foxiem trackers",
+              "description": "Your trackers in one list, each with a + button.",
+              "minWidth": "250dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 4,
+              "targetCellHeight": 2,
+              "maxResizeWidth": "380dp",
+              "maxResizeHeight": "420dp",
+              "resizeMode": "horizontal|vertical",
+              "updatePeriodMillis": 1800000
+            }
+          ]
+        }
       ]
     ],
     "extra": {
@@ -85,6 +143,7 @@
         "projectId": "cf0512da-2372-4fc2-9ec3-2dfc440cd3f1"
       }
     },
-    "owner": "vela-solution-ltd"
+    "owner": "vela-solution-ltd",
+    "scheme": "foxiem"
   }
 }

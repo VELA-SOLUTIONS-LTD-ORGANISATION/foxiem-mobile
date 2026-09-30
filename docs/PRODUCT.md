@@ -42,10 +42,19 @@ Free is a complete product. Counting, history and the user's own data are never 
 - **Your complete story:** full calendar history and yearly heatmap, weekly and monthly reviews.
 - **Smarter reminders:** up to five reminders per tracker, progress-aware copy, skipped when the target is already met, suggested time from your history.
 - **Reports:** a weekly summary CSV across all trackers.
+- **Quiet Hours:** a reminder that would fire inside your quiet window is skipped, not shifted to later.
+- **Widgets:** many trackers, a chosen tracker per widget, medium and large sizes, iOS Lock Screen widgets, colour choices and quick minus and plus buttons.
+- **Apple Watch:** count from your wrist.
 
 All Pro analytics are deterministic calculations on local events. Nothing is generated text, and every insight has a minimum-data rule; below it Foxiem says what is needed instead.
 
-Not in Pro until they exist: reminder quiet hours, widgets, sync, backup, wearables. They are not advertised.
+Free includes one home-screen widget for the primary tracker, with a quick count. Not offered anywhere: sync, backup, Wear OS, Watch complications.
+
+Widgets and the Watch share one contract (`src/widgets/`): the app writes a snapshot of display-ready tracker state to shared storage, and surfaces write presses to an inbox that the app drains idempotently (each press has a unique id; the snapshot lists the ids already applied). The display rules (`resolveDisplay`) run in TypeScript for the app and the Android widget, and are mirrored in Swift for the iOS widget and the Watch (`targets/*/Models.swift`); keep the two in step when changing them. Free users only ever get the primary tracker in the snapshot, so a widget cannot show more than Free allows. Tapping anything else deep-links (`foxiem://tracker/<id>`, `foxiem://pro?feature=widgets`).
+
+**Pro lapsing while the app is closed.** The snapshot carries `proUntil` (epoch ms, `null` for lifetime and Free): the cached entitlement's expiry plus the same offline grace the app uses. Every surface settles the snapshot against the clock when it reads it (`settleSnapshot` in TypeScript, `Snapshot.settled(now:)` in Swift, `isProNow` on the Watch), so a lapsed subscription falls back to Free behaviour (primary tracker only, Pro sizes locked) without the app having to run. The iOS timeline also schedules a refresh at `proUntil`.
+
+**Native text.** Anything the operating system itself shows (widget gallery names and descriptions, Shortcuts parameter titles, VoiceOver verbs, the Watch fallback, the Android widget picker) is translated into all six languages: `Localizable.xcstrings` in `targets/widget` and `targets/watch`, and `values-<lang>/widget_strings.xml` for Android, generated from one table by `scripts/build-string-catalogs.mjs` (`plugins/withNativeLocalization.js` applies them at prebuild and lists all six languages in the Xcode project's `knownRegions`). Text inside a widget or on the Watch that comes from the app (tracker names, captions, "Goal reached", the locked message) is translated by the app in the person's chosen language and travels in the snapshot. Tests (`nativeStrings.test.ts`, `nativeContract.test.ts`) fail if a Swift literal is missing from a catalog or the Swift structs drift from the snapshot.
 
 ### When Pro ends
 
@@ -58,9 +67,11 @@ No user data is deleted or hidden. History, trackers, notes and exports stay ava
 - `src/pro/purchaseAdapter.ts` — the store boundary: offerings, purchase, restore, refresh, manage URL, plus explicit results (success, cancelled, pending, failed, nothing to restore).
 - `src/pro/config.ts` — plan identifiers and reference prices in one place.
 
-**Status: no store integration exists yet.** Production builds use the unavailable adapter, so Pro surfaces, the paywall and restore rows are not shown and nothing pretends to be for sale. Development builds use a simulated adapter so every purchase state can be exercised.
+**Status: RevenueCat billing is implemented** (`src/pro/revenueCatAdapter.ts`, mapping in `customerInfoMapping.ts`). Entitlements always come from RevenueCat customer info, never from local flags. The Pro entitlement id is `pro`; products are `foxiem_pro_monthly`, `foxiem_pro_yearly` and `foxiem_pro_lifetime`. Localised prices come from the store. No weekly plan; yearly is the highlighted plan, and every plan shows its full billed price.
 
-To launch Pro: create `foxiem_pro_monthly`, `foxiem_pro_yearly` and `foxiem_pro_lifetime` in App Store Connect and Play Console, implement `PurchaseAdapter` with RevenueCat or StoreKit 2 / Play Billing in one file, and return it from `createPurchaseAdapter()`. Localised prices then come from the store. No weekly plan; yearly is the highlighted plan, and every plan shows its full billed price.
+Configuration is two public SDK keys, `EXPO_PUBLIC_REVENUECAT_IOS_API_KEY` (`appl_…`) and `EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY` (`goog_…`). A release build without a valid key for its platform shows no Pro surface and sells nothing. RevenueCat Test Store keys are rejected in release builds. Development builds use a simulated adapter so every purchase state can be exercised; set `EXPO_PUBLIC_REVENUECAT_IN_DEV=1` to test the real sandbox instead.
+
+The remaining work is dashboard and store setup, listed in `docs/RELEASE_CHECKLIST.md`.
 
 ## Guest-first and accounts
 
@@ -74,13 +85,14 @@ Future account work must follow these rules:
 
 ## Future platform features
 
-- **Widgets:** the domain layer (`src/domain/`) is pure TypeScript, so a widget extension can reuse status lines. Needs an App Group / shared storage bridge and native targets (for example `expo-apple-targets` and an Android AppWidget provider). Free: one tracker quick-count widget; Pro: multiple configurations and Lock Screen widgets.
-- **Apple Watch / Wear OS:** same domain layer; events carry a `source` field for later input sources.
+- **Wear OS and Watch complications:** not built. Events carry an optional `source` field so new input surfaces can be added without changing history.
 - **Sync / backup:** see accounts above; storage is already sharded per tracker.
 
 ## Analytics
 
-Firebase Analytics exists for Google Ads measurement. Foxiem sends only allow-listed events with enum parameters (`onboarding_complete`, `first_count`, `tracker_created` with intent and source, `reminder_enabled`, `paywall_viewed`, `purchase_started`, `purchase_completed`, `review_viewed`, `data_exported`). Tracker names, notes, counts and history are never sent. Users can turn measurement off in Settings → Privacy.
+Firebase Analytics exists for Google Ads measurement. Foxiem sends only allow-listed events with enum parameters (`onboarding_complete`, `first_count`, `tracker_created` with intent and source, `reminder_enabled`, `paywall_viewed`, `purchase_started`, `purchase_completed`, `review_viewed`, `data_exported`). Tracker names, notes, counts and history are never sent.
+
+**Consent (UK/EU-safe by default):** collection is off at the native level (`app.config.ts` disables Analytics collection and the advertising ID until the app enables it). After the first count, Home shows a one-time card, "Help improve Foxiem?", with "Share anonymously" and "No thanks". Until the answer is yes, `trackEvent` drops every event in JavaScript and native collection, the advertising ID, ad storage and ad personalisation stay off, so nothing is sent or stored for later. Settings → Privacy changes the choice at any time and takes effect immediately. There is no consent SDK and no tracking prompt because nothing is used for tracking.
 
 ## Major flows
 

@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Animated, Modal, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { useReducedMotion } from '@/hooks';
 import { useTheme } from '@/theme';
 
 import { Button } from './Button';
+import { useOverlayMotion } from './overlayMotion';
 import { Text } from './Text';
 
 type ConfirmDialogProps = {
@@ -33,28 +35,47 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const reduceMotion = useReducedMotion();
+  const { mounted, progress } = useOverlayMotion(visible, reduceMotion);
   const [busy, setBusy] = useState(false);
+  // State alone is stale between two taps in the same frame; the ref closes that gap.
+  const running = useRef(false);
 
   const confirm = async () => {
-    if (busy) {
+    if (running.current) {
       return;
     }
+    running.current = true;
     setBusy(true);
     try {
       await onConfirm();
     } finally {
+      running.current = false;
       setBusy(false);
     }
   };
 
+  const scale = progress.interpolate({ inputRange: [0, 1], outputRange: [reduceMotion ? 1 : 0.94, 1] });
+
   return (
-    <Modal visible={visible} transparent animationType="fade" statusBarTranslucent onRequestClose={busy ? () => undefined : onCancel}>
-      <View style={[styles.backdrop, { backgroundColor: theme.colors.scrim }]}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={busy ? undefined : onCancel} accessibilityRole="button" accessibilityLabel={cancelLabel ?? t('common.cancel')} />
-        <View
+    <Modal visible={mounted} transparent animationType="none" statusBarTranslucent onRequestClose={busy ? () => undefined : onCancel}>
+      <View style={styles.backdrop}>
+        <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: theme.colors.scrim, opacity: progress }]}>
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={busy ? undefined : onCancel}
+            accessibilityRole="button"
+            accessibilityLabel={cancelLabel ?? t('common.cancel')}
+          />
+        </Animated.View>
+        <Animated.View
           accessibilityViewIsModal
           accessibilityRole="alert"
-          style={[styles.card, theme.floating, { backgroundColor: theme.colors.surface, borderRadius: theme.radius.xl }]}
+          style={[
+            styles.card,
+            theme.floating,
+            { backgroundColor: theme.colors.surface, borderRadius: theme.radius.xl, opacity: progress, transform: [{ scale }] },
+          ]}
         >
           <Text variant="titleSmall" accessibilityRole="header">
             {title}
@@ -74,7 +95,7 @@ export function ConfirmDialog({
             {secondary ? <Button title={secondary.label} variant="secondary" disabled={busy} onPress={secondary.onPress} /> : null}
             <Button title={cancelLabel ?? t('common.cancel')} variant="ghost" disabled={busy} onPress={onCancel} />
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );

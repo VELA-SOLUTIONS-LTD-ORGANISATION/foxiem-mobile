@@ -13,6 +13,9 @@ export const PRO_FEATURES = {
   multipleReminders: { icon: 'alarm-outline' },
   smartReminders: { icon: 'notifications-outline' },
   reports: { icon: 'document-text-outline' },
+  quietHours: { icon: 'moon-outline' },
+  widgets: { icon: 'apps-outline' },
+  watch: { icon: 'watch-outline' },
 } as const;
 
 export type ProFeature = keyof typeof PRO_FEATURES;

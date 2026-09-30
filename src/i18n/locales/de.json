@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "cancel": "Abbrechen",
     "done": "Fertig",
@@ -640,16 +640,18 @@
           "week": "Noch {{count}} innerhalb des Limits dieser Woche.",
           "month": "Noch {{count}} innerhalb des Limits dieses Monats."
         },
-        "limitReached": "Bisher {{value}}, Limit {{limit}}.",
         "rhythm": "Heute noch nicht erfasst · {{active}} von {{target}} Tagen diese Woche.",
         "reduce": {
           "day": "Heute bisher {{current}} · gestern um diese Zeit {{previous}}.",
           "week": "Diese Woche bisher {{current}} · Vorwoche zum gleichen Zeitpunkt {{previous}}.",
           "month": "Diesen Monat bisher {{current}} · Vormonat zum gleichen Zeitpunkt {{previous}}."
         },
-        "countToday": "Heute {{count}} erfasst."
+        "countToday": "Heute {{count}} erfasst.",
+        "usually": "Du erfasst meist gegen {{time}}."
       }
-    }
+    },
+    "quietNote": "Durch Ruhezeiten pausiert",
+    "quickCount": "Zählen"
   },
   "notifications": {
     "messages": {
@@ -669,7 +671,18 @@
     "trackerReminders": "Zähler-Erinnerungen",
     "trackerRemindersBody": "Richte sie in den Einstellungen des jeweiligen Zählers ein.",
     "noTrackerReminders": "Noch keine Zähler-Erinnerungen.",
-    "legacy": "Aus einer früheren Version"
+    "legacy": "Aus einer früheren Version",
+    "quiet": {
+      "title": "Ruhezeiten",
+      "body": "Foxiem überspringt Erinnerungen in diesem Zeitraum und macht danach normal weiter.",
+      "toggle": "Erinnerungen in Ruhezeiten pausieren",
+      "from": "Von",
+      "to": "Bis",
+      "summary": "{{start}} bis {{end}}",
+      "changeHint": "Uhrzeit ändern",
+      "off": "Aus",
+      "proHint": "Ruhezeiten gehören zu Foxiem Pro."
+    }
   },
   "pro": {
     "name": "Foxiem Pro",
@@ -716,6 +729,18 @@
       "reports": {
         "title": "Berichte",
         "body": "Wöchentliche Zusammenfassungen aller Zähler als Export."
+      },
+      "quietHours": {
+        "title": "Ruhezeiten",
+        "body": "Halte Erinnerungen aus deiner Schlaf- und Fokuszeit heraus."
+      },
+      "widgets": {
+        "title": "Widgets",
+        "body": "Mehrere Widgets, jedes mit eigenem Zähler."
+      },
+      "watch": {
+        "title": "Apple Watch",
+        "body": "Zähle direkt vom Handgelenk."
       }
     },
     "sections": {
@@ -734,6 +759,11 @@
       "story": {
         "title": "Deine ganze Geschichte",
         "body": "Wochen- und Monatsrückblicke, der gesamte Verlauf und dein Jahr."
+      },
+      "everywhere": {
+        "title": "Immer griffbereit",
+        "bodyIos": "Widgets für jeden Zähler, Widgets für den Sperrbildschirm und Apple Watch.",
+        "bodyAndroid": "Ein Startbildschirm-Widget für jeden Zähler."
       }
     },
     "plans": {
@@ -775,7 +805,11 @@
       "billingRetry": "Zahlungsproblem · aktualisiere deine Zahlungsmethode, um Pro zu behalten",
       "expired": "Pro ist am {{date}} abgelaufen",
       "expiredBody": "Deine Zähler und dein Verlauf sind alle noch da."
-    }
+    },
+    "notAvailableTitle": "Tarife sind noch nicht verfügbar",
+    "notAvailableBody": "Foxiem konnte die Preise nicht vom Store laden. Es wurde nichts abgebucht. Versuche es gleich noch einmal.",
+    "welcomeBackTitle": "Willkommen zurück",
+    "welcomeBackBody": "Foxiem Pro ist am {{date}} abgelaufen. Wähle einen Tarif, um alles zurückzuholen. Deine Zähler und dein Verlauf sind unverändert."
   },
   "settings": {
     "title": "Einstellungen",
@@ -805,7 +839,35 @@
     "devExpire": "Simuliertes Pro beenden",
     "devClear": "Simulierten Store leeren",
     "devSeed": "Beispielzähler laden",
-    "devSeeded": "Beispielzähler hinzugefügt"
+    "devSeeded": "Beispielzähler hinzugefügt",
+    "widgets": "Widgets & Watch",
+    "widgetsBody": "Zähle direkt vom Home-Bildschirm"
+  },
+  "account": {
+    "title": "Konto",
+    "signInGoogle": "Weiter mit Google",
+    "signInApple": "Mit Apple anmelden",
+    "signInBody": "Optional. Foxiem funktioniert vollständig ohne Konto.",
+    "signedInWithGoogle": "Mit Google angemeldet",
+    "signedInWithApple": "Mit Apple angemeldet",
+    "signOut": "Abmelden",
+    "signOutTitle": "Abmelden?",
+    "signOutBody": "Deine Zähler bleiben auf diesem Gerät. Pro ist mit deinem Konto verknüpft: Melde dich erneut an oder nutze „Käufe wiederherstellen“, um es zurückzubekommen.",
+    "delete": "Konto löschen",
+    "deleteTitle": "Dein Konto löschen?",
+    "deleteBodyGoogle": "Dadurch werden dein Foxiem-Konto und die Kontodaten auf unserem Server dauerhaft gelöscht: deine E-Mail, der Abo-Status und der Mitteilungs-Token. Zähler und Einträge auf diesem Gerät bleiben unberührt, und ein aktives Abo wird nicht gekündigt. Google bittet dich um eine Bestätigung.",
+    "deleteBodyApple": "Dadurch werden dein Foxiem-Konto und die Kontodaten auf unserem Server dauerhaft gelöscht: deine E-Mail, der Abo-Status und der Mitteilungs-Token. Zähler und Einträge auf diesem Gerät bleiben unberührt, und ein aktives Abo wird nicht gekündigt. Apple bittet dich um eine Bestätigung.",
+    "deleteConfirm": "Konto löschen",
+    "toast": {
+      "signedIn": "Angemeldet.",
+      "conflict": "Diese E-Mail-Adresse gehört zu einem anderen Konto.",
+      "unverified": "Diese E-Mail-Adresse wurde nicht bestätigt.",
+      "network": "Foxiem ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+      "failed": "Anmeldung fehlgeschlagen. Bitte versuche es erneut.",
+      "deleted": "Konto gelöscht.",
+      "stepUpFailed": "Bestätigung fehlgeschlagen. Nutze dasselbe Apple- oder Google-Konto, mit dem du angemeldet bist.",
+      "deleteFailed": "Das Konto konnte nicht gelöscht werden. Bitte versuche es erneut."
+    }
   },
   "appearance": {
     "title": "Darstellung",
@@ -829,15 +891,23 @@
   "privacy": {
     "title": "Datenschutz",
     "local": "Deine Daten bleiben auf diesem Gerät",
-    "localBody": "Zähler, Einträge, Notizen, Erinnerungen und Präferenzen werden nur auf diesem Gerät gespeichert. Foxiem hat kein Konto und keinen Server, und dein Verlauf wird nie hochgeladen.",
+    "localBody": "Zähler, Einträge, Notizen, Erinnerungen und Präferenzen werden nur auf diesem Gerät gespeichert, und dein Verlauf wird nie hochgeladen. Foxiem funktioniert vollständig ohne Konto.",
     "notifications": "Mitteilungen",
     "notificationsBody": "Erinnerungen werden lokal auf diesem Gerät geplant. Foxiem fragt erst nach der Erlaubnis, wenn du eine Erinnerung einschaltest.",
     "analytics": "Anonyme Messung",
-    "analyticsBody": "Foxiem sendet einige anonyme Ereignisse an Google Analytics for Firebase, etwa dass ein Zähler erstellt wurde und welcher Art er ist. Namen, Notizen, Zahlen und Verlauf deiner Zähler werden nie gesendet.",
+    "analyticsBody": "Aus, solange du nicht zustimmst. Wenn du zustimmst, sendet Foxiem einige anonyme Ereignisse an Google Analytics for Firebase, etwa dass ein Zähler erstellt wurde und welcher Art er ist. Namen, Notizen, Zahlen und Verlauf deiner Zähler werden nie gesendet. Du kannst deine Entscheidung jederzeit ändern.",
     "analyticsToggle": "Anonyme Nutzungsereignisse teilen",
     "export": "Deine Daten gehören dir",
     "exportBody": "Exportiere jederzeit alles als CSV in den Einstellungen. „Foxiem zurücksetzen“ entfernt alles von diesem Gerät.",
-    "policy": "Datenschutzerklärung"
+    "policy": "Datenschutzerklärung",
+    "consent": {
+      "title": "Foxiem verbessern helfen?",
+      "body": "Teile ein paar anonyme Nutzungsereignisse, etwa welche Art von Zähler erstellt wird. Nie Namen, Notizen oder Zahlen. Aus, solange du nicht zustimmst, und jederzeit in den Einstellungen änderbar.",
+      "allow": "Anonym teilen",
+      "decline": "Nein danke"
+    },
+    "accountTitle": "Optionales Konto",
+    "accountBody": "Wenn du dich mit Apple oder Google anmeldest, speichert der Foxiem-Server deine E-Mail-Adresse, den Status deines Pro-Abos und – wenn du Mitteilungen erlaubst – einen Push-Token für Hinweise bei Zahlungsproblemen. Zähler, Einträge und Notizen werden nie gesendet. Melde dich in den Einstellungen ab oder lösche das Konto; beim Löschen werden diese Daten entfernt."
   },
   "about": {
     "title": "Über",
@@ -868,5 +938,38 @@
     "counted": "{{name}}: {{value}}",
     "countedGoal": "{{name}}: {{value}}. Ziel erreicht.",
     "countedLogged": "{{name}}: heute erfasst"
+  },
+  "widgets": {
+    "title": "Widgets",
+    "intro": "Zähle direkt vom Home-Bildschirm, ohne Foxiem zu öffnen.",
+    "trackerTitle": "Standard-Zähler für Widgets",
+    "trackerBody": "Widgets zeigen diesen Zähler. Mit Foxiem Pro wählst du für jedes Widget einen eigenen Zähler.",
+    "automatic": "Erster Zähler",
+    "noTrackers": "Erstelle einen Zähler, um ihn in einem Widget zu zeigen.",
+    "addTitle": "Widget hinzufügen",
+    "addIos": "Halte eine freie Stelle auf dem Home-Bildschirm gedrückt, tippe auf +, und suche nach Foxiem. Für den Sperrbildschirm: gedrückt halten, auf Anpassen tippen und Foxiem hinzufügen.",
+    "addAndroid": "Halte eine freie Stelle auf dem Startbildschirm gedrückt, wähle Widgets und suche Foxiem.",
+    "proTitle": "Mehr mit Foxiem Pro",
+    "proBodyIos": "Mehrere Widgets, in jedem ein anderer Zähler, alle Größen, Tasten + und −, Sperrbildschirm-Widgets und Apple Watch.",
+    "proBodyAndroid": "Mehrere Widgets, in jedem ein anderer Zähler, alle Größen und Tasten + und −.",
+    "unlock": "Foxiem Pro ansehen"
+  },
+  "watch": {
+    "title": "Apple Watch",
+    "body": "Zähle direkt vom Handgelenk. Deine Zähler erscheinen mit großen Tasten + und − und bleiben mit diesem iPhone abgeglichen.",
+    "notSupported": "Apple Watch ist auf diesem Gerät nicht verfügbar.",
+    "notPaired": "Mit diesem iPhone ist keine Apple Watch gekoppelt.",
+    "notInstalled": "Foxiem ist noch nicht auf deiner Watch. Öffne die Watch-App auf dem iPhone, um es zu installieren.",
+    "ready": "Foxiem ist auf deiner Apple Watch.",
+    "proBody": "Apple Watch gehört zu Foxiem Pro."
+  },
+  "widget": {
+    "goalReached": "Ziel erreicht",
+    "overLimit": "Über dem Limit",
+    "atLimit": "Am Limit",
+    "empty": "Erstelle einen Zähler in Foxiem",
+    "locked": "Foxiem Pro",
+    "lockedBody": "Öffne Foxiem, um dieses Widget freizuschalten",
+    "open": "Foxiem öffnen"
   }
 }

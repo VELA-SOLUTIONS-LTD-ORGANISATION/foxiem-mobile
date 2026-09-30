@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { AppState } from 'react-native';
 
+import type { SimulatedAdapter } from '@/dev/simulatedAdapter';
 import { i18n } from '@/i18n';
 import { trackEvent } from '@/lib/telemetry/analytics';
 import { readJson, writeJson } from '@/storage/appStorage';
@@ -30,7 +31,6 @@ import {
   type PurchaseAdapter,
   type PurchaseOutcome,
   type RestoreOutcome,
-  type SimulatedAdapter,
 } from './purchaseAdapter';
 
 type OfferingsState =
@@ -50,6 +50,8 @@ type ProValue = {
   purchase: (plan: ProPlan) => Promise<PurchaseOutcome>;
   restore: () => Promise<RestoreOutcome>;
   refresh: () => Promise<void>;
+  /** Ties store purchases to a Foxiem account (or back to an anonymous device with null). No-op without a store. */
+  identify: (userId: string | null) => Promise<void>;
   manageUrl: string | null;
   canUse: (feature: ProFeature) => boolean;
   /** Development builds only. */
@@ -104,7 +106,8 @@ export function ProProvider({ children, adapter: injected }: { children: ReactNo
       try {
         const cached = settleEntitlement(parseEntitlement(await readJson<unknown>(STORAGE_KEYS.entitlement)));
         if (!cancelled) {
-          setEntitlement(adapter.kind === 'unavailable' && cached.source === 'simulated' ? FREE_ENTITLEMENT : cached);
+          // A cached entitlement from the development simulator is only ever honoured by the simulator itself.
+          setEntitlement(cached.source === 'simulated' && adapter.kind !== 'simulated' ? FREE_ENTITLEMENT : cached);
         }
       } finally {
         if (!cancelled) {
@@ -117,6 +120,16 @@ export function ProProvider({ children, adapter: injected }: { children: ReactNo
       cancelled = true;
     };
   }, [adapter, refresh]);
+
+  // Renewals, refunds and restores made elsewhere arrive here without waiting for the next foreground.
+  useEffect(() => {
+    if (!adapter.subscribe) {
+      return undefined;
+    }
+    return adapter.subscribe((latest) => {
+      void apply(settleEntitlement(latest));
+    });
+  }, [adapter, apply]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (state) => {
@@ -170,6 +183,19 @@ export function ProProvider({ children, adapter: injected }: { children: ReactNo
     }
   }, [adapter, apply]);
 
+  const identify = useCallback(
+    async (userId: string | null) => {
+      if (!adapter.identify) {
+        return;
+      }
+      const latest = await adapter.identify(userId);
+      if (latest) {
+        await apply(settleEntitlement(latest));
+      }
+    },
+    [adapter, apply],
+  );
+
   const clearCache = useCallback(async () => {
     setEntitlement(FREE_ENTITLEMENT);
     setOfferings({ status: 'idle' });
@@ -190,12 +216,13 @@ export function ProProvider({ children, adapter: injected }: { children: ReactNo
       purchase,
       restore,
       refresh,
+      identify,
       manageUrl: adapter.manageUrl(),
       canUse,
       simulator: adapter.kind === 'simulated' ? (adapter as SimulatedAdapter) : null,
       clearCache,
     }),
-    [hydrated, available, isPro, entitlement, offerings, loadOfferings, purchase, restore, refresh, adapter, canUse, clearCache],
+    [hydrated, available, isPro, entitlement, offerings, loadOfferings, purchase, restore, refresh, identify, adapter, canUse, clearCache],
   );
 
   return <ProContext.Provider value={value}>{children}</ProContext.Provider>;

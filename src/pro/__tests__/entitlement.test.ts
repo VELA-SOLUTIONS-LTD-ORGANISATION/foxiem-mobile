@@ -10,7 +10,8 @@ import {
   type Entitlement,
 } from '@/pro/entitlement';
 import { PRO_FEATURES } from '@/pro/features';
-import { createSimulatedAdapter, unavailableAdapter } from '@/pro/purchaseAdapter';
+import { createSimulatedAdapter } from '@/dev/simulatedAdapter';
+import { unavailableAdapter } from '@/pro/purchaseAdapter';
 
 const now = new Date('2026-09-01T12:00:00Z');
 

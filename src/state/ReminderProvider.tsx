@@ -12,11 +12,21 @@ import { AppState } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { smartSchedule, standardReminderContent, type Translate } from '@/domain/reminderCopy';
-import { canAddReminder, reminderAllowed, sortDays, type Reminder, type ReminderDraft } from '@/domain/reminders';
+import { timeIsQuiet } from '@/domain/quietHours';
+import {
+  canAddReminder,
+  parseTimeString,
+  reminderAllowed,
+  sortDays,
+  type Reminder,
+  type ReminderDraft,
+} from '@/domain/reminders';
 import type { CountEvent, Tracker } from '@/domain/types';
+import { formatTime } from '@/format';
 import { trackEvent } from '@/lib/telemetry/analytics';
 import {
   cancelNotifications,
+  configureQuickActions,
   configureReminderChannel,
   getNotificationPermission,
   requestNotificationPermission,
@@ -46,6 +56,8 @@ type ReminderValue = {
   remindersFor: (trackerId: string | null) => Reminder[];
   canAdd: (trackerId: string | null) => boolean;
   isActive: (reminder: Reminder) => boolean;
+  /** True when the reminder's time falls inside quiet hours, so it never fires. */
+  isQuiet: (reminder: Pick<Reminder, 'time'>) => boolean;
   save: (draft: ReminderDraft, existingId?: string) => Promise<ReminderSaveResult>;
   setEnabled: (reminderId: string, enabled: boolean) => Promise<ReminderSaveResult>;
   remove: (reminderId: string) => Promise<void>;
@@ -80,13 +92,37 @@ function scheduleSignature(
   active: boolean,
   smart: boolean,
   contentKey: string,
+  silenced: boolean,
+  zone: string,
 ): string {
-  return JSON.stringify([active, smart, reminder.time, reminder.days, tracker?.archivedAt ?? null, contentKey]);
+  return JSON.stringify([active, smart, silenced, zone, reminder.time, reminder.days, tracker?.archivedAt ?? null, contentKey]);
+}
+
+/** The device time zone and its current offset: a change means clock-based schedules must be rebuilt. */
+function currentZone(): string {
+  let name = '';
+  try {
+    name = Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
+  } catch {
+    name = '';
+  }
+  return `${name}|${new Date().getTimezoneOffset()}`;
+}
+
+function clockDate(time: string): Date {
+  const parsed = parseTimeString(time);
+  const date = new Date();
+  date.setHours(parsed?.hour ?? 0, parsed?.minute ?? 0, 0, 0);
+  return date;
 }
 
 export function ReminderProvider({ children }: { children: ReactNode }) {
   const { t, i18n } = useTranslation();
-  const { weekStart } = usePreferences();
+  const { weekStart, preferences, language } = usePreferences();
+  // Honoured even if Pro lapses: changing it needs Pro, silencing reminders never does.
+  const quiet = preferences.quietHours;
+  const quietKey = JSON.stringify(quiet);
+  const [zone, setZone] = useState(currentZone);
   const { trackers, events, hydrated: trackersHydrated } = useTrackerStore();
   const { isPro, hydrated: proHydrated } = usePro();
   const [hydrated, setHydrated] = useState(false);
@@ -139,6 +175,8 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
     const subscription = AppState.addEventListener('change', (state) => {
       if (state === 'active') {
         void refreshPermission();
+        // A trip or a manual time-zone change while away: rebuild clock-based schedules.
+        setZone(currentZone());
       }
     });
     return () => subscription.remove();
@@ -149,6 +187,8 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
     [isPro, reminders, trackers],
   );
 
+  const isQuiet = useCallback((reminder: Pick<Reminder, 'time'>) => timeIsQuiet(reminder.time, quiet), [quiet]);
+
   /** Bring OS notifications in line with reminders; only touches reminders whose schedule changed. */
   const sync = useCallback(
     (options: { force?: boolean } = {}) => {
@@ -157,6 +197,7 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
         setPermission(current);
         if (channelLanguage.current !== i18n.language) {
           await configureReminderChannel(translate('reminders.channelName'));
+          await configureQuickActions(translate('reminders.quickCount'));
           channelLanguage.current = i18n.language;
         }
         const now = new Date();
@@ -167,12 +208,23 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
           const active = current === 'granted' && activeFor(reminder, latest.current, isPro, trackers);
           const smart = active && reminder.smart && isPro && tracker !== null;
           const trackerEvents: readonly CountEvent[] = tracker ? events[tracker.id] ?? [] : [];
-          const planned = smart && tracker ? smartSchedule(tracker, trackerEvents, reminder, { now, weekStart }, translate) : [];
+          const planned =
+            smart && tracker
+              ? smartSchedule(
+                  tracker,
+                  trackerEvents,
+                  reminder,
+                  { now, weekStart, quiet, formatClock: (time) => formatTime(clockDate(time), language) },
+                  translate,
+                )
+              : [];
           const standard = standardReminderContent(tracker, reminder, translate);
+          // A fixed weekly time inside quiet hours is skipped on every day; it resumes when the window changes.
+          const silenced = active && !smart && timeIsQuiet(reminder.time, quiet);
           const contentKey = smart
             ? JSON.stringify(planned.map((item) => [item.date.getTime(), item.content.body]))
             : JSON.stringify([standard.title, standard.body, i18n.language]);
-          const signature = scheduleSignature(reminder, tracker, active, smart, contentKey);
+          const signature = scheduleSignature(reminder, tracker, active, smart, contentKey, silenced, zone);
           if (!options.force && signatures.current.get(reminder.id) === signature) {
             next.push(reminder);
             continue;
@@ -180,7 +232,7 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
           await cancelNotifications(reminder.notificationIds);
           let notificationIds: string[] = [];
           try {
-            if (active) {
+            if (active && !silenced) {
               notificationIds = smart
                 ? await scheduleOccurrences(reminder, planned)
                 : await scheduleWeekly(reminder, standard);
@@ -198,7 +250,9 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
       });
       return syncing.current;
     },
-    [events, i18n.language, isPro, persist, translate, trackers, weekStart],
+    // `quietKey` stands in for `quiet` so an unrelated preferences write does not reschedule.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [events, i18n.language, isPro, language, persist, quietKey, translate, trackers, weekStart, zone],
   );
 
   const ready = hydrated && trackersHydrated && proHydrated;
@@ -231,7 +285,7 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
       void syncRef.current();
     }, SMART_RESCHEDULE_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [ready, events, trackers, isPro, i18n.language, weekStart, reminders, permission]);
+  }, [ready, events, trackers, isPro, i18n.language, weekStart, reminders, permission, quietKey, zone]);
 
   const requestPermission = useCallback(async () => {
     const result = await requestNotificationPermission();
@@ -345,13 +399,14 @@ export function ReminderProvider({ children }: { children: ReactNode }) {
       remindersFor,
       canAdd,
       isActive,
+      isQuiet,
       save,
       setEnabled,
       remove,
       cancelAll,
       clearAll,
     }),
-    [hydrated, reminders, permission, refreshPermission, requestPermission, remindersFor, canAdd, isActive, save, setEnabled, remove, cancelAll, clearAll],
+    [hydrated, reminders, permission, refreshPermission, requestPermission, remindersFor, canAdd, isActive, isQuiet, save, setEnabled, remove, cancelAll, clearAll],
   );
 
   return <ReminderContext.Provider value={value}>{children}</ReminderContext.Provider>;

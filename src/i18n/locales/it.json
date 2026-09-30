@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "cancel": "Annulla",
     "done": "Fine",
@@ -649,16 +649,18 @@
           "week": "Ancora {{count}} entro il limite della settimana.",
           "month": "Ancora {{count}} entro il limite del mese."
         },
-        "limitReached": "{{value}} finora, limite {{limit}}.",
         "rhythm": "Non ancora registrato oggi · {{active}} di {{target}} giorni questa settimana.",
         "reduce": {
           "day": "{{current}} finora oggi · {{previous}} ieri a quest'ora.",
           "week": "{{current}} finora questa settimana · {{previous}} allo stesso punto della settimana scorsa.",
           "month": "{{current}} finora questo mese · {{previous}} allo stesso punto del mese scorso."
         },
-        "countToday": "Oggi: {{count}}."
+        "countToday": "Oggi: {{count}}.",
+        "usually": "Di solito registri verso le {{time}}."
       }
-    }
+    },
+    "quietNote": "In pausa per le ore di silenzio",
+    "quickCount": "Conta"
   },
   "notifications": {
     "messages": {
@@ -678,7 +680,18 @@
     "trackerReminders": "Promemoria dei contatori",
     "trackerRemindersBody": "Impostali dalle impostazioni di ciascun contatore.",
     "noTrackerReminders": "Ancora nessun promemoria dei contatori.",
-    "legacy": "Da una versione precedente"
+    "legacy": "Da una versione precedente",
+    "quiet": {
+      "title": "Ore di silenzio",
+      "body": "Foxiem salta i promemoria in questa fascia e riprende normalmente dopo.",
+      "toggle": "Sospendi i promemoria nelle ore di silenzio",
+      "from": "Dalle",
+      "to": "Fino alle",
+      "summary": "Dalle {{start}} alle {{end}}",
+      "changeHint": "Cambia orario",
+      "off": "Disattivate",
+      "proHint": "Le ore di silenzio fanno parte di Foxiem Pro."
+    }
   },
   "pro": {
     "name": "Foxiem Pro",
@@ -725,6 +738,18 @@
       "reports": {
         "title": "Report",
         "body": "Esportazioni con il riepilogo settimanale di tutti i contatori."
+      },
+      "quietHours": {
+        "title": "Ore di silenzio",
+        "body": "Tieni i promemoria lontani dal tuo sonno e dai momenti di concentrazione."
+      },
+      "widgets": {
+        "title": "Widget",
+        "body": "Più widget, ciascuno con il proprio contatore."
+      },
+      "watch": {
+        "title": "Apple Watch",
+        "body": "Conta direttamente dal polso."
       }
     },
     "sections": {
@@ -743,6 +768,11 @@
       "story": {
         "title": "Tutta la tua storia",
         "body": "Riepiloghi settimanali e mensili, storico completo e il tuo anno."
+      },
+      "everywhere": {
+        "title": "Sempre a portata di mano",
+        "bodyIos": "Widget per ogni contatore, widget per la schermata di blocco e Apple Watch.",
+        "bodyAndroid": "Un widget nella schermata Home per ogni contatore."
       }
     },
     "plans": {
@@ -784,7 +814,11 @@
       "billingRetry": "Problema di pagamento · aggiorna il metodo di pagamento per mantenere Pro",
       "expired": "Pro è terminato il {{date}}",
       "expiredBody": "I tuoi contatori e lo storico sono ancora tutti qui."
-    }
+    },
+    "notAvailableTitle": "I piani non sono ancora disponibili",
+    "notAvailableBody": "Foxiem non è riuscito a ottenere i prezzi dallo store. Non è stato addebitato nulla. Riprova tra un momento.",
+    "welcomeBackTitle": "Bentornato",
+    "welcomeBackBody": "Foxiem Pro è terminato il {{date}}. Scegli un piano per riavere tutto. I tuoi contatori e la cronologia sono intatti."
   },
   "settings": {
     "title": "Impostazioni",
@@ -814,7 +848,35 @@
     "devExpire": "Fai scadere Pro simulato",
     "devClear": "Svuota negozio simulato",
     "devSeed": "Carica contatori di esempio",
-    "devSeeded": "Contatori di esempio aggiunti"
+    "devSeeded": "Contatori di esempio aggiunti",
+    "widgets": "Widget e Watch",
+    "widgetsBody": "Conta dalla schermata Home"
+  },
+  "account": {
+    "title": "Account",
+    "signInGoogle": "Continua con Google",
+    "signInApple": "Accedi con Apple",
+    "signInBody": "Facoltativo. Foxiem funziona del tutto senza account.",
+    "signedInWithGoogle": "Accesso eseguito con Google",
+    "signedInWithApple": "Accesso eseguito con Apple",
+    "signOut": "Esci",
+    "signOutTitle": "Uscire?",
+    "signOutBody": "I tuoi contatori restano su questo dispositivo. Pro è collegato al tuo account: accedi di nuovo o usa «Ripristina acquisti» per riaverlo.",
+    "delete": "Elimina account",
+    "deleteTitle": "Eliminare il tuo account?",
+    "deleteBodyGoogle": "Elimina definitivamente il tuo account Foxiem e i dati dell’account sul nostro server: la tua e-mail, lo stato dell’abbonamento e il token di notifica. Contatori e voci su questo dispositivo non vengono toccati e un abbonamento attivo non viene annullato. Google ti chiederà di confermare.",
+    "deleteBodyApple": "Elimina definitivamente il tuo account Foxiem e i dati dell’account sul nostro server: la tua e-mail, lo stato dell’abbonamento e il token di notifica. Contatori e voci su questo dispositivo non vengono toccati e un abbonamento attivo non viene annullato. Apple ti chiederà di confermare.",
+    "deleteConfirm": "Elimina account",
+    "toast": {
+      "signedIn": "Accesso eseguito.",
+      "conflict": "Questa e-mail appartiene a un altro account.",
+      "unverified": "Questo indirizzo e-mail non è stato verificato.",
+      "network": "Impossibile raggiungere Foxiem. Controlla la connessione e riprova.",
+      "failed": "Accesso non riuscito. Riprova.",
+      "deleted": "Account eliminato.",
+      "stepUpFailed": "Impossibile confermare la tua identità. Usa lo stesso account Apple o Google con cui hai effettuato l’accesso.",
+      "deleteFailed": "Impossibile eliminare l’account. Riprova."
+    }
   },
   "appearance": {
     "title": "Aspetto",
@@ -839,15 +901,23 @@
   "privacy": {
     "title": "Privacy",
     "local": "I tuoi dati restano su questo dispositivo",
-    "localBody": "Contatori, voci, note, promemoria e preferenze sono salvati solo su questo dispositivo. Foxiem non ha account né server e il tuo storico non viene mai caricato.",
+    "localBody": "Contatori, voci, note, promemoria e preferenze sono salvati solo su questo dispositivo e il tuo storico non viene mai caricato. Foxiem funziona del tutto senza account.",
     "notifications": "Notifiche",
     "notificationsBody": "I promemoria sono programmati localmente su questo dispositivo. Foxiem chiede il permesso solo quando attivi un promemoria.",
     "analytics": "Misurazione anonima",
-    "analyticsBody": "Foxiem invia alcuni eventi anonimi a Google Analytics for Firebase, ad esempio che è stato creato un contatore e di che tipo. Nomi dei contatori, note, numeri e storico non vengono mai inviati.",
+    "analyticsBody": "Disattivato se non scegli di condividere. Se lo fai, Foxiem invia alcuni eventi anonimi a Google Analytics for Firebase, ad esempio che è stato creato un contatore e di che tipo. Nomi dei contatori, note, numeri e storico non vengono mai inviati. Puoi cambiare idea in qualsiasi momento.",
     "analyticsToggle": "Condividi eventi di utilizzo anonimi",
     "export": "I tuoi dati sono tuoi",
     "exportBody": "Esporta tutto in CSV dalle Impostazioni quando vuoi. Reimposta Foxiem elimina tutto da questo dispositivo.",
-    "policy": "Informativa sulla privacy"
+    "policy": "Informativa sulla privacy",
+    "consent": {
+      "title": "Vuoi aiutarci a migliorare Foxiem?",
+      "body": "Condividi pochi eventi di utilizzo anonimi, come il tipo di contatore creato. Mai nomi, note o numeri. Disattivato finché non accetti, e puoi cambiarlo nelle Impostazioni.",
+      "allow": "Condividi in modo anonimo",
+      "decline": "No, grazie"
+    },
+    "accountTitle": "Account facoltativo",
+    "accountBody": "Se accedi con Apple o Google, il server di Foxiem conserva il tuo indirizzo e-mail, lo stato dell’abbonamento Pro e, se consenti le notifiche, un token push per avvisarti di problemi di pagamento. Contatori, voci e note non vengono mai inviati. Esci o elimina l’account dalle Impostazioni; l’eliminazione cancella questi dati."
   },
   "about": {
     "title": "Informazioni",
@@ -878,5 +948,38 @@
     "counted": "{{name}}: {{value}}",
     "countedGoal": "{{name}}: {{value}}. Obiettivo raggiunto.",
     "countedLogged": "{{name}}: registrato oggi"
+  },
+  "widgets": {
+    "title": "Widget",
+    "intro": "Conta dalla schermata Home senza aprire Foxiem.",
+    "trackerTitle": "Contatore predefinito dei widget",
+    "trackerBody": "I widget mostrano questo contatore. Con Foxiem Pro puoi scegliere un contatore diverso per ogni widget.",
+    "automatic": "Primo contatore",
+    "noTrackers": "Crea un contatore per mostrarlo in un widget.",
+    "addTitle": "Aggiungi un widget",
+    "addIos": "Tieni premuto su uno spazio vuoto della schermata Home, tocca +, poi cerca Foxiem. Per la schermata di blocco, tienila premuta, tocca Personalizza e aggiungi Foxiem.",
+    "addAndroid": "Tieni premuto su uno spazio vuoto della schermata Home, scegli Widget, poi cerca Foxiem.",
+    "proTitle": "Di più con Foxiem Pro",
+    "proBodyIos": "Più widget, un contatore diverso in ciascuno, tutte le dimensioni, pulsanti + e −, widget per la schermata di blocco e Apple Watch.",
+    "proBodyAndroid": "Più widget, un contatore diverso in ciascuno, tutte le dimensioni e pulsanti + e −.",
+    "unlock": "Scopri Foxiem Pro"
+  },
+  "watch": {
+    "title": "Apple Watch",
+    "body": "Conta dal polso. I tuoi contatori appaiono con grandi pulsanti + e − e restano allineati con questo iPhone.",
+    "notSupported": "Apple Watch non è disponibile su questo dispositivo.",
+    "notPaired": "Nessun Apple Watch è abbinato a questo iPhone.",
+    "notInstalled": "Foxiem non è ancora sul tuo orologio. Apri l'app Watch su iPhone per installarlo.",
+    "ready": "Foxiem è sul tuo Apple Watch.",
+    "proBody": "Apple Watch fa parte di Foxiem Pro."
+  },
+  "widget": {
+    "goalReached": "Obiettivo raggiunto",
+    "overLimit": "Oltre il limite",
+    "atLimit": "Al limite",
+    "empty": "Crea un contatore in Foxiem",
+    "locked": "Foxiem Pro",
+    "lockedBody": "Apri Foxiem per sbloccare questo widget",
+    "open": "Apri Foxiem"
   }
 }

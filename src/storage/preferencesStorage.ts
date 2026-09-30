@@ -1,3 +1,4 @@
+import { DEFAULT_QUIET_HOURS, parseQuietHours, type QuietHours } from '@/domain/quietHours';
 import type { WeekStart } from '@/domain/types';
 import { isSupportedLanguage, type SupportedLanguage } from '@/i18n/languages';
 
@@ -6,6 +7,9 @@ import { STORAGE_KEYS } from './keys';
 
 export type Appearance = 'system' | 'light' | 'dark';
 
+/** unknown until the person chooses. Nothing is measured unless this is granted. */
+export type AnalyticsConsent = 'unknown' | 'granted' | 'denied';
+
 export type Preferences = {
   /** null follows the device language. */
   language: SupportedLanguage | null;
@@ -13,8 +17,12 @@ export type Preferences = {
   haptics: boolean;
   /** null follows the device calendar. */
   weekStart: WeekStart | null;
-  /** Anonymous measurement events (Firebase). */
-  analytics: boolean;
+  /** Anonymous measurement events (Firebase). Opt-in: off until the person says yes. */
+  analyticsConsent: AnalyticsConsent;
+  analyticsConsentAt: string | null;
+  quietHours: QuietHours;
+  /** The tracker the Free widget shows; null follows the first active tracker on Home. */
+  widgetTrackerId: string | null;
 };
 
 export const DEFAULT_PREFERENCES: Preferences = {
@@ -22,7 +30,10 @@ export const DEFAULT_PREFERENCES: Preferences = {
   appearance: 'system',
   haptics: true,
   weekStart: null,
-  analytics: true,
+  analyticsConsent: 'unknown',
+  analyticsConsentAt: null,
+  quietHours: DEFAULT_QUIET_HOURS,
+  widgetTrackerId: null,
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -42,7 +53,15 @@ export function parsePreferences(value: unknown): Preferences {
         : 'system',
     haptics: value.haptics !== false,
     weekStart: value.weekStart === 0 || value.weekStart === 1 ? value.weekStart : null,
-    analytics: value.analytics !== false,
+    // The 2.0 development nalytics boolean was never a consent record, so it is not carried over.
+    analyticsConsent:
+      value.analyticsConsent === 'granted' || value.analyticsConsent === 'denied' ? value.analyticsConsent : 'unknown',
+    analyticsConsentAt:
+      typeof value.analyticsConsentAt === 'string' && !Number.isNaN(Date.parse(value.analyticsConsentAt))
+        ? value.analyticsConsentAt
+        : null,
+    quietHours: parseQuietHours(value.quietHours),
+    widgetTrackerId: typeof value.widgetTrackerId === 'string' && value.widgetTrackerId ? value.widgetTrackerId : null,
   };
 }
 

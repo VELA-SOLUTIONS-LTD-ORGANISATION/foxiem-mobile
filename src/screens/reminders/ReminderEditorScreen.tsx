@@ -27,6 +27,7 @@ import {
   formatTimeString,
   parseTimeString,
   repeatPreset,
+  usualLogTime,
   type ReminderDay,
 } from '@/domain/reminders';
 import { formatTime, weekdayName } from '@/format';
@@ -44,20 +45,6 @@ const DAY_INDEX: Record<ReminderDay, number> = {
   friday: 5,
   saturday: 6,
 };
-
-/** Median minute-of-day of recent entries, only when there is enough history to mean something. */
-function suggestedTime(createdAts: readonly string[], now: Date): string | null {
-  const since = now.getTime() - 30 * 86_400_000;
-  const recent = createdAts.map((value) => new Date(value)).filter((date) => date.getTime() >= since);
-  const days = new Set(recent.map((date) => date.toDateString()));
-  if (recent.length < 7 || days.size < 5) {
-    return null;
-  }
-  const minutes = recent.map((date) => date.getHours() * 60 + date.getMinutes()).sort((a, b) => a - b);
-  const median = minutes[Math.floor(minutes.length / 2)]!;
-  const rounded = Math.round(median / 15) * 15;
-  return formatTimeString(Math.floor(rounded / 60) % 24, rounded % 60);
-}
 
 function dateForTime(time: string): Date {
   const parsed = parseTimeString(time) ?? parseTimeString(DEFAULT_REMINDER_TIME)!;
@@ -87,7 +74,7 @@ export function ReminderEditorScreen({ navigation, route }: RootScreenProps<'Rem
   const [daysError, setDaysError] = useState(false);
 
   const suggestion = useMemo(
-    () => (tracker && smartFeature.allowed ? suggestedTime(events.map((event) => event.createdAt), new Date()) : null),
+    () => (tracker && smartFeature.allowed ? usualLogTime(events.map((event) => event.createdAt), new Date()) : null),
     [events, smartFeature.allowed, tracker],
   );
 
@@ -207,6 +194,11 @@ export function ReminderEditorScreen({ navigation, route }: RootScreenProps<'Rem
             themeVariant={theme.scheme}
             onChange={onTime}
           />
+        ) : null}
+        {reminders.isQuiet({ time }) ? (
+          <Text variant="caption" tone="caution" accessibilityLiveRegion="polite" style={styles.quietWarning}>
+            {t('reminders.quietNote')}
+          </Text>
         ) : null}
         {suggestion && suggestion !== time ? (
           <Pressable
@@ -361,6 +353,9 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
   },
   daysError: {
+    marginTop: 8,
+  },
+  quietWarning: {
     marginTop: 8,
   },
 });

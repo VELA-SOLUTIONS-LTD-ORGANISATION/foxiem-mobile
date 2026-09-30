@@ -55,6 +55,10 @@ On launch, `loadDomain` (in `src/storage/domainStorage.ts`) checks `foxiem.schem
 
 The 1.0.x keys are never modified or deleted by the migration. They remain on the device as a backup.
 
+## Migration record
+
+`foxiem.migration` records progress as `started`, then `staged` (the merged result is fully written to the live keys), then `committed` (schema 3 is in force). It also stores the source (`v1`, `v2`, `none` or `recovery`), an attempt count and timestamps. `foxiem.schemaVersion === 3` remains the single flag the loader trusts; the record explains how the device got there and lets a later launch resume instead of starting over. A rebuilt tracker index sets `recoveredAt`, after which orphaned history is never deleted.
+
 ## Failure behaviour
 
 | Situation | What happens |
@@ -63,7 +67,7 @@ The 1.0.x keys are never modified or deleted by the migration. They remain on th
 | One event shard unreadable | That tracker opens with no history, the raw shard is quarantined, other trackers are unaffected, and Home says "Some history couldn't be read". |
 | Shards with no tracker in the index | Removed, but only after the index parsed successfully, so a broken index can never delete history. |
 | A save fails (e.g. the device is out of space) | The in-memory state stays correct, writes keep retrying (latest wins per key), and Home says "Foxiem couldn't save your latest changes". |
-| Storage throws during the migration itself | Nothing is overwritten and the 1.0.x keys stay intact. The app starts with an unreadable-data notice and runs the migration again on the next launch. Any tracker created in that failed session can be replaced by the re-migrated 1.0.x data. This needs storage to fail mid-migration and is the one known gap. |
+| Storage fails during the migration | The 1.0.x keys are never touched. The app shows the migrated counters from memory, the record stays at `started` or `staged`, and the next launch resumes. Trackers created in the failed session are merged by id with the re-migrated data (live edits win, events are unioned, nothing is duplicated). If only the version marker failed, the fully staged result is committed without transforming again. |
 | Reset Foxiem | Removes every key that starts with `foxiem.` using `multiRemove`. It never calls `AsyncStorage.clear()`, so other libraries' data is untouched. It does not cancel a subscription. |
 
 ## Future account and sync merge

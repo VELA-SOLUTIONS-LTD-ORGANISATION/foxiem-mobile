@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 
+import { AccountProvider, AccountSync } from '@/account';
 import { ToastProvider } from '@/components';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import '@/i18n';
@@ -19,6 +20,7 @@ import {
   usePreferences,
 } from '@/state';
 import { APP_FONT_MAP, ThemeProvider } from '@/theme';
+import { WidgetSync } from '@/widgets';
 
 void SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
@@ -42,15 +44,19 @@ export default function App() {
             <ErrorBoundary>
               <TrackerStoreProvider>
                 <ProProvider>
-                  <ReminderProvider>
-                    <NoticesProvider>
-                      <CountFeedbackProvider>
-                        <ToastProvider>
-                          <AppNavigation />
-                        </ToastProvider>
-                      </CountFeedbackProvider>
-                    </NoticesProvider>
-                  </ReminderProvider>
+                  <AccountProvider>
+                    <ReminderProvider>
+                      <NoticesProvider>
+                        <CountFeedbackProvider>
+                          <ToastProvider>
+                            <WidgetSync />
+                            <AccountSync />
+                            <AppNavigation />
+                          </ToastProvider>
+                        </CountFeedbackProvider>
+                      </NoticesProvider>
+                    </ReminderProvider>
+                  </AccountProvider>
                 </ProProvider>
               </TrackerStoreProvider>
             </ErrorBoundary>

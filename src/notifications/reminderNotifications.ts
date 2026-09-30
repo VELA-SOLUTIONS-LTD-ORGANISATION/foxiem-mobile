@@ -23,7 +23,7 @@ function nativePlatform(): boolean {
   return Platform.OS === 'ios' || Platform.OS === 'android';
 }
 
-/** Expo WEEKLY trigger weekday: 1 = Sunday … 7 = Saturday. */
+/** Expo WEEKLY trigger weekday: 1 = Sunday up to 7 = Saturday. */
 export function expoWeekday(day: ReminderDay): number {
   return jsWeekday(day) + 1;
 }
@@ -95,6 +95,44 @@ function data(reminderId: string, trackerId: string | null) {
   return { foxiem: 'reminder', reminderId, trackerId: trackerId ?? '' };
 }
 
+/** Category carrying the "Count" button; only reminders about one tracker get it. */
+export const QUICK_CATEGORY = 'foxiem-tracker-reminder';
+export const COUNT_ACTION = 'foxiem.count';
+
+/**
+ * Register the notification button. It does not open the app: the press is applied to the tracker by
+ * `AppNavigation` (immediately when the app is alive, at next launch otherwise).
+ */
+export async function configureQuickActions(countLabel: string): Promise<void> {
+  if (!nativePlatform()) {
+    return;
+  }
+  try {
+    await Notifications.setNotificationCategoryAsync(QUICK_CATEGORY, [
+      { identifier: COUNT_ACTION, buttonTitle: countLabel, options: { opensAppToForeground: false } },
+    ]);
+  } catch {
+    // Reminders still work without the button.
+  }
+}
+
+function withCategory(content: ScheduledContent, trackerId: string | null) {
+  return trackerId ? { ...content, categoryIdentifier: QUICK_CATEGORY } : content;
+}
+
+/** A tap on the notification's Count button: which tracker, and a key that identifies this exact press. */
+export function quickCountTarget(response: Notifications.NotificationResponse): { trackerId: string; key: string } | null {
+  if (response.actionIdentifier !== COUNT_ACTION) {
+    return null;
+  }
+  const target = reminderTarget(response);
+  if (!target?.trackerId) {
+    return null;
+  }
+  const { identifier } = response.notification.request;
+  return { trackerId: target.trackerId, key: `${identifier}|${response.notification.date}` };
+}
+
 /** Repeating weekly notifications with fixed copy (standard reminders). */
 export async function scheduleWeekly(
   reminder: { id: string; trackerId: string | null; time: string; days: readonly ReminderDay[] },
@@ -109,7 +147,7 @@ export async function scheduleWeekly(
     for (const day of reminder.days) {
       ids.push(
         await Notifications.scheduleNotificationAsync({
-          content: { ...content, sound: 'default', data: data(reminder.id, reminder.trackerId) },
+          content: { ...withCategory(content, reminder.trackerId), sound: 'default', data: data(reminder.id, reminder.trackerId) },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
             weekday: expoWeekday(day),
@@ -140,7 +178,11 @@ export async function scheduleOccurrences(
     for (const occurrence of occurrences) {
       ids.push(
         await Notifications.scheduleNotificationAsync({
-          content: { ...occurrence.content, sound: 'default', data: data(reminder.id, reminder.trackerId) },
+          content: {
+            ...withCategory(occurrence.content, reminder.trackerId),
+            sound: 'default',
+            data: data(reminder.id, reminder.trackerId),
+          },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,
             date: occurrence.date,

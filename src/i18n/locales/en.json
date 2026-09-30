@@ -640,16 +640,18 @@
           "week": "{{count}} left within this week's limit.",
           "month": "{{count}} left within this month's limit."
         },
-        "limitReached": "{{value}} so far, limit {{limit}}.",
         "rhythm": "Not logged yet today · {{active}} of {{target}} days this week.",
         "reduce": {
           "day": "{{current}} so far today · {{previous}} by this time yesterday.",
           "week": "{{current}} so far this week · {{previous}} by this time last week.",
           "month": "{{current}} so far this month · {{previous}} by this time last month."
         },
-        "countToday": "{{count}} logged today."
+        "countToday": "{{count}} logged today.",
+        "usually": "You usually log around {{time}}."
       }
-    }
+    },
+    "quietNote": "Paused by quiet hours",
+    "quickCount": "Count"
   },
   "notifications": {
     "messages": {
@@ -669,7 +671,18 @@
     "trackerReminders": "Tracker reminders",
     "trackerRemindersBody": "Set these from each tracker's settings.",
     "noTrackerReminders": "No tracker reminders yet.",
-    "legacy": "From an earlier version"
+    "legacy": "From an earlier version",
+    "quiet": {
+      "title": "Quiet hours",
+      "body": "Foxiem skips reminders inside this window and starts again afterwards.",
+      "toggle": "Pause reminders during quiet hours",
+      "from": "From",
+      "to": "Until",
+      "summary": "{{start}} to {{end}}",
+      "changeHint": "Change time",
+      "off": "Off",
+      "proHint": "Quiet hours are part of Foxiem Pro."
+    }
   },
   "pro": {
     "name": "Foxiem Pro",
@@ -716,6 +729,18 @@
       "reports": {
         "title": "Reports",
         "body": "Weekly summary exports across trackers."
+      },
+      "quietHours": {
+        "title": "Quiet hours",
+        "body": "Keep reminders out of your sleep and focus time."
+      },
+      "widgets": {
+        "title": "Widgets",
+        "body": "Several widgets, each with its own tracker."
+      },
+      "watch": {
+        "title": "Apple Watch",
+        "body": "Count from your wrist."
       }
     },
     "sections": {
@@ -734,6 +759,11 @@
       "story": {
         "title": "Your complete story",
         "body": "Weekly and monthly reviews, full history and your year."
+      },
+      "everywhere": {
+        "title": "Always within reach",
+        "bodyIos": "Widgets for every tracker, Lock Screen widgets and Apple Watch.",
+        "bodyAndroid": "A Home Screen widget for every tracker."
       }
     },
     "plans": {
@@ -775,7 +805,11 @@
       "billingRetry": "Payment issue · update your payment method to keep Pro",
       "expired": "Pro ended {{date}}",
       "expiredBody": "Your trackers and history are all still here."
-    }
+    },
+    "notAvailableTitle": "Plans aren't available yet",
+    "notAvailableBody": "Foxiem couldn't get prices from the store. Nothing has been charged. Try again in a moment.",
+    "welcomeBackTitle": "Welcome back",
+    "welcomeBackBody": "Foxiem Pro ended on {{date}}. Choose a plan to bring it all back. Your trackers and history are untouched."
   },
   "settings": {
     "title": "Settings",
@@ -805,7 +839,35 @@
     "devExpire": "Expire simulated Pro",
     "devClear": "Clear simulated store",
     "devSeed": "Load sample trackers",
-    "devSeeded": "Sample trackers added"
+    "devSeeded": "Sample trackers added",
+    "widgets": "Widgets & Watch",
+    "widgetsBody": "Count from your Home Screen"
+  },
+  "account": {
+    "title": "Account",
+    "signInGoogle": "Continue with Google",
+    "signInApple": "Sign in with Apple",
+    "signInBody": "Optional. Foxiem works fully without an account.",
+    "signedInWithGoogle": "Signed in with Google",
+    "signedInWithApple": "Signed in with Apple",
+    "signOut": "Sign out",
+    "signOutTitle": "Sign out?",
+    "signOutBody": "Your trackers stay on this device. Pro is linked to your account: sign in again or use Restore purchases to get it back.",
+    "delete": "Delete account",
+    "deleteTitle": "Delete your account?",
+    "deleteBodyGoogle": "This permanently deletes your Foxiem account and the account data on our server: your email, subscription status and notification token. Trackers and entries on this device aren't affected, and an active subscription isn't cancelled. Google will ask you to confirm.",
+    "deleteBodyApple": "This permanently deletes your Foxiem account and the account data on our server: your email, subscription status and notification token. Trackers and entries on this device aren't affected, and an active subscription isn't cancelled. Apple will ask you to confirm.",
+    "deleteConfirm": "Delete account",
+    "toast": {
+      "signedIn": "Signed in.",
+      "conflict": "This email belongs to a different account.",
+      "unverified": "This email address hasn't been verified.",
+      "network": "Couldn't reach Foxiem. Check your connection and try again.",
+      "failed": "Couldn't sign in. Please try again.",
+      "deleted": "Account deleted.",
+      "stepUpFailed": "Couldn't confirm it's you. Use the same Apple or Google account you signed in with.",
+      "deleteFailed": "Couldn't delete the account. Please try again."
+    }
   },
   "appearance": {
     "title": "Appearance",
@@ -829,15 +891,23 @@
   "privacy": {
     "title": "Privacy",
     "local": "Your data stays on this device",
-    "localBody": "Trackers, entries, notes, reminders and preferences are stored only on this device. Foxiem has no account and no server, and your history is never uploaded.",
+    "localBody": "Trackers, entries, notes, reminders and preferences are stored only on this device, and your history is never uploaded. Foxiem works fully without an account.",
     "notifications": "Notifications",
     "notificationsBody": "Reminders are scheduled locally on this device. Foxiem asks for permission only when you turn a reminder on.",
     "analytics": "Anonymous measurement",
-    "analyticsBody": "Foxiem sends a few anonymous events to Google Analytics for Firebase, such as that a tracker was created and which kind. Tracker names, notes, counts and history are never sent.",
+    "analyticsBody": "Off unless you choose to share. If you do, Foxiem sends a few anonymous events to Google Analytics for Firebase, such as that a tracker was created and which kind. Tracker names, notes, counts and history are never sent. You can change your mind at any time.",
     "analyticsToggle": "Share anonymous usage events",
     "export": "Your data is yours",
     "exportBody": "Export everything as CSV from Settings at any time. Reset Foxiem removes all of it from this device.",
-    "policy": "Privacy Policy"
+    "policy": "Privacy Policy",
+    "consent": {
+      "title": "Help improve Foxiem?",
+      "body": "Share a few anonymous usage events, like which kind of tracker gets created. Never names, notes or counts. Off unless you say yes, and you can change it in Settings.",
+      "allow": "Share anonymously",
+      "decline": "No thanks"
+    },
+    "accountTitle": "Optional account",
+    "accountBody": "If you sign in with Apple or Google, Foxiem's server stores your email address, your Pro subscription status and, if you allow notifications, a push token for payment-problem messages. Trackers, entries and notes are never sent. Sign out or delete the account in Settings; deleting erases this data."
   },
   "about": {
     "title": "About",
@@ -868,5 +938,38 @@
     "counted": "{{name}}: {{value}}",
     "countedGoal": "{{name}}: {{value}}. Target reached.",
     "countedLogged": "{{name}}: logged today"
+  },
+  "widgets": {
+    "title": "Widgets",
+    "intro": "Count from your Home Screen without opening Foxiem.",
+    "trackerTitle": "Default widget tracker",
+    "trackerBody": "Widgets show this tracker. With Foxiem Pro you can pick a different tracker for every widget.",
+    "automatic": "First tracker",
+    "noTrackers": "Create a tracker to show it in a widget.",
+    "addTitle": "Add a widget",
+    "addIos": "Touch and hold an empty spot on your Home Screen, tap +, then search for Foxiem. For the Lock Screen, touch and hold it, tap Customise, then add Foxiem.",
+    "addAndroid": "Touch and hold an empty spot on your Home Screen, choose Widgets, then find Foxiem.",
+    "proTitle": "More with Foxiem Pro",
+    "proBodyIos": "Several widgets, a different tracker in each, every size, + and − buttons, richer Lock Screen widgets and Apple Watch.",
+    "proBodyAndroid": "Several widgets, a different tracker in each, every size and + and − buttons.",
+    "unlock": "See Foxiem Pro"
+  },
+  "watch": {
+    "title": "Apple Watch",
+    "body": "Count from your wrist. Your trackers appear with big + and − buttons and stay in step with this iPhone.",
+    "notSupported": "Apple Watch isn't available on this device.",
+    "notPaired": "No Apple Watch is paired with this iPhone.",
+    "notInstalled": "Foxiem isn't on your watch yet. Open the Watch app on your iPhone to install it.",
+    "ready": "Foxiem is on your Apple Watch.",
+    "proBody": "Apple Watch is part of Foxiem Pro."
+  },
+  "widget": {
+    "goalReached": "Goal reached",
+    "overLimit": "Over limit",
+    "atLimit": "At limit",
+    "empty": "Add a tracker in Foxiem",
+    "locked": "Foxiem Pro",
+    "lockedBody": "Open Foxiem to unlock this widget",
+    "open": "Open Foxiem"
   }
 }

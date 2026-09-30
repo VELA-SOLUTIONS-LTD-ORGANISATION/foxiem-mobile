@@ -1,12 +1,21 @@
 import { comparePeriods, trackerSnapshot } from './analysis';
 import { currentPeriodValue } from './events';
 import { isInRange, periodRange } from './periods';
-import { upcomingOccurrences, type Reminder } from './reminders';
+import { isQuietTime, type QuietHours } from './quietHours';
+import { parseTimeString, upcomingOccurrences, usualLogTime, type Reminder } from './reminders';
 import type { CountEvent, Tracker, WeekStart } from './types';
 
 export type Translate = (key: string, options?: Record<string, unknown>) => string;
 
 export type ReminderContent = { title: string; body: string };
+
+export type ReminderContext = {
+  now: Date;
+  weekStart: WeekStart;
+  /** Formats an "HH:MM" string for the user's language; needed for "usually around" copy. */
+  formatClock?: (time: string) => string;
+  quiet?: QuietHours;
+};
 
 function periodPhrase(tracker: Tracker): 'day' | 'week' | 'month' | 'all' {
   return tracker.period;
@@ -45,7 +54,7 @@ export function smartOccurrenceContent(
   events: readonly CountEvent[],
   reminder: Reminder,
   occurrence: Date,
-  context: { now: Date; weekStart: WeekStart },
+  context: ReminderContext,
   t: Translate,
 ): ReminderContent | null {
   const standard = standardReminderContent(tracker, reminder, t);
@@ -76,10 +85,11 @@ export function smartOccurrenceContent(
       if (value === 0) {
         return standard;
       }
-      if (value < tracker.target) {
-        return { title, body: t(`reminders.copy.smart.limitLeft.${periodPhrase(tracker)}`, { count: tracker.target - value }) };
+      if (value >= tracker.target) {
+        // At or over the limit there is nothing left to protect, and a reminder would only nag.
+        return null;
       }
-      return { title, body: t('reminders.copy.smart.limitReached', { value, limit: tracker.target }) };
+      return { title, body: t(`reminders.copy.smart.limitLeft.${periodPhrase(tracker)}`, { count: tracker.target - value }) };
     }
     case 'consistency': {
       if (!sameDay) {
@@ -88,6 +98,16 @@ export function smartOccurrenceContent(
       const snapshot = trackerSnapshot(tracker, events, context);
       if (snapshot.today > 0) {
         return null;
+      }
+      const usual = context.formatClock ? usualLogTime(events.map((event) => event.createdAt), context.now) : null;
+      const usualParts = usual ? parseTimeString(usual) : null;
+      if (usual && usualParts && context.formatClock) {
+        const usualMinutes = usualParts.hour * 60 + usualParts.minute;
+        const occurrenceMinutes = occurrence.getHours() * 60 + occurrence.getMinutes();
+        // Only claim a habit when the reminder is actually near the time the history shows.
+        if (Math.abs(usualMinutes - occurrenceMinutes) <= 60) {
+          return { title, body: t('reminders.copy.smart.usually', { time: context.formatClock(usual) }) };
+        }
       }
       return {
         title,
@@ -124,10 +144,13 @@ export function smartSchedule(
   tracker: Tracker,
   events: readonly CountEvent[],
   reminder: Reminder,
-  context: { now: Date; weekStart: WeekStart },
+  context: ReminderContext,
   t: Translate,
 ): { date: Date; content: ReminderContent }[] {
   return upcomingOccurrences(reminder, context.now).flatMap((date) => {
+    if (context.quiet && isQuietTime(date, context.quiet)) {
+      return [];
+    }
     const content = smartOccurrenceContent(tracker, events, reminder, date, context, t);
     return content ? [{ date, content }] : [];
   });

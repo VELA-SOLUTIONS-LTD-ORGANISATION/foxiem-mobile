@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { useAccount } from '@/account';
 import { Group, Header, Row, Screen, Section, Text, TrackerIcon, useToast } from '@/components';
 import { FOXIEM_LOGO } from '@/constants/brand';
 import { EXTERNAL_LINKS } from '@/constants/links';
@@ -27,20 +28,22 @@ function Paragraph({ title, body }: { title: string; body: string }) {
 export function PrivacyScreen(_props: RootScreenProps<'Privacy'>) {
   const { t } = useTranslation();
   const toast = useToast();
-  const { preferences, update } = usePreferences();
+  const { preferences, setAnalyticsConsent } = usePreferences();
+  const account = useAccount();
   return (
     <Screen>
       <Header title={t('privacy.title')} />
       <View style={styles.stack}>
         <Paragraph title={t('privacy.local')} body={t('privacy.localBody')} />
+        {account.available ? <Paragraph title={t('privacy.accountTitle')} body={t('privacy.accountBody')} /> : null}
         <Paragraph title={t('privacy.notifications')} body={t('privacy.notificationsBody')} />
         <Paragraph title={t('privacy.export')} body={t('privacy.exportBody')} />
         <Paragraph title={t('privacy.analytics')} body={t('privacy.analyticsBody')} />
         <Group>
           <Row
             title={t('privacy.analyticsToggle')}
-            switchValue={preferences.analytics}
-            onSwitch={(analytics) => void update({ analytics })}
+            switchValue={preferences.analyticsConsent === 'granted'}
+            onSwitch={(share) => void setAnalyticsConsent(share ? 'granted' : 'denied')}
           />
           <Row
             title={t('privacy.policy')}

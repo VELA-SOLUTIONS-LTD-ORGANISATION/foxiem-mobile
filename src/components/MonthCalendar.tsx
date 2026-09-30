@@ -192,6 +192,9 @@ export function CalendarLockedRow({ onPress, label }: { onPress: () => void; lab
   );
 }
 
+/** Minimum interactive height of a day; the column width supplies the other axis. */
+export const CELL_HIT_HEIGHT = 44;
+
 const styles = StyleSheet.create({
   nav: {
     flexDirection: 'row',
@@ -203,20 +206,23 @@ const styles = StyleSheet.create({
   },
   week: {
     flexDirection: 'row',
-    gap: 2,
-    marginBottom: 2,
   },
   weekday: {
     flex: 1,
     paddingVertical: 4,
   },
+  // The touch target is the whole column by 44pt; the drawn day is smaller and centred, so neighbouring
+  // targets tile without overlapping and the visible grid stays compact at 320pt.
   cell: {
     flex: 1,
-    aspectRatio: 1,
-    maxHeight: 48,
+    height: CELL_HIT_HEIGHT,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cellInner: {
-    flex: 1,
+    width: '94%',
+    maxWidth: 44,
+    aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,

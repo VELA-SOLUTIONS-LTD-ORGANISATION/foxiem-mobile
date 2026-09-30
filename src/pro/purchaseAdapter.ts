@@ -1,10 +1,9 @@
 import { Platform } from 'react-native';
 
-import { readJson, writeJson } from '@/storage/appStorage';
-import { STORAGE_KEYS } from '@/storage/keys';
-
-import { MANAGE_SUBSCRIPTION_URLS, PRO_PLANS, PRO_REFERENCE_CURRENCY, type ProPlan } from './config';
-import { FREE_ENTITLEMENT, type Entitlement } from './entitlement';
+import { getRevenueCatKey, storeEnabledInDevelopment } from './billingConfig';
+import type { ProPlan } from './config';
+import type { Entitlement } from './entitlement';
+import { createRevenueCatAdapter, loadPurchasesSdk } from './revenueCatAdapter';
 
 export type ProOffering = {
   plan: ProPlan;
@@ -30,8 +29,8 @@ export type RestoreOutcome =
   | { status: 'failed'; reason: PurchaseFailure };
 
 /**
- * The boundary between Foxiem and a store SDK (RevenueCat, StoreKit 2 / Play Billing).
- * A real implementation lives in one file and is returned from `createPurchaseAdapter`.
+ * The boundary between Foxiem and a store SDK. Production uses RevenueCat
+ * (`revenueCatAdapter.ts`); development can use the simulator (`src/dev`).
  */
 export interface PurchaseAdapter {
   readonly kind: 'store' | 'simulated' | 'unavailable';
@@ -41,9 +40,16 @@ export interface PurchaseAdapter {
   /** Latest entitlement from the store, or null when it cannot be reached. */
   refresh(): Promise<Entitlement | null>;
   manageUrl(): string | null;
+  /**
+   * Ties store purchases to a Foxiem account (`userId`) or back to an anonymous device (`null`).
+   * Returns the entitlement of the identity now in effect, or null when the store cannot be reached.
+   */
+  identify?(userId: string | null): Promise<Entitlement | null>;
+  /** Live entitlement changes pushed by the store (renewal, refund, restore elsewhere). Returns an unsubscribe. */
+  subscribe?(listener: (entitlement: Entitlement) => void): () => void;
 }
 
-/** Production default until a store integration ships: nothing is for sale, nothing pretends to be. */
+/** What a build without working store configuration uses: nothing is for sale, nothing pretends to be. */
 export const unavailableAdapter: PurchaseAdapter = {
   kind: 'unavailable',
   getOfferings: async () => [],
@@ -53,124 +59,29 @@ export const unavailableAdapter: PurchaseAdapter = {
   manageUrl: () => null,
 };
 
-export type SimulatedScenario = 'success' | 'cancelled' | 'failed' | 'pending';
-
-type SimulatedStore = {
-  plan: ProPlan | null;
-  expiresAt: string | null;
-  scenario: SimulatedScenario;
-};
-
-async function readStore(): Promise<SimulatedStore> {
-  const value = await readJson<Partial<SimulatedStore>>(STORAGE_KEYS.devStore);
-  return {
-    plan: value?.plan ?? null,
-    expiresAt: value?.expiresAt ?? null,
-    scenario: value?.scenario ?? 'success',
-  };
-}
-
-async function writeStore(store: SimulatedStore): Promise<void> {
-  await writeJson(STORAGE_KEYS.devStore, store);
-}
-
-function formatPrice(amount: number, locale: string): string {
-  return new Intl.NumberFormat(locale, { style: 'currency', currency: PRO_REFERENCE_CURRENCY }).format(amount);
-}
-
-function entitlementFor(plan: ProPlan, expiresAt: string | null, now: Date): Entitlement {
-  return {
-    status: plan === 'lifetime' ? 'lifetime' : expiresAt && Date.parse(expiresAt) < now.getTime() ? 'expired' : 'active',
-    plan,
-    expiresAt: plan === 'lifetime' ? null : expiresAt,
-    willRenew: plan !== 'lifetime',
-    verifiedAt: now.toISOString(),
-    source: 'simulated',
-  };
-}
-
-const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
-
-/** Development-only store that exercises every outcome without charging anyone. */
-export function createSimulatedAdapter(getLocale: () => string): PurchaseAdapter & {
-  setScenario(scenario: SimulatedScenario): Promise<void>;
-  expireNow(): Promise<void>;
-  clear(): Promise<void>;
-  getScenario(): Promise<SimulatedScenario>;
-} {
-  return {
-    kind: 'simulated',
-    async getOfferings() {
-      await delay(250);
-      const locale = getLocale();
-      return PRO_PLANS.map((plan) => ({
-        plan: plan.plan,
-        productId: plan.productId,
-        billing: plan.billing,
-        price: formatPrice(plan.referencePrice, locale),
-        pricePerMonth: plan.billing === 'year' ? formatPrice(plan.referencePrice / 12, locale) : null,
-      }));
-    },
-    async purchase(plan) {
-      await delay(700);
-      const store = await readStore();
-      if (store.scenario === 'cancelled') {
-        return { status: 'cancelled' };
-      }
-      if (store.scenario === 'failed') {
-        return { status: 'failed', reason: 'network' };
-      }
-      if (store.scenario === 'pending') {
-        return { status: 'pending' };
-      }
-      const now = new Date();
-      const expiresAt =
-        plan === 'lifetime'
-          ? null
-          : new Date(now.getFullYear() + (plan === 'yearly' ? 1 : 0), now.getMonth() + (plan === 'monthly' ? 1 : 0), now.getDate()).toISOString();
-      await writeStore({ ...store, plan, expiresAt });
-      return { status: 'success', entitlement: entitlementFor(plan, expiresAt, now) };
-    },
-    async restore() {
-      await delay(600);
-      const store = await readStore();
-      if (!store.plan) {
-        return { status: 'nothingToRestore' };
-      }
-      return { status: 'restored', entitlement: entitlementFor(store.plan, store.expiresAt, new Date()) };
-    },
-    async refresh() {
-      const store = await readStore();
-      return store.plan ? entitlementFor(store.plan, store.expiresAt, new Date()) : FREE_ENTITLEMENT;
-    },
-    manageUrl() {
-      return Platform.OS === 'ios' ? MANAGE_SUBSCRIPTION_URLS.ios : MANAGE_SUBSCRIPTION_URLS.android;
-    },
-    async setScenario(scenario) {
-      await writeStore({ ...(await readStore()), scenario });
-    },
-    async getScenario() {
-      return (await readStore()).scenario;
-    },
-    async expireNow() {
-      const store = await readStore();
-      await writeStore({ ...store, expiresAt: new Date(Date.now() - 86_400_000 * 10).toISOString() });
-    },
-    async clear() {
-      await writeStore({ plan: null, expiresAt: null, scenario: 'success' });
-    },
-  };
-}
-
-export type SimulatedAdapter = ReturnType<typeof createSimulatedAdapter>;
-
 /**
- * Swap in the real store adapter here once products exist in App Store Connect and Play Console.
- * Development builds use the simulator; production shows no Pro surfaces until then.
+ * Which adapter this build uses.
+ *
+ * - Development: the simulator, unless `EXPO_PUBLIC_REVENUECAT_IN_DEV=1` and a key is present.
+ * - Release with a valid RevenueCat key for this platform and the native SDK linked: the real store.
+ * - Anything else: `unavailable`, so no Pro surface is shown and nothing pretends to sell.
  */
 export function createPurchaseAdapter(getLocale: () => string): PurchaseAdapter {
-  if (__DEV__) {
+  if (__DEV__ && !storeEnabledInDevelopment()) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { createSimulatedAdapter } = require('@/dev/simulatedAdapter') as typeof import('@/dev/simulatedAdapter');
     return createSimulatedAdapter(getLocale);
   }
-  return unavailableAdapter;
+  if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
+    return unavailableAdapter;
+  }
+  const key = getRevenueCatKey(Platform.OS);
+  if (!key.valid) {
+    return unavailableAdapter;
+  }
+  const sdk = loadPurchasesSdk();
+  if (!sdk) {
+    return unavailableAdapter;
+  }
+  return createRevenueCatAdapter({ sdk, apiKey: key.apiKey, platform: Platform.OS });
 }

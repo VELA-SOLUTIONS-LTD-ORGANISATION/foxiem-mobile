@@ -46,6 +46,19 @@ export function hasProAccess(entitlement: Entitlement, now: Date = new Date()): 
   }
 }
 
+/**
+ * The moment (epoch ms) after which a cached entitlement stops granting Pro on its own, or null when it
+ * never does (lifetime, or a state without an expiry). Widgets and the Watch cannot ask the store, so
+ * they are given this and downgrade themselves when it passes.
+ */
+export function proAccessUntil(entitlement: Entitlement): number | null {
+  if ((entitlement.status === 'active' || entitlement.status === 'grace') && entitlement.expiresAt) {
+    const expires = Date.parse(entitlement.expiresAt);
+    return Number.isFinite(expires) ? expires + OFFLINE_GRACE_MS : 0;
+  }
+  return null;
+}
+
 /** Resolve a cached state against the clock (e.g. an expiry passed while offline). */
 export function settleEntitlement(entitlement: Entitlement, now: Date = new Date()): Entitlement {
   if ((entitlement.status === 'active' || entitlement.status === 'grace') && !hasProAccess(entitlement, now)) {

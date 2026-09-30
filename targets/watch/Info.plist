@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- A single-target watchOS app (no WatchKit extension). @bacons/apple-targets only writes this file when it
+         is missing, so these keys survive prebuild. WKCompanionAppBundleIdentifier comes from build settings. -->
+    <key>WKApplication</key>
+    <true/>
+    <!-- Required when App Icons come from an asset catalog (iOS 11+ / watchOS). -->
+    <key>CFBundleIconName</key>
+    <string>AppIcon</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+      <string>en</string>
+      <string>de</string>
+      <string>es</string>
+      <string>fr</string>
+      <string>it</string>
+      <string>tr</string>
+    </array>
+  </dict>
+</plist>

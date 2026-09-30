@@ -18,6 +18,7 @@ import { i18n, resolveDeviceLanguage, type SupportedLanguage } from '@/i18n';
 import { setAnalyticsEnabled } from '@/lib/telemetry/analytics';
 import {
   DEFAULT_PREFERENCES,
+  type AnalyticsConsent,
   loadPreferences,
   savePreferences,
   type Preferences,
@@ -41,6 +42,8 @@ type PreferencesValue = {
   weekStart: WeekStart;
   reduceMotion: boolean;
   update: (patch: Partial<Preferences>) => Promise<void>;
+  /** Records the person's analytics choice with the time it was made. */
+  setAnalyticsConsent: (consent: AnalyticsConsent) => Promise<void>;
   haptic: (kind: HapticKind) => void;
   reset: () => Promise<void>;
 };
@@ -87,7 +90,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
         latest.current = stored;
         setPreferences(stored);
         await i18n.changeLanguage(stored.language ?? resolveDeviceLanguage());
-        await setAnalyticsEnabled(stored.analytics);
+        await setAnalyticsEnabled(stored.analyticsConsent === 'granted');
       } catch {
         // Defaults are safe; the user can change them again.
       } finally {
@@ -108,17 +111,22 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     if ('language' in patch) {
       await i18n.changeLanguage(next.language ?? resolveDeviceLanguage());
     }
-    if ('analytics' in patch) {
-      await setAnalyticsEnabled(next.analytics);
+    if ('analyticsConsent' in patch) {
+      await setAnalyticsEnabled(next.analyticsConsent === 'granted');
     }
     await savePreferences(next);
   }, []);
+
+  const setAnalyticsConsent = useCallback(
+    (consent: AnalyticsConsent) => update({ analyticsConsent: consent, analyticsConsentAt: new Date().toISOString() }),
+    [update],
+  );
 
   const reset = useCallback(async () => {
     latest.current = DEFAULT_PREFERENCES;
     setPreferences(DEFAULT_PREFERENCES);
     await i18n.changeLanguage(resolveDeviceLanguage());
-    await setAnalyticsEnabled(true);
+    await setAnalyticsEnabled(false);
   }, []);
 
   const haptic = useCallback((kind: HapticKind) => {
@@ -131,8 +139,8 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   const weekStart = preferences.weekStart ?? deviceWeekStart();
 
   const value = useMemo<PreferencesValue>(
-    () => ({ hydrated, preferences, language, weekStart, reduceMotion, update, haptic, reset }),
-    [hydrated, preferences, language, weekStart, reduceMotion, update, haptic, reset],
+    () => ({ hydrated, preferences, language, weekStart, reduceMotion, update, setAnalyticsConsent, haptic, reset }),
+    [hydrated, preferences, language, weekStart, reduceMotion, update, setAnalyticsConsent, haptic, reset],
   );
 
   return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>;

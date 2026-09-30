@@ -7,6 +7,7 @@ export {
   useTracker,
   useTrackerStore,
   type DraftResult,
+  type ExternalTap,
   type TapReceipt,
 } from './TrackerStore';
 export { useResetFoxiem } from './useResetFoxiem';

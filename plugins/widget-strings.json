@@ -1,0 +1,44 @@
+{
+  "languages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "it",
+    "tr"
+  ],
+  "strings": {
+    "widget_foxiemcounter_label": {
+      "en": "Foxiem counter",
+      "de": "Foxiem-Zähler",
+      "es": "Contador de Foxiem",
+      "fr": "Compteur Foxiem",
+      "it": "Contatore Foxiem",
+      "tr": "Foxiem sayacı"
+    },
+    "widget_foxiemcounter_description": {
+      "en": "Count one tracker from your Home Screen.",
+      "de": "Zähle einen Zähler direkt vom Home-Bildschirm.",
+      "es": "Cuenta un contador desde la pantalla de inicio.",
+      "fr": "Comptez un compteur depuis l'écran d'accueil.",
+      "it": "Conta un contatore dalla schermata Home.",
+      "tr": "Ana Ekran'dan bir sayacı say."
+    },
+    "widget_foxiemtrackers_label": {
+      "en": "Foxiem trackers",
+      "de": "Foxiem-Zähler (Liste)",
+      "es": "Contadores de Foxiem",
+      "fr": "Compteurs Foxiem",
+      "it": "Contatori Foxiem",
+      "tr": "Foxiem sayaçları"
+    },
+    "widget_foxiemtrackers_description": {
+      "en": "Your trackers in one list, each with a + button.",
+      "de": "Alle deine Zähler in einer Liste, jeweils mit einer +-Taste.",
+      "es": "Todos tus contadores en una lista, cada uno con un botón +.",
+      "fr": "Tous vos compteurs dans une liste, chacun avec un bouton +.",
+      "it": "Tutti i tuoi contatori in un elenco, ognuno con un pulsante +.",
+      "tr": "Tüm sayaçların tek listede, her birinde + düğmesi."
+    }
+  }
+}

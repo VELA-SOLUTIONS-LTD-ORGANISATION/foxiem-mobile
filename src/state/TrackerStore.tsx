@@ -55,6 +55,9 @@ export type TapReceipt = {
   merged: boolean;
 };
 
+/** A press made on a widget or the Watch, stamped when it happened. */
+export type ExternalTap = { id: string; trackerId: string; direction: TapDirection; at: number };
+
 export type DraftResult = { tracker: Tracker; error: null } | { tracker: null; error: TrackerDraftError };
 
 type Snapshot = {
@@ -78,6 +81,11 @@ type TrackerStoreValue = {
   moveTracker: (trackerId: string, direction: -1 | 1) => void;
   tap: (trackerId: string, direction: TapDirection, amount?: number) => TapReceipt | null;
   undo: (receipt: TapReceipt) => boolean;
+  /**
+   * Apply presses recorded outside the app (widgets, Apple Watch) with the time they were made.
+   * Returns how many changed a tracker; presses for archived or deleted trackers are skipped.
+   */
+  applyExternalTaps: (actions: readonly ExternalTap[]) => number;
   addEntry: (trackerId: string, input: { amount: number; at: Date; note?: string }) => boolean;
   updateEntry: (trackerId: string, eventId: string, patch: EntryPatch) => boolean;
   deleteEntry: (trackerId: string, eventId: string) => CountEvent | null;
@@ -155,6 +163,8 @@ export function TrackerStoreProvider({ children }: { children: ReactNode }) {
         setLoadSource(loaded.source);
         setUnreadable(loaded.unreadableTrackerIds);
         setFirstRunCompleted(loaded.firstRunCompleted);
+        // Migrated data that could not be written yet is shown from memory; the writer keeps retrying.
+        setSaveFailed(!loaded.persisted);
       } catch (error) {
         if (__DEV__) {
           console.warn('Foxiem could not load data', error);
@@ -347,6 +357,46 @@ export function TrackerStoreProvider({ children }: { children: ReactNode }) {
     [setEvents],
   );
 
+  const applyExternalTaps = useCallback(
+    (actions: readonly ExternalTap[]): number => {
+      if (actions.length === 0) {
+        return 0;
+      }
+      const bursts = new Map<string, TapBurst>();
+      const events = { ...latest.current.events };
+      const changed = new Set<string>();
+      const now = Date.now();
+      let applied = 0;
+      for (const action of [...actions].sort((a, b) => a.at - b.at)) {
+        const tracker = findIn(latest.current, action.trackerId);
+        if (!tracker || tracker.archivedAt !== null) {
+          continue;
+        }
+        const result = applyTap(tracker, events[tracker.id] ?? [], {
+          direction: action.direction,
+          now: new Date(Math.min(action.at, now)),
+          weekStart: weekStartRef.current,
+          // Presses in one burst merge into one history entry, exactly as taps in the app do.
+          burst: bursts.get(tracker.id) ?? null,
+          id: action.id,
+        });
+        if (!result) {
+          continue;
+        }
+        bursts.set(tracker.id, result.burst);
+        events[tracker.id] = result.events;
+        changed.add(tracker.id);
+        applied += 1;
+      }
+      if (applied > 0) {
+        burst.current = null;
+        commit({ trackers: latest.current.trackers, events }, { eventIds: [...changed] });
+      }
+      return applied;
+    },
+    [commit],
+  );
+
   const undo = useCallback(
     (receipt: TapReceipt): boolean => {
       const tracker = findIn(latest.current, receipt.trackerId);
@@ -490,6 +540,7 @@ export function TrackerStoreProvider({ children }: { children: ReactNode }) {
       moveTracker,
       tap,
       undo,
+      applyExternalTaps,
       addEntry,
       updateEntry,
       deleteEntry,
@@ -515,6 +566,7 @@ export function TrackerStoreProvider({ children }: { children: ReactNode }) {
       moveTracker,
       tap,
       undo,
+      applyExternalTaps,
       addEntry,
       updateEntry,
       deleteEntry,

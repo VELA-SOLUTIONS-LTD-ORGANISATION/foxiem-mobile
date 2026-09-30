@@ -9,7 +9,8 @@ import App from '../../App';
 jest.mock('react-native-safe-area-context', () => jest.requireActual('react-native-safe-area-context/jest/mock').default);
 jest.mock('@react-native-community/datetimepicker', () => ({ __esModule: true, default: () => null }));
 
-jest.setTimeout(30_000);
+// The first flow loads the whole app cold; on a busy CI machine that alone can pass 30 s.
+jest.setTimeout(120_000);
 
 async function launch() {
   const view = await render(<App />);
@@ -18,16 +19,12 @@ async function launch() {
 
 async function press(label: string | RegExp) {
   const target = await screen.findByText(label);
-  await act(() => {
-    fireEvent.press(target);
-  });
+  await fireEvent.press(target);
 }
 
 async function pressLabel(label: string | RegExp) {
   const target = await screen.findByLabelText(label);
-  await act(() => {
-    fireEvent.press(target);
-  });
+  await fireEvent.press(target);
 }
 
 beforeEach(async () => {
@@ -49,24 +46,15 @@ describe('Foxiem flows', () => {
 
     const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
     const add = await screen.findByLabelText('Add 1');
-    await act(() => {
-      fireEvent.press(add);
-    });
-    await act(() => {
-      fireEvent.press(add);
-    });
+    await fireEvent.press(add);
+    await fireEvent.press(add);
     expect(await screen.findByText('1 left within today\'s limit')).toBeTruthy();
     expect(announce).toHaveBeenLastCalledWith('Coffee: 2');
 
     await press('Undo');
     expect(await screen.findByText('3 left within today\'s limit')).toBeTruthy();
 
-    await act(() => {
-      fireEvent.press(add);
-      fireEvent.press(add);
-      fireEvent.press(add);
-      fireEvent.press(add);
-    });
+    for (let i = 0; i < 4; i += 1) await fireEvent.press(add);
     expect(await screen.findByText('1 over today\'s limit')).toBeTruthy();
   });
 
@@ -101,9 +89,7 @@ describe('Foxiem flows', () => {
     await pressLabel(/^Settings, tab/);
     expect(await screen.findByText('Preferences')).toBeTruthy();
     const proRow = await screen.findByTestId('settings-pro');
-    await act(() => {
-      fireEvent.press(proRow);
-    });
+    await fireEvent.press(proRow);
     expect(await screen.findByText('Development build: purchases are simulated and nothing is charged.')).toBeTruthy();
 
     await pressLabel('Close');

@@ -35,10 +35,12 @@ type BannerProps = {
   tone?: 'neutral' | 'caution' | 'danger';
   icon?: keyof typeof Ionicons.glyphMap;
   action?: { label: string; onPress: () => void };
+  /** A second, equally weighted choice (for example "No thanks" beside "Allow"). */
+  secondaryAction?: { label: string; onPress: () => void };
   onDismiss?: () => void;
 };
 
-export function Banner({ title, body, tone = 'neutral', icon, action, onDismiss }: BannerProps) {
+export function Banner({ title, body, tone = 'neutral', icon, action, secondaryAction, onDismiss }: BannerProps) {
   const { t } = useTranslation();
   const theme = useTheme();
   const background =
@@ -72,9 +74,12 @@ export function Banner({ title, body, tone = 'neutral', icon, action, onDismiss 
           <IconButton icon="close" size={20} accessibilityLabel={t('common.close')} onPress={onDismiss} style={styles.bannerClose} />
         ) : null}
       </View>
-      {action ? (
+      {action || secondaryAction ? (
         <View style={styles.bannerAction}>
-          <Button title={action.label} onPress={action.onPress} variant="secondary" compact />
+          {action ? <Button title={action.label} onPress={action.onPress} variant="secondary" compact /> : null}
+          {secondaryAction ? (
+            <Button title={secondaryAction.label} onPress={secondaryAction.onPress} variant="secondary" compact />
+          ) : null}
         </View>
       ) : null}
     </View>
@@ -150,7 +155,9 @@ const styles = StyleSheet.create({
   },
   bannerAction: {
     marginTop: 12,
-    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
   },
   empty: {
     alignItems: 'center',

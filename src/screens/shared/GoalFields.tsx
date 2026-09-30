@@ -15,7 +15,8 @@ type GoalFieldsProps = {
 };
 
 export function errorMessage(error: TrackerDraftError | null, t: ReturnType<typeof useTranslation>['t']): string | undefined {
-  return error ? t(`create.errors.${error}`) : undefined;
+  // The typed key union grows with the catalogue; a dynamic key lookup is checked by the locale parity test.
+  return error ? (t as unknown as (key: string) => string)(`create.errors.${error}`) : undefined;
 }
 
 /** Only the questions that matter for the chosen intent. */

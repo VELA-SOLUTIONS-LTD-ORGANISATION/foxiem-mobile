@@ -5,6 +5,8 @@ import { Pressable, StyleSheet, View, type TextInput } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Header, NumberField, Screen, Text, TextField, TrackerIcon } from '@/components';
+import { animateNextLayout } from '@/components/motion';
+import { useReducedMotion } from '@/hooks';
 import {
   TRACKER_LIMITS,
   coerceDraftForIntent,
@@ -54,6 +56,7 @@ export function CreateTrackerScreen({ navigation, route }: RootScreenProps<'Crea
   const [iconTouched, setIconTouched] = useState<boolean>(Boolean(template));
   const [error, setError] = useState<TrackerDraftError | null>(null);
   const [showMore, setShowMore] = useState(false);
+  const reduceMotion = useReducedMotion();
   const [created, setCreated] = useState(false);
   const nameRef = useRef<TextInput>(null);
 
@@ -233,7 +236,10 @@ export function CreateTrackerScreen({ navigation, route }: RootScreenProps<'Crea
           <Pressable
             accessibilityRole="button"
             accessibilityState={{ expanded: showMore }}
-            onPress={() => setShowMore((value) => !value)}
+            onPress={() => {
+              animateNextLayout(reduceMotion);
+              setShowMore((value) => !value);
+            }}
             style={styles.moreToggle}
           >
             <Text variant="label">{showMore ? t('create.fewerOptions') : t('create.moreOptions')}</Text>

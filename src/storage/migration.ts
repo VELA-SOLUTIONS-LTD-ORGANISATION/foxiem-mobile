@@ -33,6 +33,50 @@ function orderedTopics(domain: LegacyDomain): LegacyTopic[] {
   return [...defaults, ...custom];
 }
 
+/** Union of two event lists by id (`preferred` wins on a clash), re-chained from the starting value. */
+export function mergeEventLists(
+  startingValue: number,
+  base: readonly CountEvent[],
+  preferred: readonly CountEvent[],
+): CountEvent[] {
+  const byId = new Map<string, CountEvent>();
+  for (const event of base) {
+    byId.set(event.id, event);
+  }
+  for (const event of preferred) {
+    byId.set(event.id, event);
+  }
+  return rebuildChain(startingValue, [...byId.values()]);
+}
+
+/**
+ * Combine a freshly migrated domain with whatever the live keys already hold. Live data is what
+ * the user did after (or during) a failed attempt, so it always wins: trackers keep their edits,
+ * events are unioned by id, and trackers that only exist in the live data are kept after the
+ * migrated ones. Nothing the user created is ever dropped and nothing migrated is duplicated.
+ */
+export function mergeDomains(migrated: MigrationResult, live: MigrationResult): MigrationResult {
+  const liveById = new Map(live.trackers.map((tracker) => [tracker.id, tracker]));
+  const migratedIds = new Set(migrated.trackers.map((tracker) => tracker.id));
+
+  const trackers: Tracker[] = migrated.trackers.map((tracker) => liveById.get(tracker.id) ?? tracker);
+  const extras = live.trackers
+    .filter((tracker) => !migratedIds.has(tracker.id))
+    .sort((left, right) => left.sortIndex - right.sortIndex || left.createdAt.localeCompare(right.createdAt));
+  trackers.push(...extras);
+  const ordered = trackers.map((tracker, position) => ({ ...tracker, sortIndex: position }));
+
+  const events: EventsByTracker = {};
+  for (const tracker of ordered) {
+    events[tracker.id] = mergeEventLists(
+      tracker.startingValue,
+      migrated.events[tracker.id] ?? [],
+      live.events[tracker.id] ?? [],
+    );
+  }
+  return { trackers: ordered, events };
+}
+
 /**
  * Pure v1/v2 → v3 transform. Deterministic for the same input, so an interrupted
  * migration can simply run again. Every legacy counter becomes a "Just count" tracker

@@ -65,6 +65,7 @@ describe('release config', () => {
     const deps = readPackage().dependencies ?? {};
     expect(deps['@react-native-firebase/app']).toBeTruthy();
     expect(deps['@react-native-firebase/analytics']).toBeTruthy();
+    expect(deps['@sentry/react-native']).toBeTruthy();
     expect(Object.keys(deps).some((name) => /amplitude|segment|mixpanel/i.test(name))).toBe(false);
     const androidConfig = JSON.parse(fs.readFileSync(path.join(root, 'google-services.json'), 'utf8')) as {
       project_info?: { project_id?: string };
@@ -72,7 +73,12 @@ describe('release config', () => {
     expect(androidConfig.project_info?.project_id).toBe('foxiem-counter');
     const appConfig = fs.readFileSync(path.join(root, 'app.config.ts'), 'utf8');
     expect(appConfig).toContain('@react-native-firebase/analytics');
+    expect(appConfig).toContain('@sentry/react-native/expo');
+    expect(appConfig).toContain('foxiem-mobile');
     expect(appConfig).toContain('android:resizeableActivity');
+    const sentry = fs.readFileSync(path.join(srcRoot, 'lib', 'telemetry', 'sentry.ts'), 'utf8');
+    expect(sentry).toContain('EXPO_PUBLIC_SENTRY_DSN');
+    expect(sentry).toContain('sendDefaultPii: false');
   });
 });
 
@@ -88,19 +94,69 @@ describe('architecture regression guards', () => {
     expect(joined).not.toMatch(/AsyncStorage\.clear\(/);
   });
 
-  it('has no backend, account UI or fake sync', () => {
+  it('keeps the optional account confined, configuration-gated and password-free', () => {
+    // The backend address comes from the build environment, never from source.
     expect(joined).not.toMatch(/https?:\/\/api\./i);
-    expect(joined).not.toMatch(/sign ?in|log ?in|create account|delete account/i);
+    // Google only: no passwords, no sign-up form.
+    expect(joined).not.toMatch(/create account|sign ?up|password/i);
     const types = fs.readFileSync(path.join(srcRoot, 'navigation', 'types.ts'), 'utf8');
     for (const route of ['SignIn', 'SignUp', 'Login', 'Account', 'Profile', 'Marketplace']) {
       expect(types).not.toContain(`${route}:`);
     }
+    // Only src/account talks to the network; everything else works offline.
+    for (const file of readSrcFiles()) {
+      if (path.relative(srcRoot, file).startsWith('account')) {
+        continue;
+      }
+      expect({ file: path.relative(srcRoot, file), network: /(^|[^.\w])fetch\(|XMLHttpRequest|WebSocket\(/.test(fs.readFileSync(file, 'utf8')) }).toEqual({
+        file: path.relative(srcRoot, file),
+        network: false,
+      });
+    }
+    // With no backend configured, the account surfaces do not render at all.
+    const settings = fs.readFileSync(path.join(srcRoot, 'screens', 'settings', 'SettingsScreen.tsx'), 'utf8');
+    expect(settings).toContain('account.available ?');
+    const config = fs.readFileSync(path.join(srcRoot, 'account', 'config.ts'), 'utf8');
+    expect(config).toContain('process.env.EXPO_PUBLIC_API_URL');
+    expect(config).toContain('available: false');
   });
 
   it('production builds never simulate purchases', () => {
     const adapter = fs.readFileSync(path.join(srcRoot, 'pro', 'purchaseAdapter.ts'), 'utf8');
-    expect(adapter).toMatch(/if \(__DEV__\) \{\s*return createSimulatedAdapter/);
-    expect(adapter).toMatch(/return unavailableAdapter;\s*\}\s*$/);
+    // The simulator is only ever required inside a `__DEV__` branch, and a build without a
+    // valid store key ends in `unavailableAdapter`, never in the simulator.
+    expect(adapter).toMatch(/if \(__DEV__ && !storeEnabledInDevelopment\(\)\) \{[\s\S]*?require\('@\/dev\/simulatedAdapter'\)/);
+    expect(adapter.match(/simulatedAdapter/g)?.length).toBeLessThanOrEqual(3);
+    expect(adapter).toMatch(/return unavailableAdapter;\s*\}\s*const sdk/);
+    expect(adapter).toMatch(/return createRevenueCatAdapter\(/);
+  });
+
+  it('only imports development helpers as types or behind __DEV__', () => {
+    for (const file of readSrcFiles()) {
+      const relative = path.relative(srcRoot, file);
+      if (relative.startsWith('dev') || relative.endsWith('purchaseAdapter.ts')) {
+        continue;
+      }
+      const source = fs.readFileSync(file, 'utf8');
+      for (const line of source.split('\n')) {
+        if (/from '@\/dev\//.test(line) && !/^import type /.test(line.trim())) {
+          // A runtime import of src/dev is only acceptable from a file that is itself dev-gated.
+          expect({ file: relative, gated: /__DEV__/.test(source) }).toEqual({ file: relative, gated: true });
+        }
+      }
+    }
+  });
+
+  it('ships store billing: RevenueCat SDK, entitlement id and the three product ids', () => {
+    const deps = readPackage().dependencies ?? {};
+    expect(deps['react-native-purchases']).toBeTruthy();
+    const config = fs.readFileSync(path.join(srcRoot, 'pro', 'config.ts'), 'utf8');
+    for (const id of ['foxiem_pro_monthly', 'foxiem_pro_yearly', 'foxiem_pro_lifetime']) {
+      expect(config).toContain(id);
+    }
+    expect(config).not.toMatch(/plan: 'weekly'|foxiem_pro_weekly/);
+    const mapping = fs.readFileSync(path.join(srcRoot, 'pro', 'customerInfoMapping.ts'), 'utf8');
+    expect(mapping).toContain("PRO_ENTITLEMENT_ID = 'pro'");
   });
 
   it('keeps Pro gating in one registry', () => {

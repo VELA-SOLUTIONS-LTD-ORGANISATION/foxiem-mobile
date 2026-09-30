@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FOXIEM_LOGO } from '@/constants/brand';
+import { captureException } from '@/lib/telemetry/sentry';
 import { useTheme } from '@/theme';
 
 import { Button } from './Button';
@@ -20,6 +21,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
+    captureException(error, 'error_boundary');
     if (__DEV__) {
       console.error('Foxiem crashed', error, info.componentStack);
     }

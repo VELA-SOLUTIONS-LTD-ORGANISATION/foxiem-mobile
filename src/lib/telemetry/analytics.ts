@@ -23,6 +23,9 @@ const FEATURES = [
   'multipleReminders',
   'smartReminders',
   'reports',
+  'quietHours',
+  'widgets',
+  'watch',
   'settings',
 ] as const;
 
@@ -51,7 +54,7 @@ export type AnalyticsSink = {
   setEnabled?: (enabled: boolean) => void | Promise<void>;
 };
 
-let enabled = true;
+let enabled = false;
 let testSink: AnalyticsSink | null = null;
 let nativeSink: AnalyticsSink | null | undefined;
 
@@ -111,6 +114,11 @@ export function sanitizeParams(name: AnalyticsEventName, params?: Record<string,
   return out;
 }
 
+export function isAnalyticsEnabled(): boolean {
+  return enabled;
+}
+
+/** Turn collection on or off. Called with the stored consent at launch and whenever it changes. */
 export async function setAnalyticsEnabled(next: boolean): Promise<void> {
   enabled = next;
   try {

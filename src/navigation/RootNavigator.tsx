@@ -8,6 +8,7 @@ import { PaywallScreen } from '@/screens/pro/PaywallScreen';
 import { ReminderEditorScreen } from '@/screens/reminders/ReminderEditorScreen';
 import { AboutScreen, ArchivedScreen, PrivacyScreen } from '@/screens/settings/InfoScreens';
 import { NotificationsScreen } from '@/screens/settings/NotificationsScreen';
+import { WidgetsScreen } from '@/screens/settings/WidgetsScreen';
 import { AppearanceScreen, LanguageScreen } from '@/screens/settings/PreferenceScreens';
 import { HistoryScreen } from '@/screens/tracker/HistoryScreen';
 import { TrackerDetailScreen } from '@/screens/tracker/TrackerDetailScreen';
@@ -40,6 +41,7 @@ export function RootNavigator({ initialRoute }: { initialRoute: 'Welcome' | 'Mai
       <Stack.Screen name="Language" component={LanguageScreen} />
       <Stack.Screen name="Appearance" component={AppearanceScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="Widgets" component={WidgetsScreen} />
       <Stack.Screen name="Privacy" component={PrivacyScreen} />
       <Stack.Screen name="About" component={AboutScreen} />
       <Stack.Screen name="Archived" component={ArchivedScreen} />

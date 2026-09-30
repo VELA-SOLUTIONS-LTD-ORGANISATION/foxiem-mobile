@@ -1,13 +1,109 @@
+import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
-import { Linking, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { Linking, Platform, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { Banner, Group, Header, Row, Screen, Section, Text, TrackerIcon } from '@/components';
+import { Banner, Group, Header, ProBadge, Row, Screen, Section, Text, TrackerIcon } from '@/components';
+import { withQuietTime } from '@/domain/quietHours';
+import { parseTimeString } from '@/domain/reminders';
+import { formatTime } from '@/format';
 import type { RootScreenProps } from '@/navigation/types';
+import { useFeature } from '@/pro/useFeature';
 import { usePreferences, useReminders, useTrackerStore } from '@/state';
 import { useTheme } from '@/theme';
 
 import { reminderSummary } from '../tracker/TrackerSettingsScreen';
+
+function clockDate(time: string): Date {
+  const parsed = parseTimeString(time);
+  const date = new Date();
+  date.setHours(parsed?.hour ?? 0, parsed?.minute ?? 0, 0, 0);
+  return date;
+}
+
+function QuietHoursSection() {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const { preferences, update, language } = usePreferences();
+  const feature = useFeature('quietHours');
+  const [editing, setEditing] = useState<'start' | 'end' | null>(null);
+  const quiet = preferences.quietHours;
+
+  // A lapsed subscriber keeps a window they already set (and can switch it off); a new one needs Pro.
+  if (!feature.visible && !quiet.enabled) {
+    return null;
+  }
+  const canEdit = feature.allowed;
+  const save = (next: typeof quiet) => void update({ quietHours: next });
+  const onPick = (event: DateTimePickerEvent, selected?: Date) => {
+    const edge = editing;
+    if (Platform.OS === 'android') {
+      setEditing(null);
+    }
+    if (event.type === 'dismissed' || !selected || !edge) {
+      return;
+    }
+    save(withQuietTime(quiet, edge, selected.getHours(), selected.getMinutes()));
+  };
+
+  return (
+    <Section title={t('notifications.quiet.title')} description={t('notifications.quiet.body')}>
+      <Group>
+        {canEdit || quiet.enabled ? (
+          <Row
+            testID="quiet-toggle"
+            title={t('notifications.quiet.toggle')}
+            switchValue={quiet.enabled}
+            onSwitch={(enabled) => {
+              if (enabled && !canEdit) {
+                feature.request();
+                return;
+              }
+              save({ ...quiet, enabled });
+            }}
+          />
+        ) : (
+          <Row
+            title={t('notifications.quiet.toggle')}
+            subtitle={t('notifications.quiet.proHint')}
+            trailing={<ProBadge small />}
+            onPress={feature.request}
+          />
+        )}
+        {quiet.enabled ? (
+          <Row
+            testID="quiet-start"
+            title={t('notifications.quiet.from')}
+            value={formatTime(clockDate(quiet.start), language)}
+            disabled={!canEdit}
+            accessibilityHint={t('notifications.quiet.changeHint')}
+            onPress={() => setEditing(editing === 'start' ? null : 'start')}
+          />
+        ) : null}
+        {quiet.enabled ? (
+          <Row
+            testID="quiet-end"
+            title={t('notifications.quiet.to')}
+            value={formatTime(clockDate(quiet.end), language)}
+            disabled={!canEdit}
+            accessibilityHint={t('notifications.quiet.changeHint')}
+            onPress={() => setEditing(editing === 'end' ? null : 'end')}
+          />
+        ) : null}
+      </Group>
+      {editing && quiet.enabled ? (
+        <DateTimePicker
+          value={clockDate(editing === 'start' ? quiet.start : quiet.end)}
+          mode="time"
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          themeVariant={theme.scheme}
+          onChange={onPick}
+        />
+      ) : null}
+    </Section>
+  );
+}
 
 export function NotificationsScreen({ navigation }: RootScreenProps<'Notifications'>) {
   const { t } = useTranslation();
@@ -43,13 +139,21 @@ export function NotificationsScreen({ navigation }: RootScreenProps<'Notificatio
         )}
       </View>
 
+      <QuietHoursSection />
+
       <Section title={t('notifications.checkIns')} description={t('notifications.checkInsBody')}>
         <Group>
           {general.map((reminder) => (
             <Row
               key={reminder.id}
               title={reminderSummary(reminder, t, language)}
-              subtitle={reminder.messageKey ? t('notifications.legacy') : undefined}
+              subtitle={
+                reminder.enabled && reminders.isQuiet(reminder)
+                  ? t('reminders.quietNote')
+                  : reminder.messageKey
+                    ? t('notifications.legacy')
+                    : undefined
+              }
               switchValue={reminder.enabled}
               onSwitch={(enabled) => void reminders.setEnabled(reminder.id, enabled)}
               onPress={() => navigation.navigate('ReminderEditor', { trackerId: null, reminderId: reminder.id })}
@@ -81,7 +185,11 @@ export function NotificationsScreen({ navigation }: RootScreenProps<'Notificatio
                 <Row
                   key={reminder.id}
                   title={tracker.name}
-                  subtitle={reminderSummary(reminder, t, language)}
+                  subtitle={
+                    reminder.enabled && reminders.isQuiet(reminder)
+                      ? `${reminderSummary(reminder, t, language)} · ${t('reminders.quietNote')}`
+                      : reminderSummary(reminder, t, language)
+                  }
                   leading={<TrackerIcon icon={tracker.icon} color={tracker.color} size={36} />}
                   switchValue={reminder.enabled}
                   onSwitch={(enabled) => void reminders.setEnabled(reminder.id, enabled)}

@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "cancel": "Vazgeç",
     "done": "Tamam",
@@ -640,16 +640,18 @@
           "week": "Bu haftaki sınırın içinde {{count}} hak kaldı.",
           "month": "Bu ayki sınırın içinde {{count}} hak kaldı."
         },
-        "limitReached": "Şimdiye kadar {{value}}, sınır {{limit}}.",
         "rhythm": "Bugün henüz kaydedilmedi · bu hafta {{active}} / {{target}} gün.",
         "reduce": {
           "day": "Bugün şimdiye kadar {{current}} · dün bu saatte {{previous}}.",
           "week": "Bu hafta şimdiye kadar {{current}} · geçen hafta bu noktada {{previous}}.",
           "month": "Bu ay şimdiye kadar {{current}} · geçen ay bu noktada {{previous}}."
         },
-        "countToday": "Bugün {{count}} kaydedildi."
+        "countToday": "Bugün {{count}} kaydedildi.",
+        "usually": "Genelde {{time}} civarında kaydediyorsun."
       }
-    }
+    },
+    "quietNote": "Sessiz saatler nedeniyle duraklatıldı",
+    "quickCount": "Say"
   },
   "notifications": {
     "messages": {
@@ -669,7 +671,18 @@
     "trackerReminders": "Sayaç hatırlatıcıları",
     "trackerRemindersBody": "Bunları her sayacın ayarlarından kur.",
     "noTrackerReminders": "Henüz sayaç hatırlatıcısı yok.",
-    "legacy": "Önceki bir sürümden"
+    "legacy": "Önceki bir sürümden",
+    "quiet": {
+      "title": "Sessiz saatler",
+      "body": "Foxiem bu aralıktaki hatırlatıcıları atlar ve sonrasında normal şekilde devam eder.",
+      "toggle": "Sessiz saatlerde hatırlatıcıları duraklat",
+      "from": "Başlangıç",
+      "to": "Bitiş",
+      "summary": "{{start}} – {{end}}",
+      "changeHint": "Saati değiştir",
+      "off": "Kapalı",
+      "proHint": "Sessiz saatler Foxiem Pro'nun bir parçasıdır."
+    }
   },
   "pro": {
     "name": "Foxiem Pro",
@@ -716,6 +729,18 @@
       "reports": {
         "title": "Raporlar",
         "body": "Sayaçlar genelinde haftalık özet dışa aktarımları."
+      },
+      "quietHours": {
+        "title": "Sessiz saatler",
+        "body": "Hatırlatıcıları uyku ve odaklanma saatlerinden uzak tut."
+      },
+      "widgets": {
+        "title": "Widget'lar",
+        "body": "Her biri kendi sayacını gösteren birden çok widget."
+      },
+      "watch": {
+        "title": "Apple Watch",
+        "body": "Bileğinden say."
       }
     },
     "sections": {
@@ -734,6 +759,11 @@
       "story": {
         "title": "Hikâyenin tamamı",
         "body": "Haftalık ve aylık değerlendirmeler, tüm geçmiş ve yılın."
+      },
+      "everywhere": {
+        "title": "Hep elinin altında",
+        "bodyIos": "Her sayaç için widget, Kilit Ekranı widget'ları ve Apple Watch.",
+        "bodyAndroid": "Her sayaç için bir Ana Ekran widget'ı."
       }
     },
     "plans": {
@@ -775,7 +805,11 @@
       "billingRetry": "Ödeme sorunu · Pro'yu korumak için ödeme yöntemini güncelle",
       "expired": "Pro {{date}} tarihinde sona erdi",
       "expiredBody": "Sayaçların ve geçmişin olduğu gibi duruyor."
-    }
+    },
+    "notAvailableTitle": "Planlar henüz kullanılamıyor",
+    "notAvailableBody": "Foxiem mağazadan fiyatları alamadı. Hesabından hiçbir ödeme alınmadı. Biraz sonra tekrar dene.",
+    "welcomeBackTitle": "Tekrar hoş geldin",
+    "welcomeBackBody": "Foxiem Pro {{date}} tarihinde sona erdi. Her şeyi geri getirmek için bir plan seç. Sayaçların ve geçmişin olduğu gibi duruyor."
   },
   "settings": {
     "title": "Ayarlar",
@@ -805,7 +839,35 @@
     "devExpire": "Taklit Pro'yu sona erdir",
     "devClear": "Taklit mağazayı temizle",
     "devSeed": "Örnek sayaçları yükle",
-    "devSeeded": "Örnek sayaçlar eklendi"
+    "devSeeded": "Örnek sayaçlar eklendi",
+    "widgets": "Widget'lar ve Watch",
+    "widgetsBody": "Ana Ekran'dan say"
+  },
+  "account": {
+    "title": "Hesap",
+    "signInGoogle": "Google ile devam et",
+    "signInApple": "Apple ile giriş yap",
+    "signInBody": "İsteğe bağlı. Foxiem hesap olmadan da tam çalışır.",
+    "signedInWithGoogle": "Google ile giriş yapıldı",
+    "signedInWithApple": "Apple ile giriş yapıldı",
+    "signOut": "Çıkış yap",
+    "signOutTitle": "Çıkış yapılsın mı?",
+    "signOutBody": "Sayaçların bu cihazda kalır. Pro hesabına bağlıdır: geri almak için tekrar giriş yap veya \"Satın alımları geri yükle\"yi kullan.",
+    "delete": "Hesabı sil",
+    "deleteTitle": "Hesabın silinsin mi?",
+    "deleteBodyGoogle": "Bu işlem Foxiem hesabını ve sunucumuzdaki hesap verilerini kalıcı olarak siler: e-postan, abonelik durumun ve bildirim jetonun. Bu cihazdaki sayaçlar ve girişler etkilenmez, etkin bir abonelik iptal edilmez. Google onay isteyecek.",
+    "deleteBodyApple": "Bu işlem Foxiem hesabını ve sunucumuzdaki hesap verilerini kalıcı olarak siler: e-postan, abonelik durumun ve bildirim jetonun. Bu cihazdaki sayaçlar ve girişler etkilenmez, etkin bir abonelik iptal edilmez. Apple onay isteyecek.",
+    "deleteConfirm": "Hesabı sil",
+    "toast": {
+      "signedIn": "Giriş yapıldı.",
+      "conflict": "Bu e-posta farklı bir hesaba ait.",
+      "unverified": "Bu e-posta adresi doğrulanmadı.",
+      "network": "Foxiem'e ulaşılamadı. Bağlantını kontrol edip tekrar dene.",
+      "failed": "Giriş yapılamadı. Lütfen tekrar dene.",
+      "deleted": "Hesap silindi.",
+      "stepUpFailed": "Kimliğin doğrulanamadı. Giriş yaptığın Apple veya Google hesabını kullan.",
+      "deleteFailed": "Hesap silinemedi. Lütfen tekrar dene."
+    }
   },
   "appearance": {
     "title": "Görünüm",
@@ -829,15 +891,23 @@
   "privacy": {
     "title": "Gizlilik",
     "local": "Verilerin bu cihazda kalır",
-    "localBody": "Sayaçlar, girişler, notlar, hatırlatıcılar ve tercihler yalnızca bu cihazda saklanır. Foxiem'in hesabı ya da sunucusu yoktur ve geçmişin asla yüklenmez.",
+    "localBody": "Sayaçlar, girişler, notlar, hatırlatıcılar ve tercihler yalnızca bu cihazda saklanır ve geçmişin asla yüklenmez. Foxiem hesap olmadan da tam çalışır.",
     "notifications": "Bildirimler",
     "notificationsBody": "Hatırlatıcılar bu cihazda yerel olarak planlanır. Foxiem yalnızca bir hatırlatıcıyı açtığında izin ister.",
     "analytics": "Anonim ölçüm",
-    "analyticsBody": "Foxiem, Firebase için Google Analytics'e birkaç anonim olay gönderir; örneğin bir sayacın oluşturulduğu ve türü. Sayaç adları, notlar, sayılar ve geçmiş asla gönderilmez.",
+    "analyticsBody": "Paylaşmayı seçmedikçe kapalıdır. Paylaşırsan Foxiem, Firebase için Google Analytics'e birkaç anonim olay gönderir; örneğin bir sayacın oluşturulduğu ve türü. Sayaç adları, notlar, sayılar ve geçmiş asla gönderilmez. Fikrini istediğin zaman değiştirebilirsin.",
     "analyticsToggle": "Anonim kullanım olaylarını paylaş",
     "export": "Verilerin senindir",
     "exportBody": "Her şeyi istediğin zaman Ayarlar'dan CSV olarak dışa aktar. Foxiem'i sıfırlamak hepsini bu cihazdan siler.",
-    "policy": "Gizlilik Politikası"
+    "policy": "Gizlilik Politikası",
+    "consent": {
+      "title": "Foxiem'i geliştirmeye yardım eder misin?",
+      "body": "Oluşturulan sayaç türü gibi birkaç anonim kullanım olayını paylaş. Asla ad, not veya sayı yok. Sen evet demedikçe kapalıdır ve Ayarlar'dan değiştirebilirsin.",
+      "allow": "Anonim paylaş",
+      "decline": "Hayır, teşekkürler"
+    },
+    "accountTitle": "İsteğe bağlı hesap",
+    "accountBody": "Apple veya Google ile giriş yaparsan Foxiem sunucusu e-posta adresini, Pro abonelik durumunu ve bildirimlere izin verirsen ödeme sorunu mesajları için bir push jetonunu saklar. Sayaçlar, girişler ve notlar asla gönderilmez. Ayarlar'dan çıkış yapabilir veya hesabı silebilirsin; silme bu verileri yok eder."
   },
   "about": {
     "title": "Hakkında",
@@ -868,5 +938,38 @@
     "counted": "{{name}}: {{value}}",
     "countedGoal": "{{name}}: {{value}}. Hedefe ulaşıldı.",
     "countedLogged": "{{name}}: bugün kaydedildi"
+  },
+  "widgets": {
+    "title": "Widget'lar",
+    "intro": "Foxiem'i açmadan Ana Ekran'dan say.",
+    "trackerTitle": "Varsayılan widget sayacı",
+    "trackerBody": "Widget'lar bu sayacı gösterir. Foxiem Pro ile her widget için farklı bir sayaç seçebilirsin.",
+    "automatic": "İlk sayaç",
+    "noTrackers": "Bir widget'ta göstermek için sayaç oluştur.",
+    "addTitle": "Widget ekle",
+    "addIos": "Ana Ekran'da boş bir yere basılı tut, + simgesine dokun ve Foxiem'i ara. Kilit Ekranı için ekrana basılı tut, Özelleştir'e dokun ve Foxiem'i ekle.",
+    "addAndroid": "Ana ekranda boş bir yere basılı tut, Widget'lar'ı seç ve Foxiem'i bul.",
+    "proTitle": "Foxiem Pro ile daha fazlası",
+    "proBodyIos": "Birden çok widget, her birinde farklı sayaç, tüm boyutlar, + ve − düğmeleri, Kilit Ekranı widget'ları ve Apple Watch.",
+    "proBodyAndroid": "Birden çok widget, her birinde farklı sayaç, tüm boyutlar ve + ve − düğmeleri.",
+    "unlock": "Foxiem Pro'yu gör"
+  },
+  "watch": {
+    "title": "Apple Watch",
+    "body": "Bileğinden say. Sayaçların büyük + ve − düğmeleriyle görünür ve bu iPhone ile eşit kalır.",
+    "notSupported": "Apple Watch bu cihazda kullanılamıyor.",
+    "notPaired": "Bu iPhone'a eşlenmiş bir Apple Watch yok.",
+    "notInstalled": "Foxiem henüz saatinde yok. Yüklemek için iPhone'daki Watch uygulamasını aç.",
+    "ready": "Foxiem Apple Watch'ında.",
+    "proBody": "Apple Watch, Foxiem Pro'nun bir parçasıdır."
+  },
+  "widget": {
+    "goalReached": "Hedefe ulaşıldı",
+    "overLimit": "Sınır aşıldı",
+    "atLimit": "Sınırda",
+    "empty": "Foxiem'de bir sayaç oluştur",
+    "locked": "Foxiem Pro",
+    "lockedBody": "Bu widget'ı açmak için Foxiem'i aç",
+    "open": "Foxiem'i aç"
   }
 }

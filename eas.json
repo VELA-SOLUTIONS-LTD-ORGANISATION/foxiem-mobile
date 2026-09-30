@@ -31,6 +31,13 @@
       "ios": {
         "ascAppId": "6811348160"
       }
+    },
+    "internal": {
+      "android": {
+        "serviceAccountKeyPath": "C:/Users/hkuzudisli/.credentials/play-service-account.json",
+        "track": "internal",
+        "releaseStatus": "completed"
+      }
     }
   }
 }
