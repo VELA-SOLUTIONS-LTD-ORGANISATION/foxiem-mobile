@@ -6,6 +6,8 @@ import type { PurchaseAdapter } from '@/pro/purchaseAdapter';
 import { readJson, writeJson } from '@/storage/appStorage';
 import { STORAGE_KEYS } from '@/storage/keys';
 
+import { isStoreScreenshotMode } from './storeScreenshotMode';
+
 /**
  * Development-only store that exercises every purchase outcome without charging anyone.
  * It is required only behind `__DEV__` in `createPurchaseAdapter`, so release bundles never include it.
@@ -47,7 +49,7 @@ function entitlementFor(plan: ProPlan, expiresAt: string | null, now: Date): Ent
   };
 }
 
-const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) => (isStoreScreenshotMode() ? Promise.resolve() : new Promise<void>((resolve) => setTimeout(resolve, ms)));
 
 export function createSimulatedAdapter(getLocale: () => string): PurchaseAdapter & {
   setScenario(scenario: SimulatedScenario): Promise<void>;

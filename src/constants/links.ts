@@ -2,9 +2,10 @@ import { Platform } from 'react-native';
 
 export const EXTERNAL_LINKS = {
   privacyPolicy: 'https://foxiem.com/privacy',
+  accountDeletion: 'https://foxiem.com/delete',
   /** Empty until Foxiem publishes its own terms; the store's standard terms apply meanwhile. */
   termsOfUse: '',
-  support: 'mailto:solutionvela@gmail.com',
+  support: 'mailto:support@solutionvela.co.uk',
 } as const;
 
 const STORE_STANDARD_TERMS = {

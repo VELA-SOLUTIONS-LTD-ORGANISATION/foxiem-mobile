@@ -23,6 +23,7 @@ import {
   resetRunningValue,
   revertTaps,
   updateEntry as updateEntryPure,
+  relocalizeTemplateTrackers,
   validateDraft,
   type CountEvent,
   type EntryPatch,
@@ -34,7 +35,7 @@ import {
   type TrackerDraftError,
   type TrackerOrigin,
 } from '@/domain';
-import { i18n } from '@/i18n';
+import { i18n, SUPPORTED_LANGUAGES } from '@/i18n';
 import { trackEvent } from '@/lib/telemetry/analytics';
 import {
   createKeyedWriter,
@@ -107,7 +108,7 @@ function findIn(snapshot: Snapshot, trackerId: string): Tracker | undefined {
 }
 
 export function TrackerStoreProvider({ children }: { children: ReactNode }) {
-  const { weekStart } = usePreferences();
+  const { weekStart, language } = usePreferences();
   const [hydrated, setHydrated] = useState(false);
   const [loadSource, setLoadSource] = useState<LoadSource>('fresh');
   const [unreadableTrackerIds, setUnreadable] = useState<string[]>([]);
@@ -206,6 +207,22 @@ export function TrackerStoreProvider({ children }: { children: ReactNode }) {
     },
     [writer],
   );
+
+  // Default habits (Water, Coffee...) follow the app language until the person renames them.
+  useEffect(() => {
+    if (!hydrated) {
+      return;
+    }
+    const next = relocalizeTemplateTrackers(
+      latest.current.trackers,
+      SUPPORTED_LANGUAGES.map((item) => item.code),
+      (lng, key) => i18n.getFixedT(lng)(key as never) as string,
+      language,
+    );
+    if (next) {
+      commit({ trackers: next, events: latest.current.events }, { trackers: true });
+    }
+  }, [commit, hydrated, language]);
 
   const setEvents = useCallback(
     (trackerId: string, events: CountEvent[]) => {

@@ -1,0 +1,13 @@
+Foxiem is a simple counter for habits, goals, reps and everyday counts. Open it, tap, and keep going — without an account, and without a complicated setup.
+
+Create named trackers for different things you care about. Count quickly with +1, +5 or −1, add a note when you need context, and pick up where you left off.
+
+See how the numbers move. History, insights and consistency views help you notice patterns over days and weeks, not just the current total.
+
+Set reminders when you want a nudge. Android widgets let you count from the home screen when that extra step is useful.
+
+Foxiem is local-first. Your trackers, counts and notes live on the device. You can use the app as a guest. Signing in is optional and does not replace the counters already on your phone.
+
+Optional Foxiem Pro unlocks extra insights, reminder options, widgets and related tools. Monthly, yearly and lifetime purchases are optional. Restore purchases if you already bought Pro.
+
+Purchases, optional sign-in, crash reports and opt-in analytics are described in the privacy policy.

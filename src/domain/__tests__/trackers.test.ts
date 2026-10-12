@@ -1,5 +1,5 @@
 import { buildEventsCsv, buildWeeklySummaryCsv } from '../csv';
-import { findTemplate, draftFromTemplate, suggestIcon, TRACKER_TEMPLATES } from '../templates';
+import { findTemplate, draftFromTemplate, relocalizeTemplateTrackers, suggestIcon, TRACKER_TEMPLATES } from '../templates';
 import {
   activeTrackers,
   coerceDraftForIntent,
@@ -35,6 +35,9 @@ describe('tracker creation', () => {
     const existing = [makeTracker({ name: 'Water' })];
     expect(validateDraft(emptyDraft({ name: '   ' }), existing)).toBe('nameRequired');
     expect(validateDraft(emptyDraft({ name: ' water ' }), existing)).toBe('nameDuplicate');
+    expect(validateDraft(emptyDraft({ name: 'wATER' }), existing)).toBe('nameDuplicate');
+    expect(validateDraft(emptyDraft({ name: 'WATER' }), existing)).toBe('nameDuplicate');
+    expect(validateDraft(emptyDraft({ name: 'İçecek' }), [makeTracker({ name: 'içecek' })])).toBe('nameDuplicate');
     expect(validateDraft(emptyDraft({ name: 'x'.repeat(41) }), existing)).toBe('nameTooLong');
     expect(validateDraft(emptyDraft({ name: 'Coffee', intent: 'limit', period: 'day', target: null }), existing)).toBe('targetRequired');
     expect(validateDraft(emptyDraft({ name: 'Gym', intent: 'consistency', period: 'week', target: 9 }), existing)).toBe('targetRange');
@@ -60,6 +63,38 @@ describe('tracker creation', () => {
   it('spreads colours across trackers', () => {
     const fox = makeTracker({ name: 'A', color: 'fox' });
     expect(pickColor([fox])).not.toBe('fox');
+  });
+});
+
+describe('template trackers follow the language', () => {
+  const names: Record<string, Record<string, string>> = {
+    en: { 'start.templates.water': 'Water', 'units.glasses': 'glasses' },
+    tr: { 'start.templates.water': 'Su', 'units.glasses': 'bardak' },
+  };
+  const label = (lng: string, key: string) => names[lng]![key] ?? key;
+  const water = makeTracker({ name: 'Water', unit: 'glasses', templateId: 'water' });
+
+  it('renames untouched template names and units', () => {
+    const next = relocalizeTemplateTrackers([water], ['en', 'tr'], label, 'tr')!;
+    expect(next[0]).toMatchObject({ name: 'Su', unit: 'bardak' });
+    expect(relocalizeTemplateTrackers(next, ['en', 'tr'], label, 'en')![0]).toMatchObject({ name: 'Water', unit: 'glasses' });
+  });
+
+  it('also converts default names on trackers that carry no template id', () => {
+    const plain = makeTracker({ name: 'Water', unit: 'glasses' });
+    expect(relocalizeTemplateTrackers([plain], ['en', 'tr'], label, 'tr')![0]).toMatchObject({ name: 'Su', unit: 'bardak' });
+  });
+
+  it('leaves names the person chose, and does nothing when already in the language', () => {
+    const custom = makeTracker({ name: 'My water', templateId: 'water' });
+    expect(relocalizeTemplateTrackers([custom], ['en', 'tr'], label, 'tr')).toBeNull();
+    expect(relocalizeTemplateTrackers([{ ...water, name: 'Su', unit: 'bardak' }], ['en', 'tr'], label, 'tr')).toBeNull();
+  });
+
+  it('skips a rename that would duplicate another tracker', () => {
+    const other = makeTracker({ name: 'Su' });
+    const next = relocalizeTemplateTrackers([water, other], ['en', 'tr'], label, 'tr')!;
+    expect(next[0]!.name).toBe('Water');
   });
 });
 

@@ -243,8 +243,8 @@ export function InsightsSection({ tracker, events, context, locale: language, tr
     <Section title={t('detail.insights')}>
       <Group inset={60}>
         {rows.length === 0 ? <InsightRow icon="hourglass-outline" text={t('detail.insightsEmpty')} /> : null}
-        {rows.map((row) => (
-          <InsightRow key={row.text} icon={row.icon} text={row.text} />
+        {rows.map((row, index) => (
+          <InsightRow key={`${row.key}:${index}`} icon={row.icon} text={row.text} />
         ))}
         {patterns.allowed && !readiness.ready ? (
           <InsightRow icon="pulse-outline" text={t('insight.patternsSoon', { count: readiness.daysNeeded })} />

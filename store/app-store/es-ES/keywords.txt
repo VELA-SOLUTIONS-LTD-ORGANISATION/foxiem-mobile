@@ -1,0 +1,1 @@
+contador,habito,meta,repeticion,recuento,recordatorio,widget,progreso,diario

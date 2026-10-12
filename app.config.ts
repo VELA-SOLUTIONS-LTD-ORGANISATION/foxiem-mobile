@@ -5,6 +5,7 @@ import {
   AndroidConfig,
   withAndroidManifest,
   withAndroidStyles,
+  withGradleProperties,
   type ConfigPlugin,
 } from 'expo/config-plugins';
 import type { ConfigContext, ExpoConfig } from 'expo/config';
@@ -26,6 +27,24 @@ const withAndroidLargeScreens: ConfigPlugin = (config) =>
     delete activity.$['android:maxAspectRatio'];
     delete activity.$['android:minAspectRatio'];
     activity.$['android:resizeableActivity'] = 'true';
+    return mod;
+  });
+
+/**
+ * AGP 8.12 keeps this off unless asked. It shrinks resources together with R8.
+ * Launcher, splash and notification icons stay because the manifest references them.
+ * React Native itself is still on AGP 8.12; AGP 9 is not enabled here because that
+ * plugin does not support it yet.
+ */
+const withOptimizedResourceShrinking: ConfigPlugin = (config) =>
+  withGradleProperties(config, (mod) => {
+    const key = 'android.r8.optimizedResourceShrinking';
+    const existing = mod.modResults.find((item) => item.type === 'property' && item.key === key);
+    if (existing && existing.type === 'property') {
+      existing.value = 'true';
+    } else {
+      mod.modResults.push({ type: 'property', key, value: 'true' });
+    }
     return mod;
   });
 
@@ -153,6 +172,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   }
 
   return withNativeLocalization(
+    withOptimizedResourceShrinking(
     withAnalyticsOffByDefault(
       withAndroidEdgeToEdgeTheme(
         withAndroidLargeScreens({
@@ -162,6 +182,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           ios,
         }),
       ),
+    ),
     ),
   );
 };

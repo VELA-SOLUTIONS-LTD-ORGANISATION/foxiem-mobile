@@ -67,7 +67,7 @@ export const unavailableAdapter: PurchaseAdapter = {
  * - Anything else: `unavailable`, so no Pro surface is shown and nothing pretends to sell.
  */
 export function createPurchaseAdapter(getLocale: () => string): PurchaseAdapter {
-  if (__DEV__ && !storeEnabledInDevelopment()) {
+  if (__DEV__ && (process.env.EXPO_PUBLIC_STORE_SCREENSHOTS === '1' || !storeEnabledInDevelopment())) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { createSimulatedAdapter } = require('@/dev/simulatedAdapter') as typeof import('@/dev/simulatedAdapter');
     return createSimulatedAdapter(getLocale);

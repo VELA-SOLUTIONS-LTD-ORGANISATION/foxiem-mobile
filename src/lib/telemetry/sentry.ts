@@ -74,6 +74,9 @@ export function initSentry(): void {
     sentry.init({
       dsn: value,
       environment: __DEV__ ? 'development' : 'production',
+      // Emulator/dev-client sessions (e.g. the idle-main-thread ANR from an Android 14 emulator,
+      // FOXIEM-MOBILE-1) are noise; only release builds report.
+      enabled: !__DEV__,
       sendDefaultPii: false,
       enableAutoSessionTracking: true,
       attachStacktrace: true,

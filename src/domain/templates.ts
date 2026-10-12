@@ -1,5 +1,5 @@
-import { emptyDraft } from './trackers';
-import type { TrackerColor, TrackerDraft, TrackerIntent, TrackerPeriod } from './types';
+import { emptyDraft, nameKey } from './trackers';
+import type { Tracker, TrackerColor, TrackerDraft, TrackerIntent, TrackerPeriod } from './types';
 
 export type TrackerTemplate = {
   id: string;
@@ -46,6 +46,71 @@ export function draftFromTemplate(
     unit: labels.unit,
     templateId: template.id,
   });
+}
+
+/**
+ * Template trackers store the name they were created with ("Water"). When the language changes,
+ * the ones still carrying an untouched template name (or unit) in another language move to the
+ * new language. Names the person typed or edited never match a template and are left alone, and a
+ * rename is skipped if it would collide with another tracker.
+ * Returns null when nothing needs to change.
+ */
+export function relocalizeTemplateTrackers(
+  trackers: readonly Tracker[],
+  languages: readonly string[],
+  label: (language: string, key: string) => string,
+  target: string,
+  now: Date = new Date(),
+): Tracker[] | null {
+  const taken = new Set(trackers.filter((tracker) => tracker.archivedAt === null).map((tracker) => nameKey(tracker.name)));
+  let changed = false;
+  const next = trackers.map((tracker) => {
+    // Trackers without template info (older or sample data) still count when their name is exactly
+    // a default name in some language.
+    const ownKey = nameKey(tracker.name);
+    const template =
+      findTemplate(tracker.templateId) ??
+      TRACKER_TEMPLATES.find((item) =>
+        languages.some((language) => nameKey(label(language, `start.templates.${item.id}`)) === ownKey),
+      ) ??
+      null;
+    if (!template) {
+      return tracker;
+    }
+    let name = tracker.name;
+    let unit = tracker.unit;
+
+    const targetName = label(target, `start.templates.${template.id}`);
+    const currentKey = nameKey(tracker.name);
+    const targetKey = nameKey(targetName);
+    if (
+      currentKey !== targetKey &&
+      languages.some((language) => language !== target && nameKey(label(language, `start.templates.${template.id}`)) === currentKey) &&
+      !taken.has(targetKey)
+    ) {
+      taken.delete(currentKey);
+      taken.add(targetKey);
+      name = targetName;
+    }
+
+    if (template.unitKey && tracker.unit) {
+      const targetUnit = label(target, template.unitKey);
+      const unitKeyNow = nameKey(tracker.unit);
+      if (
+        unitKeyNow !== nameKey(targetUnit) &&
+        languages.some((language) => language !== target && nameKey(label(language, template.unitKey!)) === unitKeyNow)
+      ) {
+        unit = targetUnit;
+      }
+    }
+
+    if (name === tracker.name && unit === tracker.unit) {
+      return tracker;
+    }
+    changed = true;
+    return { ...tracker, name, unit, updatedAt: now.toISOString() };
+  });
+  return changed ? next : null;
 }
 
 /** Icons offered in the picker, grouped loosely by theme. */

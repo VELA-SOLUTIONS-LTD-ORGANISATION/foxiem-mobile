@@ -60,7 +60,7 @@ export function createAppleAuth(): AppleAuth | null {
         }
         const nonce = randomNonce();
         let hashedNonce: string | undefined;
-        if (crypto?.digestStringAsync && crypto.CryptoDigestAlgorithm?.SHA256) {
+        if (crypto && typeof crypto.digestStringAsync === 'function') {
           hashedNonce = await crypto.digestStringAsync(crypto.CryptoDigestAlgorithm.SHA256, nonce);
         }
         const credential = await apple.signInAsync({

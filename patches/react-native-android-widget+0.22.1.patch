@@ -1,0 +1,69 @@
+diff --git a/node_modules/react-native-android-widget/android/src/main/java/com/reactnativeandroidwidget/builder/widget/utils/ResourceUtils.java b/node_modules/react-native-android-widget/android/src/main/java/com/reactnativeandroidwidget/builder/widget/utils/ResourceUtils.java
+index 23d6780..3cdb335 100644
+--- a/node_modules/react-native-android-widget/android/src/main/java/com/reactnativeandroidwidget/builder/widget/utils/ResourceUtils.java
++++ b/node_modules/react-native-android-widget/android/src/main/java/com/reactnativeandroidwidget/builder/widget/utils/ResourceUtils.java
+@@ -15,9 +15,9 @@ import com.caverock.androidsvg.SVG;
+ import com.caverock.androidsvg.SVGParseException;
+ import com.facebook.react.bridge.ReactApplicationContext;
+ 
++import java.io.ByteArrayOutputStream;
+ import java.io.IOException;
+ import java.io.InputStream;
+-import java.net.HttpURLConnection;
+ import java.net.URL;
+ import java.util.HashMap;
+ import java.util.Locale;
+@@ -43,8 +43,8 @@ public class ResourceUtils {
+         } else if (source.startsWith("file://")) {
+             return BitmapFactory.decodeFile(source.replaceFirst("file://", ""));
+         } else {
+-            InputStream input = getInputStreamFromSource(source);
+-            return BitmapFactory.decodeStream(input);
++            byte[] bytes = readLimited(getInputStreamFromSource(source), 4 * 1024 * 1024);
++            return bytes == null ? null : decodeSampled(bytes, 1024);
+         }
+     }
+ 
+@@ -100,11 +100,37 @@ public class ResourceUtils {
+     }
+ 
+     private static InputStream getInputStreamFromSource(String source) throws IOException {
+-        URL url = new URL(source);
+-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+-        connection.setDoInput(true);
+-        connection.connect();
+-        return connection.getInputStream();
++        return new URL(source).openStream();
++    }
++
++    /** Widget cells are small. Decode a subsample so a remote image cannot fill the heap. */
++    private static Bitmap decodeSampled(byte[] bytes, int maxEdge) {
++        BitmapFactory.Options bounds = new BitmapFactory.Options();
++        bounds.inJustDecodeBounds = true;
++        BitmapFactory.decodeByteArray(bytes, 0, bytes.length, bounds);
++        int sample = 1;
++        while (bounds.outWidth / sample > maxEdge || bounds.outHeight / sample > maxEdge) {
++            sample *= 2;
++        }
++        BitmapFactory.Options options = new BitmapFactory.Options();
++        options.inSampleSize = sample;
++        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
++    }
++
++    private static byte[] readLimited(InputStream input, int maxBytes) throws IOException {
++        try (InputStream in = input; ByteArrayOutputStream out = new ByteArrayOutputStream()) {
++            byte[] chunk = new byte[16 * 1024];
++            int total = 0;
++            int read;
++            while ((read = in.read(chunk)) != -1) {
++                total += read;
++                if (total > maxBytes) {
++                    return null;
++                }
++                out.write(chunk, 0, read);
++            }
++            return out.toByteArray();
++        }
+     }
+ 
+     private static Typeface loadTypeface(ReactApplicationContext context, @NonNull String fontName) {

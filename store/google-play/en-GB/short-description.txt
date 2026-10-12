@@ -1,0 +1,1 @@
+A simple counter for habits, goals and the things you want to keep track of.

@@ -29,6 +29,31 @@ const FEATURES = [
   'settings',
 ] as const;
 
+/** Route names from navigation/types.ts; never tracker ids or names. */
+export const SCREENS = [
+  'Welcome',
+  'Start',
+  'HomeTab',
+  'InsightsTab',
+  'SettingsTab',
+  'CreateTracker',
+  'TrackerDetail',
+  'TrackerSettings',
+  'History',
+  'ReminderEditor',
+  'Paywall',
+  'WeeklyReview',
+  'MonthlyReview',
+  'YearView',
+  'Language',
+  'Appearance',
+  'Notifications',
+  'Widgets',
+  'Privacy',
+  'About',
+  'Archived',
+] as const;
+
 export const ANALYTICS_EVENTS = {
   onboarding_complete: {},
   first_count: {},
@@ -39,6 +64,10 @@ export const ANALYTICS_EVENTS = {
   purchase_completed: { plan: PLANS },
   review_viewed: { kind: ['weekly', 'monthly'] },
   data_exported: { kind: ['entries', 'report'] },
+  // Firebase's standard screen_view (feeds per-screen engagement reports) plus our own
+  // time-on-screen bucket. Only fixed route names and a coarse bucket ever leave the device.
+  screen_view: { screen_name: SCREENS },
+  screen_time: { screen_name: SCREENS, duration: ['lt5s', 's5to15', 's15to60', 'm1to5', 'gt5m'] },
 } as const satisfies Record<string, Record<string, readonly string[]>>;
 
 export type AnalyticsEventName = keyof typeof ANALYTICS_EVENTS;

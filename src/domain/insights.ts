@@ -30,6 +30,32 @@ export type Insight =
   | { kind: 'activeDays'; tier: 'free'; success: number; days: number }
   | { kind: 'targetsThisWeek'; tier: 'free'; count: number };
 
+/** Stable list identity. The rendered sentence is not unique, so it must not be a React key. */
+export function insightKey(insight: Insight): string {
+  switch (insight.kind) {
+    case 'comparison':
+      return `comparison:${insight.trackerId}:${insight.comparison.period}`;
+    case 'hitRate':
+      return `hitRate:${insight.trackerId}:${insight.rule}`;
+    case 'average':
+      return `average:${insight.trackerId}`;
+    case 'weekday':
+      return `weekday:${insight.trackerId}`;
+    case 'dayPart':
+      return `dayPart:${insight.trackerId}:${insight.part}`;
+    case 'pace':
+      return `pace:${insight.trackerId}:${insight.pace.kind}`;
+    case 'weeks':
+      return `weeks:${insight.trackerId}`;
+    case 'crossTracker':
+      return `cross:${insight.driverId}:${insight.subjectId}`;
+    case 'activeDays':
+      return 'activeDays';
+    case 'targetsThisWeek':
+      return 'targetsThisWeek';
+  }
+}
+
 /** Why a Pro pattern is not shown yet, so the UI can be honest instead of empty. */
 export type PatternReadiness = { ready: true } | { ready: false; daysNeeded: number };
 

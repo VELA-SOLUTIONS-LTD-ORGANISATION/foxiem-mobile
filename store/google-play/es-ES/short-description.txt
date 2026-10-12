@@ -1,0 +1,1 @@
+Un contador sencillo para hábitos, metas y lo que quieras llevar la cuenta.

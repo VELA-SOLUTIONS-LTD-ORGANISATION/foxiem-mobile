@@ -1,0 +1,6 @@
+# Google Play phone class. 7"/10" tablets stay off until those listings exist.
+
+app_package_name('co.uk.solutionvela.foxiem')
+locales(['en-GB', 'tr-TR', 'de-DE', 'fr-FR', 'es-ES', 'it-IT'])
+output_directory('store-assets/raw')
+use_tests_in_packages(['co.uk.solutionvela.foxiem'])

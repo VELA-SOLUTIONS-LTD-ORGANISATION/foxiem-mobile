@@ -1,9 +1,11 @@
 export { APP_FONT_MAP, fontFamily } from './fonts';
 export {
   contentMaxWidth,
+  getContentMaxWidth,
   getHorizontalPadding,
   getLayoutRange,
   layoutBreakpoints,
+  tabletContentMaxWidth,
   type LayoutRange,
 } from './layout';
 export { darkPalette, lightPalette, trackerTone, type ColorScheme, type Palette, type TrackerTone } from './palette';

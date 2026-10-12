@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "cancel": "Annulla",
     "done": "Fine",
@@ -210,7 +210,13 @@
     "recoveredTitle": "Foxiem ha ripristinato i tuoi contatori",
     "recoveredBody": "I dati salvati non erano leggibili, quindi Foxiem ha usato il backup. Le voci più recenti potrebbero mancare.",
     "unreadableTitle": "Parte dello storico non era leggibile",
-    "unreadableBody": "Foxiem ne ha conservato una copia su questo dispositivo e ha fatto ripartire i contatori interessati."
+    "unreadableBody": "Foxiem ne ha conservato una copia su questo dispositivo e ha fatto ripartire i contatori interessati.",
+    "greetingMorning": "Buongiorno",
+    "greetingAfternoon": "Buon pomeriggio",
+    "greetingEvening": "Buonasera",
+    "todayProgress": "{{done}} di {{total}} contati oggi",
+    "todayAll": "Tutto contato oggi",
+    "todayNone": "Ancora niente oggi"
   },
   "status": {
     "total": "totale",

@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "cancel": "Annuler",
     "done": "OK",
@@ -210,7 +210,13 @@
     "recoveredTitle": "Foxiem a restauré vos compteurs",
     "recoveredBody": "Les données enregistrées étaient illisibles, Foxiem a donc utilisé sa sauvegarde. Vos entrées les plus récentes peuvent manquer.",
     "unreadableTitle": "Une partie de l’historique était illisible",
-    "unreadableBody": "Foxiem en a gardé une copie sur cet appareil et a redémarré les compteurs concernés."
+    "unreadableBody": "Foxiem en a gardé une copie sur cet appareil et a redémarré les compteurs concernés.",
+    "greetingMorning": "Bonjour",
+    "greetingAfternoon": "Bon après-midi",
+    "greetingEvening": "Bonsoir",
+    "todayProgress": "{{done}} sur {{total}} comptés aujourd'hui",
+    "todayAll": "Tout est compté aujourd'hui",
+    "todayNone": "Rien de compté aujourd'hui"
   },
   "status": {
     "total": "total",

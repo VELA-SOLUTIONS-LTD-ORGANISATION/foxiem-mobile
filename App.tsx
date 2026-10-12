@@ -3,7 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import type { ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
+import { Dimensions, LogBox, Platform, StyleSheet } from 'react-native';
 
 import { AccountProvider, AccountSync } from '@/account';
 import { ToastProvider } from '@/components';
@@ -24,21 +24,33 @@ import { WidgetSync } from '@/widgets';
 
 void SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
+if (__DEV__ && process.env.EXPO_PUBLIC_STORE_SCREENSHOTS === '1') {
+  LogBox.ignoreAllLogs(true);
+}
+
 function ThemedApp({ children }: { children: ReactNode }) {
   const { preferences } = usePreferences();
   return <ThemeProvider appearance={preferences.appearance}>{children}</ThemeProvider>;
 }
 
-export default function App() {
-  const [fontsLoaded, fontError] = useFonts(APP_FONT_MAP);
-
-  if (!fontsLoaded && !fontError) {
-    return null;
+function screenshotSafeAreaMetrics() {
+  if (Platform.OS !== 'web' || process.env.EXPO_PUBLIC_STORE_SCREENSHOTS !== '1') {
+    return undefined;
   }
+  const { width, height } = Dimensions.get('window');
+  const tablet = Math.min(width, height) >= 768;
+  return {
+    frame: { x: 0, y: 0, width, height },
+    insets: tablet
+      ? { top: 24, left: 0, right: 0, bottom: 20 }
+      : { top: 59, left: 0, right: 0, bottom: 34 },
+  };
+}
 
+function AppTree() {
   return (
     <GestureHandlerRootView style={styles.root}>
-      <SafeAreaProvider>
+      <SafeAreaProvider initialMetrics={screenshotSafeAreaMetrics()}>
         <PreferencesProvider>
           <ThemedApp>
             <ErrorBoundary>
@@ -65,6 +77,26 @@ export default function App() {
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
+}
+
+export default function App() {
+  const [fontsLoaded, fontError] = useFonts(APP_FONT_MAP);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
+  if (__DEV__ && process.env.EXPO_PUBLIC_STORE_SCREENSHOTS === '1') {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { ScreenshotFixtureGate } = require('@/dev/storeScreenshotGate') as typeof import('@/dev/storeScreenshotGate');
+    return (
+      <ScreenshotFixtureGate>
+        <AppTree />
+      </ScreenshotFixtureGate>
+    );
+  }
+
+  return <AppTree />;
 }
 
 const styles = StyleSheet.create({

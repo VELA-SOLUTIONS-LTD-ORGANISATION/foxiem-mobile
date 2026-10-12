@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { isStoreScreenshotMode } from '@/lib/storeScreenshotMode';
 import { CreateTrackerScreen } from '@/screens/create/CreateTrackerScreen';
 import { MonthlyReviewScreen, WeeklyReviewScreen } from '@/screens/insights/ReviewScreens';
 import { StartScreen } from '@/screens/onboarding/StartScreen';
@@ -26,7 +27,11 @@ export function RootNavigator({ initialRoute }: { initialRoute: 'Welcome' | 'Mai
   return (
     <Stack.Navigator
       initialRouteName={initialRoute}
-      screenOptions={{ headerShown: false, contentStyle: { backgroundColor: theme.colors.canvas } }}
+      screenOptions={{
+        headerShown: false,
+        animation: isStoreScreenshotMode() ? 'none' : 'default',
+        contentStyle: { backgroundColor: theme.colors.canvas },
+      }}
     >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Start" component={StartScreen} />

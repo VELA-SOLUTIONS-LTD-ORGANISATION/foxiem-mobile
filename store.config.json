@@ -1,185 +1,159 @@
 {
   "configVersion": 0,
   "apple": {
-    "version": "1.0.4",
+    "version": "2.0.0",
     "copyright": "2026 VELA SOLUTIONS LTD",
     "release": {
       "automaticRelease": true
     },
     "info": {
       "fr-FR": {
-        "description": "Foxiem est un compteur multiple simple et apaisant pour tout ce que vous souhaitez compter : habitudes, répétitions sportives, lecture, personnes, scores, routines ou activités du quotidien.\n\nPLUSIEURS COMPTEURS\nDonnez un nom à chaque compteur et séparez vos activités. Passez facilement d’un compteur à l’autre depuis l’accueil, les statistiques, l’historique et la régularité.\n\nCOMPTEZ RAPIDEMENT\nUtilisez +1, +5 et -1 pour enregistrer une progression en quelques secondes. Réinitialisez le compteur actif lorsque vous souhaitez recommencer.\n\nSUIVEZ VOS PROGRÈS\nConsultez l’historique, les statistiques quotidiennes, hebdomadaires et mensuelles, ainsi que les séries du compteur sélectionné.\n\nRESTEZ RÉGULIER\nCréez des rappels locaux adaptés à votre routine.\n\nSIMPLE ET LOCAL\nAucun compte n’est nécessaire. Vos compteurs Foxiem, votre historique, votre profil, vos rappels et vos préférences sont stockés sur votre appareil. Les pratiques liées à la publicité et aux statistiques sont décrites dans les informations de confidentialité de l’app.\n\nDe petits comptes. De grands progrès.",
+        "description": "Foxiem est un compteur simple pour les habitudes, les objectifs, les répétitions et les décomptes du quotidien. Ouvrez, appuyez, continuez — sans compte et sans configuration compliquée.\n\nCréez des compteurs nommés pour ce qui compte. Comptez vite avec +1, +5 ou −1, ajoutez une note au besoin, et reprenez exactement où vous en étiez.\n\nVoyez comment les chiffres évoluent. L’historique, les aperçus et la régularité aident à remarquer des tendances sur plusieurs jours, pas seulement le total du moment.\n\nProgrammez des rappels si vous voulez un coup de pouce. Les widgets d’écran d’accueil et Apple Watch permettent de compter sans ouvrir l’app.\n\nFoxiem est d’abord local. Compteurs, totaux et notes restent sur l’appareil. Vous pouvez l’utiliser en invité. La connexion est facultative et ne remplace pas les compteurs déjà sur le téléphone.\n\nFoxiem Pro, en option, débloque des aperçus supplémentaires, des options de rappel, des widgets et des outils associés. Les achats intégrés mensuel, annuel et à vie sont facultatifs. Restaurez vos achats si vous avez déjà Pro.\n\nLes achats, la connexion facultative, les rapports de plantage et l’analyse après consentement sont décrits dans la politique de confidentialité.",
         "keywords": [
-          "comptage",
-          "clic",
-          "répétitions",
-          "score",
-          "inventaire",
+          "compteur",
+          "habitude",
           "objectif",
-          "routine",
-          "personnes",
-          "statistiques",
+          "repetition",
+          "decompter",
+          "rappel",
+          "widget",
+          "progres",
           "quotidien"
         ],
-        "releaseNotes": "L’App Store affiche désormais Foxiem en anglais, turc, allemand, français, espagnol et italien.",
+        "releaseNotes": "Foxiem 2.0. Compteurs nommés, aperçus, rappels, widgets et Apple Watch. Sans publicité. Pro facultatif. Mode invité ; la connexion ne remplace pas les compteurs locaux.",
         "marketingUrl": "https://foxiem.com",
-        "supportUrl": "https://foxiem.com/privacy",
-        "title": "Foxiem : Compteur multiple",
-        "subtitle": "Habitudes, séries & progrès",
+        "supportUrl": "https://foxiem.com",
+        "title": "Foxiem : Compteur",
+        "subtitle": "Habitudes, objectifs, comptes",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "promoText": "Désormais avec plusieurs compteurs nommés : passez d’une activité à l’autre et consultez statistiques, historique et séries."
+        "promoText": "Comptez en local. Mode invité. Pro facultatif pour plus d’outils."
       },
       "tr": {
-        "description": "Foxiem; alışkanlıkları, spor tekrarlarını, okumayı, günlük rutinleri, kişi sayısını, skorları veya saymak istediğin herhangi bir şeyi takip etmek için sade bir çoklu sayaçtır.\n\nBİRDEN FAZLA SAYAÇ OLUŞTUR\nHer sayaca bir isim ver ve farklı aktivitelerini birbirinden ayır. Ana Sayfa, İstatistikler, Geçmiş ve Tutarlılık ekranlarında aktif sayaçlar arasında kolayca geçiş yap.\n\nHIZLI SAY\n+1, +5 ve -1 kontrolleriyle ilerlemeni saniyeler içinde kaydet. Yeniden başlamak istediğinde aktif sayacı sıfırla.\n\nİLERLEMENİ GÖR\nSeçili sayacın aktivite geçmişini, günlük/haftalık/aylık istatistiklerini ve devam serilerini incele.\n\nDÜZENİNİ KORU\nSana uygun gün ve saatler için cihazında çalışan yerel hatırlatıcılar oluştur.\n\nSADE KALIR\nFoxiem hesap açmanı istemez ve karmaşık kurulumlarla uğraştırmaz. Sayaçların, sayım geçmişin, profilin, hatırlatıcıların ve tercihlerin cihazında saklanır. Reklam ve analiz hizmetleriyle ilgili veri kullanımı uygulamanın gizlilik bilgilerinde ve gizlilik politikasında açıklanır.\n\nFoxiem'i şunlar için kullanabilirsin:\n- günlük alışkanlıklar ve rutinler\n- spor tekrarları ve antrenman\n- okuma ve çalışma\n- kişi ve katılım sayımı\n- skor veya tekrar eden işler\n- zikir/tesbih gibi tekrar sayımları\n- düzenli olarak saymak istediğin her şey\n\nKüçük sayımlar. Büyük ilerleme.",
+        "description": "Foxiem, alışkanlıklar, hedefler, tekrarlar ve günlük sayımlar için sade bir sayaçtır. Hesap açmadan açıp dokunarak devam edebilirsin.\n\nFarklı şeyler için isimli takipçiler oluştur. +1, +5 veya −1 ile hızlı say, gerektiğinde not ekle ve kaldığın yerden devam et.\n\nSayıların nasıl değiştiğini gör. Geçmiş, içgörüler ve süreklilik görünümleri yalnızca anlık toplamı değil, günler ve haftalar içindeki düzeni fark etmene yardımcı olur.\n\nİstediğinde hatırlatıcı kur. Ana Ekran widget’ları ve Apple Watch, uygulamayı açmadan saymak işe yaradığında ekstra bir adım sağlar.\n\nFoxiem önce cihazda çalışır. Takipçilerin, sayımların ve notların telefonda durur. Misafir olarak kullanabilirsin. Oturum açmak isteğe bağlıdır ve telefondaki mevcut sayaçların yerine geçmez.\n\nİsteğe bağlı Foxiem Pro ek içgörüler, hatırlatıcı seçenekleri, widget’lar ve ilgili araçları açar. Aylık, yıllık ve ömür boyu Uygulama İçi Satın Alma isteğe bağlıdır. Pro’yu daha önce aldıysan satın alımları geri yükle.\n\nSatın almalar, isteğe bağlı oturum, çökme raporları ve tercih ile açılan analitik gizlilik politikasında anlatılır.",
         "keywords": [
-          "sayma",
-          "sayıcı",
-          "tıklama",
-          "zikir",
-          "tesbih",
-          "zikirmatik",
-          "skor",
-          "spor",
+          "sayac",
+          "aliskanlik",
+          "hedef",
+          "tekrar",
+          "sayim",
           "rutin",
-          "günlük",
-          "kişi",
-          "adet",
-          "sayım"
+          "hatirlatma",
+          "widget",
+          "ilerleme",
+          "gunluk"
         ],
-        "releaseNotes": "App Store artık Foxiem’i İngilizce, Türkçe, Almanca, Fransızca, İspanyolca ve İtalyanca olarak listeliyor.",
+        "releaseNotes": "Foxiem 2.0. İsimli takipçiler, içgörüler, hatırlatıcılar, widget’lar ve Apple Watch. Reklam yok. İsteğe bağlı Pro. Misafir olarak kullan; oturum açmak yerel sayaçların yerine geçmez.",
         "marketingUrl": "https://foxiem.com",
-        "supportUrl": "https://foxiem.com/privacy",
-        "title": "Foxiem: Çoklu Sayaç",
-        "subtitle": "Alışkanlık, Tekrar, İlerleme",
+        "supportUrl": "https://foxiem.com",
+        "title": "Foxiem: Sayaç",
+        "subtitle": "Alışkanlık, hedef ve sayım",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "promoText": "Artık birden fazla isimli sayaç var: aktiviteler arasında geçiş yap, her biri için istatistik, geçmiş ve serileri gör."
+        "promoText": "Alışkanlıklar ve hedefler için yerel sayaç. Misafir. İsteğe bağlı Pro."
       },
       "en-GB": {
-        "description": "Foxiem is a calm, simple tally counter for anything you want to count — habits, gym reps, reading, attendance, scores, routines, or everyday activities.\n\nCREATE MULTIPLE COUNTERS\nGive each counter a name and keep different activities separate. Switch between counters from Home, Statistics, History, and Consistency.\n\nCOUNT FAST\nUse +1, +5, or -1 to record progress in seconds. Reset the active counter whenever you want a fresh start.\n\nSEE YOUR PROGRESS\nReview activity history, daily, weekly and monthly statistics, and consistency streaks for the selected counter.\n\nSTAY CONSISTENT\nCreate local reminders for the days and times that suit your routine.\n\nSIMPLE BY DESIGN\nFoxiem is built to stay out of the way: no account, no complicated setup, and a clean interface focused on counting.\n\nYour Foxiem counter data, history, profile, reminders and preferences are stored on your device. Advertising and analytics practices are described in the app's privacy information and privacy policy.\n\nUse Foxiem for:\n- daily habits and routines\n- gym reps and practice sessions\n- reading or learning activities\n- attendance and people counting\n- scores and repeated tasks\n- anything else you want to count consistently\n\nSmall counts. Big progress.",
+        "description": "Foxiem is a simple counter for habits, goals, reps and everyday counts. Open it, tap, and keep going — without an account, and without a complicated setup.\n\nCreate named trackers for different things you care about. Count quickly with +1, +5 or −1, add a note when you need context, and pick up where you left off.\n\nSee how the numbers move. History, insights and consistency views help you notice patterns over days and weeks, not just the current total.\n\nSet reminders when you want a nudge. Home Screen widgets and Apple Watch let you count without opening the app when that extra step is useful.\n\nFoxiem is local-first. Your trackers, counts and notes live on the device. You can use the app as a guest. Signing in is optional and does not replace the counters already on your phone.\n\nOptional Foxiem Pro unlocks extra insights, reminder options, widgets and related tools. Monthly, yearly and lifetime In-App Purchases are optional. Restore purchases if you already bought Pro.\n\nPurchases, optional sign-in, crash reports and opt-in analytics are described in the privacy policy.",
         "keywords": [
-          "multi",
-          "clicker",
-          "counting",
-          "score",
-          "inventory",
-          "attendance",
+          "counter",
+          "habits",
+          "tracker",
+          "reps",
+          "goals",
+          "count",
           "streak",
-          "goal",
-          "routine",
-          "people",
-          "number",
+          "reminders",
+          "widgets",
           "progress"
         ],
-        "releaseNotes": "The App Store now lists Foxiem in English, Turkish, German, French, Spanish and Italian.",
+        "releaseNotes": "Foxiem 2.0. Named trackers, insights, reminders, widgets and Apple Watch. Ads are gone. Optional Pro via In-App Purchase. Guest-first; sign-in is optional and does not replace local counters.",
         "marketingUrl": "https://foxiem.com",
-        "supportUrl": "https://foxiem.com/privacy",
+        "supportUrl": "https://foxiem.com",
         "title": "Foxiem: Tally Counter",
-        "subtitle": "Habits, Reps & Daily Tracker",
+        "subtitle": "Habits, goals and daily counts",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "screenshots": {
-          "APP_IPAD_PRO_3GEN_129": [
-            "store\\apple\\screenshot\\en-GB\\APP_IPAD_PRO_3GEN_129\\foxiem-ipad-1-2064x2752.png",
-            "store\\apple\\screenshot\\en-GB\\APP_IPAD_PRO_3GEN_129\\02-see-your-progress.png",
-            "store\\apple\\screenshot\\en-GB\\APP_IPAD_PRO_3GEN_129\\03-make-it-yours.png"
-          ],
-          "APP_IPHONE_65": [
-            "store\\apple\\screenshot\\en-GB\\APP_IPHONE_65\\01-count-what-matters.png",
-            "store\\apple\\screenshot\\en-GB\\APP_IPHONE_65\\02-see-your-progress.png",
-            "store\\apple\\screenshot\\en-GB\\APP_IPHONE_65\\03-make-it-yours.png"
-          ]
-        },
-        "promoText": "Now with multiple named counters: switch between activities and view stats, history and streaks for each one."
+        "promoText": "Count habits, reps and goals locally. Guest-first. Optional Pro."
       },
       "de-DE": {
-        "description": "Foxiem ist ein ruhiger, einfacher Mehrfachzähler für alles, was du zählen möchtest — Gewohnheiten, Wiederholungen beim Training, Lesen, Personen, Punkte, Routinen oder andere Alltagsaktivitäten.\n\nMEHRERE ZÄHLER\nGib jedem Zähler einen Namen und halte deine Aktivitäten getrennt. Wechsle auf Start, Statistik, Verlauf und Konsistenz zwischen deinen Zählern.\n\nSCHNELL ZÄHLEN\nErfasse mit +1, +5 und -1 jeden Schritt in Sekunden und setze den aktiven Zähler bei Bedarf zurück.\n\nFORTSCHRITT VERFOLGEN\nSieh Verlauf, tägliche, wöchentliche und monatliche Statistiken sowie deine Serien für den ausgewählten Zähler.\n\nERINNERUNGEN\nErstelle lokale Erinnerungen für die Tage und Uhrzeiten, die zu deiner Routine passen.\n\nEINFACH UND LOKAL\nKein Konto und keine komplizierte Einrichtung. Deine Foxiem-Zähler, dein Verlauf, Profil, Erinnerungen und Einstellungen werden auf deinem Gerät gespeichert. Informationen zu Werbung und Analyse findest du in den Datenschutzangaben und der Datenschutzerklärung.\n\nKleine Zählungen. Großer Fortschritt.",
+        "description": "Foxiem ist ein einfacher Zähler für Gewohnheiten, Ziele, Wiederholungen und alltägliche Zahlen. Öffnen, tippen, weiterzählen — ohne Konto und ohne umständliche Einrichtung.\n\nLege benannte Tracker für verschiedene Dinge an. Zähle schnell mit +1, +5 oder −1, ergänze bei Bedarf eine Notiz und mach genau dort weiter.\n\nSieh, wie sich die Zahlen bewegen. Verlauf, Einblicke und Beständigkeit helfen dir, Muster über Tage und Wochen zu erkennen, nicht nur den aktuellen Stand.\n\nStelle Erinnerungen ein, wenn du einen Impuls brauchst. Home-Screen-Widgets und die Apple Watch erlauben das Zählen, ohne die App zu öffnen.\n\nFoxiem ist zuerst lokal. Tracker, Zählungen und Notizen bleiben auf dem Gerät. Du kannst die App als Gast nutzen. Die Anmeldung ist optional und ersetzt die Zähler auf dem Telefon nicht.\n\nOptionales Foxiem Pro schaltet zusätzliche Einblicke, Erinnerungsoptionen, Widgets und verwandte Werkzeuge frei. Monatliche, jährliche und einmalige In-App-Käufe sind freiwillig. Stelle Käufe wieder her, wenn du Pro bereits hast.\n\nKäufe, optionale Anmeldung, Absturzberichte und Analyse nach Einwilligung stehen in der Datenschutzerklärung.",
         "keywords": [
-          "klickzähler",
-          "zählen",
-          "wiederholungen",
-          "punkte",
-          "inventar",
-          "serie",
-          "ziele",
+          "zaehler",
+          "gewohnheit",
+          "ziel",
+          "wiederholung",
+          "zaehlen",
           "routine",
-          "personen",
-          "statistik",
-          "täglich"
+          "erinnerung",
+          "widget",
+          "fortschritt"
         ],
-        "releaseNotes": "Der App Store listet Foxiem jetzt auf Englisch, Türkisch, Deutsch, Französisch, Spanisch und Italienisch.",
+        "releaseNotes": "Foxiem 2.0. Benannte Tracker, Einblicke, Erinnerungen, Widgets und Apple Watch. Keine Werbung. Optionales Pro. Gastbetrieb; Anmeldung ersetzt lokale Zähler nicht.",
         "marketingUrl": "https://foxiem.com",
-        "supportUrl": "https://foxiem.com/privacy",
-        "title": "Foxiem: Mehrfachzähler",
-        "subtitle": "Gewohnheiten & Fortschritt",
+        "supportUrl": "https://foxiem.com",
+        "title": "Foxiem: Zähler",
+        "subtitle": "Gewohnheiten, Ziele, Zählen",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "promoText": "Jetzt mit mehreren benannten Zählern: Wechsle zwischen Aktivitäten und sieh Statistiken, Verlauf und Serien für jeden Zähler."
+        "promoText": "Lokal zählen. Gäste willkommen. Optionales Pro für extra Werkzeuge."
       },
       "it": {
-        "description": "Foxiem è un contatore multiplo semplice e rilassante per tutto ciò che vuoi contare: abitudini, ripetizioni in palestra, lettura, persone, punteggi, routine o attività quotidiane.\n\nPIÙ CONTATORI\nDai un nome a ogni contatore e mantieni separate le diverse attività. Passa da un contatore all’altro da Home, Statistiche, Cronologia e Costanza.\n\nCONTA VELOCEMENTE\nUsa +1, +5 e -1 per registrare i progressi in pochi secondi. Reimposta il contatore attivo quando vuoi ricominciare.\n\nVEDI I TUOI PROGRESSI\nConsulta cronologia, statistiche giornaliere, settimanali e mensili e le serie del contatore selezionato.\n\nMANTIENI LA COSTANZA\nCrea promemoria locali nei giorni e negli orari più adatti alla tua routine.\n\nSEMPLICE E LOCALE\nNon serve un account. I contatori Foxiem, la cronologia, il profilo, i promemoria e le preferenze vengono archiviati sul dispositivo. Le pratiche relative a pubblicità e analisi sono descritte nelle informazioni sulla privacy dell’app.\n\nPiccoli conteggi. Grandi progressi.",
+        "description": "Foxiem è un contatore semplice per abitudini, obiettivi, ripetizioni e conteggi di ogni giorno. Aprilo, tocca e continua — senza account e senza una configurazione complicata.\n\nCrea tracker con nome per cose diverse. Conta in fretta con +1, +5 o −1, aggiungi una nota quando serve e riprendi da dove eri rimasto.\n\nGuarda come si muovono i numeri. Cronologia, approfondimenti e costanza aiutano a notare schemi su giorni e settimane, non solo il totale attuale.\n\nImposta promemoria se vuoi una spinta. I widget della schermata Home e Apple Watch permettono di contare senza aprire l’app.\n\nFoxiem è prima di tutto locale. Tracker, conteggi e note restano sul dispositivo. Puoi usarlo come ospite. L’accesso è facoltativo e non sostituisce i contatori già sul telefono.\n\nFoxiem Pro facoltativo sblocca approfondimenti extra, opzioni di promemoria, widget e strumenti correlati. Gli acquisti in-app mensile, annuale e a vita sono facoltativi. Ripristina gli acquisti se hai già Pro.\n\nAcquisti, accesso facoltativo, report di crash e analisi dopo il consenso sono descritti nell’informativa sulla privacy.",
         "keywords": [
-          "conteggio",
-          "clic",
-          "ripetizioni",
-          "punteggio",
-          "inventario",
+          "contatore",
+          "abitudine",
           "obiettivo",
-          "routine",
-          "persone",
-          "statistiche",
-          "giornaliero"
+          "ripetizione",
+          "conteggio",
+          "promemoria",
+          "widget",
+          "progresso"
         ],
-        "releaseNotes": "L’App Store mostra Foxiem in inglese, turco, tedesco, francese, spagnolo e italiano.",
+        "releaseNotes": "Foxiem 2.0. Tracker con nome, approfondimenti, promemoria, widget e Apple Watch. Niente annunci. Pro facoltativo. Modalità ospite; l’accesso non sostituisce i contatori locali.",
         "marketingUrl": "https://foxiem.com",
-        "supportUrl": "https://foxiem.com/privacy",
-        "title": "Foxiem: Contatore multiplo",
-        "subtitle": "Abitudini, serie e progressi",
+        "supportUrl": "https://foxiem.com",
+        "title": "Foxiem: Contatore",
+        "subtitle": "Abitudini, obiettivi, conteggi",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "promoText": "Ora con più contatori personalizzati: passa tra le attività e consulta statistiche, cronologia e serie per ogni contatore."
+        "promoText": "Conta in locale. Modalità ospite. Pro facoltativo per più strumenti."
       },
       "es-ES": {
-        "description": "Foxiem es un contador múltiple sencillo y tranquilo para todo lo que quieras contar: hábitos, repeticiones de ejercicio, lectura, personas, puntuaciones, rutinas o actividades diarias.\n\nVARIOS CONTADORES\nPon un nombre a cada contador y mantén separadas tus actividades. Cambia de contador desde Inicio, Estadísticas, Historial y Constancia.\n\nCUENTA RÁPIDO\nUsa +1, +5 y -1 para registrar tu progreso en segundos. Restablece el contador activo cuando quieras empezar de nuevo.\n\nMIRA TU PROGRESO\nConsulta el historial, las estadísticas diarias, semanales y mensuales y las rachas del contador seleccionado.\n\nMANTÉN LA CONSTANCIA\nCrea recordatorios locales para los días y horas que mejor encajen con tu rutina.\n\nSIMPLE Y LOCAL\nNo necesitas una cuenta. Tus contadores de Foxiem, historial, perfil, recordatorios y preferencias se guardan en tu dispositivo. Las prácticas de publicidad y analítica se explican en la información de privacidad de la app.\n\nPequeños conteos. Gran progreso.",
+        "description": "Foxiem es un contador sencillo para hábitos, metas, repeticiones y recuentos del día a día. Ábrelo, pulsa y sigue — sin cuenta y sin una configuración complicada.\n\nCrea rastreadores con nombre para cosas distintas. Cuenta rápido con +1, +5 o −1, añade una nota cuando haga falta y continúa donde lo dejaste.\n\nMira cómo se mueven los números. El historial, las ideas y la constancia ayudan a ver patrones a lo largo de días y semanas, no solo el total de ahora.\n\nPon recordatorios si quieres un empujón. Los widgets de la pantalla de inicio y Apple Watch permiten contar sin abrir la app.\n\nFoxiem es local primero. Rastreadores, recuentos y notas viven en el dispositivo. Puedes usarlo como invitado. Iniciar sesión es opcional y no sustituye los contadores que ya tienes en el teléfono.\n\nFoxiem Pro opcional desbloquea más ideas, opciones de recordatorio, widgets y herramientas relacionadas. Las compras integradas mensual, anual y de por vida son opcionales. Restaura las compras si ya tienes Pro.\n\nLas compras, el inicio de sesión opcional, los informes de fallos y el análisis con consentimiento se describen en la política de privacidad.",
         "keywords": [
-          "conteo",
-          "clic",
-          "repeticiones",
-          "puntuación",
-          "inventario",
-          "objetivo",
-          "rutina",
-          "personas",
-          "estadísticas",
+          "contador",
+          "habito",
+          "meta",
+          "repeticion",
+          "recuento",
+          "recordatorio",
+          "widget",
+          "progreso",
           "diario"
         ],
-        "releaseNotes": "El App Store muestra Foxiem en inglés, turco, alemán, francés, español e italiano.",
+        "releaseNotes": "Foxiem 2.0. Rastreadores con nombre, ideas, recordatorios, widgets y Apple Watch. Sin anuncios. Pro opcional. Modo invitado; iniciar sesión no sustituye los contadores locales.",
         "marketingUrl": "https://foxiem.com",
-        "supportUrl": "https://foxiem.com/privacy",
-        "title": "Foxiem: Contador múltiple",
-        "subtitle": "Hábitos, rachas y progreso",
+        "supportUrl": "https://foxiem.com",
+        "title": "Foxiem: Contador",
+        "subtitle": "Hábitos, metas y recuentos",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "promoText": "Ahora con varios contadores con nombre: cambia de actividad y consulta estadísticas, historial y rachas de cada contador."
+        "promoText": "Cuenta en local. Modo invitado. Pro opcional para más herramientas."
       },
       "ar-SA": {
-        "title": "Foxiem: عداد متعدد",
-        "subtitle": "عادات وتكرار وتتبع يومي",
+        "title": "Foxiem: عدّاد",
+        "subtitle": "عادات وأهداف وعدّ يومي",
         "privacyPolicyUrl": "https://foxiem.com/privacy",
-        "description": "Foxiem عدّاد بسيط وهادئ لكل ما تريد إحصاءه: العادات، تكرارات التمرين، القراءة، الحضور، النقاط، الروتين، أو أي نشاط يومي.\n\nعدّادات متعددة\nامنح كل عدّاد اسمًا وافصل بين أنشطتك. انتقل بين العدّادات من الرئيسية والإحصائيات والسجل والانتظام.\n\nعدّ بسرعة\nاستخدم +1 و+5 و-1 لتسجيل تقدّمك خلال ثوانٍ. أعد ضبط العدّاد النشط عندما تريد البداية من جديد.\n\nشاهد تقدّمك\nراجع سجل النشاط والإحصائيات اليومية والأسبوعية والشهرية وسلاسل الانتظام للعدّاد الذي تختاره.\n\nحافظ على انتظامك\nأنشئ تذكيرات محلية في الأيام والأوقات التي تناسب روتينك.\n\nبسيط ومحلي\nلا حاجة إلى حساب. تُحفظ عدّادات Foxiem وسجلك وملفك وتذكيراتك وتفضيلاتك على جهازك. تُوضَّح ممارسات الإعلانات والتحليلات في معلومات الخصوصية وسياسة الخصوصية.\n\nاستخدم Foxiem من أجل:\n- العادات والروتين اليومي\n- تكرارات التمرين وجلسات التدريب\n- القراءة والتعلّم\n- الحضور وعدّ الأشخاص\n- النقاط والمهام المتكررة\n- أي شيء تريد إحصاءه بانتظام\n\nعدّات صغيرة. تقدّم كبير.",
+        "description": "Foxiem عدّاد بسيط للعادات والأهداف والتكرارات والعدّ اليومي. افتحه، اضغط، وتابع — من دون حساب ومن دون إعداد معقّد.\n\nأنشئ متتبعات بأسماء لما يهمك. عدّ بسرعة بـ +1 أو +5 أو −1، أضف ملاحظة عند الحاجة، وتابع من حيث توقفت.\n\nشاهد كيف تتحرك الأرقام. السجل والرؤى والانتظام تساعد على ملاحظة الأنماط عبر الأيام والأسابيع، وليس المجموع الحالي فقط.\n\nاضبط تذكيرات إذا أردت تنبيهًا. ودجات الشاشة الرئيسية وApple Watch تسمح بالعدّ دون فتح التطبيق.\n\nFoxiem محلي أولًا. المتتبعات والعدّ والملاحظات تبقى على الجهاز. يمكنك استخدامه كضيف. تسجيل الدخول اختياري ولا يستبدل العدادات الموجودة على الهاتف.\n\nFoxiem Pro الاختياري يفتح رؤى إضافية وخيارات تذكير وودجات وأدوات مرتبطة. الشراء داخل التطبيق الشهري والسنوي ولمدى الحياة اختياري. استعد المشتريات إذا كان لديك Pro.\n\nالمشتريات وتسجيل الدخول الاختياري وتقارير الأعطال والتحليلات بعد الموافقة موضحة في سياسة الخصوصية.",
         "keywords": [
           "عداد",
-          "نقر",
           "عادات",
-          "تكرار",
-          "سلسلة",
           "هدف",
-          "روتين",
-          "حضور",
-          "مخزون",
-          "نقاط",
-          "عدد",
-          "تقدم"
+          "تكرار",
+          "عد",
+          "تذكير",
+          "ودجت",
+          "تقدم",
+          "يومي"
         ],
-        "supportUrl": "https://foxiem.com/privacy",
+        "supportUrl": "https://foxiem.com",
         "marketingUrl": "https://foxiem.com",
-        "releaseNotes": "يعرض App Store الآن Foxiem بالإنجليزية والتركية والألمانية والفرنسية والإسبانية والإيطالية.",
-        "promoText": "عدادات متعددة بأسماء: بدّل بين الأنشطة وشاهد الإحصائيات والسجل والسلاسل لكل عداد."
+        "releaseNotes": "Foxiem 2.0. متتبعات بأسماء، رؤى، تذكيرات، ودجات وApple Watch. بلا إعلانات. Pro اختياري. وضع الضيف؛ تسجيل الدخول لا يستبدل العدادات المحلية.",
+        "promoText": "عدّ محليًا. وضع الضيف. Pro اختياري لمزيد من الأدوات."
       }
     },
     "categories": [
@@ -204,16 +178,7 @@
       "unrestrictedWebAccess": false,
       "violenceCartoonOrFantasy": "NONE",
       "violenceRealistic": "NONE",
-      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
-      "advertising": true,
-      "ageAssurance": false,
-      "ageRatingOverrideV2": "NONE",
-      "developerAgeRatingInfoUrl": null,
-      "gunsOrOtherWeapons": "NONE",
-      "healthOrWellnessTopics": false,
-      "messagingAndChat": false,
-      "parentalControls": false,
-      "userGeneratedContent": false
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE"
     },
     "review": {
       "firstName": "Hakan",
@@ -221,7 +186,7 @@
       "email": "solutionvela@gmail.com",
       "phone": "+447462066583",
       "demoRequired": false,
-      "notes": "You don't have to sign-In information"
+      "notes": "Foxiem is guest-first. Core counting works without an account.\n\nRestricted functionality is Foxiem Pro (RevenueCat entitlement `pro`): extra insights, extra reminder options, widgets beyond the Free set, and related Pro surfaces. Access is via App Store In-App Purchase:\n\n- `foxiem_pro_monthly` (auto-renewable monthly)\n- `foxiem_pro_yearly` (auto-renewable yearly)\n- `foxiem_pro_lifetime` (non-consumable)\n\nThere is no permanent production backdoor. Reviewers should use Apple’s sandbox / TestFlight with a sandbox Apple ID so purchases do not charge a personal payment method. After purchase, Pro unlocks from RevenueCat customer info. Restore Purchases is in Settings.\n\nLocal tracker data remains on the device if Pro expires or the optional account is deleted.\n\nPaywall: Settings → Foxiem Pro, or any locked Pro surface.\n\nOptional Sign in with Apple / Google does not replace local trackers."
     }
   }
 }

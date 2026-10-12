@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useReducedMotion, useResponsiveLayout } from '@/hooks';
-import { contentMaxWidth, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 
 import { IconButton } from './IconButton';
 import { shouldDismissSheet, useOverlayMotion } from './overlayMotion';
@@ -37,7 +37,7 @@ export function Sheet({ visible, title, onClose, children, footer, testID }: She
   const { t } = useTranslation();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const { height, horizontalPadding } = useResponsiveLayout();
+  const { height, horizontalPadding, contentMaxWidth } = useResponsiveLayout();
   const reduceMotion = useReducedMotion();
   const { mounted, progress } = useOverlayMotion(visible, reduceMotion);
   const [drag] = useState(() => new Animated.Value(0));

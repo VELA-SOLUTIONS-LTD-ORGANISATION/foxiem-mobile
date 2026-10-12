@@ -1,42 +1,36 @@
-# App Privacy questionnaire notes (source audit)
+# App Privacy questionnaire notes (Foxiem 2.0 source)
 
-Draft answers for App Store Connect **App Privacy**. Owner must confirm before Save. Do not invent AdMob production IDs.
+Draft answers for App Store Connect **App Privacy**. Confirm before Save. Official: [guideline 5.1](https://developer.apple.com/app-store/review/guidelines/).
 
 ## Privacy Policy URL
 
-`https://foxiem.com/privacy` (HTTPS 200). Save in ASC **App Privacy → Edit → Save**.
+`https://foxiem.com/privacy` (HTTPS, public, names Foxiem, optional account, RevenueCat, Sentry, opt-in analytics, no ads, deletion).
 
 ## Does this app collect data?
 
-**Yes** — `react-native-google-mobile-ads` is linked and initializes (UMP + Mobile Ads) with production Foxiem AdMob App IDs and banner units on Statistics / Activity History.
+**Yes.** Guest use keeps trackers on-device. Optional account, purchases, crash reports and opt-in analytics leave the device.
 
-## Local-only Foxiem data (usually do **not** declare as “collected”)
+## Local-only (do not declare as collected product content)
 
-Name/username, language, counter, history, reminders stay in AsyncStorage on device. Foxiem code does not sync them to a Foxiem server.
+Tracker names, counts, notes, reminders, preferences in on-device storage. Not uploaded.
 
-## Data types to declare (Google Mobile Ads SDK)
+## Types to declare (2.0)
 
-Per [Google AdMob iOS data disclosure](https://developers.google.com/admob/ios/privacy/data-disclosure):
+| Type | Linked to user? | Purposes (draft) |
+|------|-----------------|------------------|
+| Email Address | Yes, if the person signs in | App Functionality |
+| User ID | Yes when signed in; RevenueCat app user id for billing | App Functionality; Fraud Prevention |
+| Purchase History | Yes if they buy/restore | App Functionality |
+| Crash Data | Not linked to email (`sendDefaultPii: false`) | App Functionality |
+| Product Interaction | Only after analytics consent | Analytics |
+| Device ID / diagnostics typical of Sentry | Not linked to email | App Functionality |
 
-| Type | Purposes (draft) | Linked to user? (draft) |
-|------|------------------|-------------------------|
-| Device ID | Third-Party Advertising; Analytics | Not Linked |
-| Advertising Data | Third-Party Advertising; Analytics | Not Linked |
-| Product Interaction | Third-Party Advertising; Analytics | Not Linked |
-| Diagnostics (Crash Data) | App Functionality; Analytics | Not Linked |
-| Performance Data | App Functionality; Analytics; Third-Party Advertising | Not Linked |
-| Coarse Location | Third-Party Advertising; Analytics | Not Linked |
-
-Firebase Analytics is linked for Ads measurement only (`@react-native-firebase/app` + `analytics`, project `foxiem-counter`). Events are PII-free (`onboarding_complete`, `first_count`). No Foxiem crash/auth/push backends or Foxiem server in source.
+No advertising SDK in 2.0. Do **not** declare Third-Party Advertising.
 
 ## Used for Tracking?
 
-**Draft: No** for current binary (no ATT / `NSUserTrackingUsageDescription`). Revisit if personalized ads / IDFA go live.
+**Draft: No** unless ATT / IDFA is added. Analytics is opt-in measurement, not ATT tracking as currently implemented.
 
-## Evidence
+## Account deletion
 
-- Ads: `src/ads/*`, `app.json`, `package.json`
-- Firebase / Ads conversions: `google-services.json`, `GoogleService-Info.plist`, `app.config.ts`, `src/lib/telemetry/adsConversions.ts`
-- Local storage: `src/storage/*`
-- Notifications: local only (`src/notifications/reminderNotifications.ts`)
-- Guards: `src/__tests__/releaseConfig.test.ts`, `store/compliance-notes.md`
+In-app Settings → Delete account, and `https://foxiem.com/delete`. Does not wipe local trackers.

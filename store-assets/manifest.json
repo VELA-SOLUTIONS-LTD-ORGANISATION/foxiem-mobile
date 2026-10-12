@@ -1,0 +1,797 @@
+{
+  "generatedAt": "2026-10-05T10:16:40.674Z",
+  "slots": {
+    "en-GB/ios/iphone-6.9": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 199134,
+          "sha256": "5b1b204b5c900663c0f1105af75a1db11281e98c4d6e47cc202cdfdbfd092393",
+          "path": "store-assets/raw/en-GB/ios/iphone-6.9/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 232761,
+          "sha256": "aeb1a3f329e996af2f77ce14e1e7c2a898d812671ffbbf7f26cf455c70f53000",
+          "path": "store-assets/raw/en-GB/ios/iphone-6.9/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 318469,
+          "sha256": "fd599cea39aa565ffdde505f85f20dda8ff785506161b3a9f29b6916ab4b87e6",
+          "path": "store-assets/raw/en-GB/ios/iphone-6.9/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 266609,
+          "sha256": "713e814eeabe329e2ebd6f93014ba2d322dad11d99c648dec9ae9b44e759633a",
+          "path": "store-assets/raw/en-GB/ios/iphone-6.9/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 422242,
+          "sha256": "493514e0a1316640bf197682d4fb267004a07d581b1fe56fe68872012439e9b0",
+          "path": "store-assets/raw/en-GB/ios/iphone-6.9/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 349976,
+          "sha256": "e44d27d9ab708121f41b8ae4e0797fbb081651699681fc913ec6bc48b22cdcdf",
+          "path": "store-assets/raw/en-GB/ios/iphone-6.9/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "en-GB/ios/ipad-13": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 146984,
+          "sha256": "5a6af9b7a92d28c2bc566e46a931f4f306358d45b515234517a57fe4d24e5be1",
+          "path": "store-assets/raw/en-GB/ios/ipad-13/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 232706,
+          "sha256": "2cd3ce03e0a1b32454f2d9e3d5a21823a3711f150431f11d48060f34367c5066",
+          "path": "store-assets/raw/en-GB/ios/ipad-13/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 303679,
+          "sha256": "8501573fb30de23d02f651e6aa77d8ffbefa979384e5a935b3567666ef18c2f0",
+          "path": "store-assets/raw/en-GB/ios/ipad-13/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 192004,
+          "sha256": "4286fdd0382285a3984e8f431b944ef6d0930d9b6917c716f5ff801ed16084b9",
+          "path": "store-assets/raw/en-GB/ios/ipad-13/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 323093,
+          "sha256": "9a5514ec679757367e03a460595af6ff3430b007541dd736af83c3d3cd779577",
+          "path": "store-assets/raw/en-GB/ios/ipad-13/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 382794,
+          "sha256": "a4564d1b77738adbb324f33c902f11a098b36316bc8d226c2ff035b7bd5b23a2",
+          "path": "store-assets/raw/en-GB/ios/ipad-13/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "tr-TR/ios/iphone-6.9": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 191190,
+          "sha256": "81e9d3f2ce4a2374134d7592a3721165feacf73e49b61dd1512244573abb6fd7",
+          "path": "store-assets/raw/tr-TR/ios/iphone-6.9/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 224071,
+          "sha256": "03c304342e8457402a31cb389421e7274a3c45623b0f1306c2fd25f5e4d0c0d3",
+          "path": "store-assets/raw/tr-TR/ios/iphone-6.9/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 318919,
+          "sha256": "fd3eaa6004f28e08d906d0a381d0d730374641900d9a59553e7083f8137638e8",
+          "path": "store-assets/raw/tr-TR/ios/iphone-6.9/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 255158,
+          "sha256": "a1a3b0da41c3981f9f92e97b9355375458c0872776f29f641ae2f08b5d75738d",
+          "path": "store-assets/raw/tr-TR/ios/iphone-6.9/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 421666,
+          "sha256": "07967bac064e7399dea830733087a49449ff7229add4fe0212834b40ed8834cc",
+          "path": "store-assets/raw/tr-TR/ios/iphone-6.9/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 359107,
+          "sha256": "e4eb2fd130f298a834eb341f030e9a865a48e7cd3ba484fac32f04baec1303ca",
+          "path": "store-assets/raw/tr-TR/ios/iphone-6.9/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "tr-TR/ios/ipad-13": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 141662,
+          "sha256": "bc0b5596cc97d54b46db7cd97064c9c8d75882dd2a559673ff1dc7b7d9745e68",
+          "path": "store-assets/raw/tr-TR/ios/ipad-13/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 219722,
+          "sha256": "ec2993197bef23486c21db786ca945b0ca81fe9a144016ecf740523bc25ebd40",
+          "path": "store-assets/raw/tr-TR/ios/ipad-13/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 304067,
+          "sha256": "8f17e57fd6adcf016203f9253d82945ec3a1a84967bd51656da509cecd51ade7",
+          "path": "store-assets/raw/tr-TR/ios/ipad-13/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 185757,
+          "sha256": "56b7642b8d90c8dc4bffa9d131c867f46eb009aeeb28b0e8b1f19c6a4b22b9bc",
+          "path": "store-assets/raw/tr-TR/ios/ipad-13/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 314285,
+          "sha256": "ad2fc3df207308e14638390af43fbca5692080fa0e0adc958e1870605657aa1d",
+          "path": "store-assets/raw/tr-TR/ios/ipad-13/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 371530,
+          "sha256": "d19f93ebaae9791bd657217f8165daa376b6538accb4341b910dc5a92e872198",
+          "path": "store-assets/raw/tr-TR/ios/ipad-13/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "de-DE/ios/iphone-6.9": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 197445,
+          "sha256": "a2609feff7ac82cdbe47800d3c18713a5ff899cee60d9e2c4b8b53e92578c625",
+          "path": "store-assets/raw/de-DE/ios/iphone-6.9/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 241030,
+          "sha256": "0acef36e692a227c2a9070a8443ba627870773614b87d8d80d6f7454d5ed3dab",
+          "path": "store-assets/raw/de-DE/ios/iphone-6.9/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 347635,
+          "sha256": "9f1d9a8760e6f17c9b5a9389740bae1fd0009b8e22a861095ba652d2ac637b62",
+          "path": "store-assets/raw/de-DE/ios/iphone-6.9/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 277453,
+          "sha256": "1bd6dcda98599ea4b8d68d88e478353437684343fd61c39f4e74a550d10743c7",
+          "path": "store-assets/raw/de-DE/ios/iphone-6.9/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 418169,
+          "sha256": "4e9c21445c8b98842ed7aa0238ccb1e975ba227ea7be448325732c777b561ab6",
+          "path": "store-assets/raw/de-DE/ios/iphone-6.9/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 379043,
+          "sha256": "81862894ef4678ca70fc0e9c1a818e3ac737b4990f1516680d3dea775748ce9d",
+          "path": "store-assets/raw/de-DE/ios/iphone-6.9/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "de-DE/ios/ipad-13": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 146382,
+          "sha256": "ae69174bf580ead280b624f36cd7781d9beda4d20aa6adab166a884b681b1211",
+          "path": "store-assets/raw/de-DE/ios/ipad-13/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 237850,
+          "sha256": "64eb4beeeb48be6129f065782ddfd47dfa5fc706d4b6e82d758540fc34b31f47",
+          "path": "store-assets/raw/de-DE/ios/ipad-13/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 341720,
+          "sha256": "07f2c33a126e6b1789d09bd2b54d12d255f9f2475a77e4e99f2578ecff58c4da",
+          "path": "store-assets/raw/de-DE/ios/ipad-13/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 200014,
+          "sha256": "604a595ad8de11d71a19ea0d4d55a174df8971c7d3c9685166cb1abfdfbf2b69",
+          "path": "store-assets/raw/de-DE/ios/ipad-13/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 339134,
+          "sha256": "d95b3ab29a64f7bc6129fe4af6679fc8acc9ac5dab07c8372aa5b70ca46674be",
+          "path": "store-assets/raw/de-DE/ios/ipad-13/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 412744,
+          "sha256": "ac96912fdcbb7e0859f27d65c3a6f0f8d7be4d824560c0e83356ae0b202888e8",
+          "path": "store-assets/raw/de-DE/ios/ipad-13/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "fr-FR/ios/iphone-6.9": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 199942,
+          "sha256": "2ab207daacaa1a05ab421d893c8d5ce5a80dbaf6a5404d9bc6a74c8cbafd02a8",
+          "path": "store-assets/raw/fr-FR/ios/iphone-6.9/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 248770,
+          "sha256": "62bf92b0b94c9c246092822207f68cf4aba3ab848f993d4dfabb406deeaffcf7",
+          "path": "store-assets/raw/fr-FR/ios/iphone-6.9/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 340018,
+          "sha256": "15cfac7e1b3ccb3decfb25a4ddb55bcc72a7b9bbfa697fe94a389452996f2575",
+          "path": "store-assets/raw/fr-FR/ios/iphone-6.9/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 301993,
+          "sha256": "993b10b0d8a9c0d907895b939211dfe66e9e1d5f2b45d55b42258ec78af9680d",
+          "path": "store-assets/raw/fr-FR/ios/iphone-6.9/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 439731,
+          "sha256": "734e2c7633978e912d286d69d96355119a33baeae27af0a9f6eafa53c6a861bc",
+          "path": "store-assets/raw/fr-FR/ios/iphone-6.9/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 385151,
+          "sha256": "b85629014f8e2fe550ae4d9b5d136960720b68632a9ff3aa83fdf4a301caae73",
+          "path": "store-assets/raw/fr-FR/ios/iphone-6.9/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "fr-FR/ios/ipad-13": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 148278,
+          "sha256": "7a451cb1f55b8d27aee242dc5423acafded0464224aa570c62a2ab4b34369edf",
+          "path": "store-assets/raw/fr-FR/ios/ipad-13/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 242978,
+          "sha256": "d2ecdcfee4dcd63c037a4f76132f694d0460b5c799b58a0cadca1806b7f474ac",
+          "path": "store-assets/raw/fr-FR/ios/ipad-13/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 330814,
+          "sha256": "f493e82aaa1556d97d1fe1e8b25d672136e37e06f78594c1e8c54ebe8261f0bd",
+          "path": "store-assets/raw/fr-FR/ios/ipad-13/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 208531,
+          "sha256": "c4f2793a152e07776918e62b176f7b2e9b7c773c9ccb2830025e0dd3a26535de",
+          "path": "store-assets/raw/fr-FR/ios/ipad-13/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 347430,
+          "sha256": "72aa31bcd0e2be0a72d2e647c3f404e72c6b42f2ea7e7a29749c9d6acad77129",
+          "path": "store-assets/raw/fr-FR/ios/ipad-13/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 418281,
+          "sha256": "3860812361d2f65b55a83dda04f086652d55d3126ac8d7e44b93467935e5428f",
+          "path": "store-assets/raw/fr-FR/ios/ipad-13/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "es-ES/ios/iphone-6.9": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 196764,
+          "sha256": "626eec19f4c6fb42b878a5037af3562043a0944b256c04476b446eccc6adb93a",
+          "path": "store-assets/raw/es-ES/ios/iphone-6.9/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 237834,
+          "sha256": "30a996dec19cfbc804895ec16df8cf4022499081c818c58188116288fc712d55",
+          "path": "store-assets/raw/es-ES/ios/iphone-6.9/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 344049,
+          "sha256": "37a16f53d7131afe99a52a534ca0b7ed01b6ae16117612517787e7371e350ea9",
+          "path": "store-assets/raw/es-ES/ios/iphone-6.9/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 304885,
+          "sha256": "8c88a50588b83f8f840104d8d38ed9f2a9e792aec05cf5b3ed85dbbbc6ca4cb6",
+          "path": "store-assets/raw/es-ES/ios/iphone-6.9/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 441874,
+          "sha256": "0524e5ddd912509ec7e4341bc824a3c137506054aa3ed75565c0b79d69a022a5",
+          "path": "store-assets/raw/es-ES/ios/iphone-6.9/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 359106,
+          "sha256": "2fb819fa8c0a2476843f19a09976447ba6e33057610edf6681b7f3385f5d135e",
+          "path": "store-assets/raw/es-ES/ios/iphone-6.9/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "es-ES/ios/ipad-13": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 146309,
+          "sha256": "37df025e8e077b4f29fa0b4157a1c7f255892174d53755e1893f4d95d2a6c66f",
+          "path": "store-assets/raw/es-ES/ios/ipad-13/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 236821,
+          "sha256": "1d0e53e77412d98f2b83a875b4e32e0e08121caa56b28ad78d6332191612bade",
+          "path": "store-assets/raw/es-ES/ios/ipad-13/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 315214,
+          "sha256": "766ce5b7766528d7f76fd7d4ddf9d95db426db3bb2fe9cfae76ab6cfb71a404f",
+          "path": "store-assets/raw/es-ES/ios/ipad-13/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 217149,
+          "sha256": "da25afb777c99bef2fa1eeea21b34164c89dc376ba2a33bb69a0d80590ae7798",
+          "path": "store-assets/raw/es-ES/ios/ipad-13/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 338196,
+          "sha256": "d6259239a16cb7e7e1627e6842ea37458be8966fc4b8ae98a7a80f8669335b4a",
+          "path": "store-assets/raw/es-ES/ios/ipad-13/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 394263,
+          "sha256": "ef9a52281a52b4232f805b009c3077efec814241e4b88c6bcb31ddbdeebdcf27",
+          "path": "store-assets/raw/es-ES/ios/ipad-13/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "it-IT/ios/iphone-6.9": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 204680,
+          "sha256": "a07f8b6a091d3c9d2f912735e972e497ccf10ac7c1183beacced66b9ed61f84c",
+          "path": "store-assets/raw/it-IT/ios/iphone-6.9/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 252648,
+          "sha256": "35e91792af27048781246961ad2339df04af01bed6b64449ee2af1f63c1fac9e",
+          "path": "store-assets/raw/it-IT/ios/iphone-6.9/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 337458,
+          "sha256": "0dbc400e01c654a8dad11f673371ef64107e976ac79722329cd43a6c812ad588",
+          "path": "store-assets/raw/it-IT/ios/iphone-6.9/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 277205,
+          "sha256": "b31b5114a722e500a9097fd5bd1b651bcd4cab5fe7eb28205b8b24edd7044b2a",
+          "path": "store-assets/raw/it-IT/ios/iphone-6.9/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 438664,
+          "sha256": "9fbabdba88ceda56e6dd3b959c78af5a20b368987fa3d77c35ed69ec79ba2c18",
+          "path": "store-assets/raw/it-IT/ios/iphone-6.9/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 1320,
+          "height": 2868,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 376842,
+          "sha256": "7ccfe26ba4e1f44e48d77b85ed920b8e3b8da665c264bf8129c0e520845cc6bd",
+          "path": "store-assets/raw/it-IT/ios/iphone-6.9/06-pro.png"
+        }
+      ],
+      "errors": []
+    },
+    "it-IT/ios/ipad-13": {
+      "ok": true,
+      "files": [
+        {
+          "name": "01-home.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 149004,
+          "sha256": "ddce801e35a0c56d5be06bde72466c6a74f1eff9502af66f5bfe034fdc203e29",
+          "path": "store-assets/raw/it-IT/ios/ipad-13/01-home.png"
+        },
+        {
+          "name": "02-counter.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 243384,
+          "sha256": "4bc3dd9c8c1842b0ca601fffaa2fc2e4a16fbbdab0e396f06b408b39f985915f",
+          "path": "store-assets/raw/it-IT/ios/ipad-13/02-counter.png"
+        },
+        {
+          "name": "03-insights.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 329077,
+          "sha256": "52e8fbbbdfe127bbb30461bd85d34e33f8efeec089b53f566ecbb80fdaa81d56",
+          "path": "store-assets/raw/it-IT/ios/ipad-13/03-insights.png"
+        },
+        {
+          "name": "04-reminders.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 197760,
+          "sha256": "ff93510f24a2d1e498c5454fc78f7af432e8bfaee27b47873b39f0a1f96a7ea4",
+          "path": "store-assets/raw/it-IT/ios/ipad-13/04-reminders.png"
+        },
+        {
+          "name": "05-widgets.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 332566,
+          "sha256": "11b3453bc3a7b428333ee084c839d4d8e5c382a016cacf1a186d1627f15a37e5",
+          "path": "store-assets/raw/it-IT/ios/ipad-13/05-widgets.png"
+        },
+        {
+          "name": "06-pro.png",
+          "width": 2064,
+          "height": 2752,
+          "bitDepth": 8,
+          "colorType": 2,
+          "bytes": 386972,
+          "sha256": "2b7b7242ebe25e8a0ae11caccb30b0826e809fb3e1130187385a9f1c1a86d38e",
+          "path": "store-assets/raw/it-IT/ios/ipad-13/06-pro.png"
+        }
+      ],
+      "errors": []
+    }
+  }
+}

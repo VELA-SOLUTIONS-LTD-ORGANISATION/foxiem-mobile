@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#000000",
+    "backgroundColor": "#F3F4F1",
     "ios": {
       "bundleIdentifier": "co.uk.solutionvela.foxiem",
       "supportsTablet": true,
@@ -38,16 +38,20 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/splash-icon.png",
-          "imageWidth": 220,
+          "image": "./assets/splash-wordmark-light.png",
+          "imageWidth": 240,
           "resizeMode": "contain",
-          "backgroundColor": "#000000"
+          "backgroundColor": "#F3F4F1",
+          "dark": {
+            "image": "./assets/splash-wordmark-dark.png",
+            "backgroundColor": "#0E1012"
+          }
         }
       ],
       [
         "expo-status-bar",
         {
-          "style": "light"
+          "style": "dark"
         }
       ],
       "expo-font",

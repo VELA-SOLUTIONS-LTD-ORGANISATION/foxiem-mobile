@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "cancel": "Cancelar",
     "done": "Listo",
@@ -210,7 +210,13 @@
     "recoveredTitle": "Foxiem ha restaurado tus contadores",
     "recoveredBody": "No se pudieron leer los datos guardados, así que Foxiem usó su copia de seguridad. Puede que falten tus entradas más recientes.",
     "unreadableTitle": "No se pudo leer parte del historial",
-    "unreadableBody": "Foxiem guardó una copia en este dispositivo y reinició los contadores afectados."
+    "unreadableBody": "Foxiem guardó una copia en este dispositivo y reinició los contadores afectados.",
+    "greetingMorning": "Buenos días",
+    "greetingAfternoon": "Buenas tardes",
+    "greetingEvening": "Buenas noches",
+    "todayProgress": "{{done}} de {{total}} contados hoy",
+    "todayAll": "Todo contado hoy",
+    "todayNone": "Aún nada contado hoy"
   },
   "status": {
     "total": "total",

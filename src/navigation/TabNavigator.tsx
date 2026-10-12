@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { isStoreScreenshotMode } from '@/lib/storeScreenshotMode';
 import { HomeScreen } from '@/screens/home/HomeScreen';
 import { InsightsScreen } from '@/screens/insights/InsightsScreen';
 import { SettingsScreen } from '@/screens/settings/SettingsScreen';
@@ -26,10 +28,15 @@ export function TabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        animation: 'fade',
+        animation: isStoreScreenshotMode() ? 'none' : 'fade',
+        sceneStyle: {
+          backgroundColor: theme.colors.canvas,
+          ...(Platform.OS === 'web' ? { paddingBottom: 56 + insets.bottom } : null),
+        },
         tabBarActiveTintColor: theme.colors.ink,
         tabBarInactiveTintColor: theme.colors.inkTertiary,
         tabBarStyle: {
+          position: 'relative',
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.line,
           // The default 49pt bar is sized for 10pt labels; ours are 12pt.

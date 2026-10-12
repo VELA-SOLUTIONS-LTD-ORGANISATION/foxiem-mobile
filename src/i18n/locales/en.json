@@ -207,7 +207,13 @@
     "recoveredTitle": "Foxiem restored your trackers",
     "recoveredBody": "Stored data couldn't be read, so Foxiem used its backup. Your most recent entries may be missing.",
     "unreadableTitle": "Some history couldn't be read",
-    "unreadableBody": "Foxiem kept a copy on this device and started the affected trackers fresh."
+    "unreadableBody": "Foxiem kept a copy on this device and started the affected trackers fresh.",
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening",
+    "todayProgress": "{{done}} of {{total}} counted today",
+    "todayAll": "Everything counted today",
+    "todayNone": "Nothing counted yet today"
   },
   "status": {
     "total": "total",

@@ -1,0 +1,47 @@
+# Foxiem store screenshot factory.
+# Expo CNG does not keep ios/android UI-test targets in git, so these lanes
+# call the native capture scripts (simctl / adb + foxiem://_dev/store/…).
+# That is the same job Fastlane snapshot / screengrab do: relaunch per locale
+# on the store device classes, write RAW PNGs, then AppScreens can frame them.
+
+default_platform(:ios)
+
+def capture(script)
+  sh("node", File.expand_path("../scripts/store-screenshots/#{script}", __dir__))
+end
+
+desc "RAW screenshots for every enabled device class and locale"
+lane :screenshots do
+  if FastlaneCore::Helper.mac?
+    capture("ios.mjs")
+  else
+    UI.important("No Xcode; capturing iOS 6.9\" / iPad 13\" sizes from Expo web.")
+    capture("web.mjs")
+  end
+  capture("android.mjs")
+  capture("validate.mjs")
+end
+
+platform :ios do
+  desc "iPhone 6.9\" and iPad 13\" (if the simulator exists), all listing locales"
+  lane :screenshots do
+    capture("ios.mjs")
+  end
+
+  desc "Alias matching Fastlane snapshot"
+  lane :snapshot do
+    screenshots
+  end
+end
+
+platform :android do
+  desc "Play phone 1080×1920, all listing locales"
+  lane :screenshots do
+    capture("android.mjs")
+  end
+
+  desc "Alias matching Fastlane screengrab"
+  lane :screengrab do
+    screenshots
+  end
+end

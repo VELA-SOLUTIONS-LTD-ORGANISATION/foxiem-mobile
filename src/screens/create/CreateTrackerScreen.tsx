@@ -69,7 +69,10 @@ export function CreateTrackerScreen({ navigation, route }: RootScreenProps<'Crea
     setStep((current) => (current > 1 ? ((current - 1) as Step) : current));
   });
 
-  const nameError = error && NAME_ERRORS.includes(error) ? errorMessage(error, t) : undefined;
+  const nameTaken = validateDraft(emptyDraft({ name: draft.name }), trackers) === 'nameDuplicate';
+  const nameError =
+    (error && NAME_ERRORS.includes(error) ? errorMessage(error, t) : undefined) ??
+    (nameTaken ? errorMessage('nameDuplicate', t) : undefined);
 
   const goToIntent = () => {
     const problem = validateDraft({ ...draft, intent: 'count', period: 'all', target: null }, trackers);
@@ -123,11 +126,11 @@ export function CreateTrackerScreen({ navigation, route }: RootScreenProps<'Crea
       <Button
         testID="create-continue"
         title={t('common.continue')}
-        disabled={draft.name.trim().length === 0}
+        disabled={draft.name.trim().length === 0 || nameTaken}
         onPress={goToIntent}
       />
     ) : step === 3 ? (
-      <Button testID="create-submit" title={t('create.cta')} onPress={create} />
+      <Button testID="create-submit" title={t('create.cta')} disabled={nameTaken} onPress={create} />
     ) : null;
 
   return (
@@ -158,6 +161,12 @@ export function CreateTrackerScreen({ navigation, route }: RootScreenProps<'Crea
 
       {step === 1 ? (
         <View style={styles.stack}>
+          <View style={[styles.preview, { backgroundColor: theme.tone(draft.color).soft, borderRadius: theme.radius.lg }]}>
+            <TrackerIcon icon={draft.icon} color={draft.color} size={56} />
+            <Text variant="bodyStrong" numberOfLines={1} style={styles.previewName}>
+              {draft.name.trim() || t('create.namePlaceholder')}
+            </Text>
+          </View>
           <TextField
             ref={nameRef}
             testID="create-name"
@@ -169,7 +178,6 @@ export function CreateTrackerScreen({ navigation, route }: RootScreenProps<'Crea
             returnKeyType="next"
             onSubmitEditing={goToIntent}
             error={nameError}
-            leading={<TrackerIcon icon={draft.icon} color={draft.color} size={36} />}
             onChangeText={(name) =>
               update(iconTouched ? { name } : { name, icon: suggestIcon(name) ?? DEFAULT_TRACKER_ICON })
             }
@@ -316,6 +324,17 @@ const styles = StyleSheet.create({
   },
   stack: {
     gap: 20,
+  },
+  preview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+  },
+  previewName: {
+    flex: 1,
+    minWidth: 0,
   },
   intentRow: {
     minHeight: 64,

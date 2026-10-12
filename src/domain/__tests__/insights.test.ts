@@ -1,4 +1,4 @@
-import { globalInsights, patternReadiness, trackerInsights } from '../insights';
+import { globalInsights, insightKey, patternReadiness, trackerInsights } from '../insights';
 import { monthlyReview, weeklyReview } from '../review';
 
 import { at, dailyEntries, makeEvents, makeTracker } from './helpers';
@@ -12,6 +12,21 @@ describe('insights never invent patterns', () => {
     const context = { now: at(2026, 3, 3, 20), weekStart };
     expect(trackerInsights(tracker, events, context).filter((insight) => insight.tier === 'pro')).toEqual([]);
     expect(patternReadiness(tracker, events, context)).toEqual({ ready: false, daysNeeded: 18 });
+  });
+
+  it('gives identical sentences from different trackers different list keys', () => {
+    const coffee = makeTracker({ name: 'Coffee', intent: 'limit', period: 'day', target: 3 }, at(2026, 2, 1));
+    const tea = makeTracker({ name: 'Tea', intent: 'limit', period: 'day', target: 3 }, at(2026, 2, 1));
+    const same: Parameters<typeof insightKey>[0] = {
+      kind: 'hitRate',
+      tier: 'free',
+      trackerId: coffee.id,
+      rule: 'limit',
+      success: 7,
+      days: 7,
+    };
+    expect(insightKey(same)).toBe(insightKey({ ...same }));
+    expect(insightKey({ ...same, trackerId: tea.id })).not.toBe(insightKey(same));
   });
 
   it('reports the target hit rate over the last 7 complete days', () => {

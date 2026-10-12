@@ -1,0 +1,1 @@
+contatore,abitudine,obiettivo,ripetizione,conteggio,promemoria,widget,progresso

@@ -116,7 +116,7 @@ export function NotificationsScreen({ navigation }: RootScreenProps<'Notificatio
   const blocked = reminders.permission === 'blocked' || reminders.permission === 'denied';
 
   return (
-    <Screen>
+    <Screen testID="notifications">
       <Header title={t('notifications.title')} />
       <View style={styles.status}>
         {blocked ? (

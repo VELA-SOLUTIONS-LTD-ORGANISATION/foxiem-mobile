@@ -62,3 +62,6 @@ scripts/_token_receiver_once.py
 __pycache__/
 *.pyc
 
+
+# local EAS logs
+eas-ios-*.log

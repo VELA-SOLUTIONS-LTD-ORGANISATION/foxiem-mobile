@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "cancel": "Abbrechen",
     "done": "Fertig",
@@ -207,7 +207,13 @@
     "recoveredTitle": "Foxiem hat deine Zähler wiederhergestellt",
     "recoveredBody": "Die gespeicherten Daten waren nicht lesbar, deshalb hat Foxiem die Sicherung verwendet. Deine neuesten Einträge fehlen eventuell.",
     "unreadableTitle": "Ein Teil des Verlaufs war nicht lesbar",
-    "unreadableBody": "Foxiem hat eine Kopie auf diesem Gerät behalten und die betroffenen Zähler neu gestartet."
+    "unreadableBody": "Foxiem hat eine Kopie auf diesem Gerät behalten und die betroffenen Zähler neu gestartet.",
+    "greetingMorning": "Guten Morgen",
+    "greetingAfternoon": "Guten Tag",
+    "greetingEvening": "Guten Abend",
+    "todayProgress": "{{done}} von {{total}} heute gezählt",
+    "todayAll": "Heute alles gezählt",
+    "todayNone": "Heute noch nichts gezählt"
   },
   "status": {
     "total": "gesamt",

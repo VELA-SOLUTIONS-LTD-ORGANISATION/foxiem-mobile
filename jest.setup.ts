@@ -1,3 +1,5 @@
+delete process.env.EXPO_PUBLIC_STORE_SCREENSHOTS;
+
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );

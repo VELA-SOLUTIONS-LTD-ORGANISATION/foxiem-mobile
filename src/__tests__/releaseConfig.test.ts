@@ -125,7 +125,9 @@ describe('architecture regression guards', () => {
     const adapter = fs.readFileSync(path.join(srcRoot, 'pro', 'purchaseAdapter.ts'), 'utf8');
     // The simulator is only ever required inside a `__DEV__` branch, and a build without a
     // valid store key ends in `unavailableAdapter`, never in the simulator.
-    expect(adapter).toMatch(/if \(__DEV__ && !storeEnabledInDevelopment\(\)\) \{[\s\S]*?require\('@\/dev\/simulatedAdapter'\)/);
+    expect(adapter).toMatch(
+      /if \(__DEV__ && \(process\.env\.EXPO_PUBLIC_STORE_SCREENSHOTS === '1' \|\| !storeEnabledInDevelopment\(\)\)\) \{[\s\S]*?require\('@\/dev\/simulatedAdapter'\)/,
+    );
     expect(adapter.match(/simulatedAdapter/g)?.length).toBeLessThanOrEqual(3);
     expect(adapter).toMatch(/return unavailableAdapter;\s*\}\s*const sdk/);
     expect(adapter).toMatch(/return createRevenueCatAdapter\(/);

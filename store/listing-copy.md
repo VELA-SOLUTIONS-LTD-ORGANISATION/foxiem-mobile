@@ -1,65 +1,46 @@
-# Foxiem App Store listing copy
+# Foxiem store listing copy (2.0)
 
-Applied to App Store Connect version **1.0.4** via `store.config.json` (`eas metadata:push`). Version 1.0.3 stays the live public listing until a 1.0.4 binary is submitted and approved. Do not invent support contacts, reviews, widgets, or features the app does not have.
+Canonical **Google Play** copy lives in `store/google-play/{locale}/`.
+Canonical **App Store** copy lives in `store/app-store/{locale}/`.
 
-Canonical copy for all six locales is in `scripts/apply-aso-store-config.mjs`.
+This file is the English positioning for both stores. Do not keyword-stuff. Do not put prices in metadata.
 
-## Name
+Version **2.0.0** is not submitted for App Review. Google Play Production is still live **1.0.4** until a 2.0 AAB is uploaded and reviewed.
+
+## Name (Play 50 / App Store 30)
 
 Foxiem: Tally Counter
 
-## Subtitle
+## Play short description (80)
 
-Habits, Reps & Daily Tracker
+A simple counter for habits, goals and the things you want to keep track of.
 
-## Promotional text
+## App Store subtitle (30)
 
-Now with multiple named counters: switch between activities and view stats, history and streaks for each one.
+Habits, goals and daily counts
 
-## Description
+## Promotional text (App Store 170)
 
-Foxiem is a calm, simple tally counter for anything you want to count — habits, gym reps, reading, attendance, scores, routines, or everyday activities.
+Count habits, reps and goals locally. Guest-first. Optional Pro.
 
-CREATE MULTIPLE COUNTERS
-Give each counter a name and keep different activities separate. Switch between counters from Home, Statistics, History, and Consistency.
+## English full description (Play 4000 / App Store 4000)
 
-COUNT FAST
-Use +1, +5, or -1 to record progress in seconds. Reset the active counter whenever you want a fresh start.
+See `store/google-play/en-GB/full-description.txt` and `store/app-store/en-GB/description.txt`. Play mentions Android widgets; App Store mentions Home Screen widgets and Apple Watch. Neither claims data never leaves the device.
 
-SEE YOUR PROGRESS
-Review activity history, daily, weekly and monthly statistics, and consistency streaks for the selected counter.
+## Keywords (App Store 100)
 
-STAY CONSISTENT
-Create local reminders for the days and times that suit your routine.
+counter,habit,goal,reps,tally,routine,reminder,widget,progress,daily
 
-SIMPLE BY DESIGN
-Foxiem is built to stay out of the way: no account, no complicated setup, and a clean interface focused on counting.
+## What's New (2.0)
 
-Your Foxiem counter data, history, profile, reminders and preferences are stored on your device. Advertising and analytics practices are described in the app's privacy information and privacy policy.
-
-Use Foxiem for:
-- daily habits and routines
-- gym reps and practice sessions
-- reading or learning activities
-- attendance and people counting
-- scores and repeated tasks
-- anything else you want to count consistently
-
-Small counts. Big progress.
-
-## Keywords
-
-multi,clicker,counting,score,inventory,attendance,streak,goal,routine,people,number,progress
-
-## What's New (1.0.4)
-
-The App Store now lists Foxiem in English, Turkish, German, French, Spanish and Italian.
+Foxiem 2.0. Named trackers, insights, reminders, widgets and Apple Watch. No ads. Optional Pro. Guest-first; signing in does not replace local counters.
 
 ## URLs
 
 - Marketing: https://foxiem.com
 - Privacy: https://foxiem.com/privacy
-- Support: solutionvela@gmail.com
+- Support: https://foxiem.com (email support@solutionvela.co.uk)
+- Account deletion (Play): https://foxiem.com/delete
 
 ## Category
 
@@ -67,14 +48,15 @@ Utilities (primary), Productivity (secondary)
 
 ## Review notes
 
-Foxiem does not require an account or sign-in. The app is a local-first counter with statistics, activity history, consistency tracking, and local reminders.
+See `store/google-play/reviewer-notes.md` and `store/app-store/reviewer-notes.md`.
 
 ## Demo account
 
-None — no authentication.
+None for core counting. Pro is IAP (monthly / yearly / lifetime). Use store sandbox / license testers.
 
 ## Price / release
 
 - Free download
-- Prefer: Manually release this version
-- No IAP/subscriptions for 1.0
+- Optional IAP: foxiem_pro_monthly, foxiem_pro_yearly, foxiem_pro_lifetime
+- Do not submit App Review until the owner asks
+- Do not publish Play 2.0 Production until versionCode > 11 AAB + purchase tests pass

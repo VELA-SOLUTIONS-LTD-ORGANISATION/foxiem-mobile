@@ -50,7 +50,7 @@ const live: Session = {
   accessToken: 'access-1',
   refreshToken: 'refresh-1',
   accessExpiresAt: NOW + 10 * 60_000,
-  user: { id: 'u-1', email: 'person@example.com' },
+  user: { id: 'u-1', email: 'person@example.com', provider: 'google' },
 };
 
 describe('sign-in', () => {
@@ -59,7 +59,12 @@ describe('sign-in', () => {
     const session = await client.signInWithGoogle('google-id-token');
     expect(calls[0]).toMatchObject({ url: 'https://api.foxiem.app/api/v1/auth/google', method: 'POST', body: { idToken: 'google-id-token' } });
     expect(calls[0]?.headers.Authorization).toBeUndefined();
-    expect(session).toEqual({ accessToken: 'a', refreshToken: 'r', accessExpiresAt: NOW + 900_000, user: { id: 'u-1', email: 'person@example.com' } });
+    expect(session).toEqual({
+      accessToken: 'a',
+      refreshToken: 'r',
+      accessExpiresAt: NOW + 900_000,
+      user: { id: 'u-1', email: 'person@example.com', provider: 'google' },
+    });
     await expect(store.load()).resolves.toEqual(session);
   });
 
@@ -180,7 +185,7 @@ describe('sign-out and deletion', () => {
 
   it('deletes the account with the step-up token, then forgets the session', async () => {
     const { client, calls, store } = setup(() => json(204), live);
-    await client.deleteAccount('fresh-google-id-token');
+    await client.deleteAccount('fresh-google-id-token', 'google');
     expect(calls[0]).toMatchObject({
       method: 'POST',
       url: 'https://api.foxiem.app/api/account/delete',
@@ -191,7 +196,7 @@ describe('sign-out and deletion', () => {
 
   it('keeps the session when deletion fails', async () => {
     const { client, store } = setup(() => json(500), live);
-    await expect(client.deleteAccount('token')).rejects.toMatchObject({ status: 500 });
+    await expect(client.deleteAccount('token', 'google')).rejects.toMatchObject({ status: 500 });
     await expect(store.load()).resolves.not.toBeNull();
   });
 });

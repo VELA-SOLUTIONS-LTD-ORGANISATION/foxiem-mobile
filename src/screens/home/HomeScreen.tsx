@@ -13,7 +13,7 @@ import { formatLongDate } from '@/format';
 import { useResponsiveLayout } from '@/hooks';
 import type { TabScreenProps } from '@/navigation/types';
 import { NOTICE_IDS, useCountFeedback, useNotices, usePreferences, useTrackerStore } from '@/state';
-import { contentMaxWidth, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 
 import { AmountSheet } from '../shared/AmountSheet';
 import { useAnalysisContext } from '../shared/useAnalysisContext';
@@ -26,7 +26,7 @@ export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
   const { t } = useTranslation();
   const theme = useTheme();
   const { language, reduceMotion, hydrated: preferencesHydrated, preferences, setAnalyticsConsent } = usePreferences();
-  const { horizontalPadding, isCompact } = useResponsiveLayout();
+  const { horizontalPadding, isCompact, contentMaxWidth } = useResponsiveLayout();
   const store = useTrackerStore();
   const feedback = useCountFeedback();
   const notices = useNotices();
@@ -45,6 +45,19 @@ export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
       animateNextLayout(reduceMotion);
     }
   }, [orderKey, reduceMotion]);
+  const todayDone = useMemo(
+    () => trackers.filter((tracker) => trackerSnapshot(tracker, store.events[tracker.id] ?? EMPTY, context).today > 0).length,
+    [trackers, store.events, context],
+  );
+  const hour = context.now.getHours();
+  const greeting =
+    hour < 12 ? t('home.greetingMorning') : hour < 18 ? t('home.greetingAfternoon') : t('home.greetingEvening');
+  const todayLine =
+    todayDone === 0
+      ? t('home.todayNone')
+      : todayDone === trackers.length
+        ? t('home.todayAll')
+        : t('home.todayProgress', { done: todayDone, total: trackers.length });
   const archivedCount = useMemo(() => archivedTrackers(store.trackers).length, [store.trackers]);
   const migrated = store.trackers.some((tracker) => tracker.origin === 'migrated');
   // Asked once, in context, only after the person has something on Home. Never as a first-launch wall.
@@ -85,6 +98,29 @@ export function HomeScreen({ navigation }: TabScreenProps<'HomeTab'>) {
           onPress={() => navigation.navigate('CreateTracker')}
         />
       </View>
+      {trackers.length > 0 ? (
+        <View
+          accessible
+          accessibilityLabel={`${greeting}. ${todayLine}`}
+          style={[
+            styles.hero,
+            { backgroundColor: theme.colors.surface, borderColor: theme.colors.line, borderRadius: theme.radius.lg },
+          ]}
+        >
+          <Text variant="title">{greeting}</Text>
+          <Text variant="caption" tone="inkSecondary">
+            {todayLine}
+          </Text>
+          <View style={styles.heroTrack}>
+            {trackers.map((tracker, index) => (
+              <View
+                key={tracker.id}
+                style={[styles.heroSegment, { backgroundColor: index < todayDone ? theme.colors.ink : theme.colors.line }]}
+              />
+            ))}
+          </View>
+        </View>
+      ) : null}
       <View style={styles.banners}>
         {store.saveFailed ? (
           <Banner tone="caution" icon="warning-outline" title={t('home.saveFailedTitle')} body={t('home.saveFailedBody')} />
@@ -294,6 +330,22 @@ const styles = StyleSheet.create({
   },
   date: {
     marginTop: 2,
+  },
+  hero: {
+    gap: 4,
+    padding: 16,
+    marginBottom: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  heroTrack: {
+    flexDirection: 'row',
+    gap: 4,
+    marginTop: 10,
+  },
+  heroSegment: {
+    flex: 1,
+    height: 6,
+    borderRadius: 3,
   },
   banners: {
     gap: 10,

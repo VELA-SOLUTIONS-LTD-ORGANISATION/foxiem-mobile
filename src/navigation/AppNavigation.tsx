@@ -3,7 +3,9 @@ import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import * as SystemUI from 'expo-system-ui';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { Linking } from 'react-native';
+import { AppState, Linking, Platform } from 'react-native';
+
+import { createScreenTracker } from '@/lib/telemetry/screenTracking';
 
 import { quickCountTarget, reminderTarget } from '@/notifications';
 import { usePro } from '@/pro/ProProvider';
@@ -26,6 +28,18 @@ export function AppNavigation() {
   const notices = useNotices();
   const ready = preferences.hydrated && store.hydrated && reminders.hydrated && pro.hydrated && notices.hydrated;
   const pending = useRef<DeepLinkTarget | null>(null);
+  const screens = useRef(createScreenTracker());
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        screens.current.onForeground();
+      } else {
+        screens.current.onBackground();
+      }
+    });
+    return () => subscription.remove();
+  }, []);
   const trackersRef = useRef(store.trackers);
   const firstRunRef = useRef(store.firstRunCompleted);
 
@@ -60,8 +74,18 @@ export function AppNavigation() {
       pending.current = target;
       return;
     }
-    // Before first run is finished the Welcome flow owns navigation.
-    if (!firstRunRef.current) {
+    if (!firstRunRef.current && target.kind !== 'storeScreenshot') {
+      return;
+    }
+    if (target.kind === 'storeScreenshot') {
+      if (!__DEV__) {
+        return;
+      }
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const nav = require('@/dev/storeScreenshotNav') as typeof import('@/dev/storeScreenshotNav');
+      void nav.applyStoreScreenshotLocale(target.lang, preferences, store).then(() => {
+        nav.openStoreScreenshotSceneWhenIdle(target.scene);
+      });
       return;
     }
     if (target.kind === 'tracker') {
@@ -75,7 +99,7 @@ export function AppNavigation() {
     } else {
       openHome();
     }
-  }, []);
+  }, [preferences, store]);
 
   const { tap } = store;
   const seenPresses = useRef(new Set<string>());
@@ -119,13 +143,43 @@ export function AppNavigation() {
     });
     const linkSubscription = Linking.addEventListener('url', ({ url }) => {
       const target = parseDeepLink(url);
-      if (target) {
-        go(target);
+      if (!target) {
+        return;
       }
+      if (target.kind === 'storeScreenshot') {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const { claimScreenshotUrl } = require('@/dev/storeScreenshotLaunch') as typeof import('@/dev/storeScreenshotLaunch');
+        if (!claimScreenshotUrl(url)) {
+          return;
+        }
+      }
+      go(target);
     });
+    const onHashChange = () => {
+      if (Platform.OS !== 'web') {
+        return;
+      }
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const launch = require('@/dev/storeScreenshotLaunch') as typeof import('@/dev/storeScreenshotLaunch');
+      const resolved = launch.screenshotLaunchHref(typeof window !== 'undefined' ? window.location.href : null);
+      const target = parseDeepLink(resolved);
+      if (!target || target.kind !== 'storeScreenshot') {
+        return;
+      }
+      if (!launch.claimScreenshotUrl(resolved)) {
+        return;
+      }
+      go(target);
+    };
+    if (Platform.OS === 'web' && typeof window !== 'undefined') {
+      window.addEventListener('hashchange', onHashChange);
+    }
     return () => {
       notificationSubscription.remove();
       linkSubscription.remove();
+      if (Platform.OS === 'web' && typeof window !== 'undefined') {
+        window.removeEventListener('hashchange', onHashChange);
+      }
     };
   }, [countFromNotification, go]);
 
@@ -147,10 +201,21 @@ export function AppNavigation() {
       .catch(() => undefined);
     void Linking.getInitialURL()
       .then((url) => {
-        const target = parseDeepLink(url);
-        if (target) {
-          go(target);
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const href = require('@/dev/storeScreenshotLaunch') as typeof import('@/dev/storeScreenshotLaunch');
+        const resolved = href.screenshotLaunchHref(url);
+        const target = parseDeepLink(resolved);
+        if (!target) {
+          return;
         }
+        if (target.kind === 'storeScreenshot') {
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          const { claimScreenshotUrl } = require('@/dev/storeScreenshotLaunch') as typeof import('@/dev/storeScreenshotLaunch');
+          if (!claimScreenshotUrl(resolved)) {
+            return;
+          }
+        }
+        go(target);
       })
       .catch(() => undefined);
   }, [countFromNotification, go, ready]);
@@ -163,7 +228,9 @@ export function AppNavigation() {
     <NavigationContainer
       ref={navigationRef}
       theme={navigationTheme}
+      onStateChange={() => screens.current.onRoute(navigationRef.getCurrentRoute()?.name)}
       onReady={() => {
+        screens.current.onRoute(navigationRef.getCurrentRoute()?.name);
         void SplashScreen.hideAsync().catch(() => undefined);
         const target = pending.current;
         pending.current = null;

@@ -1,4 +1,4 @@
-﻿{
+{
   "common": {
     "cancel": "Vazgeç",
     "done": "Tamam",
@@ -207,7 +207,13 @@
     "recoveredTitle": "Foxiem sayaçlarını geri yükledi",
     "recoveredBody": "Kayıtlı veriler okunamadığı için Foxiem yedeğini kullandı. En son girişlerin eksik olabilir.",
     "unreadableTitle": "Geçmişin bir kısmı okunamadı",
-    "unreadableBody": "Foxiem bu cihazda bir kopya sakladı ve etkilenen sayaçları sıfırdan başlattı."
+    "unreadableBody": "Foxiem bu cihazda bir kopya sakladı ve etkilenen sayaçları sıfırdan başlattı.",
+    "greetingMorning": "Günaydın",
+    "greetingAfternoon": "İyi günler",
+    "greetingEvening": "İyi akşamlar",
+    "todayProgress": "Bugün {{total}} sayacın {{done}} tanesi sayıldı",
+    "todayAll": "Bugün hepsi sayıldı",
+    "todayNone": "Bugün henüz sayılmadı"
   },
   "status": {
     "total": "toplam",

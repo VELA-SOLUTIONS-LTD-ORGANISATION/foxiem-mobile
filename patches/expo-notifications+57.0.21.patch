@@ -1,0 +1,54 @@
+diff --git a/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/notifications/presentation/builders/DownloadImage.kt b/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/notifications/presentation/builders/DownloadImage.kt
+index 1ce92bb..b9872a5 100644
+--- a/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/notifications/presentation/builders/DownloadImage.kt
++++ b/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/notifications/presentation/builders/DownloadImage.kt
+@@ -6,17 +6,44 @@ import android.net.Uri
+ import kotlinx.coroutines.Dispatchers
+ import kotlinx.coroutines.withContext
+ import kotlinx.coroutines.withTimeout
++import java.io.ByteArrayOutputStream
+ import java.net.URL
+ 
++private const val MAX_IMAGE_BYTES = 4 * 1024 * 1024
++private const val MAX_IMAGE_EDGE = 512
++
++/**
++ * Notification artwork only. Bytes are capped and decoded to the size a notification
++ * can show, instead of decoding the full remote image into memory.
++ */
+ suspend fun downloadImage(imageUrl: Uri, connectTimeout: Long = 8000, readTimeout: Long = 8000): Bitmap? {
+   return runCatching {
+     withTimeout(connectTimeout + readTimeout) {
+       withContext(Dispatchers.IO) {
+-        val url = URL(imageUrl.toString())
+-        val connection = url.openConnection()
+-        connection.connectTimeout = connectTimeout.toInt()
+-        connection.readTimeout = readTimeout.toInt()
+-        BitmapFactory.decodeStream(connection.inputStream)
++        val bytes = URL(imageUrl.toString()).openStream().use { stream ->
++          val out = ByteArrayOutputStream()
++          val chunk = ByteArray(16 * 1024)
++          var total = 0
++          while (true) {
++            val read = stream.read(chunk)
++            if (read < 0) {
++              break
++            }
++            total += read
++            if (total > MAX_IMAGE_BYTES) {
++              return@withContext null
++            }
++            out.write(chunk, 0, read)
++          }
++          out.toByteArray()
++        }
++        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
++        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
++        var sample = 1
++        while (bounds.outWidth / sample > MAX_IMAGE_EDGE || bounds.outHeight / sample > MAX_IMAGE_EDGE) {
++          sample *= 2
++        }
++        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, BitmapFactory.Options().apply { inSampleSize = sample })
+       }
+     }
+   }.getOrNull()

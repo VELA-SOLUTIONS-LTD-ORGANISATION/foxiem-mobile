@@ -9,7 +9,7 @@ import { formatNumber, relativeDay } from '@/format';
 import { useResponsiveLayout } from '@/hooks';
 import type { RootScreenProps } from '@/navigation/types';
 import { usePreferences, useTracker } from '@/state';
-import { contentMaxWidth, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 
 import { EntrySheet } from '../shared/EntrySheet';
 import { EntryRow } from './EntryRow';
@@ -20,7 +20,7 @@ export function HistoryScreen({ route }: RootScreenProps<'History'>) {
   const { t } = useTranslation();
   const theme = useTheme();
   const { language } = usePreferences();
-  const { horizontalPadding } = useResponsiveLayout();
+  const { horizontalPadding, contentMaxWidth } = useResponsiveLayout();
   const { tracker, events } = useTracker(route.params.trackerId);
   const [entry, setEntry] = useState<{ event: CountEvent | null } | null>(null);
 
@@ -56,7 +56,7 @@ export function HistoryScreen({ route }: RootScreenProps<'History'>) {
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={[styles.fill, { backgroundColor: theme.colors.canvas }]}>
-      <View style={[styles.headerWrap, { paddingHorizontal: horizontalPadding }]}>
+      <View style={[styles.headerWrap, { paddingHorizontal: horizontalPadding, maxWidth: contentMaxWidth }]}>
         <Header
           title={t('history.title')}
           subtitle={tracker.name}
@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
   },
   headerWrap: {
     width: '100%',
-    maxWidth: contentMaxWidth,
     alignSelf: 'center',
   },
   add: {

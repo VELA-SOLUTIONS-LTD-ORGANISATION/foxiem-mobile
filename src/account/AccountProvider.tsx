@@ -106,11 +106,10 @@ export function AccountProvider({
   const status: AccountStatus = client ? loadedStatus : 'signedOut';
 
   useEffect(() => {
-    let cancelled = false;
     if (!apple) {
-      setAppleReady(false);
       return undefined;
     }
+    let cancelled = false;
     void apple.available().then((ready) => {
       if (!cancelled) {
         setAppleReady(ready);

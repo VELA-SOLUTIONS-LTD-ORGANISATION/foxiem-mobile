@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import type { ReactNode, Ref } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type Ref } from 'react';
 import {
-  KeyboardAvoidingView,
+  Keyboard,
   Platform,
   ScrollView,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
 import { useResponsiveLayout } from '@/hooks';
-import { contentMaxWidth, useTheme } from '@/theme';
+import { useTheme } from '@/theme';
 
 type ScreenProps = {
   children: ReactNode;
@@ -25,6 +25,33 @@ type ScreenProps = {
   scrollRef?: Ref<ScrollView>;
   testID?: string;
 };
+
+/**
+ * iOS keyboard avoidance measured in window coordinates, so it stays correct inside modal
+ * sheets (KeyboardAvoidingView assumes the view sits at the top of the window and left the footer
+ * button hidden behind the keyboard). Returns the overlap to pad the frame with.
+ */
+function useKeyboardOverlap(enabled: boolean) {
+  const frame = useRef<View>(null);
+  const [overlap, setOverlap] = useState(0);
+  useEffect(() => {
+    if (!enabled || Platform.OS !== 'ios') {
+      return;
+    }
+    const change = Keyboard.addListener('keyboardWillChangeFrame', (event) => {
+      const keyboardTop = event.endCoordinates.screenY;
+      frame.current?.measureInWindow((_x, y, _w, height) => {
+        setOverlap(Math.max(0, y + height - keyboardTop));
+      });
+    });
+    const hide = Keyboard.addListener('keyboardWillHide', () => setOverlap(0));
+    return () => {
+      change.remove();
+      hide.remove();
+    };
+  }, [enabled]);
+  return { frame, overlap };
+}
 
 /** Safe-area frame with the canvas colour, centred content and native keyboard behaviour. */
 export function Screen({
@@ -39,7 +66,8 @@ export function Screen({
   testID,
 }: ScreenProps) {
   const theme = useTheme();
-  const { horizontalPadding } = useResponsiveLayout();
+  const { frame, overlap } = useKeyboardOverlap(keyboard);
+  const { horizontalPadding, contentMaxWidth } = useResponsiveLayout();
   const inner = [
     styles.inner,
     { paddingHorizontal: horizontalPadding, maxWidth: contentMaxWidth },
@@ -49,6 +77,7 @@ export function Screen({
   const body = scroll ? (
     <ScrollView
       ref={scrollRef}
+      style={[styles.fill, styles.clip]}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
       contentContainerStyle={styles.scrollContent}
@@ -61,7 +90,7 @@ export function Screen({
   );
 
   const framed = (
-    <>
+    <View ref={frame} collapsable={false} style={[styles.fill, styles.clip, overlap > 0 && { paddingBottom: overlap }]}>
       {body}
       {footer ? (
         <View
@@ -74,22 +103,16 @@ export function Screen({
             },
           ]}
         >
-          <View style={[styles.footerInner, { maxWidth: contentMaxWidth - horizontalPadding * 2 }]}>{footer}</View>
+          <View style={[styles.footerInner, { maxWidth: contentMaxWidth }]}>{footer}</View>
         </View>
       ) : null}
-    </>
+    </View>
   );
 
   return (
     <SafeAreaView testID={testID} edges={edges} style={[styles.fill, { backgroundColor: theme.colors[background] }]}>
       <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
-      {keyboard && Platform.OS === 'ios' ? (
-        <KeyboardAvoidingView style={styles.fill} behavior="padding">
-          {framed}
-        </KeyboardAvoidingView>
-      ) : (
-        framed
-      )}
+      {framed}
     </SafeAreaView>
   );
 }
@@ -97,10 +120,10 @@ export function Screen({
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
+    minHeight: 0,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingBottom: 40,
+  clip: {
+    overflow: 'hidden',
   },
   inner: {
     width: '100%',
@@ -114,5 +137,8 @@ const styles = StyleSheet.create({
   footerInner: {
     width: '100%',
     alignSelf: 'center',
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
 });

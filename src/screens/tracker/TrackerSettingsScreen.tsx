@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { CommonActions, usePreventRemove } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -18,11 +18,13 @@ import {
   TextField,
   useToast,
 } from '@/components';
+import { OVERLAY_EXIT_MS } from '@/components/overlayMotion';
 import {
   TRACKER_LIMITS,
   coerceDraftForIntent,
   draftFromTracker,
   runningValue,
+  validateDraft,
   type TrackerDraft,
   type TrackerDraftError,
 } from '@/domain';
@@ -71,6 +73,11 @@ export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'Tr
   const [confirm, setConfirm] = useState<'reset' | 'delete' | 'discard' | null>(null);
   const [leaving, setLeaving] = useState(false);
   const [pendingAction, setPendingAction] = useState<Parameters<typeof navigation.dispatch>[0] | null>(null);
+  const pendingDelete = useRef<{ id: string; reminderIds: string[] } | null>(null);
+  const storeRef = useRef(store);
+  const remindersRef = useRef(reminders);
+  storeRef.current = store;
+  remindersRef.current = reminders;
 
   const dirty = Boolean(tracker && draft && JSON.stringify(draftFromTracker(tracker)) !== JSON.stringify(draft));
 
@@ -78,6 +85,29 @@ export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'Tr
     setPendingAction(data.action);
     setConfirm('discard');
   });
+
+  // Close the dialog before removing the tracker. Deleting immediately unmounts this screen's
+  // modal while iOS is still dismissing it, and the app closes.
+  useEffect(() => {
+    const job = pendingDelete.current;
+    if (!leaving || confirm !== null || !job) {
+      return undefined;
+    }
+    const timer = setTimeout(() => {
+      if (pendingDelete.current !== job) {
+        return;
+      }
+      pendingDelete.current = null;
+      if (navigation.canGoBack()) {
+        navigation.popToTop();
+      } else {
+        navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Main', params: { screen: 'HomeTab' } }] }));
+      }
+      void Promise.all(job.reminderIds.map((reminderId) => remindersRef.current.remove(reminderId).catch(() => undefined)));
+      storeRef.current.deleteTracker(job.id);
+    }, OVERLAY_EXIT_MS + 40);
+    return () => clearTimeout(timer);
+  }, [confirm, leaving, navigation]);
 
   if (!tracker || !draft) {
     return (
@@ -117,12 +147,13 @@ export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'Tr
   const trackerReminders = reminders.remindersFor(tracker.id);
   const running = runningValue(tracker, events);
   const canAdd = reminders.canAdd(tracker.id);
+  const nameTaken = validateDraft(draft, store.trackers, { editingId: tracker.id }) === 'nameDuplicate';
 
   return (
     <Screen
       keyboard
       edges={['top', 'bottom', 'left', 'right']}
-      footer={<Button testID="settings-save" title={t('common.saveChanges')} disabled={!dirty} onPress={save} />}
+      footer={<Button testID="settings-save" title={t('common.saveChanges')} disabled={!dirty || nameTaken} onPress={save} />}
     >
       <Header title={t('trackerSettings.title')} subtitle={tracker.name} />
 
@@ -134,7 +165,10 @@ export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'Tr
             value={draft.name}
             maxLength={TRACKER_LIMITS.nameMaxLength + 5}
             onChangeText={(name) => update({ name })}
-            error={error && NAME_ERRORS.includes(error) ? errorMessage(error, t) : undefined}
+            error={
+              (error && NAME_ERRORS.includes(error) ? errorMessage(error, t) : undefined) ??
+              (nameTaken ? errorMessage('nameDuplicate', t) : undefined)
+            }
           />
           <AppearanceFields icon={draft.icon} color={draft.color} onChange={update} />
         </View>
@@ -336,11 +370,13 @@ export function TrackerSettingsScreen({ navigation, route }: RootScreenProps<'Tr
             : undefined
         }
         onCancel={() => setConfirm(null)}
-        onConfirm={async () => {
+        onConfirm={() => {
+          pendingDelete.current = {
+            id: tracker.id,
+            reminderIds: trackerReminders.map((reminder) => reminder.id),
+          };
+          setLeaving(true);
           setConfirm(null);
-          await Promise.all(trackerReminders.map((reminder) => reminders.remove(reminder.id)));
-          store.deleteTracker(tracker.id);
-          leave(true);
         }}
       />
       <ConfirmDialog

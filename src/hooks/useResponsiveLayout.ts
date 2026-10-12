@@ -1,14 +1,16 @@
 import { useWindowDimensions } from 'react-native';
 
-import { contentMaxWidth, getHorizontalPadding, getLayoutRange, type LayoutRange } from '@/theme/layout';
+import { getContentMaxWidth, getHorizontalPadding, getLayoutRange, type LayoutRange } from '@/theme/layout';
 
 export type ResponsiveLayout = {
   width: number;
   height: number;
   range: LayoutRange;
   isCompact: boolean;
+  isTablet: boolean;
   horizontalPadding: number;
-  /** Width available to content after padding, capped for tablets. */
+  contentMaxWidth: number;
+  /** Width available to content after padding, capped for the current range. */
   contentWidth: number;
 };
 
@@ -16,12 +18,15 @@ export function useResponsiveLayout(): ResponsiveLayout {
   const { width, height } = useWindowDimensions();
   const range = getLayoutRange(width);
   const horizontalPadding = getHorizontalPadding(width);
+  const maxWidth = getContentMaxWidth(width);
   return {
     width,
     height,
     range,
     isCompact: range === 'compact',
+    isTablet: range === 'tablet',
     horizontalPadding,
-    contentWidth: Math.min(contentMaxWidth, width) - horizontalPadding * 2,
+    contentMaxWidth: maxWidth,
+    contentWidth: Math.min(maxWidth, width) - horizontalPadding * 2,
   };
 }

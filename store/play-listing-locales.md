@@ -3,7 +3,7 @@
 Same language set as Apple (`en`, `tr`, `de`, `fr`, `es`, `it`). Default Play listing: **en-GB**. Full descriptions use the App Store sections in `scripts/apply-aso-store-config.mjs`, with the Google opening below as the first paragraph.
 
 Privacy / marketing (all): `https://foxiem.com/privacy` · `https://foxiem.com`  
-Support email: solutionvela@gmail.com
+Support email: support@solutionvela.co.uk
 
 ## en-GB (default)
 

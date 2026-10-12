@@ -16,10 +16,19 @@ export function WelcomeScreen({ navigation }: RootScreenProps<'Welcome'>) {
   return (
     <Screen
       edges={['top', 'bottom', 'left', 'right']}
-      footer={<Button testID="welcome-start" title={t('welcome.cta')} onPress={() => navigation.navigate('Start')} />}
+      footer={
+        <View style={styles.footer}>
+          <Button
+            testID="welcome-start"
+            title={t('welcome.cta')}
+            style={styles.cta}
+            onPress={() => navigation.navigate('Start')}
+          />
+        </View>
+      }
     >
       <View style={styles.body}>
-        <Text variant="wordmark" style={{ color: theme.colors.brandInk }} accessibilityRole="header">
+        <Text variant="wordmark" align="center" style={{ color: theme.colors.brandInk }} accessibilityRole="header">
           Foxiem
         </Text>
         <View style={styles.hero}>
@@ -31,10 +40,10 @@ export function WelcomeScreen({ navigation }: RootScreenProps<'Welcome'>) {
             accessibilityLabel={t('welcome.foxAlt')}
           />
         </View>
-        <Text variant="title" style={styles.title}>
+        <Text variant="title" align="center" style={styles.title}>
           {t('welcome.title')}
         </Text>
-        <Text variant="body" tone="inkSecondary" style={styles.copy}>
+        <Text variant="body" tone="inkSecondary" align="center" style={styles.copy}>
           {t('welcome.body')}
         </Text>
       </View>
@@ -43,6 +52,14 @@ export function WelcomeScreen({ navigation }: RootScreenProps<'Welcome'>) {
 }
 
 const styles = StyleSheet.create({
+  // Lifts the button off the bottom edge and makes it a touch taller and larger.
+  footer: {
+    paddingBottom: 28,
+  },
+  cta: {
+    minHeight: 58,
+    paddingVertical: 15,
+  },
   body: {
     flexGrow: 1,
     paddingTop: 16,

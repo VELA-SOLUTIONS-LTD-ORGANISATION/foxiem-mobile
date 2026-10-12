@@ -1,6 +1,8 @@
 # Foxiem — Google Play listing copy
 
-Sent for review from Publishing overview (managed publishing off). Category is **Tools**. Do not invent support emails.
+**2.0 copy (source of truth):** `store/google-play/{locale}/`. Do not push 2.0 screenshots or Pro/no-ads copy onto the live listing while Production is still 1.0.4.
+
+Category is **Tools**. Do not invent support emails.
 
 ## App name (max 30)
 
@@ -49,7 +51,7 @@ Tools
 
 - Privacy policy: https://foxiem.com/privacy
 - Marketing: https://foxiem.com
-- Support email: solutionvela@gmail.com
+- Support email: support@solutionvela.co.uk
 
 ## Graphics
 

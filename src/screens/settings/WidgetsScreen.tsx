@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Group, Header, ProBadge, Row, Screen, Section, Text, TrackerIcon } from '@/components';
 import { orderTrackers } from '@/domain';
+import { storeListingPlatform } from '@/lib/storeListingPlatform';
 import type { RootScreenProps } from '@/navigation/types';
 import { usePro } from '@/pro/ProProvider';
 import { useFeature } from '@/pro/useFeature';
@@ -18,7 +19,7 @@ export function WidgetsScreen({ navigation }: RootScreenProps<'Widgets'>) {
   const pro = usePro();
   const widgets = useFeature('widgets');
   const watchFeature = useFeature('watch');
-  const isIos = Platform.OS === 'ios';
+  const isIos = storeListingPlatform() === 'ios';
   const trackers = useMemo(() => orderTrackers(store.trackers.filter((tracker) => tracker.archivedAt === null)), [store.trackers]);
   const chosen = trackers.some((tracker) => tracker.id === preferences.widgetTrackerId) ? preferences.widgetTrackerId : null;
   const watch = useMemo(() => (isIos ? readWatchStatus() : null), [isIos]);
@@ -34,8 +35,8 @@ export function WidgetsScreen({ navigation }: RootScreenProps<'Widgets'>) {
           : t('watch.ready');
 
   return (
-    <Screen>
-      <Header large title={t('widgets.title')} />
+    <Screen testID="widgets">
+      <Header title={t('widgets.title')} />
       <Text variant="body" tone="inkSecondary" style={styles.intro}>
         {t('widgets.intro')}
       </Text>

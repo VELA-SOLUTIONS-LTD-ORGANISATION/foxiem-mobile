@@ -1,0 +1,7 @@
+appId: co.uk.solutionvela.foxiem
+---
+- openLink: foxiem://_dev/store/home
+- extendedWaitUntil:
+    visible:
+      id: home-list
+    timeout: 15000

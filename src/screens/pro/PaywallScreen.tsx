@@ -1,13 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Animated, Image, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, Image, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { Banner, Button, IconButton, Screen, Text } from '@/components';
 import { useAnimatedFlag } from '@/components/motion';
-import { useReducedMotion } from '@/hooks';
 import { FOXIEM_LOGO } from '@/constants/brand';
 import { EXTERNAL_LINKS, termsUrl } from '@/constants/links';
+import { storeListingPlatform } from '@/lib/storeListingPlatform';
+import { useReducedMotion, useResponsiveLayout } from '@/hooks';
 import { trackEvent } from '@/lib/telemetry/analytics';
 import { formatShortDate } from '@/format';
 import type { RootScreenProps } from '@/navigation/types';
@@ -33,6 +34,8 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
   const { t } = useTranslation();
   const theme = useTheme();
   const pro = usePro();
+  const { isTablet } = useResponsiveLayout();
+  const listing = storeListingPlatform();
   const { language } = usePreferences();
   const feature = route.params?.feature;
   const [plan, setPlan] = useState<ProPlan>(HIGHLIGHTED_PLAN);
@@ -46,7 +49,8 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
     void trackEvent('paywall_viewed', { feature: feature ?? 'settings' });
   }, [feature, loadOfferings]);
 
-  const store = Platform.OS === 'ios' ? t('pro.appStore') : t('pro.googlePlay');
+  const storeShot = __DEV__ && process.env.EXPO_PUBLIC_STORE_SCREENSHOTS === '1';
+  const store = listing === 'ios' ? t('pro.appStore') : t('pro.googlePlay');
   const offerings = pro.offerings.status === 'ready' ? pro.offerings.offerings : [];
   const selected = offerings.find((offering) => offering.plan === plan) ?? null;
   // The store answered but has nothing for sale (products not live yet, or store config missing).
@@ -57,7 +61,7 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
   const canManage = pro.manageUrl !== null && entitlement.status !== 'free';
   const sectionBody = (key: (typeof SECTIONS)[number]['key']) =>
     key === 'everywhere'
-      ? t(`pro.sections.everywhere.${Platform.OS === 'ios' ? 'bodyIos' : 'bodyAndroid'}`)
+      ? t(`pro.sections.everywhere.${listing === 'ios' ? 'bodyIos' : 'bodyAndroid'}`)
       : t(`pro.sections.${key}.body`);
 
   const buy = async () => {
@@ -122,14 +126,21 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
   }
 
   return (
-    <Screen
+      <Screen
+      testID="paywall"
       edges={['top', 'bottom', 'left', 'right']}
       footer={
         pro.available ? (
           <View style={styles.footer}>
             <Button
               testID="paywall-buy"
-              title={selected ? t('pro.cta', { price: planPrice(selected, t) }) : t('pro.loading')}
+              title={
+                selected
+                  ? storeShot
+                    ? t('common.continue')
+                    : t('pro.cta', { price: planPrice(selected, t) })
+                  : t('pro.loading')
+              }
               disabled={!selected}
               loading={busy === 'purchase'}
               onPress={() => void buy()}
@@ -187,6 +198,9 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
         </View>
       ) : null}
 
+      <View style={isTablet ? styles.tabletSplit : undefined}>
+        <View style={isTablet ? styles.tabletCol : undefined}>
+      {storeShot && !isTablet ? null : (
       <View style={styles.sections}>
         {SECTIONS.map((section) => (
           <View key={section.key} style={styles.section}>
@@ -202,6 +216,9 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
           </View>
         ))}
       </View>
+      )}
+        </View>
+        <View style={isTablet ? styles.tabletCol : undefined}>
 
       {pro.offerings.status === 'loading' || pro.offerings.status === 'idle' ? (
         <View style={styles.loading}>
@@ -211,7 +228,7 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
           </Text>
         </View>
       ) : null}
-      {pro.offerings.status === 'error' ? (
+      {pro.offerings.status === 'error' && !storeShot ? (
         <View style={styles.loading}>
           <Text variant="body" tone="inkSecondary" align="center">
             {t('pro.loadFailed')}
@@ -220,7 +237,7 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
         </View>
       ) : null}
 
-      {notAvailable ? (
+      {notAvailable && !storeShot ? (
         <View style={styles.loading}>
           <Text variant="bodyStrong" align="center" accessibilityRole="header">
             {t('pro.notAvailableTitle')}
@@ -234,8 +251,16 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
 
       <View accessibilityRole="radiogroup" style={styles.plans}>
         {offerings.map((offering) => (
-          <PlanCard key={offering.plan} offering={offering} selected={offering.plan === plan} onSelect={() => setPlan(offering.plan)} />
+          <PlanCard
+            key={offering.plan}
+            offering={offering}
+            selected={offering.plan === plan}
+            onSelect={() => setPlan(offering.plan)}
+            hidePrices={storeShot}
+          />
         ))}
+      </View>
+        </View>
       </View>
 
       {message ? (
@@ -266,7 +291,7 @@ export function PaywallScreen({ navigation, route }: RootScreenProps<'Paywall'>)
           </Text>
         </Pressable>
       </View>
-      {pro.simulator ? (
+      {pro.simulator && !storeShot ? (
         <Text variant="micro" tone="inkTertiary" align="center" style={styles.simulated}>
           {t('pro.simulated')}
         </Text>
@@ -283,15 +308,26 @@ function planPrice(offering: ProOffering, t: ReturnType<typeof useTranslation>['
       : t('pro.plans.lifetimePrice', { price: offering.price });
 }
 
-function PlanCard({ offering, selected, onSelect }: { offering: ProOffering; selected: boolean; onSelect: () => void }) {
+function PlanCard({
+  offering,
+  selected,
+  onSelect,
+  hidePrices,
+}: {
+  offering: ProOffering;
+  selected: boolean;
+  onSelect: () => void;
+  hidePrices?: boolean;
+}) {
   const { t } = useTranslation();
   const theme = useTheme();
   const reduceMotion = useReducedMotion();
   // Colour and scale are JS-driven (a border colour cannot use the native driver); one small card, so it is cheap.
   const highlight = useAnimatedFlag(selected, reduceMotion, { native: false });
-  const priceLine = planPrice(offering, t);
-  const detail =
-    offering.billing === 'year' && offering.pricePerMonth
+  const priceLine = hidePrices ? '' : planPrice(offering, t);
+  const detail = hidePrices
+    ? null
+    : offering.billing === 'year' && offering.pricePerMonth
       ? t('pro.plans.yearlyPerMonth', { price: offering.pricePerMonth })
       : offering.billing === 'once'
         ? t('pro.plans.lifetimeBody')
@@ -335,9 +371,11 @@ function PlanCard({ offering, selected, onSelect }: { offering: ProOffering; sel
           </Text>
         ) : null}
       </View>
+      {hidePrices ? null : (
       <Text variant="bodyStrong" style={styles.price}>
         {priceLine}
       </Text>
+      )}
       </Animated.View>
     </Pressable>
   );
@@ -377,6 +415,16 @@ const styles = StyleSheet.create({
   sections: {
     marginTop: 20,
     gap: 14,
+  },
+  tabletSplit: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 28,
+    marginTop: 8,
+  },
+  tabletCol: {
+    flex: 1,
+    minWidth: 0,
   },
   section: {
     flexDirection: 'row',

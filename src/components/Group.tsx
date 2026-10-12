@@ -10,6 +10,7 @@ import { Text } from './Text';
 export function Group({ children, style, inset = 0 }: { children: ReactNode; style?: StyleProp<ViewStyle>; inset?: number }) {
   const theme = useTheme();
   const items = Children.toArray(children).filter(isValidElement);
+  const usedKeys = new Set<string>();
   return (
     <View
       style={[
@@ -18,14 +19,26 @@ export function Group({ children, style, inset = 0 }: { children: ReactNode; sty
         style,
       ]}
     >
-      {items.map((child, index) => (
-        <Fragment key={child.key ?? index}>
-          {index > 0 ? (
-            <View style={[styles.separator, { marginLeft: inset || 16, backgroundColor: theme.colors.line }]} />
-          ) : null}
-          {child}
-        </Fragment>
-      ))}
+      {items.map((child, index) => {
+        // Children.toArray copies a caller's key onto the element. Two rows with the same
+        // sentence used to share that key, and React can then drop one of them.
+        const preferred = child.key == null ? `row-${index}` : String(child.key);
+        let key = preferred;
+        let extra = index;
+        while (usedKeys.has(key)) {
+          extra += 1;
+          key = `${preferred}:${extra}`;
+        }
+        usedKeys.add(key);
+        return (
+          <Fragment key={key}>
+            {index > 0 ? (
+              <View style={[styles.separator, { marginLeft: inset || 16, backgroundColor: theme.colors.line }]} />
+            ) : null}
+            {child}
+          </Fragment>
+        );
+      })}
     </View>
   );
 }

@@ -31,8 +31,12 @@ export function normalizeName(value: string): string {
   return value.replace(/\s+/g, ' ').trim().normalize('NFC');
 }
 
+/**
+ * Identity of a tracker name. Case folding does not use the phone locale: on a Turkish
+ * device `I` would otherwise become `ı`, so "Water" and "wATER" would not match.
+ */
 export function nameKey(value: string): string {
-  return normalizeName(value).toLocaleLowerCase();
+  return normalizeName(value).replace(/\u0130/g, 'i').replace(/I/g, 'i').toLowerCase().replace(/\u0131/g, 'i');
 }
 
 function cleanInteger(value: number | null | undefined): number | null {

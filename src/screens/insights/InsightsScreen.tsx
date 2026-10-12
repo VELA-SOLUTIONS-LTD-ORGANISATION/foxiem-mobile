@@ -16,6 +16,7 @@ import {
   type Insight,
 } from '@/domain';
 import { formatMonth, formatNumber, formatRange, weekSummaryLine } from '@/format';
+import { useResponsiveLayout } from '@/hooks';
 import type { TabScreenProps } from '@/navigation/types';
 import { useFeature } from '@/pro/useFeature';
 import { usePreferences, useTrackerStore } from '@/state';
@@ -27,6 +28,7 @@ import { useAnalysisContext } from '../shared/useAnalysisContext';
 export function InsightsScreen({ navigation }: TabScreenProps<'InsightsTab'>) {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isTablet } = useResponsiveLayout();
   const { language } = usePreferences();
   const store = useTrackerStore();
   const context = useAnalysisContext();
@@ -88,7 +90,7 @@ export function InsightsScreen({ navigation }: TabScreenProps<'InsightsTab'>) {
   }
 
   return (
-    <Screen>
+    <Screen testID="insights">
       <Header large title={t('insights.title')} subtitle={t('insights.weekRange', { range: formatRange(week.start, week.end, language, context.now) })} />
 
       {age < 7 ? (
@@ -100,6 +102,8 @@ export function InsightsScreen({ navigation }: TabScreenProps<'InsightsTab'>) {
         </View>
       ) : null}
 
+      <View style={isTablet ? styles.tabletSplit : undefined}>
+        <View style={isTablet ? styles.tabletCol : undefined}>
       <Section title={t('insights.thisWeek')} style={styles.firstSection}>
         <Group inset={66}>
           {trackers.map((tracker) => {
@@ -134,12 +138,14 @@ export function InsightsScreen({ navigation }: TabScreenProps<'InsightsTab'>) {
           })}
         </Group>
       </Section>
+        </View>
+        <View style={isTablet ? styles.tabletCol : undefined}>
 
       <Section title={t('insights.highlights')}>
         <Group inset={60}>
           {highlights.length === 0 ? <InsightRow icon="hourglass-outline" text={t('insights.noHighlights')} /> : null}
-          {highlights.map((row) => (
-            <InsightRow key={row.text} icon={row.icon} text={row.text} />
+          {highlights.map((row, index) => (
+            <InsightRow key={`${row.key}:${index}`} icon={row.icon} text={row.text} />
           ))}
         </Group>
       </Section>
@@ -171,13 +177,15 @@ export function InsightsScreen({ navigation }: TabScreenProps<'InsightsTab'>) {
             {!patterns.allowed ? (
               <InsightRow icon="git-compare-outline" text={t('insights.patternsLocked')} locked onPress={patterns.request} />
             ) : crossRows.length > 0 ? (
-              crossRows.map((row) => <InsightRow key={row.text} icon={row.icon} text={row.text} />)
+              crossRows.map((row, index) => <InsightRow key={`${row.key}:${index}`} icon={row.icon} text={row.text} />)
             ) : (
               <InsightRow icon="hourglass-outline" text={t('insights.noPatterns')} />
             )}
-          </Group>
-        </Section>
+        </Group>
+      </Section>
       ) : null}
+        </View>
+      </View>
     </Screen>
   );
 }
@@ -193,6 +201,15 @@ const styles = StyleSheet.create({
   },
   firstSection: {
     marginTop: 20,
+  },
+  tabletSplit: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 28,
+  },
+  tabletCol: {
+    flex: 1,
+    minWidth: 0,
   },
   weekRow: {
     minHeight: 72,
